@@ -77,18 +77,18 @@ This project ...
     ```
     $CONFIG['DB_Host'] = "localhost";    //Database Hostname ex. localhost
     $CONFIG['DB_Name'] = "regmondb";     //Database Name ex. regmondb
-    $CONFIG['DB_User'] = "regmondbuser"; //Database User ex. root
-    $CONFIG['DB_Pass'] = "regmondbpass"; //Database Password ex. root
+    $CONFIG['DB_User'] = "root";         //Database User ex. root
+    $CONFIG['DB_Pass'] = "";             //Database Password ex. root
     ```
 
 ### How to set my Email configuration
 1. Edit the following lines in **"__config.regmon.php"** file:
     ```
     $CONFIG['EMAIL'] = [
-        'Host'       => 'domain.org',      //SMTP server (localhost)
+        'Host'       => 'domain.com',      //SMTP server (localhost)
         'SMTPSecure' => 'tls',             //ssl, tls - ssl(465) - tls(587)
         'Port'       => '587',             //SMTP port for the server (25, 465, 587)
-        'Username'   => 'info@domain.org', //SMTP account username
+        'Username'   => 'info@domain.com', //SMTP account username
         'Password'   => 'userpassword',    //SMTP account password
     ]
     ```
