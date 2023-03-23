@@ -1,10 +1,35 @@
-<?php
+<?php // Language de
+
 return 
 array(	
 	//Languages
 	'LANG_CURRENT' 	=> 'de', //not change
 	'LANG_ENGLISH' 	=> 'English',
 	'LANG_GERMAN' 	=> 'German',
+
+	//all pages
+    'APP_NAME'			=> 'REGmon',
+    'APP_INFO'			=> 'Regenerationsmanagement durch Athletenmonitoring',
+    'HOMEPAGE'			=> 'Startseite',
+    'PAGE_TOP'			=> 'Seitenanfang',
+    'SAVE'				=> 'Speichern',
+    'YES' 				=> 'Ja',
+    'NO' 				=> 'Nein',
+    'ERROR' 			=> 'Fehler',
+    'SUCCESS' 			=> 'Erfolg',
+	'STATUS' 			=> 'Status',
+	'EDIT'				=> 'bearbeiten',
+	'DELETE'			=> 'löschen',
+	'BACK' 				=> 'Zurück',
+	'CLOSE' 			=> 'Schließen',
+	'CREATED'			=> 'Erstellt',
+	'MODIFIED'			=> 'Geändert',
+	'LVL_ADMIN' 		=> 'Admin',
+	'LVL_LOCATION' 		=> 'Standortadmin',
+	'LVL_GROUP_ADMIN'	=> 'Gruppenadmin',
+	'LVL_GROUP_ADMIN_2'	=> 'Gruppenadmin (reduziert)',
+	'LVL_ATHLETE'		=> 'Sportler',
+	'LVL_TRAINER' 		=> 'Trainer',
 
 	//login.php
 	'LOGIN' 			=> 'Anmelden',
@@ -13,7 +38,6 @@ array(
 	'LOGIN_USERNAME' 	=> 'Benutzername',
 	'LOGIN_PASSWORD' 	=> 'Passwort',
 	'LOGIN_REGISTER'	=> 'Registrieren',
-	'LOGIN_SUBMIT'		=> 'Anmelden',
 	'LOGIN_CONTACT'		=> 'Kontakt',
 	'LOGIN_FAIL_TXT_1' 	=> 'Der Benutzername oder das Passwort ist falsch!',
 	'LOGIN_FAIL_TXT_2' 	=> 'Bitte versuchen Sie es erneut.',
@@ -23,7 +47,6 @@ array(
 	'LOGIN_FAIL_TXT_6' 	=> 'Bitte kontaktieren Sie unsere Support-Abteilung.',
 	'LOGIN_FAIL_TXT_7' 	=> 'Your IP is Blocked after {Max_Attempts} fail attempts.',
 	'LOGIN_FAIL_TXT_8' 	=> 'Your IP will be unblocked in {Block_Minutes} minutes.',
-	'LOGIN_OLD_BROWSER'	=> 'Es werden leider nur moderne Browsern unterstützt.',
 	
 	//register.php
 	'REGISTER' 				=> 'Registrieren',
@@ -67,70 +90,83 @@ array(
 	'REGISTER_LVL_TRAINER' 		=> 'Trainer',
 	'REGISTER_PRIVATE_GROUP'	=> 'Privat Gruppe',
 	'REGISTER_PRIVATE_KEY'	 	=> 'Privat Schlüssel',
+	'REGISTER_PRIVATE_KEY_ERROR'=> 'Privat Schlüssel Fehler',
 	'REGISTER_BACK' 			=> 'Zurück',
-	//User Account
+    'REGISTER_BACKWARD'			=> 'rückwärts',
+	//User Account - box.profile_edit.php
+	'PROFILE_USER_ACCOUNT' 		=> 'Benutzerkonto',
 	'PROFILE_LOCATION' 			=> 'Standort (aktiv)',
 	'PROFILE_GROUP' 			=> 'Gruppe (aktiv)',
 	'PROFILE_LEVEL' 			=> 'Profil',
 	'PROFILE_DASHBOARD_ON_LOGIN'=> 'Dashboard nach dem Login',
 	'PROFILE_DASHBOARD_CLOSED'	=> 'Geschlossen',
 	'PROFILE_DASHBOARD_OPENED'	=> 'Geöffnet',
+	'PROFILE_SAVED'				=> 'Das Formular wurde gespeichert.',
+	'PROFILE_NOT_SAVED'			=> 'Das Formular wird nicht gespeichert.',
+	'PROFILE_LAST_LOGIN' 		=> 'Letzte Anmeldung',
+	'PROFILE_LOGIN_COUNT' 		=> 'Anzahl der Anmeldungen',
+	'PROFILE_LAST_IP' 			=> 'Letzte IP',
+	'PROFILE_NO_CHANGE_PASSWORD'=> 'Lassen Sie dieses Feld leer, wenn Sie das Passwort <b>nicht</b> ändern wollen.',
+	//User
+	'NAME_EXIST'			=> 'ERROR! <br>Dieser Name ist bereits vergeben. <br> Bitte anderen Namen verwenden.',
+	'WARN_USERNAME_EXIST' 	=> 'Warnung! Dieser Name ist bereits vergeben. <br> Bitte anderen Namen verwenden.',
+	'WARN_EMPTY_USERNAME' 	=> 'Warnung! leerer Benutzername',
+	'WARN_CONFIRM_PASSWORD' => 'Warnung! Passwort und Passwort bestätigen stimmt nicht überein',
+	'WARN_EMPTY_PASSWORD' 	=> 'Warnung! leeres Passwort',
+	'WARN_PASSWORD_CHARS' 	=> 'Warnung! Das Passwort muss mindestens 8 Zeichen lang sein',
+	'WARN_INVALID_EMAIL' 	=> 'Warnung! Ungültige E-Mail-Adresse',
+	'WARN_CHANGE_MAIN_NAME' => 'Warnung! Sie können den Benutzernamen des Hauptkontos nicht ändern',
+	'WARN_DEACT_YOUR_ACC' 	=> 'Warnung! Sie können Ihr Konto nicht deaktivieren',
+	'WARN_DELETE_YOUR_ACC'  => 'Warnung! Sie können Ihr Konto nicht löschen',
+	//
+ 	'TRAINER_2_ATHLETES_ACCESS'  => 'Freigaben der Sportler',
 	
-
-	//all pages
-    'APP_NAME'			=> 'REGmon',
-    'APP_INFO'			=> 'Regenerationsmanagement durch Athletenmonitoring',
-    'HOMEPAGE'			=> 'Startseite',
-    'PAGE_TOP'			=> 'Seitenanfang',
-    'LOGOUT'			=> 'Abmelden',
-    'BACKWARD'			=> 'rückwärts',
-    'FORWARD'			=> 'vorwärts',
-    'PREVIEW'			=> 'Vorschau',
-    'SAVE'				=> 'Speichern',
-    'YES' 				=> 'Ja',
-    'NO' 				=> 'Nein',
-    'ERROR' 			=> 'Fehler',
-    'SUCCESS' 			=> 'Erfolg',
-	'STATUS' 			=> 'Status',
-	'EDIT'				=> 'bearbeiten',
-	'DELETE'			=> 'löschen',
-	'BACK' 				=> 'Zurück',
-
-	//Interface Menu //////////////////////////////////////////////////////////
-	//index.php / menu
-	'MENU_PAGE_TITLE' 	=> 'Athletenmonitoring - REGmon',
-	'INDEX_GROUP' 		=> 'Gruppe',
-	'INDEX_ATHELTE' 	=> 'Sportler*in',
-	'SELECT_OPTION'		=> 'Wähle eine Option',
-	'SELECT_GROUP'		=> 'Gruppe(n)', //'Gruppe wählen',
-	'SELECT_ATHLETE'	=> 'Sportler wählen', //'Sportler auswählen',
-	'SELECT_FORM'		=> 'Formular(e)', //'Formular wählen',
-	'SELECT_FIELDS'		=> 'Rohdaten / Vorlage(n)', //'Daten auswählen',
-	'VIEW_CALENDAR'		=> 'Kalender',
-	'VIEW_OPTIONS'		=> 'Optionen',
-	'EDIT_RECORD'		=> 'Eintrag bearbeiten',
-	'VIEW_RECORD'		=> 'Eintrag anzeigen',
-	'DELETE_RECORD'		=> 'Eintrag löschen',
-	'DEACTIVATE_RECORD'	=> 'Eintrag ausblenden',
-	'ACTIVATE_RECORD'	=> 'Eintrag einblenden',
-	'VIEW_RESULTS'		=> 'Ergebnisansicht',
+	//######################################################
+	//index
+	'INDEX_PAGE_TITLE' 		=> 'Athletenmonitoring - REGmon',
+	'INDEX_GROUP' 			=> 'Gruppe',
+	'INDEX_ATHLETE' 		=> 'Sportler*in',
+	'INDEX_VIEW_CALENDAR'	=> 'Kalender',
+	'INDEX_VIEW_OPTIONS'	=> 'Optionen',
+	//nav
+	'BUTTON_RESULTS'		=> 'Ergebnisse',
+	'BUTTON_RESULTS_GROUP'	=> 'Ergebnisse (gruppenbasiert)',
+	'BUTTON_USER_ACCOUNT' 	=> 'Benutzerkonto',
+    'BUTTON_LOGOUT'			=> 'Abmelden',
+	'BUTTON_ADMINISTRATION'	=> 'Verwaltung',
+	//private group
+	'INDEX_PRIVATE_GROUP' 		=> 'Private Gruppe',
+	'INDEX_PRIVATE_GROUP_MARK'	=> '(privat)',
+	'INDEX_PRIVATE_KEY' 		=> 'Privat Schlüssel',
+	'INDEX_REQUEST_FOR_GROUP'	=> 'Anfragen für Gruppenzuordnung',
+	'INDEX_EXPORT_LINK' 		=> 'Datenabfrage (Export)',
+	'INDEX_IMPORT_LINK' 		=> 'Import',
 	//dashboard
-	'DASHBOARD_ON_LOGIN'=> 'Beim Login öffnen?',
-	'DASHBOARD_NEW_LINK'=> 'Dashboard-Link hinzufügen',
-
-	'MY_FORM_SELECTION'	=> 'meine Formularauswahl',
-	'PRIVATE_GROUP' 	=> 'Private Gruppe',
-	'PRIVATE_GROUP_MARK'=> '(privat)',
-	'PRIVATE_KEY' 		=> 'Privat Schlüssel',
-	'PRIVATE_KEY_ERROR' => 'Privat Schlüssel Fehler',
-	'REQUEST_FOR_GROUP' => 'Anfragen für Gruppenzuordnung',
-
-	'IMPORT_EXPORT_TAB' => 'Datenmanagement (Export, Import, Transfer, usw.)',
-	'EXPORT_LINK' 		=> 'Datenabfrage (Export)',
-	'IMPORT_LINK' 		=> 'Import',
-	'GROUP_ACCESS_TAB'  => 'Gruppenzugang',
-	'GROUP_LEAVE_TAB'   => 'Gruppe verlassen',
-	'GROUP_FORMS_TAB'   => 'verfügbare Formulare',
+	'DASHBOARD_ON_LOGIN'		=> 'Beim Login öffnen?',
+	'DASHBOARD_NEW_LINK'		=> 'Dashboard-Link hinzufügen',
+	//tabs / panels
+	'TAB_ATHLETE_2_GROUP_FORM_SELECTION'=> 'meine Formularauswahl',
+	'TAB_FORMS_ACCESS_TO_TRAINERS'		=> 'Trainerfreigaben',
+	'TAB_FORMS_ACCESS_FROM_ATHLETES'	=> 'Freigaben der Sportler',
+	'TAB_TRAINER_REQUESTS_2_ATHLETES'	=> 'Sportlerverwaltung', //'Zugriffsanfrage an Sportler stellen',
+	'TAB_ATHLETE_REQUESTS_FROM_TRAINERS'=> 'Trainerverwaltung', //'Angeforderter Zugriff von Trainer',
+	'TAB_IMPORT_EXPORT' 		=> 'Datenmanagement (Export, Import, Transfer, usw.)',
+	'TAB_GROUP_ACCESS'  		=> 'Gruppenzugang',
+	'TAB_GROUP_LEAVE'   		=> 'Gruppe verlassen',
+	'TAB_GROUP_FORMS'   		=> 'verfügbare Formulare',
+	'TAB_GROUP_USERS'			=> 'Gruppennutzer',
+	'TAB_FORMS'					=> 'Formulare',
+	'TAB_CATEGORIES'			=> 'Kategorien',
+	'TAB_SPORTS_N_DROPDOWNS'	=> 'Listen (Sportarten, Dropdowns, usw.)', 
+	'TAB_LOCATION_GROUPS'		=> 'Standort Gruppen',
+	//calendar actions butttons
+	'INDEX_EDIT_RECORD'			=> 'Eintrag bearbeiten',
+	'INDEX_VIEW_RECORD'			=> 'Eintrag anzeigen',
+	'INDEX_DELETE_RECORD'		=> 'Eintrag löschen',
+	'INDEX_DEACTIVATE_RECORD'	=> 'Eintrag ausblenden',
+	'INDEX_ACTIVATE_RECORD'		=> 'Eintrag einblenden',
+	'INDEX_VIEW_RESULTS'		=> 'Ergebnisansicht',
+	//calendar comments
 	'COMMENT_ALL_DAY'   => 'ganztägig',
 	'COMMENT_DATE'  	=> 'Datum',
 	'COMMENT_DATE_FROM' => 'Von',
@@ -146,163 +182,90 @@ array(
 	'COMMENT_DAY_MAX_3'	=> 'Fehler: 3 Kommentare Max pro Tag',
 
 	//Messages
-	'WARNING' 			=> 'Warning!',
-	'INSERT_OK'			=> 'OK_insert', //not change
-	'UPDATE_OK'			=> 'OK_update', //not change
-	'DELETE_OK'			=> 'OK_delete', //not change
 	'UPDATE_NOTHING' 	=> 'Info! <br>Aktualisieren Erfolgreich, aber nichts geändert.', 
 	'UPDATE_ERROR' 		=> 'ERROR! <br>DB-Fehler. Aktualisierung fehlgeschlagen.', 
-	'DB_ERROR' 			=> 'ERROR! <br>DB-Fehler.',
 	'DELETE_ERROR' 		=> 'ERROR! <br>DB-Fehler. Fehler beim Löschvorgang.',
 	'INSERT_ERROR' 		=> 'ERROR! <br>DB-Fehler. Fehler beim Speichervorgang.',
-	'NAME_EXIST'		=> 'ERROR! <br>Dieser Name ist bereits vergeben. <br> Bitte anderen Namen verwenden.',
-	'PAGE_ERROR'		=> 'ERROR! <br>Seite Fehler. <br> Seite nicht vorhanden.',
 	'NEED_ADMIN_RIGHTS'	=> 'Admin-Rechte erforderlich',
 	'NO_ACCESS_RIGHTS'	=> 'Sie haben keine Zugriffsrechte',
-	'FORM_SAVED'		=> 'Das Formular wurde gespeichert.',
-	'FORM_NOT_SAVED'	=> 'Das Formular wird nicht gespeichert.',
-	'FORM_RESET'		=> 'Reset-Form',
-	'FORM_CLOSE'		=> 'Close-Form',
-		
-	//Users
-	'WARN_EMPTY_USERNAME' 	=> 'Warnung! leerer Benutzername',
-	'WARN_EMPTY_PASSWORD' 	=> 'Warnung! leeres Passwort',
-	'WARN_CONFIRM_PASSWORD' => 'Warnung! Passwort und Passwort bestätigen stimmt nicht überein',
-	'WARN_PASSWORD_CHARS' 	=> 'Warnung! Das Passwort muss mindestens 4 Zeichen lang sein',
-	'WARN_INVALID_EMAIL' 	=> 'Warnung! Ungültige E-Mail-Adresse',
-	'WARN_USERNAME_EXIST' 	=> 'Warnung! Dieser Name ist bereits vergeben. <br> Bitte anderen Namen verwenden.',
-	'WARN_CHANGE_MAIN_NAME' => 'Warnung! Sie können den Benutzernamen des Hauptkontos nicht ändern',
-	'WARN_DEACT_YOUR_ACC' 	=> 'Warnung! Sie können Ihr Konto nicht deaktivieren',
-	'WARN_DELETE_YOUR_ACC'  => 'Warnung! Sie können Ihr Konto nicht löschen',
- 
-	'TRAINER_2_ATHLETES_ACCESS'  => 'Freigaben der Sportler',
-
-	//VERWALTUNG  //admin - //benutzerkonten.php
-	'USERS' 				=> 'Benutzerkonten',
-	'USER_PROFILE' 			=> 'Benutzerkonto',
-	'SEX' 					=> 'Geschlecht',
-	'LEVEL' 				=> 'Ebene',
-	'LAST_LOGIN' 			=> 'Letzte Anmeldung',
-	'LOGIN_COUNT' 			=> 'Anzahl der Anmeldungen',
-	'LAST_IP' 				=> 'Letzte IP',
-	'CREATED'				=> 'Erstellt',
-	'MODIFIED'				=> 'Geändert',
-	'LVL_ADMIN' 			=> 'Admin',
-	'LVL_LOCATION' 			=> 'Standortadmin',
-	'LVL_GROUP_ADMIN'			=> 'Gruppenadmin',
-	'LVL_GROUP_ADMIN_2'		=> 'Gruppenadmin (reduziert)',
-	'LVL_ATHLETE'			=> 'Sportler',
-	'LVL_TRAINER' 			=> 'Trainer',
-	'PASSWORD_NOT_CHANGE'	=> 'Lassen Sie dieses Feld leer, wenn Sie das Passwort <b>nicht</b> ändern wollen.',
-
-	'ADMIN' 				=> 'Verwaltung',
-	'ADMIN_PAGE_TITLE'		=> 'Verwaltung - REGmon',
-	
-	//locations
-	'LOCATION' 				=> 'Standort',
-	'LOCATIONS' 			=> 'Standorte',
-	'LOCATION_SELECT' 		=> 'Bitte wählen Sie einen Standort',
+	//ajax.locations
 	'EMPTY_LOCATION_NAME' 	=> 'Warnung! Leere Standortnamen',
 	'WARN_LOCATION_EXIST' 	=> 'Warnung! Dieses Standort ist bereits vorhanden. <br> Bitte benutzen Sie einen anderen Namen.',
-
-	//groups
-	'GROUP' 				=> 'Gruppe',
-	'GROUPS' 				=> 'Gruppen',
-	'GROUP_SELECT' 			=> 'Bitte wählen Sie eine Gruppe',
+	//ajax.groups
 	'EMPTY_GROUP_NAME' 		=> 'Warnung! Leere Gruppenname',
 	'WARN_GROUP_EXIST' 		=> 'Warnung! Dieses Gruppe ist bereits vorhanden. <br> Bitte benutzen Sie einen anderen Namen.',
 	'WARN_PRIVATE_KEY_EXIST'=> 'Warnung! Dieses (Privat Schlüssel) ist bereits vorhanden. <br> Bitte benutzen Sie einen anderen (Privat Schlüssel).',
-
-	//Categories
-	'CATEGORY' 				=> 'Kategorie',
-	'CATEGORIES' 			=> 'Kategorien',
+	//ajax.categories
 	'EMPTY_CATEGORY_NAME' 	=> 'Warnung! Leere Name',
-	'WARN_CATEGORY_EXIST' 	=> 'Warnung! Dieses Kategorie ist bereits vorhanden. <br> Bitte benutzen Sie einen anderen Namen.',
-	'WARN_CATEGORY_DELETE' 	=> 'Warnung! Kann nicht löschen. <br> Habe ({SUBCATEGORIES_NUM}) Unterkategorien',
-
-	//forms
-	'FORM' 					=> 'Formular',
-	'FORMS' 				=> 'Formulare',
+	//ajax.forms2categories
 	'NO_FORM_SELECTED' 		=> 'Warnung! keine Formular ausgewählt',
+	//ajax.forms
 	'EMPTY_FORM_NAME' 		=> 'Warnung! Leere Name',
-	'WARN_FORM_EXIST' 		=> 'Warnung! Dieses Name ist bereits vorhanden.',
 	'WARN_FORM_DELETE'		=> 'Warnung! Kann nicht löschen. Habe ({DATA_NUM}) Datenerfassung',
-	'WARN_FORM_EDIT' 		=> 'Warnung! ({DATA_NUM}) gefundene  Datenerfassungen. <br> Sie können das Formular nicht vollständig  bearbeiten, nur die Texte und Optionen. <br> Um es vollständig zu bearbeiten müssen Sie zuerst die Daten zu löschen. (nur durch den Admin)',
-	'FORMS_DATA_DELETE_DATA'=> 'Daten löschen',
-	'FORMS_DATA_DELETED'	=> 'Daten gelöscht',
-
-	//sports
-	'SPORT' 				=> 'Sportart',
-	'SPORTS' 				=> 'Sportarten',
+	//ajax.sports
 	'EMPTY_SPORT_NAME' 		=> 'Warnung! Leere Sportart',
 	'WARN_SPORT_EXIST' 		=> 'Warnung! Dieses Sportart ist bereits vorhanden. <br> Bitte benutzen Sie einen anderen Namen.',
-
-	//dropdowns
-	'DROPDOWN' 				=> 'Dropdown',
-	'DROPDOWNS' 			=> 'Dropdowns und Fragebogenformat',
+	//ajax.dropdowns
 	'EMPTY_DROPDOWN_NAME' 	=> 'Warnung! Leere Name',
 	'WARN_DROPDOWN_EXIST' 	=> 'Warnung! Dieses Dropdown ist bereits vorhanden. <br> Bitte benutzen Sie einen anderen Namen.',
 	'WARN_DROPDOWN_DELETE' 	=> 'Warnung! Kann nicht löschen. <br> Habe ({OPTIONS_NUM}) Optionen.',
 	'WARN_DROPDOWN_NOT_DELETE'	=> 'Warnung! Kann nicht löschen diese',
 	'WARN_DROPDOWN_NOT_CHANGE'	=> 'Warnung! Kann nicht ändern',
-	
-	//Forms menu
-	'FORMS_APPROVE_TITLE' 		=> 'Trainerfreigaben',
-	'FORMS_APPROVE_TITLE_SHOW' 	=> 'Freigaben der Sportler',
-	'NO_SELECTED_FORMS'			=> 'Keine selektierten Formulare.',
-	'NO_FORMS_IN_GROUP' 		=> 'Es wurden noch keine Formulare für diese Gruppe freigeschaltet.',
 
-	'FORMS_TITLE'				=> 'Formulare',
-	'CATEGORIES_TITLE'			=> 'Kategorien',
+	//VERWALTUNG  //admin - //benutzerkonten.php
+	'ADMIN_PAGE_TITLE'		=> 'Verwaltung - REGmon',
+	'ADMIN_USERS' 			=> 'Benutzerkonten',
+	'ADMIN_LOCATIONS' 		=> 'Standorte',
+	'ADMIN_GROUPS' 			=> 'Gruppen',
+	'ADMIN_SPORTS' 			=> 'Sportarten',
+	'ADMIN_DROPDOWNS' 		=> 'Dropdowns und Fragebogenformat',
+
+	//trainers
+	'TRAINER_USERS' 		=> 'Benutzerkonten',
+
+	//location groups
+	'LOCATION_GROUPS'		=> 'Standort Gruppen',
+
+	//sports
+	'SPORT' 				=> 'Sportart',
+	'SPORTS' 				=> 'Sportarten',
+
+	//dropdowns
+	'DROPDOWNS' 			=> 'Dropdowns und Fragebogenformat',
+
+	//categories
+	'CATEGORIES_TITLE'		=> 'Kategorien',
+
+	//#################################################################
+	//Requests ########################################################
 
 	//Athlete Answers to Trainer Request menu
-	'ATHLETE_REQUEST_FROM_TRAINER'	=> 'Trainerverwaltung', //'Angeforderter Zugriff von Trainer',
-	'TRAINER_NOT_AVAL_REQUESTS'		=> 'Bisher gab es noch keine Traineranfragen.', //'Nicht vorhanden Traineranfragen',
+	'TRAINER_NOT_AVALABLE_REQUESTS'	=> 'Bisher gab es noch keine Traineranfragen.', //'Nicht vorhanden Traineranfragen',
 	'TRAINER_NOT_AVALABLE'			=> 'Es wurden noch keine Trainer freigeschaltet.', //'Nicht verfügbar Trainers',
 	'ATHLETES_NOT_AVALABLE'			=> 'Es wurde noch nichts freigegeben.', //'Nicht verfügbar Sportler',
 
-	//Trainer Request Access from Athletes menu
-	'TRAINER_REQUEST_ATHLETES'	=> 'Sportlerverwaltung', //'Zugriffsanfrage an Sportler stellen',
-
 	//Group
-	'GROUP_REQUEST_ACCESS'	=> 'Gruppenzugang',
-	'GROUP_USERS'			=> 'Gruppennutzer',
-	'GROUP_USERS_NO_REQUESTS'=> 'Keine Nutzeranfragen',
+	'GROUP_USERS_NO_REQUESTS'		=> 'Keine Nutzeranfragen',
+	'REQUEST_FOR_X_GROUP'			=> 'Zugang zur Gruppe "<b>{GROUP}</b>" anfordern', //'Anfragen für Gruppenzuordnung',
+	'REQUEST_FOR_GROUP_CANCEL'		=> 'Abbrechen der Gruppenzuordnung',
+	'REQUEST_FOR_GROUP_CANCELED'	=> 'Der Anfrage wurde gelöscht',
+	'REQUEST_GROUP_LEAVE_USER'		=> 'Gruppenzuordnung aufheben', //'Anfrage verlasen',
 
-	//Location Groups
-	'LOCATION_GROUPS'		=> 'Standort Gruppen',
+	'REQUEST_WAS_SENT_AT'			=> 'Die Anfrage wurde um {DATE_TIME} geschickt',
+	'REQUEST_SENDING_ERROR'			=> 'Fehler beim Versenden der Anfrage',
+	'REQUEST_ANSWER_ERROR'			=> 'Fehler während der Anwortanfrage',
 
-	//Sports - Dropdowns
-	'SPORTS_DROPDOWNS'		=> 'Listen (Sportarten, Dropdowns, usw.)', //'Sportarten - Dropdowns', 
+	//button actions
+	'REQUEST_FOR_ACCESS'			=> 'Zugriffsanfrage senden', //'Anfragen für die Zuordnung',
+	'REQUEST_FOR_ACCESS_CANCEL'		=> 'Zugriffsanfrage abbrechen', //'Abbrechen Anfragen', //'Abbrechen Anfragen für Zuordnung',
+	'REQUEST_TRAINER_LEAVE_ATHLETE'	=> 'Zuordnung aufheben', //Cancel Access Athlete (by Trainer)
+	'REQUEST_ATHLETE_LEAVE_TRAINER'	=> 'Zuordnung aufheben', //Cancel Access Trainer (by Athlete)
+	'REQUEST_ACCEPT'				=> 'Anfrage angenommen',
+	'REQUEST_REJECT'				=> 'Anfrage abgelehnt',
+	'REQUEST_USER_INACTIVE'			=> 'Inaktive',
 
-	/////////////////////////////////////////////////////////////////////
-	//Requests //////////////////////////////////////////////////////////
-
-	//Group
-	'REQUEST_FOR_X_GROUP'		=> 'Zugang zur Gruppe "<b>{GROUP}</b>" anfordern', //'Anfragen für Gruppenzuordnung',
-	'REQUEST_FOR_GROUP_CANCEL'	=> 'Abbrechen der Gruppenzuordnung',
-	'REQUEST_FOR_GROUP_CANCELED'=> 'Der Anfrage wurde gelöscht',
-	'REQUEST_USER_LEAVE_GROUP'	=> 'Trainingsgruppe verlassen', //'Gruppenzuordnung verlassen',
-	'REQUEST_GROUP_LEAVE_USER'	=> 'Gruppenzuordnung aufheben', //'Anfrage verlasen',
-
-	'REQUEST_WAS_SENT_AT'		=> 'Die Anfrage wurde um {DATE_TIME} geschickt',
-	'REQUEST_STATUS_UPDATED'	=> 'Status am {DATE_TIME} aktualisiert',
-	'REQUEST_SENDING_ERROR'		=> 'Fehler beim Versenden der Anfrage',
-	'REQUEST_ANSWER_ERROR'		=> 'Fehler während der Anwortanfrage',
-
-	//button actions -- Trainer Request Access
-	'REQUEST_FOR_ACCESS'		=> 'Zugriffsanfrage senden', //'Anfragen für die Zuordnung',
-	'REQUEST_FOR_ACCESS_CANCEL'	=> 'Zugriffsanfrage abbrechen', //'Abbrechen Anfragen', //'Abbrechen Anfragen für Zuordnung',
-	'REQUEST_FOR_ACCESS_CANCELED'=> 'Der Anfrage wurde gelöscht',
-	'REQUEST_LEAVE_ATHLETE'		=> 'Zuordnung aufheben', //Cancel Access Athlete (by Trainer)
-	'REQUEST_LEAVE_TRAINER'		=> 'Zuordnung aufheben', //Cancel Access Trainer (by Athlete)
-	'REQUEST_ACCEPT'			=> 'Anfrage angenommen',
-	'REQUEST_REJECT'			=> 'Anfrage abgelehnt',
-	'REQUEST_USER_INACTIVE'		=> 'Inaktive',
-
-	////////////////////////////////////////////////
+	########################################################
 	//Request Status Icons Explain (tooltips) --> the same on .js file
-	'STATUS_NO_REQUEST'					=> 'Keine Anfragen', //. No request yet
 	'STATUS_REQUEST_REJECTED'			=> 'Anfrage abgelehnt', //0 Request Rejected
 	'STATUS_REQUEST_ACCEPTED'			=> 'Anfrage angenommen', //1 Request Accepted
 	'STATUS_CANCELED_ACCESS_TRAINER'	=> 'Zuordnung aufgehoben (vom Trainer)', //'Zugang abgebrochen ()', //5 Canceled Access (by Trainer)
@@ -313,8 +276,8 @@ array(
 	'STATUS_REQUEST_WAIT'				=> 'Warte auf Zugriffserlaubnis', //9 Waiting Access (New Request - first time)
 
 	//Groups
-	//0,1 the same as above
-	'STATUS_REQ_ACCEPT_SRV_END'			=> 'Datenerfassung Beendete', //2 Request Accepted - Data Collection Ended - Survey Expired
+	//0+1 the same as above
+	'STATUS_REQ_ACCEPT_SRV_END'			=> 'Datenerfassung Beendete', //2 Request Accepted - Data Collection Ended - Form Expired
 	'STATUS_CANCELED_ACCESS_USER'		=> 'Zugangsabbruch (vom Nutzer)', //5 Canceled Access (by User)
 	'STATUS_CANCELED_ACCESS_GROUPADMIN'	=> 'Zugangsabbruch (vom Gruppenadmin)', //15 Canceled Access (by Groupadmin)
 	'STATUS_REQ_WAIT_CANCELED_USER'		=> 'Warte auf Zugriffserlaubnis (nach Zugangsabbruch vom Nutzer)', //7 Waiting Access (after Canceled Access by User)
@@ -323,8 +286,8 @@ array(
 	'STATUS_REQ_WAIT_NEW_USER'			=> 'Neues Benutzerkonto', //10 New Account
 	'STATUS_REQ_WAIT_USER_INACTIVE'		=> 'Inaktives Benutzerkonto', //11 Inactive Account
 
+	########################################################
 	//same with the above but for other use
-	////////////////////////////////////////////////
 	'GROUP_STATUS_REQUEST_'		=> 'Keine Anfragen',
 	'GROUP_STATUS_REQUEST_-1'	=> 'Keine Anfragen',
 	'GROUP_STATUS_REQUEST_0'	=> 'Anfrage abgelehnt', //0
@@ -339,54 +302,111 @@ array(
 	'GROUP_STATUS_REQUEST_10'	=> 'Neues Benutzerkonto', //10
 	'GROUP_STATUS_REQUEST_11'	=> 'Inaktives Benutzerkonto', //11
 
-	'TRAINER_STATUS_REQUEST_'	=> 'Keine Anfragen',
-	'TRAINER_STATUS_REQUEST_-1'	=> 'Keine Anfragen',
-	'TRAINER_STATUS_REQUEST_0'	=> 'Anfrage abgelehnt', //0 
-	'TRAINER_STATUS_REQUEST_1'	=> 'Anfrage angenommen', //1 
-	'TRAINER_STATUS_REQUEST_5'	=> 'Zuordnung aufgehoben (vom Trainer)', //'Zugang abgebrochen ()', //5
-	'TRAINER_STATUS_REQUEST_15'	=> 'Zuordnung aufgehoben (vom Sportler)', //'Zugang abgebrochen ()', //15
-	'TRAINER_STATUS_REQUEST_7'	=> 'Warte auf Zugriffserlaubnis (nach Abbruch durch Trainer)', //7
-	'TRAINER_STATUS_REQUEST_17'	=> 'Warte auf Zugriffserlaubnis (nach Abbruch durch Sportler)', //17
-	'TRAINER_STATUS_REQUEST_8'	=> 'Warte auf Zugriffserlaubnis (nach aufgehobener Zuordnung durch Sportler)', //8
-	'TRAINER_STATUS_REQUEST_9'	=> 'Warte auf Zugriffserlaubnis', //9
-	////////////////////////////////////////////////
+	//Requests end ####################################################
+	###################################################################
 
 	//FORMS
-	'SUBPAGE_TITLE' 	=> 'Seite Titel', //Page Title
-	'SUBPAGE_DEMO'  	=> 'Beispielseite', //Informationsseite //Demo-information Page
-	'PAGE'				=> 'Seite',
-	'DEMO_ONCE'			=> 'einmal Anzeigen', //show once - show demo-info page only the first time
-	'CENTER'			=> 'Zentriert',
-	'ITEM_NO'			=> 'Zahl',
-	'ITEM_TITLE'		=> 'Bezeichnung',
-	'ITEM_DETAILS'		=> 'Bezeichnung Details',
-	'ITEM_SELECT_OPTION'=> 'Wähle eine Option',
-	'HAS_TIME_LIMIT'	=> 'Zeitlimit',
-	'TIME_LIMIT_MIN'	=> 'Minutenzeitlimit',
-	'DISPLAY_TIMES'		=> 'Diese Seite nur die ersten Male anzeigen',
-	'VIEW_COUT_ITEMS'	=> 'Nummerierung an/aus',
-	'PROGRESS'			=> 'Fortschritt',
-	'ADD_NEW_PAGE'		=> 'Neue Seite hinzufügen',
-	'ADD_NEW_ITEM'		=> 'Neues Element hinzufügen',
-	'ADD_NEW_VALUE'		=> 'Neuen Wert hinzufügen',
-	'ITEM'				=> 'Element',
-	'TYPE'				=> 'Typ',
-	'OPTIONAL'			=> 'Optional',
-	'REQUIRED'			=> 'Pflichtfeld',
-	'MIN'				=> 'MIN',
-	'MAX'				=> 'MAX',
-	'INTEGER'			=> 'Ganzzahl', //ganze Zahl //integer
-	'DECIMAL'			=> 'Dezimal', //Dezimalzahl //decimal
-	'WIDTH'				=> 'Breite',
-	'LEFT'				=> 'Links',
-	'RIGHT'				=> 'Rechts',
-	'DATE'				=> 'Datum', //'Datum des Eintrags',
-	'TIME'				=> 'Uhrzeit', //'Uhrzeit des Eintrags',
-	'CATEGORY_TITLE' 	=> 'Kategorie Titel',
+	'FORM_PAGE'					=> 'Seite',
+	'FORM_BACKWARD'				=> 'rückwärts',
+    'FORM_FORWARD'				=> 'vorwärts',
+    'FORM_PREVIEW'				=> 'Vorschau',
+    'FORM_PREVIEW_TITLE'		=> 'Vorschauansicht',
+	'FORM_PREVIEW_WARNING'		=> 'Dies ist eine Vorschau des Formulars. <br>Bitte klicke in den Kalender oder nutze das Dashboard, um Daten für dieses Formular zu erfassen.',
+	'WARN_FORM_EDIT' 			=> 'Warnung! ({DATA_NUM}) gefundene  Datenerfassungen. <br> Sie können das Formular nicht vollständig  bearbeiten, nur die Texte und Optionen. <br> Um es vollständig zu bearbeiten müssen Sie zuerst die Daten zu löschen. (nur durch den Admin)',
+	'FORMS_DATA_DELETE_DATA'	=> 'Daten löschen',
+	'FORMS_DATA_DELETED'		=> 'Daten gelöscht',
+    'FORM_SAVE'					=> 'Speichern',
+    'FORM_KEEP_AFTER_SAVE'		=> 'Formular nach dem Speichern geöffnet lassen',
+	'FORM_DATE'					=> 'Datum',
+	'FORM_TIME'					=> 'Uhrzeit',
+	'FORM_TIME_NOW'				=> 'Jetzt',
+	'FORM_ATHLETE_S' 			=> 'Sportler*in',
+	'FORM_GROUP_S' 				=> 'Gruppe(n)',
+	'FORM_PAGE_TITLE'			=> 'Seite Titel',
+	'FORM_PAGE_ERROR'			=> 'ERROR! <br>Seite Fehler. <br> Seite nicht vorhanden.',
+	'FORM_TITLE_CENTER'			=> 'Zentriert',
+	'FORM_HAS_TIME_LIMIT'		=> 'Zeitlimit',
+	'FORM_TIME_LIMIT_PERIOD'	=> 'Dauer',
+	'FORM_TIME_LIMIT_SECONDS'	=> 'Sekunden',
+	'FORM_TIME_LIMIT_MINUTES'	=> 'Minuten',
+	'FORM_TIME_LIMIT_HOURS'		=> 'Stunden',
+	'FORM_DAYS_AVAILABLE'		=> 'Tage verfügbar',
+	'FORM_DAY_MON'				=> 'Mon',
+	'FORM_DAY_TUE'				=> 'Die',
+	'FORM_DAY_WED'				=> 'Mit',
+	'FORM_DAY_THU'				=> 'Don',
+	'FORM_DAY_FRI'				=> 'Fre',
+	'FORM_DAY_SAT'				=> 'Sam',
+	'FORM_DAY_SUN'				=> 'Son',
+	'FORM_DISPLAY_TIMES'		=> 'Diese Seite nur die ersten Male anzeigen',
+	'FORM_DISPLAY_TIMES_INFO'	=> 'Bedingung zur Nutzung dieser Funktion:'."\n".' Auf dieser Seite darf kein Pflichtfeld existieren und das Formular muss mindestens eine weitere, immer angezeigte Seite enthalten.',
+	'FORM_DISPLAY_TIMES_0'		=> 'Immer',
+	'FORM_DISPLAY_TIMES_1'		=> '1 mal',
+	'FORM_DISPLAY_TIMES_2'		=> '2 mal',
+	'FORM_DISPLAY_TIMES_3'		=> '3 mal',
+	'FORM_DISPLAY_TIMES_4'		=> '4 mal',
+	'FORM_DISPLAY_TIMES_5'		=> '5 mal',
+	//Forms functions
+	'FORM_PAGE_ADD'				=> 'Neue Seite hinzufügen',
+	'FORM_ITEM_ADD'				=> 'Neues Element hinzufügen',
+	'FORM_ROW_ADD'				=> 'Neues Zeile hinzufügen',
+	'FORM_ROW_DUPLICATE'		=> 'Zeile duplizieren',
+	'FORM_ROW_DELETE'			=> 'Zeile löschen',
+	//item types
+	'FORM_ITEM_EMPTY'			=> 'Leer',
+	'FORM_ITEM_SPACE'			=> 'Raum',
+	'FORM_ITEM_LINE'			=> 'Linie',
+	'FORM_ITEM_LABEL'			=> 'Bezeichnung',
+	'FORM_ITEM_TEXT_HTML'		=> 'Text (Html)',
+	'FORM_ITEM_TEXT'			=> 'Textfeld',
+	'FORM_ITEM_TEXTAREA'		=> 'Textareafeld',
+	'FORM_ITEM_NUMBER'			=> 'Zahlfeld',
+	'FORM_ITEM_DATE'			=> 'Datum',
+	'FORM_ITEM_TIME'			=> 'Uhrzeit',
+	'FORM_ITEM_PERIOD'			=> 'Dauer',
+	'FORM_ITEM_DROPDOWN'		=> 'Dropdown',
+	'FORM_ITEM_RADIO'			=> 'Fragebogenformat',
+	'FORM_ITEM_ACCORDION'		=> 'Klappbox-Umgebung',
+	'FORM_ITEM_ACCORDION_PANEL'	=> 'Klappbox',
+	//item options
+	'FORM_OUTPUT_NAME' 			=> 'Ausgabename',
+	'FORM_ITEM_TITLE'			=> 'Bezeichnung',
+	'FORM_ITEM_BOLD_NOT'		=> 'normal',
+	'FORM_ITEM_BOLD_HALF'		=> 'halb fett',
+	'FORM_ITEM_BOLD_FULL'		=> 'fett',
+	'FORM_ITEM_ALIGN_LEFT'		=> 'Links',
+	'FORM_ITEM_ALIGN_CENTER'	=> 'Zentriert',
+	'FORM_ITEM_ALIGN_RIGHT'		=> 'Rechts',
+	'FORM_ITEM_REQUIRED'		=> 'Pflichtfeld',
+	'FORM_ITEM_MIN'				=> 'MIN',
+	'FORM_ITEM_MAX'				=> 'MAX',
+	'FORM_ITEM_INTEGER'			=> 'Ganzzahl', //ganze Zahl //integer
+	'FORM_ITEM_DECIMAL'			=> 'Dezimal', //Dezimalzahl //decimal
+	'FORM_ITEM_WIDTH'			=> 'Breite',
+	'FORM_DROPDOWN' 			=> 'Dropdown',
+	'FORM_ITEM_SELECT_OPTION'	=> 'Wähle eine Option',
+	'FORM_PLACEHOLDER' 			=> 'Platzhalter',
+	'FORM_PLACEHOLDER_FROM_TO' 	=> 'Platzhalter Von - Bis',
+	'FORM_PLACEHOLDER_PERIOD' 	=> 'Platzhalter Dauer',
+	'FORM_ITEM_USE_COLOR' 		=> 'Farben verwenden',
+	'FORM_ITEM_PANEL_OPENING'	=> 'Öffnen von Klappboxen',
+	'FORM_ITEM_PANEL_OPEN_ONE'	=> 'immer nur eine',
+	'FORM_ITEM_PANEL_OPEN_MULTI'=> 'mehrere gleichzeitig',
+	'FORM_ITEM_PANEL_OPEN_BEGIN'=> 'Sichtbarkeit zu Beginn',
+	'FORM_ITEM_PANEL_ADD'		=> 'Klappbox hinzufügen',
+	'FORM_ITEM_PANEL_OPENED'	=> 'Geöffnet',
+	'FORM_ITEM_PANEL_CLOSED'	=> 'Geschlossen',
+	//ajax.forms_menu
+	'FORM_OPTIONS'				=> 'Formularoptionen',
+	'FORM_NO_SELECTED_FORMS'	=> 'Keine selektierten Formulare.',
+	'FORM_NO_FORMS_IN_GROUP'	=> 'Es wurden noch keine Formulare für diese Gruppe freigeschaltet.',
+	'FORM_MENU_COMMENT' 		=> 'Notiz',
+	'FORM_MENU_COMMENT_ADD' 	=> 'Notiz hinzufügen',
+	'FORM_MENU_GO_2_FORM_SELECT'=> 'Zur Formularauswahl',
+	'FORM_DEFAULT_TEMPLATE' 	=> 'Standardvorlage',
 
 	//results.php - results
 	'RESULTS'					=> 'Ergebnisse',
-	'RESULTS_GROUP'				=> 'Ergebnisse (gruppenbasiert)',
 	'RESULTS_PAGE_TITLE' 		=> 'REGmon - Ergebnisse und Auswertung',
 	'RESULTS_SUBMIT_THANKS'		=> 'Danke!',
 	'RESULTS_SUBMIT_SUCCESS'	=> 'Formular wurde erfolgreich abgegeben.',
@@ -401,6 +421,10 @@ array(
 	'GRAPH_HELP_TOOLTIP'		=> "- Markieren Sie mit gedrückter linker Maustaste einen Bereich (horizontal oder vertikal), um ihn zu vergrößern.
 - Halten Sie 'Alt' gedrückt, um die Grafik mit gedrückter linker Maustaste zu schwenken.
 - Klicken Sie mit der linken Maustaste doppelt auf die Grafik, um die ursprüngliche Ansicht wiederherzustellen.", //not used
+	'RESULTS_GROUP' 			=> 'Gruppe',
+	'RESULTS_SELECT_GROUP'		=> 'Gruppe(n)', //'Gruppe wählen',
+	'RESULTS_SELECT_FORM'		=> 'Formular(e)', //'Formular wählen',
+	'RESULTS_SELECT_FIELDS'		=> 'Rohdaten / Vorlage(n)', //'Daten auswählen',
 
 	//import.php
 	'IMPORT' 				=> 'Import',
@@ -443,6 +467,7 @@ array(
 	'EXPORT_HEADER_SRV_DATE_NO' => 'Erfassungsnr. am Tag',
 	'EXPORT_FILE' 				=> 'Datei exportieren',
 	'EXPORT_LOADING' 			=> 'Wird Geladen ...', //Loading...
+	'EXPORT_FILTER_NO_DATA' 	=> 'Keine Daten für die gewählten Filter vorhanden. Bitte ändern Sie die Filter.',
 
 	//import.php
     'IMPORT_DATA'			=> 'Daten importieren',
@@ -459,7 +484,7 @@ array(
     'DELETE_CONFIRM' 		=> 'Löschvorgang bestätigen?',
     'ERROR_DELETING'		=> 'Fehler beim Löschvorgang',
 
-	//Email Templates //////////////////////////////////////////////////////
+	//Email Templates ######################################################
 	//Please do not translate text inside curly brackets {notTranslatedText}
 
 	//user email new user

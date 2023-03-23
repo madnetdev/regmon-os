@@ -1,7 +1,6 @@
 <?php // resisters a new user and send emails to admins to activate the account
 
-$uname = filter_input(INPUT_POST, 'uname', FILTER_SANITIZE_STRING);
-if (!$uname) exit;
+$uname = isset($_POST['uname']) ? $_POST['uname'] : exit;
 
 // load language & database ##########
 require_once('no_validate.php');
@@ -17,7 +16,6 @@ if ($db->numberRows() > 0)  {
 	$register_ERROR = $LANG->WARN_USERNAME_EXIST;
 }
 else {
-	//print_r($_POST); exit;
 	$new_data = true;
 	
 	$values = array();			
@@ -58,38 +56,38 @@ else {
 	$values['passwd'] = MD5($values['passwd']);
 	$values['account'] = 'user';
 	$values['level'] = 10;
-	$values['status'] = 0; //$values['approved'] = 0;
+	$values['status'] = 0;
 	$values['telephone'] = $_POST['countryCode'].' '.$_POST['telephone'];
 	if ($_POST['year'] != '' AND $_POST['month'] != '' AND $_POST['day'] != '') {
 		$values['birth_date'] = $_POST['year'].'-'.$_POST['month'].'-'.$_POST['day'];
 	}
-	$level = explode('_', $_POST['profile']);
+	$level = explode('_', $_POST['profile']??'10_Athlete');
 	$values['level'] = $level[0];
 	$profile = $level[1];
 
 	if ($_POST['location_group'] == 'Private') {
-		$grst = $db->fetchRow("SELECT gr.id, gr.location_id, gr.status, gr.private_key, gr.name, st.name AS location 
-			FROM groups gr 
-			LEFT JOIN locations st ON st.id = gr.location_id 
-			WHERE gr.status = 3 AND gr.private_key = ?", array($_POST['private_key'])); 
+		$grst = $db->fetchRow("SELECT gr.id, gr.location_id, gr.status, gr.private_key, gr.name, st.name AS location_name 
+FROM groups gr 
+LEFT JOIN locations st ON st.id = gr.location_id 
+WHERE gr.status = 3 AND gr.private_key = ?", array($_POST['private_key'])); 
 		if ($db->numberRows() > 0)  {
-			$values['location'] = $grst['location_id'];
-			$location_name 		= $grst['location'];
-			$values['group_id'] = $grst['id'];
-			$group_name 		= $grst['name'];
+			$values['location_id'] 	= $grst['location_id'];
+			$location_name 			= $grst['location_name'];
+			$values['group_id'] 	= $grst['id'];
+			$group_name 			= $grst['name'];
 		}
-		else $register_ERROR = $LANG->PRIVATE_KEY_ERROR;
+		else $register_ERROR = $LANG->REGISTER_PRIVATE_KEY_ERROR;
 	}
 	else {
-		$location_group = explode('|', $_POST['location_group']);
-		$values['location'] = $location_group[0];
-		$location_name 		= $location_group[1];
-		$values['group_id'] = $location_group[2];
-		$group_name 		= $location_group[3];
+		$location_group = explode('|', $_POST['location_group'].'|||');
+		$values['location_id'] 	= $location_group[0];
+		$location_name 			= $location_group[1];
+		$values['group_id'] 	= $location_group[2];
+		$group_name 			= $location_group[3];
 	}
 	$values['last_ip'] = '';
-	$values['modified'] = date("Y-m-d H:i:s");
-	$values['created'] = date("Y-m-d H:i:s");
+	$values['modified'] = get_date_time_SQL('now');
+	$values['created'] = get_date_time_SQL('now');
 	$activate_code = MD5($values['account'].$values['uname'].$values['passwd']);
 	
 	//sport
@@ -137,7 +135,7 @@ else {
 		$register_ERROR = $LANG->INSERT_ERROR;
 	}
 	else {
-		if (substr_count($insert_id, 'Duplicate entry') <> 0) { //to db mas dinei to error sto insert_id //anti gia error
+		if (substr_count($insert_id, 'Duplicate entry') <> 0) { //db give the error into insert_id
 			$register_ERROR = $LANG->WARN_USERNAME_EXIST;
 		}
 		else {
@@ -147,13 +145,13 @@ else {
 			$values2['user_id'] = $insert_id;
 			$values2['group_id'] = $values['group_id'];
 			$values2['status'] = '10';
-			$values2['created'] = date("Y-m-d H:i:s");
+			$values2['created'] = get_date_time_SQL('now');
 			$values2['created_by'] = $values['uname'];
-			$values2['modified'] = date("Y-m-d H:i:s");
+			$values2['modified'] = get_date_time_SQL('now');
 			$values2['modified_by'] = $values['uname'];
 			$users2groups = $db->insert($values2, "users2groups");
 			
-			// Email ///////////////////////////////////////////////////////////////////////////
+			// Email ##############################
 			require($PATH_2_ROOT.'php/email.php');
 			
 			//New user account email
@@ -183,6 +181,7 @@ else {
 				'{DOMAIN}' => $CONFIG['DOMAIN'],
 				'{REGmon_Folder}' => $CONFIG['REGmon_Folder']
 			];
+			//replace strings
 			$Message = strtr($LANG->EMAIL_NEW_ACCOUNT_MESSSAGE, $params_Message);
 
 			if (SendEmail($_POST['email'], $Subject, $Message) == 'OK') {}
@@ -206,7 +205,8 @@ else {
 
 				//overwrite some admin vals
 				$params_Message['{Sport}'] = $sport_admin;
-				$params_Message['{Activate_Link}'] = $activate_link;  //here may have new sports activation link
+				//here may have new sports activation link
+				$params_Message['{Activate_Link}'] = $activate_link;
 
 				$Message_admin = strtr($LANG->EMAIL_NEW_ACCOUNT_ADMIN_MESSSAGE, $params_Message);
 				
@@ -217,12 +217,10 @@ else {
 	} //if insert_id
 }
 
-$this_color = "#446f91";
-$this_color_hover = "#446f91";
-//#####################################################################################
+//#######################################
 $title = $LANG->REGISTER_PAGE_TITLE;
 require($PATH_2_ROOT.'php/inc.head.php');
-//#####################################################################################
+//#######################################
 ?>
 </head>
 <body>

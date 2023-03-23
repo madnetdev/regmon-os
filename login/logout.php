@@ -15,7 +15,7 @@ session_destroy();
 header( 'Location: ../login.php' ); //we need only this but have the others for reference
 ?>
 <!DOCTYPE HTML>
-<html lang="en-US">
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="refresh" content="1;url=/">

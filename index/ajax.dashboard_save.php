@@ -1,4 +1,4 @@
-<?php // saves a dashboard entry to db
+<?php // ajax Dashboard Save
 require_once('../_settings.regmon.php');
 require('../login/validate.php');
 require('../index/index_functions.php');
@@ -20,7 +20,7 @@ $values['name'] = $name;
 $values['type'] = $type;
 $values['options'] = $options;
 $values['color'] = $color;
-$values['modified'] = date("Y-m-d H:i:s");
+$values['modified'] = get_date_time_SQL('now');
 $values['modified_by'] = $USERNAME;
 
 if ($sort == 'max') {
@@ -33,7 +33,7 @@ if ($dash_id AND $dash_id != '') { //update
 	$update = $db->update($values, "dashboard", "user_id=? AND group_id=? AND id=?", array($ath_id, $group_id, $dash_id));
 }
 else { //new
-	$values['created'] = date("Y-m-d H:i:s");
+	$values['created'] = get_date_time_SQL('now');
 	$values['created_by'] = $USERNAME;
 	$insert = $db->insert($values, "dashboard");
 }

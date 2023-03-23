@@ -1,4 +1,4 @@
-<?php
+<?php // class db 
 
 /**
  * Abstract database wrapper
@@ -262,10 +262,10 @@ abstract class db {
 		$seconds = number_format($time_end - $time_start, 8);
 		//if slow (more than 10sec) write to error log
 		if ($this->Log_Slow_DB_Query_Seconds AND $seconds > $this->Log_Slow_DB_Query_Seconds) {
-			error_log(date('Y-m-d H:i:s')."\n".$fullSql."\n***************SLOW***************\n".$seconds." seconds\n\n");
+			error_log(date("Y-m-d H:i:s")."\n".$fullSql."\n***************SLOW***************\n".$seconds." seconds\n\n");
 		}
 		if ($this->logFile) {
-			fwrite($this->logFile, date('Y-m-d H:i:s')."\n".$fullSql."\n".$seconds." seconds\n\n");
+			fwrite($this->logFile, date("Y-m-d H:i:s")."\n".$fullSql."\n".$seconds." seconds\n\n");
 		}
 
 		$this->myError = false;
@@ -291,7 +291,7 @@ abstract class db {
 	 */
 	public function insert($data, $table) {
 		if (is_string($data) && is_array($table)) {
-			error_log(date('Y-m-d H:i:s').'db - Parameters passed to insert() were in reverse order');
+			error_log(date("Y-m-d H:i:s").'db - Parameters passed to insert() were in reverse order');
 		}
 		// remove invalid fields
 		if ($this->filterInvalidFields) {
@@ -338,7 +338,7 @@ abstract class db {
 	 */
 	public function update($data, $table, $where = null, $parameters = array()) {
 		if (is_string($data) && is_array($table)) {
-			error_log(date('Y-m-d H:i:s').'db - Parameters passed to update() were in reverse order');
+			error_log(date("Y-m-d H:i:s").'db - Parameters passed to update() were in reverse order');
 		}
 		// remove invalid fields
 		if ($this->filterInvalidFields) {

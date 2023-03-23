@@ -57,7 +57,11 @@ a.fc-event { cursor: pointer; }
 }
 */
 .iti--allow-dropdown { width:100%; }
-.iti__country-list { max-width:390px; max-height:250px; }
+.iti__country-list {
+    max-width:390px;
+    max-height:250px;
+    z-index: 3;
+}
 
 .swal2-container { z-index:10000; }
 

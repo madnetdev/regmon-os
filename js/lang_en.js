@@ -1,7 +1,39 @@
 LANG = {
 	LANG_CURRENT	: 'en', //not change
 	
-	ALL				: 'All',
+	//moment date format
+	MOMENT : {
+		DATE 			: 'YYYY-MM-DD', //default --not used
+		DATE_TIME 		: 'YYYY-MM-DD HH:mm:ss', //default --not used
+		DATE_TIME_NOSECS: 'YYYY-MM-DD HH:mm', //default --not used
+	},
+	//grid date format
+	GRID : {
+		DATE 			: 'Y-m-d',
+		DATE_TIME 		: 'Y-m-d H:i:s',
+	},
+	//datepicker date format
+	DATEPICKER : {
+		DATE 			: 'yy-mm-dd',
+	},
+
+	//Date Select
+	DATE_TODAY 			: 'Today',
+	DATE_CLEAR 			: 'Clear selection',
+	DATE_CLOSE 			: 'Close',
+	DATE_SELECT_TIME 	: 'Select Time',
+	DATE_MONTH_SELECT 	: 'Select Month',
+	DATE_MONTH_PREV 	: 'Previous Month',
+	DATE_MONTH_NEXT 	: 'Next Month',
+	DATE_YEAR_SELECT 	: 'Select Year',
+	DATE_YEAR_PREV 		: 'Previous Year',
+	DATE_YEAR_NEXT 		: 'Next Year',
+	DATE_DECADE_SELECT	: 'Select Decade',
+	DATE_DECADE_PREV	: 'Previous Decade',
+	DATE_DECADE_NEXT	: 'Next Decade',
+	DATE_CENTURY_PREV 	: 'Previous Century',
+	DATE_CENTURY_NEXT 	: 'Next Century',	
+	
 	ID 				: 'ID',
 	STATUS 			: 'Status',
 	ST_ACTIVE 		: 'Active',
@@ -29,90 +61,41 @@ LANG = {
 	//Page Warnings
 	PROBLEM_LOADING_PAGE	: 'The requested content cannot be loaded.<br>Please try again later.',
 	LEAVE_PAGE_WARNING		: 'Do you really want to leave this page?\nAll changes will be lost',
-	TIME_END_WARNING		: 'You have exceeded the time limit. Would you like to fill out the form again? …',
-	INVALID_TIME 			: 'Please enter a valid time.',
 	WARN_CONFIRM_PASSWORD 	: 'Warning! Password and Password Confirm do not match',
 	WRITE_ACCESS_PROBLEM 	: 'Data entry for this group is paused or finished.<br><br>Please contact a group admin for more information.',
+	WARN_USERNAME_EXIST 	: 'Warning! This name is already taken. <br> Please use a different name.',
 	
 	CONFIRM_DELETE_ENTRY 	: 'Do you really want to delete the selected entry?',
 	ENTRY_DELETED_SUCCESS 	: 'Entry Deleted.',
 	NOT_HAVE_ACCESS_RIGHTS 	: 'You do not have access rights',
 
+	//Buttons
+	BUTTON_ADD 				: 'Add',
+	BUTTON_EDIT 			: 'Edit',
+	BUTTON_DELETE 			: 'Delete',
+	BUTTON_CANCEL 			: 'Cancel',
+	BUTTON_VIEW 			: 'View',
+	BUTTON_SEARCH 			: 'Search',
+	BUTTON_RELOAD 			: 'Reload',
+	BUTTON_SAVE 			: 'Save',
+	BUTTON_DUPLICATE		: 'Form Duplicate',
+	//index buttons
 	BUTTON_DATUM 			: 'Date',
 	BUTTON_DATUM_TOOLTIP 	: 'Go to Date',
 	BUTTON_COMMENT 			: 'Comment',
 	BUTTON_COMMENT_TOOLTIP 	: 'Add Comment',
 
 	//messages
-	UPDATE_OK			: 'Updated successfully!',
-	INSERT_OK			: 'Inserted successfully!',
-	DELETE_OK			: 'Deleted successfully!',
+	UPDATE_OK	: 'Updated successfully!',
+	INSERT_OK	: 'Inserted successfully!',
+	DELETE_OK	: 'Deleted successfully!',
 
-	//forms
-	PAGE				: 'Page',
-	DISPLAY_TIMES		: 'Display Times',
-	SUBPAGE_TITLE 		: 'Page Title',
-	CENTER				: 'Centered',
-	ADD_NEW_ITEM		: 'Add New Item',
-	ADD_NEW_VALUE		: 'Add New Value',
-	ITEM				: 'Item',
-	TYPE				: 'Type',
-	EXAMPLE				: 'Example',
-	AVAILABLE_FIELDS	: 'Available Fields',
-	CATEGORY			: 'Category',
-	CATEGORY_TITLE 		: 'Category Title',
-	FORM_ATHLETE_SAVE 	: 'Form selection saved.',
-	FORM_ADMIN_SAVE 	: 'Available forms saved for this Group. <br>Group:',
-	SHARES_TRAINER_SAVE : 'Shares saved. <br>Trainer:',
-	
-	//form details
-	REQUIRED	: 'Required',
-	MIN			: 'MIN',
-	MAX			: 'MAX',
-	INTEGER		: 'Integer', //ganze Zahl //integer
-	DECIMAL		: 'Decimal', //Dezimalzahl //decimal
-	WIDTH		: 'Width',
-	ITEM_TITLE	: 'Description',
-	
-	//Date Select
-	DATE_TODAY 			: 'Today',
-	DATE_CLEAR 			: 'Clear selection',
-	DATE_CLOSE 			: 'Close',
-	DATE_SELECT_TIME 	: 'Select Time',
-	DATE_MONTH_SELECT 	: 'Select Month',
-	DATE_MONTH_PREV 	: 'Previous Month',
-	DATE_MONTH_NEXT 	: 'Next Month',
-	DATE_YEAR_SELECT 	: 'Select Year',
-	DATE_YEAR_PREV 		: 'Previous Year',
-	DATE_YEAR_NEXT 		: 'Next Year',
-	DATE_DECADE_SELECT	: 'Select Decade',
-	DATE_DECADE_PREV	: 'Previous Decade',
-	DATE_DECADE_NEXT	: 'Next Decade',
-	DATE_CENTURY_PREV 	: 'Previous Century',
-	DATE_CENTURY_NEXT 	: 'Next Century',	
-	
-	//Buttons
-	BUTTON_ADD 		: 'Add',
-	BUTTON_EDIT 	: 'Edit',
-	BUTTON_DELETE 	: 'Delete',
-	BUTTON_CANCEL 	: 'Cancel',
-	BUTTON_VIEW 	: 'View',
-	BUTTON_SEARCH 	: 'Search',
-	BUTTON_RELOAD 	: 'Reload',
-	BUTTON_SAVE 	: 'Save',
-	BUTTON_DUPLICATE: 'Form Duplicate',
-	COLUMNS			: 'Columns',
-	CHOOSE_COLUMNS	: 'Select columns',
-		
-
-	//location Table/Form Fields
 	LOCATIONS : {
 		HEADER 		: 'Locations',
 		NAME 		: 'Location Name',
 		ADMIN 		: 'Location Admin'
 	},
 	
-	//groups Table/Form Fields
 	GROUPS : {
 		HEADER 				: 'Groups',
 		LOCATION			: 'Location',
@@ -124,7 +107,6 @@ LANG = {
 		STOP_DATE 			: 'Available<br> Until',
 	},
 	
-	//categories Table/Form Fields
 	CATEGORIES : {
 		HEADER 		: 'Categories',
 		NAME 		: 'Category',
@@ -136,29 +118,90 @@ LANG = {
 		AVAILABLE 	: 'Available',
 		STANDARD 	: 'Proposed',
 		READ 		: 'Read',
-		WRITE 		: 'Write',
-		OPEN_CLOSE_ALL : 'Close all / Expand all'
+		WRITE 		: 'Write'
 	},
-	
-	//forms Table/Form Fields
+		
 	FORMS : {
-		HEADER 		: 'Forms',
-		CATEGORIES 	: 'Categories',
-		NAME 		: 'External Name',
-		NAME2 		: 'Internal Name',
-		TAGS 		: 'Tags',
-		COLOR 		: 'Color',
-		DETAILS 	: 'Details',
-		AVAILABLE 	: 'Available',
-		STANDARD 	: 'Proposed',
-		READ 		: 'Read',
-		WRITE 		: 'Write',
-		OPEN_CLOSE_ALL : 'Close all / Expand all'
+		CATEGORIES 		: 'Categories',
+		NAME 			: 'External Name',
+		NAME2 			: 'Internal Name',
+		TAGS 			: 'Tags',
+		DETAILS 		: 'Details',
+		AVAILABLE 		: 'Available',
+		STANDARD 		: 'Proposed',
+		READ 			: 'Read',
+		WRITE 			: 'Write',
+		OPEN_CLOSE_ALL 	: 'Close all / Expand all',
+		FORM_EDIT		: 'Edit Form',
+		FORM_SAVED		: 'Form Saved.',
+		FORM_DATA_SAVED	: 'Form Data Saved.',
+		FORM_DB_ERROR	: 'ERROR!<br>DB error. Update failed.',
+		
+		DISPLAY_TIMES	: 'Display this page only the first X times',
+		DISPLAY_TIMES_INFO: 'Conditions for using this function: \n There must be no required field on this page nd the form must contain at least one other page that is always displayed.',
+		DISPLAY_TIMES_0	: 'Always',
+		DISPLAY_TIMES_1	: '1 time',
+		DISPLAY_TIMES_2	: '2 times',
+		DISPLAY_TIMES_3	: '3 times',
+		DISPLAY_TIMES_4	: '4 times',
+		DISPLAY_TIMES_5	: '5 times',
+		DISPLAY_TIMES_FIELD_ERROR : 'Warning!<br>Display this page only the first X times:<br> - There must be no required field on this page',
+		DISPLAY_TIMES_FIELD_ERROR : 'Warning!<br>Conditions for using this function:<br> There must be no required field on this page and the form must contain at least one other page that is always displayed.',
+
+		ITEM_DELETE		: 'Delete',
+		ITEM_SAVE		: 'Save',
+		ITEM_CANCEL		: 'Cancel',
+		ITEM_RESET		: 'Reset',
+		ITEM_WIDTH		: 'Width',
+		ITEM_EMPTY		: 'Empty',
+		ITEM_SPACE		: 'Space',
+		ITEM_LINE		: 'Line',
+		ITEM_LABEL		: 'Label',
+		ITEM_TEXT_HTML	: 'Text (Html)',
+		ITEM_TEXT		: 'Text',
+		ITEM_TEXTAREA	: 'Textarea',
+		ITEM_NUMBER		: 'Number',
+		ITEM_DATE		: 'Date',
+		ITEM_TIME		: 'Time',
+		ITEM_PERIOD		: 'Period',
+		ITEM_DROPDOWN	: 'Dropdown',
+		ITEM_RADIO		: 'Radio Buttons',
+		ITEM_ACCORDION	: 'Accordion',
+		ITEM_ACCORDION_PANEL : 'Accordion Panel',
+		
+		FORM_TITLE			: 'Page',
+		PAGE_TITLE 			: 'Page Title',
+		CENTER				: 'Centered',
+		ADD_NEW_ITEM		: 'Add New Item',
+		ATHLETE_SELECT_SAVE : 'Form selection saved.',
+		GROUP_SELECT_SAVE 	: 'Available forms saved for this Group. <br>Group:',
+		ATHLETE_2_TRAINER_SELECT_SAVE: 'Form selection saved. <br>Trainer: ',
+
+		TIME_BETWEEN_ERROR	: 'Please enter a valid time, between 00:00 and 23:59',
+		TIME_LIMIT_EXCEEDED : 'You have exceeded the time limit. Would you like to fill in the form again?',
+		
+		GROUP_SELECT_SEARCH 	: 'Search...',
+		GROUP_SELECT_PLACEHOLDER: 'Select Group...',
+		GROUPS_SELECTED 		: 'Selected Groups',
+		GROUPS_SELECT_ALL 		: 'Select All',
+		GROUPS_ALL_SELECTED 	: 'All Selected',
+		GROUPS_SELECT_NO_GROUP 	: 'No Group',
+		
+		ATHLETE_SELECT_SEARCH 		: 'Search...',
+		ATHLETE_SELECT_PLACEHOLDER	: 'Select Athlete...',
+		ATHLETES_SELECTED 			: 'Selected Athletes',
+		ATHLETES_SELECT_ALL 		: 'Select All',
+		ATHLETES_ALL_SELECTED 		: 'All Selected',
+		ATHLETES_SELECT_NO_ATHLETE 	: 'No Athlete',
 	},
 	
-	//forms2categories Table/Form Fields
+	RESULTS : {
+		DEFAULT_TEMPLATE_SELECT : 'Please select default template',
+		PARENTHESES_ERROR 		: 'Parentheses Error',
+		ALLOWED_CHARS_ERROR 	: 'only allowed "({+-*/._})" and numbers',
+	},
+
 	FORMS2CATEGORIES : {
-		HEADER 		: 'Forms for Categories',
 		CATEGORY 	: 'Category',
 		FORM_SELECT : 'Form<br> Select',
 		FORM_NAME	: 'Form',
@@ -166,34 +209,12 @@ LANG = {
 		STOP_DATE 	: 'Available<br> Until',
 	},
 	
-	//features Table/Form Fields
-	FEATURES : {
-		HEADER 		: 'Features',
-		NAME 		: 'Featurename',
-		COLOR 		: 'Color',
-		CATEGORY 	: 'Category'
-	},
-	
-	//features Table/Form Fields
-	FORMS : {
-		HEADER 		: 'Forms',
-		NAME 		: 'Form Name',
-		DETAILS 	: 'Details',
-		AVAILABLE 	: 'Available',
-		STANDARD 	: 'Proposed',
-		READ 		: 'Read',
-		WRITE 		: 'Write',
-		OPEN_CLOSE_ALL : 'Close all / Expand all'
-	},
-
-	//sports Table/Form Fields
 	SPORTS : {
 		HEADER 		: 'Sports',
 		OPTIONGROUP : 'Sport Groups',
 		NAME 		: 'Sport Names'
 	},
 	
-	//dropdown menus Table/Form Fields
 	DROPDOWN : {
 		HEADER 		: 'Dropdown menu',
 		NAME 		: 'Name',
@@ -201,7 +222,6 @@ LANG = {
 		FOR_FORMS	: 'for Forms'
 	},
 	
-	//users Table/Form Fields
 	USERS : {
 		HEADER 			: 'Users',
 		ACCOUNT 		: 'Account',
@@ -213,37 +233,27 @@ LANG = {
 		BIRTH_DATE 		: 'Birth date',
 		SPORT 			: 'Sport',
 		SEX 			: 'Gender',
+		SEX_MALE 		: 'Male',
+		SEX_FEMALE		: 'Female',
+		SEX_OTHER		: 'Other',
 		BODY_HEIGHT 	: 'Body height',
 		EMAIL 			: 'Email',
 		TELEPHONE 		: 'Mobile',
 		LEVEL 			: 'Level',
 		GROUP 			: 'Group (active)',
 		LOCATION 		: 'Location (active)',
-		PERMISSIONS 	: 'Permissions',
 		LAST_LOGIN 		: 'Last Login',
 		LOGIN_COUNT 	: 'Number of Logins',
 		LAST_IP 		: 'Last IP',
 		ERGEBNISSE 		: 'Results',
 		
-		SEX_MALE 		: 'Male',
-		SEX_FEMALE		: 'Female',
-		SEX_OTHER		: 'Other',
-		
-		GROUPING_NO		: 'No grouping',
-		GROUPING_BY		: 'Grouping by',
-		
 		//LEVELS
-		LVL_ADMIN 		: 'Admin',
-		LVL_LOCATION 	: 'Location Admin',
-		LVL_GROUP_ADMIN	: 'Group Admin',
+		LVL_ADMIN 			: 'Admin',
+		LVL_LOCATION 		: 'Location Admin',
+		LVL_GROUP_ADMIN		: 'Group Admin',
 		LVL_GROUP_ADMIN_2	: 'Group Admin (reduced)',
-		LVL_ATHLETE		: 'Athlete',
-		LVL_TRAINER 	: 'Trainer',
-
-		ID 				: 'ID',
-		USER_ID 		: 'User ID',
-		TYPE 			: 'Type',
-		COMMENT 		: 'Comment'
+		LVL_ATHLETE			: 'Athlete',
+		LVL_TRAINER 		: 'Trainer'
 	},
 
 	//Dashboard
@@ -257,7 +267,7 @@ LANG = {
 		TYPE_OPTIONS 	: 'Options',
 		TYPE_FORMS 		: 'Forms',
 		TYPE_RESULTS 	: 'Results',
-		TYPE_RESULTS_GRP : 'Results (Group)',
+		TYPE_RESULTS_GRP: 'Results (Group)',
 		VIEW		 	: 'View',
 		VIEW_SELECT	 	: 'Select View',
 		VIEW_MONTH	 	: 'Month View',
@@ -281,6 +291,8 @@ LANG = {
 		OPTION_12		: 'Categories',
 		OPTION_13		: 'Lists (Sports, Dropdowns, etc.)',
 		OPTION_14		: 'Location Groups',
+		OPTION_15		: 'Import',
+		OPTION_16		: 'Export',
 		FORM			: 'Form',
 		FORM_SELECT		: 'Form Select',
 		FORM_COLOR_USE	: 'use Form Color',
@@ -301,40 +313,36 @@ LANG = {
 		PERIOD_LAST_YEARS	: 'Years',
 	},
 
-	//inteface ///////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////////////
+	REQUEST : {
+		WAS_SENT_AT			: 'The request was sent at {DATE_TIME}',
+		STATUS_UPDATED		: 'Status updated at {DATE_TIME}',
+		USER_LEAVE_GROUP	: 'leave Group', //leave Group (by User)
+		NOBODY_SELECTED		: 'Nobody Selected',
+		REQUEST_ACCESS_FROM	: 'Request access from :',
+		CANCEL_REQUEST_FROM	: 'Cancel requests from :',
+		CANCEL_ACCESS_TO	: 'Cancel Access to :',
+	},
 
-	REQUEST_WAS_SENT_AT		: 'The request was sent at {DATE_TIME}',
-	REQUEST_STATUS_UPDATED	: 'Status updated at {DATE_TIME}',
-	REQUEST_USER_LEAVE_GROUP: 'leave Group', //leave Group (by User)
-
-	//athletes - group users
-	REQUEST_NOBODY_SELECTED	: 'Nobody Selected',
-	REQUEST_ACCESS_FROM		: 'Request access from :',
-	CANCEL_REQUEST_FROM		: 'Cancel requests from :',
-	CANCEL_ACCESS_TO		: 'Cancel Access to :',
-
-	////////////////////////////////////////////////////////////////////////////
 	//Request Status Icons Explain (tooltips) --> the same on .php file
-	STATUS_NO_REQUEST				: 'No Request', //. No request yet
-	STATUS_REQUEST_REJECTED			: 'Request Rejected', //0 Request Rejected
-	STATUS_REQUEST_ACCEPTED			: 'Request Accepted', //1 Request Accepted
-	STATUS_CANCELED_ACCESS_TRAINER	: 'Canceled Access (by Trainer)', //5 Canceled Access (by Trainer)
-	STATUS_CANCELED_ACCESS_ATHLETE	: 'Canceled Access (by Athlete)', //15 Canceled Access (by Athlete)
-	STATUS_REQ_WAIT_CANCELED_TRAINER: 'Waiting Access (after Canceled Access by Trainer)', //7 Waiting Access (after Canceled Access by Trainer)
-	STATUS_REQ_WAIT_CANCELED_ATHLETE: 'Waiting Access (after Canceled Access by Athlete)', //17 Waiting Access (after Canceled Access by Athlete)
-	STATUS_REQ_WAIT_REJECTED_ATHLETE: 'Waiting Access (after Rejected Request by Athlete)', //8 Waiting Access (after Rejected Request by Athlete)
-	STATUS_REQUEST_WAIT				: 'Waiting Access', //9 Waiting Access (New - first time)
-
-	//Group
-	STATUS_CANCELED_ACCESS_USER		: 'Canceled Access (by User)', //5 Canceled Access (by User)
-	STATUS_CANCELED_ACCESS_GROUP	: 'Canceled Access (by Groupadmin)', //15 Canceled Access (by Groupadmin)
-	STATUS_REQ_WAIT_CANCELED_USER	: 'Waiting Access (after Canceled Access by User)', //7 Waiting Access (after Canceled Access by User)
-	STATUS_REQ_WAIT_CANCELED_GROUP	: 'Waiting Access (after Canceled Access by Groupadmin)', //17 Waiting Access (after Canceled Access by Groupadmin)
-	STATUS_REQ_WAIT_REJECTED_USER	: 'Waiting Access (after Rejected Request by Groupadmin)', //8 Waiting Access (after Rejected Request by Groupadmin)
-	STATUS_REQ_WAIT_NEW_USER		: 'New account', //10 New Account
-	STATUS_REQ_WAIT_USER_INACTIVE	: 'Inactive Account', //11 Inactive Account
-
+	R_STATUS : {
+		NO_REQUEST				: 'No Request', //. No request yet
+		REQUEST_REJECTED		: 'Request Rejected', //0 Request Rejected
+		REQUEST_ACCEPTED		: 'Request Accepted', //1 Request Accepted
+		CANCELED_ACCESS_TRAINER	: 'Canceled Access (by Trainer)', //5 Canceled Access (by Trainer)
+		CANCELED_ACCESS_ATHLETE	: 'Canceled Access (by Athlete)', //15 Canceled Access (by Athlete)
+		REQ_WAIT_CANCELED_TRAINER: 'Waiting Access (after Canceled Access by Trainer)', //7 Waiting Access (after Canceled Access by Trainer)
+		REQ_WAIT_CANCELED_ATHLETE: 'Waiting Access (after Canceled Access by Athlete)', //17 Waiting Access (after Canceled Access by Athlete)
+		REQ_WAIT_REJECTED_ATHLETE: 'Waiting Access (after Rejected Request by Athlete)', //8 Waiting Access (after Rejected Request by Athlete)
+		REQUEST_WAIT			: 'Waiting Access', //9 Waiting Access (New - first time)
+		//Group ############################################################
+		CANCELED_ACCESS_USER	: 'Canceled Access (by User)', //5 Canceled Access (by User)
+		CANCELED_ACCESS_GROUP	: 'Canceled Access (by Groupadmin)', //15 Canceled Access (by Groupadmin)
+		REQ_WAIT_CANCELED_USER	: 'Waiting Access (after Canceled Access by User)', //7 Waiting Access (after Canceled Access by User)
+		REQ_WAIT_CANCELED_GROUP	: 'Waiting Access (after Canceled Access by Groupadmin)', //17 Waiting Access (after Canceled Access by Groupadmin)
+		REQ_WAIT_REJECTED_USER	: 'Waiting Access (after Rejected Request by Groupadmin)', //8 Waiting Access (after Rejected Request by Groupadmin)
+		REQ_WAIT_NEW_USER		: 'New account', //10 New Account
+		REQ_WAIT_USER_INACTIVE	: 'Inactive Account', //11 Inactive Account
+	},
 
 	
 	END : 'End'

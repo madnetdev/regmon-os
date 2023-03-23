@@ -1,12 +1,13 @@
-<?php
+<?php // General Functions
+
 function get_Sport_Groups($ajax_options=false) {
 	global $db;
 	$sport_groups = array();
 	$sport_groups_ajax_options = '0:'; 
 	$rows = $db->fetch("SELECT o.id, o.options 
-		FROM dropdowns d 
-		LEFT JOIN dropdowns o ON o.idd = d.id 
-		WHERE d.name='Sport_Groups' AND o.status=1 ORDER BY o.options", array());
+FROM dropdowns d 
+LEFT JOIN dropdowns o ON o.idd = d.id 
+WHERE d.name='Sport_Groups' AND o.status=1 ORDER BY o.options", array());
 	if ($db->numberRows() > 0) {
 		foreach ($rows as $row) {
 			$sport_groups[$row['id']] = $row['options'];
@@ -21,7 +22,7 @@ function get_Sports_Select_Options($ajax_options = false) {
 	global $db;
 	//Sports Select Options
 	$sports_options = '';
-	$sports_ajax_options = '0:'; 
+	$sports_ajax_options = ': '; 
 	$rows = $db->fetch("SELECT name FROM sports WHERE status = 1 ORDER BY name", array()); 
 	if ($db->numberRows() > 0)  {
 		foreach ($rows as $row) {
@@ -89,16 +90,16 @@ function get_User_Height_Options($body_height_selected = '', $ajax_options = fal
 	$user_height_options = ''; 
 	$user_height_ajax_options = '0:'; 
 	$rows = $db->fetch("SELECT o.id, o.options 
-		FROM dropdowns d 
-		LEFT JOIN dropdowns o ON o.idd = d.id 
-		WHERE d.name='Body_Height' AND o.status=1 ORDER BY o.options", array()); 
+FROM dropdowns d 
+LEFT JOIN dropdowns o ON o.idd = d.id 
+WHERE d.name='Body_Height' AND o.status=1 ORDER BY o.options", array()); 
 	if ($db->numberRows() > 0)  {
 		foreach ($rows as $row) {
 			//RangeOfValues(100->250) cm //range of values
 			if (substr_count($row['options'], 'RangeOfValues') != 0) {
-				$tmp1 = explode('(', $row['options']);
-				$tmp2 = explode(')', $tmp1[1]);
-				$range = explode('->',$tmp2[0]);
+				$tmp1 = explode('(', $row['options']??'');
+				$tmp2 = explode(')', $tmp1[1]??'');
+				$range = explode('->',$tmp2[0]??'');
 				$unit = $tmp2[1];
 				for ($i = $range[0]; $i <= $range[1]; $i++) {
 					$t_selected = '';
@@ -118,5 +119,8 @@ function get_User_Height_Options($body_height_selected = '', $ajax_options = fal
 	if ($ajax_options) return $user_height_ajax_options;
 	return $user_height_options;
 }
+
+
+
 
 ?>

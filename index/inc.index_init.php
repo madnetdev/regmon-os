@@ -97,7 +97,7 @@ if ($db->numberRows() > 0)  {
 			$t_option = '';
 		}
 		else {
-			$t_option = '<option class="'.$g_class.' v_'.$group_id.'" value="'.$group_id.'"'.$t_selected.' data-status="'.$g_text.'">'.$group_name.($row['status']==3?' '.$LANG->PRIVATE_GROUP_MARK:'').'</option>';
+			$t_option = '<option class="'.$g_class.' v_'.$group_id.'" value="'.$group_id.'"'.$t_selected.' data-status="'.$g_text.'">'.$group_name.($row['status']==3?' '.$LANG->INDEX_PRIVATE_GROUP_MARK:'').'</option>';
 		}
 
 		if ($GP_group == '') {
@@ -113,7 +113,7 @@ if ($db->numberRows() > 0)  {
 	}
 	//if we have private groups give an option for that
 	if (count($private_groups)) {
-		$private_option = '<option value="Private"'.'>'.$LANG->PRIVATE_GROUP.'...</option>';
+		$private_option = '<option value="Private"'.'>'.$LANG->INDEX_PRIVATE_GROUP.'...</option>';
 	}
 }
 $GP_select_options = $GP_select_options_grp . $GP_select_options . $private_option;
@@ -134,14 +134,14 @@ $GROUP = $GROUP ?? '';
 
 //Trainer
 $THIS_GROUP_TRAINER = false;
-$GROUP_Trainers = explode(',', (isset($groups2location[$GROUP][4])?$groups2location[$GROUP][4]:false));
+$GROUP_Trainers = explode(',', (isset($groups2location[$GROUP][4])?$groups2location[$GROUP][4]:''));
 if (in_array($UID, $GROUP_Trainers)) $THIS_GROUP_TRAINER = true;
 
 
 //Athletes Name
 $a_name = $USER['lastname'] != '' ? $USER['lastname'] : $USER['uname'];
 $a_vorname = $USER['firstname'] != '' ? $USER['firstname'] : $USER['uname'];
-$Athlete_Name = '<span style="font-size:17px; font-weight:bold; vertical-align:middle;">'.$a_vorname.' &nbsp; '.$a_name.'</span>';
+$Athlete_Name = $a_vorname.' &nbsp; '.$a_name;
 
 //Athletes Select
 $Athletes_Select = '';
@@ -153,8 +153,9 @@ if ($ADMIN OR $THIS_LOCATION_ADMIN OR $THIS_GROUP_ADMIN OR $THIS_GROUP_ADMIN_2) 
 		LEFT JOIN users2groups u2g ON u.id = u2g.user_id 
 		WHERE u2g.group_id = ? AND u2g.status = 1 AND u.status = 1 $where AND u.id != ? 
 		ORDER BY u.level DESC, u.firstname, u.lastname, u.id", array($GROUP, $UID)); //Group USERS
-	$Athletes_Select = '<span id="ATH_select_title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$LANG->INDEX_ATHELTE.' : &nbsp; </span><select name="ATH_select" id="ATH_select" style="width:100%; max-width:350px; font-size:17px; vertical-align:middle; color:#444; font-weight:bold;">';
-	$Athletes_Select .= '<option value="'.$UID.'" selected>'.$a_vorname.' '.$a_name.'</option>';
+	$Athletes_Select = '<span id="ATH_select_title">'.$LANG->INDEX_ATHLETE.' : &nbsp; </span>'.
+						'<select name="ATH_select" id="ATH_select">'.
+						'<option value="'.$UID.'" selected>'.$a_vorname.' '.$a_name.'</option>';
 	if ($db->numberRows() > 0)  {
 		foreach ($u_rows as $u_row) {
 			$selected = '';
@@ -169,16 +170,17 @@ if ($ADMIN OR $THIS_LOCATION_ADMIN OR $THIS_GROUP_ADMIN OR $THIS_GROUP_ADMIN_2) 
 }
 elseif ($TRAINER) {
 	//give the name in case dont have athlete yet
-	$Athletes_Select = '<span style="font-size:17px; font-weight:bold; vertical-align:middle; color:rgb(51,51,51); margin:-5px 0 -4px 2px; display:inline-block;">'.$a_vorname.' &nbsp; '.$a_name.'</span>';
+	$Athletes_Select = '<div class="just_name">'.$a_vorname.' &nbsp; '.$a_name.'</div>';
 	//Select Athletes in Group with Trainer this User-$UID
 	$rows = $db->fetch("SELECT u.id, u.uname, u.lastname, u.firstname FROM users2groups u2g 
 		JOIN users u ON (u.id = u2g.user_id AND u.level = 10 AND u.status = 1) 
 		JOIN users2trainers u2t ON (u.id = u2t.user_id AND u2g.group_id = u2t.group_id AND u2t.status = 1 AND u2t.trainer_id = ?) 
 		WHERE u2g.group_id = ? AND u2g.status = 1 ORDER BY u.firstname, u.lastname, u.id", array($UID, $GROUP)); 
 	if ($db->numberRows() > 0) {
-		$Athletes_Select = '<span id="ATH_select_title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$LANG->INDEX_ATHELTE.' : &nbsp; </span><select name="ATH_select" id="ATH_select" style="width:100%; max-width:350px; font-size:17px; vertical-align:middle; color:#444; font-weight:bold;">';
-		$Athletes_Select .= '<option value=""></option>';
-		$Athletes_Select .= '<option value="'.$UID.'" selected>'.$a_vorname.' '.$a_name.'</option>';
+		$Athletes_Select = '<span id="ATH_select_title">'.$LANG->INDEX_ATHLETE.' : &nbsp; </span>'.
+							'<select name="ATH_select" id="ATH_select">'.
+							'<option value=""></option>'.
+							'<option value="'.$UID.'" selected>'.$a_vorname.' '.$a_name.'</option>';
 		foreach ($rows as $row) {
 			$selected = '';
 			$u_name = $row['lastname'] != '' ? $row['lastname'] : $row['uname'];
@@ -194,7 +196,7 @@ elseif ($TRAINER) {
 }
 else {
 	//give just the name
-	$Athletes_Select = '<span style="font-size:17px; font-weight:bold; vertical-align:middle; color:rgb(51,51,51); margin-bottom:1px; display:inline-block;">'.$a_vorname.' &nbsp; '.$a_name.'</span>';
+	$Athletes_Select = '<div class="just_name">'.$a_vorname.' &nbsp; '.$a_name.'</div>';
 }
 
 

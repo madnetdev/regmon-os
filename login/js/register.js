@@ -1,6 +1,6 @@
 jQuery(function($) {
 
-	//SCROLL TO TOP ============
+	//SCROLL TO TOP
 	function animateToTop(top) {
 		if (top != 0) {
 			top = 0;
@@ -23,23 +23,9 @@ jQuery(function($) {
 	$('#toTop').on('click',function() {
 		animateToTop(0);
 	});	
-	
-	//Languages
-	$("#lang_de").on('click',function () {
-		if ($.cookie('LANG') == 'de') return false;
-		$("#loading").show();
-		$.cookie('LANG', 'de', { expires: 365, path: '/' });
-		window.location.reload();
-	});
-	$("#lang_en").on('click',function () {
-		if ($.cookie('LANG') == 'en') return false;
-		$("#loading").show();
-		$.cookie('LANG', 'en', { expires: 365, path: '/' });
-		window.location.reload();
-	});
 
 
-	// WIZARD  ================================================
+	// WIZARD  ###############################################
 	// Basic wizard with validation
 	$('form#wrapped').attr('action', 'login/registration.php');
 	$('form#wrapped').wizard({
@@ -59,14 +45,14 @@ jQuery(function($) {
 			}
 			else {
 				animateToTop();
-				//$('form#wrapped').submit();
+				//$('form#wrapped').trigger('submit');
 				//$('#submit').prop('disabled', false);
 				$("#loading").show();
 				setTimeout(function(){$('#submit').trigger("click");}, 1000);
 				
 				//check if password and password confirm match --alternative http://jqueryvalidation.org/equalTo-method
 				/*if ($('input#pass_confirm').val() != $('input#passwd').val()) {
-					alert('passwort und passwort bestätigen Felder nicht überein');
+					alert(LANG.WARN_CONFIRM_PASSWORD);
 					return false;
 				}*/
 			}
@@ -123,10 +109,10 @@ jQuery(function($) {
 		},
 		messages: {
 			pass_confirm: {
-				equalTo: "passwort und passwort bestätigen Felder nicht überein"
+				equalTo: LANG.WARN_CONFIRM_PASSWORD
 			},
 			uname: {
-				remote: jQuery.validator.format("Fehler! Dieser Name ist bereits vergeben. Bitte anderen Namen verwenden.")
+				remote: jQuery.validator.format(LANG.WARN_USERNAME_EXIST)
 			},
 			private_key: {
 				remote: jQuery.validator.format(LANG.GROUPS.PRIVATE_KEY_ERROR)
@@ -139,16 +125,14 @@ jQuery(function($) {
 			else if (element.is('select')) {
 				if (element.attr('id') == 'SPORTS_select') {
 					error.insertBefore(element);
-				}
-				else {
+				} else {
 					error.insertBefore(element.parent());
 				}
 			}
 			else { 
 				if (element.attr('id') == 'private_key') {
 					error.insertBefore(element.parent());
-				}
-				else {
+				} else {
 					error.insertBefore( element );
 					//error.insertAfter( element );
 				}
@@ -157,7 +141,7 @@ jQuery(function($) {
 	});
 
 
-	// Other Fileds  ================================================
+	// Other Fileds  ######################################
 
 	//Check and radio input styles
 	$('input.check_radio').iCheck({
@@ -169,12 +153,24 @@ jQuery(function($) {
 	$('input, textarea').placeholder();
 	
 	//SPORTS select
-	$("#SPORTS_select").chosen({width:'100%', multiple:true, create_option:true, create_option_text:LANG.NEW_OPTION, no_results_text:LANG.NO_RESULTS, search_contains:true}).change(function() {
+	$("#SPORTS_select").chosen({
+		width: '100%',
+		multiple: true,
+		create_option: true,
+		create_option_text: LANG.NEW_OPTION,
+		no_results_text: LANG.NO_RESULTS,
+		search_contains: true
+	}).on('change', function () {
 		$(this).parent('div').find('label.error').remove(); //remove required error if select something
 	});
 
 	//telephone
-	$("#telephone").intlTelInput({initialCountry:'de', preferredCountries:['de'],separateDialCode:true});
+	$("#telephone").intlTelInput({
+		initialCountry: 'de', 
+		//Specify the countries to appear at the top of the list.
+		preferredCountries: ['de', 'gb', 'us'], 
+		separateDialCode: true
+	});
 	$("#telephone").inputFilter(function(value) { //Floating point (use . or , as decimal separator):
 		return /^-?\d*[ ]?\d*$/.test(value);
 	});	
@@ -194,21 +190,16 @@ jQuery(function($) {
 		$('#GRP_select').parent().show();
 		$("#GRP_select").val('');
 	});
-
-	//Home button
-	$("button.home").on('click',function() {
-		$("#loading").show();
-		window.location.href = '.';
-	});
 	
 });
 
-// Filter Numbers ///////////////////////////////////////////////////////
+
+// Filter Numbers #########################################################
 // Restricts input for each element in the set of matched elements to the given inputFilter.
 (function($) {
 	$.fn.inputFilter = function(inputFilter) {
 		return this.on("input keydown keyup mousedown mouseup select contextmenu drop blur", function(e) {
-			this.value = this.value.replace('.', ',');
+			this.value = this.value.replace('.', ','); //TODO: check if this is LANG specific
 			if (inputFilter(this.value)) {
 				this.oldValue = this.value;
 				this.oldSelectionStart = this.selectionStart;
@@ -221,5 +212,3 @@ jQuery(function($) {
 		});
 	};
 }(jQuery));
-// Filter Numbers ///////////////////////////////////////////////////////
-

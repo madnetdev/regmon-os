@@ -1,4 +1,5 @@
-<?php // login page
+<?php // Login
+
 declare(strict_types=1);
 require_once('_settings.regmon.php');
 
@@ -29,7 +30,7 @@ $LANG = Language::getInstance($CONFIG['REGmon_Folder']);
 <link rel="stylesheet" type="text/css" href="node_modules/@fontsource/lato/latin.css" />
 <link rel="stylesheet" type="text/css" href="css/menu.css<?=$G_VER;?>" />
 <link rel="stylesheet" type="text/css" href="login/css/login.css<?= $G_VER; ?>" />
-<link rel="stylesheet" type="text/css" href="index/css/index_sticky_navbar.css<?=$G_VER;?>" />
+<link rel="stylesheet" type="text/css" href="index/css/sticky_navbar.css<?=$G_VER;?>" />
 
 <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" src="node_modules/jquery-ui/dist/jquery-ui.min.js"></script>
@@ -41,8 +42,11 @@ $LANG = Language::getInstance($CONFIG['REGmon_Folder']);
 <script src="login/visualCaptcha/js/visualcaptcha.jquery.js"></script>
 <script src="login/visualCaptcha/js/visualcaptcha.js"></script>
 
+<script type="text/javascript" src="js/common.js<?=$G_VER;?>"></script>
+<script>
+var V_REGmon_Folder = '<?=$CONFIG['REGmon_Folder'];?>';
+</script>
 <script src="login/js/login.js<?=$G_VER;?>"></script>
-
 <style>
 /*loading*/
 .ajaxOverlay {z-index:10000; border:none; margin:0px; padding:0px; width:100%; height:100%; top:0px; left:0px; opacity:0.6; cursor:wait; position:fixed; background-color:rgb(0, 0, 0);}
@@ -88,7 +92,7 @@ font-weight:100;margin:0 0 24px}
 				<h1 style="text-align:center;"><span class="log-in"><?=$LANG->LOGIN_HEADER;?></span></h1>
 				<p class="float">
 					<label for="login"><i class="fa fa-user"></i><?=$LANG->LOGIN_USERNAME;?></label>
-					<input type="text" id="username" name="username" placeholder="<?=$LANG->LOGIN_USERNAME;?>">
+					<input type="text" id="username" name="username" placeholder="<?=$LANG->LOGIN_USERNAME;?>" autofocus>
 				</p>
 				<p class="float">
 					<label for="password"><i class="fa fa-lock"></i><?=$LANG->LOGIN_PASSWORD;?></label>

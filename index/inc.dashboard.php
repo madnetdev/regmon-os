@@ -1,7 +1,7 @@
-<?php // inc dashboard links
+<?php // inc Dashboard links
 
 //Forms
-//we get forms from the forms.menu.php
+//we get forms from the ajax.forms_menu.php
 
 //get forms_data counts & sql filters for forms that have data
 $where_forms = "AND g.form_id IN (";
@@ -33,8 +33,8 @@ WHERE g.is_axis=0 $where_forms ORDER BY g.form_id, g.name", array(), 'form_id', 
 if ($db->numberRows() > 0) {
 	foreach ($saves as $fid => $save_id) {
 		$saves_tmp = '';
-		foreach ($save_id as $sid => $save) {
-			$saves_tmp .= '<option value="'.$save['form_id'].'__'.$sid.'">'.$save['name'].'</option>';
+		foreach ($save_id as $save_id => $save) {
+			$saves_tmp .= '<option value="'.$save['form_id'].'__'.$save_id.'">'.$save['name'].'</option>';
 		}
 		$dash_saves_options .= '<optgroup label="'.$save['form_name'].'">'.$saves_tmp.'</optgroup>';
 	}
@@ -45,8 +45,8 @@ $dash_saves3_options = '';
 //can see all at the moment
 $saves3 = $db->fetchAllwithKey("SELECT id, name FROM graphs WHERE is_axis=3 ORDER BY form_id, name", array(), 'id'); 
 if ($db->numberRows() > 0) {
-	foreach ($saves3 as $sid => $save) {
-		$dash_saves3_options .= '<option value="'.$sid.'">'.$save['name'].'</option>';
+	foreach ($saves3 as $save_id => $save) {
+		$dash_saves3_options .= '<option value="'.$save_id.'">'.$save['name'].'</option>';
 	}
 }
 

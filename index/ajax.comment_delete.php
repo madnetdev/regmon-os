@@ -1,4 +1,4 @@
-<?php // deletes a comment from db
+<?php // ajax Comment Delete
 require_once('../_settings.regmon.php');
 require('../login/validate.php');
 

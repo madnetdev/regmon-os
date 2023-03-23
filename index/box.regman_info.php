@@ -1,4 +1,4 @@
-<?php // info box
+<?php // ajax box REGmon Info
 require_once('../_settings.regmon.php');
 
 //for not call this as a single page but only from ajax --why not, only an info page

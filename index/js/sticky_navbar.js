@@ -1,4 +1,9 @@
+"use strict";
+
+// Sticky NavBar
+
 var myNavBar;
+
 jQuery(function() 
 {
 myNavBar = {

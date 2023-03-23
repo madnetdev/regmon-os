@@ -93,10 +93,6 @@
 
 #views.fixed-theme { padding-top: 80px; }
 
-#location_name { display:none; }
-#location_name.fixed-theme { display:block; }
-
-
 
 /*.navbar-custom, .navbar-container, .navbar-header, #nav-header-logo, #navbar {
     transition: 0.5s;

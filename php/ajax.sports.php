@@ -1,9 +1,10 @@
-<?php // Sports
+<?php // ajax Sports
+
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
 switch ($action) {
-	case 'add': // INSERT /////////////////////////////////////////////////////////////////
-	case 'edit': // UPDATE /////////////////////////////////////////////////////////////////
+	case 'add': // INSERT 
+	case 'edit': // UPDATE 
 		$values = array();			
 		foreach ($_REQUEST as $key => $val) {
 			$key = trim((string)$key); 
@@ -24,7 +25,9 @@ switch ($action) {
 		}
 
 		$where_id = '';
-		if ($id != 0) $where_id = "AND id != $id"; //if edit = have id
+		if ($id != 0) {
+			$where_id = "AND id != " . ((int)$id); //if edit = have id
+		}
 		$row = $db->fetchRow("SELECT * FROM sports WHERE name=? AND sport_group_id=? $where_id", array($values['name'], $values['sport_group_id']));
 		if ($db->numberRows() > 0)  {
 			echo $LANG->WARN_SPORT_EXIST;
@@ -32,8 +35,8 @@ switch ($action) {
 		else {
 			// INSERT
 			if ($action == 'add') {
-				$values['modified'] = date("Y-m-d H:i:s");
-				$values['created'] = date("Y-m-d H:i:s");
+				$values['modified'] = get_date_time_SQL('now');
+				$values['created'] = get_date_time_SQL('now');
 				
 				$insert_id = $db->insert($values, "sports");
 				
@@ -41,7 +44,7 @@ switch ($action) {
 			}
 			// UPDATE
 			elseif ($action == 'edit') {
-				$values['modified'] = date("Y-m-d H:i:s");
+				$values['modified'] = get_date_time_SQL('now');
 				
 				$result = $db->update($values, "sports", "id=?", array($id));
 
@@ -51,17 +54,17 @@ switch ($action) {
 
 	  break;
 	  
-	case 'del': // DELETE /////////////////////////////////////////////////////////////////
+	case 'del': // DELETE 
 		
-		//$row = $db->fetchRow("SELECT * FROM sports WHERE id=?", array($id));
-		
+		//TODO: what if any users already selected this sport ??? @@@@@@@@
+
 		$result = $db->delete("sports", "id=?", array($id));
 			
 		echo check_delete_result($result);
 
 	  break;
 	  
-	case 'sports_options': // SELECT /////////////////////////////////////////////////////////////////
+	case 'sports_options': // SELECT 
 		
 		//Sports Select Options
 		$ajax_options = true;
@@ -70,7 +73,7 @@ switch ($action) {
 			
 	  break;
 	  
-	case 'sports_options_grp': // SELECT /////////////////////////////////////////////////////////////////
+	case 'sports_options_grp': // SELECT 
 		
 		//Sports Select Options
 		$SP_select = '<select id="SP_select" name="SP_select"><option value=""></option>';
@@ -80,7 +83,7 @@ switch ($action) {
 			
 	  break;
 	  
-	case 'view': // SELECT /////////////////////////////////////////////////////////////////
+	case 'view': // SELECT 
 	default: //view
 		
 		$responce = new stdClass();
@@ -96,8 +99,8 @@ switch ($action) {
 					$row['sport_group_id'],
 					$row['name'],
 					$row['status'],
-					get_date_time($row['created'].''),
-					get_date_time($row['modified'].'')
+					get_date_time_SQL($row['created'].''),
+					get_date_time_SQL($row['modified'].'')
 				);
 				$i++;
 			}

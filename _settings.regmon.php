@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace REGmon;
 
 //Version
-$G_Version = "3.200";
+$G_Version = "3.285";
 $G_VER = "?ver=".$G_Version;
 
 
@@ -26,7 +26,8 @@ if ($_SERVER['HTTP_HOST'] == 'localhost' OR
 	$CONFIG['PRODUCTION'] = false;
 	$CONFIG['HTTP'] = 'http://';
 	$CONFIG['DOMAIN'] = $_SERVER['HTTP_HOST'];
-}else {
+}
+else {
 	die('only localhost for now');
 	
 	//redirect to https

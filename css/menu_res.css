@@ -333,8 +333,8 @@ a, button, li {
 #profile_edit { padding: 20px; }
 #profile_edit label { vertical-align: top; }
 
-#gbox_users_trainer .ui-jqgrid-view { font-size: 13px; }
-#gbox_users_group .ui-jqgrid-view { font-size: 13px; }
+#gbox_trainer_users .ui-jqgrid-view { font-size: 13px; }
+#gbox_group_users .ui-jqgrid-view { font-size: 13px; }
 #gbox_forms .ui-jqgrid-view { font-size: 13px; }
 #gbox_categories .ui-jqgrid-view { font-size: 13px; }
 #gbox_location_groups .ui-jqgrid-view { font-size: 13px; }
@@ -342,10 +342,10 @@ a, button, li {
 #gbox_dropdowns .ui-jqgrid-view { font-size: 13px; }
 
 @media (min-width: 1199px) {
-	#gbox_users_trainer .ui-jqgrid-view { font-size: 15px; }
-	#gbox_users_trainer span.req:before { font-size: 20px !important; }
-	#gbox_users_group .ui-jqgrid-view { font-size: 15px; }
-	#gbox_users_group span.req:before { font-size: 20px !important; }
+	#gbox_trainer_users .ui-jqgrid-view { font-size: 15px; }
+	#gbox_trainer_users span.req:before { font-size: 20px !important; }
+	#gbox_group_users .ui-jqgrid-view { font-size: 15px; }
+	#gbox_group_users span.req:before { font-size: 20px !important; }
 	#gbox_forms .ui-jqgrid-view { font-size: 15px; }
 	#gbox_categories .ui-jqgrid-view { font-size: 15px; }
 	#gbox_location_groups .ui-jqgrid-view { font-size: 15px; }
@@ -384,10 +384,10 @@ a, button, li {
 	#A_Group_Requests span.req:before { font-size: 17px; }
 }
 @media (min-width: 671px) and (max-width: 767px) {
-	#gbox_users_trainer .ui-jqgrid-view { font-size: 17px; }
-	#gbox_users_trainer span.req:before { font-size: 20px !important; }
-	#gbox_users_group .ui-jqgrid-view { font-size: 17px; }
-	#gbox_users_group span.req:before { font-size: 20px !important; }
+	#gbox_trainer_users .ui-jqgrid-view { font-size: 17px; }
+	#gbox_trainer_users span.req:before { font-size: 20px !important; }
+	#gbox_group_users .ui-jqgrid-view { font-size: 17px; }
+	#gbox_group_users span.req:before { font-size: 20px !important; }
 	#gbox_forms .ui-jqgrid-view { font-size: 17px; }
 	#gbox_categories .ui-jqgrid-view { font-size: 17px; }
 	#gbox_location_groups .ui-jqgrid-view { font-size: 17px; }
@@ -397,10 +397,10 @@ a, button, li {
 	#A_Group_Requests span.req:before { font-size: 23px; }
 }
 @media (min-width: 616px) and (max-width: 670px) {
-	#gbox_users_trainer .ui-jqgrid-view { font-size: 16px; }
-	#gbox_users_trainer span.req:before { font-size: 20px !important; }
-	#gbox_users_group .ui-jqgrid-view { font-size: 16px; }
-	#gbox_users_group span.req:before { font-size: 20px !important; }
+	#gbox_trainer_users .ui-jqgrid-view { font-size: 16px; }
+	#gbox_trainer_users span.req:before { font-size: 20px !important; }
+	#gbox_group_users .ui-jqgrid-view { font-size: 16px; }
+	#gbox_group_users span.req:before { font-size: 20px !important; }
 	#gbox_forms .ui-jqgrid-view { font-size: 16px; }
 	#gbox_categories .ui-jqgrid-view { font-size: 16px; }
 	#gbox_location_groups .ui-jqgrid-view { font-size: 16px; }
@@ -410,8 +410,8 @@ a, button, li {
 	#A_Group_Requests span.req:before { font-size: 23px; }
 }
 @media (min-width: 580px) and (max-width: 615px) {
-	#gbox_users_trainer .ui-jqgrid-view { font-size: 14px; }
-	#gbox_users_group .ui-jqgrid-view { font-size: 14px; }
+	#gbox_trainer_users .ui-jqgrid-view { font-size: 14px; }
+	#gbox_group_users .ui-jqgrid-view { font-size: 14px; }
 	#gbox_forms .ui-jqgrid-view { font-size: 14px; }
 	#gbox_categories .ui-jqgrid-view { font-size: 14px; }
 	#gbox_location_groups .ui-jqgrid-view { font-size: 14px; }

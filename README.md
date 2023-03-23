@@ -45,9 +45,11 @@ This project ...
     ```
     or 
 
-    you can use the **_vendor.zip** and **_node_modules.zip** and extract them on your app folder (you can delete those files afterwards)
+    you can use the files **"extra/_vendor.zip"** and **"extra/_node_modules.zip"** and extract them on your app folder (you can delete those files afterwards)
 
-3. Create Database and Import the **"_regmondb_init.sql"** file
+3. Create Database and Import :
+    use **"extra/_regmondb_init v3.002.sql"** file for a new installation
+    use **"extra/_regmondb_update_to_v3.002.sql"** file for update from a v3.000 installation
 
 4. Create a folder for exports/imports and users uploads.
 

@@ -1,4 +1,5 @@
-<?php // Users
+<?php // ajax Users
+
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
 switch ($action) {
@@ -21,12 +22,12 @@ switch ($action) {
 				case 'telephone': 
 				case 'level': 
 				case 'status':
-				case 'location':
+				case 'location_id':
 				case 'group_id':
 					$values[$key] = $val;
 				  break;
 				case 'birth_date':	
-						if ($val != '') $values[$key] = get_date__en($val.'');
+						if ($val != '') $values[$key] = get_date_SQL($val.'');
 				  break;
 			}
 		}		
@@ -72,23 +73,23 @@ switch ($action) {
 			echo $LANG->WARN_USERNAME_EXIST;
 		}
 		else {
-			// INSERT ///////////////////
+			// INSERT ###############################
 			if ($action == 'add') {
 				if (trim($values['passwd']) == '') {
 					echo $LANG->WARN_EMPTY_PASSWORD;
 					exit;
 				}
 				else {
-					//if pass < 4 chars
-					if (strlen($values['passwd']) < 4) {
+					//if pass < 8 chars
+					if (strlen($values['passwd']) < 8) {
 						echo $LANG->WARN_PASSWORD_CHARS;
 						exit;
 					}
 					
 					$values['passwd'] = MD5($values['passwd']);
 					$values['last_ip'] = '';
-					$values['modified'] = date("Y-m-d H:i:s");
-					$values['created'] = date("Y-m-d H:i:s");
+					$values['modified'] = get_date_time_SQL('now');
+					$values['created'] = get_date_time_SQL('now');
 					
 					$insert_id = $db->insert($values, "users");
 					
@@ -96,24 +97,24 @@ switch ($action) {
 					
 					//for group edit/add
 					if (isset($_REQUEST['act']) AND $_REQUEST['act'] == 'group_add_edit' AND $save_res == 'OK_insert') {
-						////////////////////////////////////
+						//###############################
 						//group access
 						$values2 = array();			
 						$values2['user_id'] = $insert_id;
 						$values2['group_id'] = $values['group_id'];
 						$values2['status'] = '1';
-						$values2['created'] = date("Y-m-d H:i:s");
+						$values2['created'] = get_date_time_SQL('now');
 						$values2['created_by'] = $USER['uname'];
-						$values2['modified'] = date("Y-m-d H:i:s");
+						$values2['modified'] = get_date_time_SQL('now');
 						$values2['modified_by'] = $USER['uname'];
 						$users2groups = $db->insert($values2, "users2groups");
-						////////////////////////////////////
+						//###############################
 					}
 					
 					echo $save_res;
 				}
 			}
-			// UPDATE ///////////////
+			// UPDATE ###############################
 			elseif ($action == 'edit')
 			{
 				if ($values['uname'] == $USERNAME AND $status != '1')  {
@@ -125,10 +126,13 @@ switch ($action) {
 					exit;
 				}
 				
+				//TODO: change the MD5 encryption function with something better
+				//TODO: check at least for one number one uppercase letter and one lowercase letter @@@@@@@@@@
+
 				// If $password is not blank save it, else dont make changes to the current password
 				if (trim($values['passwd']) != '') {
-					//if pass < 4 chars
-					if (strlen($values['passwd']) < 4) {
+					//if pass < 8 chars
+					if (strlen($values['passwd']) < 8) {
 						echo $LANG->WARN_PASSWORD_CHARS;
 						exit;
 					}
@@ -139,7 +143,7 @@ switch ($action) {
 					unset($values['passwd']); //delete pass from array
 				}
 				
-				$values['modified'] = date("Y-m-d H:i:s");
+				$values['modified'] = get_date_time_SQL('now');
 				
 				$result = $db->update($values, "users", "id=?", array($id));
 				
@@ -183,7 +187,7 @@ switch ($action) {
 			}
 		}		
 		
-		$values['modified'] = date("Y-m-d H:i:s");
+		$values['modified'] = get_date_time_SQL('now');
 		
 		$result = $db->update($values, "users", "id=?", array($id));
 		
@@ -224,12 +228,12 @@ switch ($action) {
 					$row['id'],
 					$row['firstname'],
 					$row['lastname'],
-					get_date($row['birth_date'].''),
+					get_date_SQL($row['birth_date'].''),
 					$row['sport'],
 					$row['sex'],
 					$row['body_height'],
-					get_date_time($row['created'].''),
-					get_date_time($row['modified'].''),
+					get_date_time_SQL($row['created'].''),
+					get_date_time_SQL($row['modified'].''),
 					$row['req_status']==1?'<img class="checklist" data-id="'.$row['id'].'" src="img/checklist.png" style="cursor:pointer;" title="'.$LANG->TRAINER_2_ATHLETES_ACCESS.'">':'',
 					$row['req_status']
 				);
@@ -283,17 +287,17 @@ switch ($action) {
 					'', //repeat_pass,
 					$row['firstname'],
 					$row['lastname'],
-					get_date($row['birth_date'].''),
+					get_date_SQL($row['birth_date'].''),
 					$row['sport'],
 					$row['sex'],
 					$row['body_height'],
 					$row['email'],
 					$row['telephone'],
 					$row['level'],
-					get_date_time($row['lastlogin'].''),
+					get_date_time_SQL($row['lastlogin'].''),
 					$row['logincount'],
-					get_date_time($row['created'].''),
-					get_date_time($row['modified'].''),
+					get_date_time_SQL($row['created'].''),
+					get_date_time_SQL($row['modified'].''),
 					$row['req_status']
 				);
 				$i++;
@@ -350,7 +354,7 @@ switch ($action) {
 					{
 						$size = round(filesize($dir.'/'.$file) / 1024, 2);
 						$get_file = file_get_contents($dir.$file);
-						$date = date("d.m.Y H:i:s", filemtime($dir.$file)); //filectime
+						$date_time = get_date_time_SQL(date("Y-m-d H:i:s", filemtime($dir.$file))); //filectime
 						$type = '';
 						$import_page ='';
 						
@@ -375,7 +379,7 @@ switch ($action) {
 							$type,
 							'<img src="img/ico/' .$ext. '.png" style="height:30px;">',
 							$size,
-							$date,
+							$date_time,
 							($import_page!=''?'<a href="'.$import_page.'?file='.urlencode($file).'" class="file_import" style="display:block; font-size:20px; color:green; padding:5px;" title="'.$LANG->IMPORT_DATA.'"><i class="fa fa-file-code-o"></i><i class="fa fa-arrow-right" style="margin-left:5px;"></i><i class="fa fa-database" style="margin-left:5px;"></i></a>':''),
 							'<a href="js/plugins/jsonTreeViewer/index.php?file='.urlencode($file).'" class="file_view" style="display:block;" title="'.$LANG->VIEW_DATA.'"><i class="fa fa-list-alt" style="font-size:20px; color:#5bc0de; cursor:pointer;"></i></a>',
 							'<i class="fa fa-download file_download" style="font-size:20px; color:blue; cursor:pointer; padding:2px;" alt="'.urlencode($file).'" title="'.$LANG->FILE_DOWNLOAD.'"></i>',
@@ -398,7 +402,7 @@ switch ($action) {
 	  break;
 
 
-	case 'view': // SELECT /////////////////////////////////////////////////////////////////
+	case 'view': // SELECT 
 	default: //view
 		
 		$responce = new stdClass();
@@ -423,11 +427,11 @@ switch ($action) {
 					$row['uname'],
 					'', //$row['passwd'],
 					'', //repeat_pass,
-					$row['location'],
+					$row['location_id'],
 					$row['group_id'],
 					$row['firstname'],
 					$row['lastname'],
-					get_date($row['birth_date'].''),
+					get_date_SQL($row['birth_date'].''),
 					$row['sport'],
 					$row['sex'],
 					$row['body_height'],
@@ -435,12 +439,20 @@ switch ($action) {
 					$row['telephone'],
 					$row['status'],
 					$row['level'],
-					get_date_time($row['lastlogin'].''),
+					get_date_time_SQL($row['lastlogin'].''),
 					$row['logincount'],
 					$row['last_ip'],
-					get_date_time($row['created'].''),
-					get_date_time($row['modified'].''),
-					'<div title="'.$LANG->RESULTS.'" style="text-align:center;cursor:pointer;" onmouseover="jQuery(this).addClass(\'ui-state-hover\');" onmouseout="jQuery(this).removeClass(\'ui-state-hover\');"><a href="results.php?sid='.$row['id'].'" target="_blank" style="display:inline-block;"><span class="ui-icon ui-icon-image" style="float:left;"></span><span class="ui-icon ui-icon-extlink" style="float:left;"></span></a></div>'
+					get_date_time_SQL($row['created'].''),
+					get_date_time_SQL($row['modified'].''),
+					'<div title="'.$LANG->RESULTS.'"'.
+						' style="text-align:center;cursor:pointer;"'.
+						' onmouseover="jQuery(this).addClass(\'ui-state-hover\');"'.
+						' onmouseout="jQuery(this).removeClass(\'ui-state-hover\');">'.
+							'<a href="results.php?athid='.$row['id'].'" target="_blank" style="display:inline-block;">'.
+								'<span class="ui-icon ui-icon-image" style="float:left;"></span>'.
+								'<span class="ui-icon ui-icon-extlink" style="float:left;"></span>'.
+							'</a>'.
+						'</div>'
 				);
 				$i++;
 			}

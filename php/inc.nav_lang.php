@@ -1,3 +1,5 @@
+<?php // inc Nav Lang ?>
+
 	<nav id="nav-header" class="navbar navbar-custom">
 		<div id="nav-header-container" class="container-fluid navbar-container">
 			<div class="navbar-header">

@@ -1,4 +1,5 @@
-<?php
+<?php // Email Function
+
 require (__DIR__.'/../vendor/autoload.php');
 
 use PHPMailer\PHPMailer\PHPMailer;

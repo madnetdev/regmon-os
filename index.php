@@ -1,4 +1,5 @@
-<?php
+<?php // index
+
 declare(strict_types=1);
 require_once('_settings.regmon.php');
 require('login/validate.php');
@@ -16,7 +17,7 @@ require('index/inc.index_init.php');
 <meta name="description" content="" />
 <meta name="keywords" content="" />
 <meta name="author" content="MAD" />
-<title><?=$LANG->MENU_PAGE_TITLE;?></title>
+<title><?=$LANG->INDEX_PAGE_TITLE;?></title>
 
 <link rel="manifest" href="manifest.json?mad2" />
 <link rel="icon" href="img/icons/icon-512x512.png" sizes="512x512">
@@ -77,8 +78,9 @@ require('index/inc.index_init.php');
 <script type="text/javascript" src="node_modules/select2/dist/js/select2.min.js"></script>
 
 <script type="text/javascript" src="node_modules/jquery-validation/dist/jquery.validate.js"></script>
-<?php /*<script type="text/javascript" src="node_modules/jquery-validation/dist/localization/messages_de.min.js"></script>*/?>
-<script type="text/javascript" src="js/overrides/query-validation/messages_de.min.js"></script>
+<?php if ($LANG->LANG_CURRENT != 'en') { ?>
+<script type="text/javascript" src="js/overrides/query-validation/messages_<?=$LANG->LANG_CURRENT;?>.min.js"></script>
+<?php } ?>
 <script type="text/javascript" src="node_modules/jquery-placeholder/jquery.placeholder.js"></script>
 
 <link rel="stylesheet" type="text/css" href="node_modules/sweetalert2/dist/sweetalert2.min.css">
@@ -105,21 +107,22 @@ require('index/inc.index_init.php');
 <script type="text/javascript" src="js/plugins/clockpicker/clockpicker.js"></script>
 
 <script type="text/javascript" src="node_modules/moment/min/moment.min.js"></script>
-<?php /*<script type="text/javascript" src="node_modules/moment/locale/de.js"></script> --we load it with calendar*/?>
+<?php if ($LANG->LANG_CURRENT != 'en') { ?>
+<script type="text/javascript" src="js/overrides/moment/<?=$LANG->LANG_CURRENT;?>.js"></script>
+<?php } ?>
 
 <link rel="stylesheet" type="text/css" href="node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
 <script type="text/javascript" src="node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 
 <link rel="stylesheet" href="node_modules/fullcalendar/dist/fullcalendar.min.css" />
-<?php /*<script type="text/javascript" src="node_modules/fullcalendar/lib/moment.min.js"></script> --we loaded above for the datepicker */?>
 <script type="text/javascript" src="node_modules/fullcalendar/dist/fullcalendar.min.js"></script>
 <?php if ($LANG->LANG_CURRENT != 'en') { ?>
-<script type="text/javascript" src="node_modules/fullcalendar/dist/locale/<?=$LANG->LANG_CURRENT;?>.js"></script><?php /*de, en-gb*/?>
+<script type="text/javascript" src="js/overrides/fullcalendar/<?=$LANG->LANG_CURRENT;?>.js"></script>
 <?php } ?>
 <link rel="stylesheet" type="text/css" href="css/overrides.css<?=$G_VER;?>" />
 <link rel="stylesheet" type="text/css" href="index/css/dashboard.css<?=$G_VER;?>" />
 <link rel="stylesheet" type="text/css" href="index/css/index.css<?=$G_VER;?>" />
-<link rel="stylesheet" type="text/css" href="index/css/index_sticky_navbar.css<?=$G_VER;?>" />
+<link rel="stylesheet" type="text/css" href="index/css/sticky_navbar.css<?=$G_VER;?>" />
 
 <script type="text/javascript">
 	//$.fn.bootstrapBtn = $.fn.button.noConflict();
@@ -132,6 +135,7 @@ require('index/inc.index_init.php');
 <?php /*<script type="text/javascript" src="node_modules/free-jqgrid/dist/plugins/min/jquery.jqgrid.showhidecolumnmenu.js"></script>*/?>
 <script type="text/javascript" src="node_modules/free-jqgrid/dist/i18n/min/grid.locale-<?=$LANG->LANG_CURRENT;?>.js"></script><?php /*de, en*/?>
 <script type="text/javascript" src="js/lang_<?=$LANG->LANG_CURRENT;?>.js<?=$G_VER;?>"></script>
+<script type="text/javascript" src="js/common.js<?=$G_VER;?>"></script>
 <script type="text/javascript" src="js/grid._extend.js<?=$G_VER;?>"></script>
 <script type="text/javascript">
 //fix bfcach problem when browser back button is pressed and page not load properly
@@ -142,6 +146,7 @@ window.addEventListener( "pageshow", function (event) {
   	}
 });
 
+var V_REGmon_Folder = '<?=$CONFIG['REGmon_Folder'];?>';
 var PRODUCTION = <?=($CONFIG['PRODUCTION']?'true':'false');?>;
 var V_ONLINE = true;
 <?php echo 'var'
@@ -171,8 +176,11 @@ var V_ONLINE = true;
 ?>
 </script>
 <script type="text/javascript" src="forms/js/forms.menu.js<?=$G_VER;?>"></script>
+<script type="text/javascript" src="index/js/fancybox_defaults.js<?=$G_VER;?>"></script>
+<script type="text/javascript" src="index/js/comments.js<?=$G_VER;?>"></script>
+<script type="text/javascript" src="index/js/options.js<?=$G_VER;?>"></script>
 <script type="text/javascript" src="index/js/index.js<?=$G_VER;?>"></script>
-<script type="text/javascript" src="index/js/index_sticky_navbar.js<?=$G_VER;?>"></script>
+<script type="text/javascript" src="index/js/sticky_navbar.js<?=$G_VER;?>"></script>
 <script type="text/javascript" src="index/js/dashboard.js<?=$G_VER;?>"></script>
 </head>
 <body>
@@ -187,7 +195,9 @@ var V_ONLINE = true;
 	<?php require('index/inc.nav.php');?>
 
 	<?php require('index/inc.index_main.php');?>
-	
+
+	<?php require('index/inc.comments.php');?>
+
 	<?php //require('php/inc.footer.php');?>
 
 </body>

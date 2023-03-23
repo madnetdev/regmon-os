@@ -168,7 +168,7 @@ ul.data-list#terms li label.error {
 	width:165px;
 } 
 
-/** Error styles for survey questions**/   
+/** Error styles for form questions**/   
 ul.data-list-2 li label.error {
 	font-size:11px;
 	position: absolute;
@@ -299,6 +299,10 @@ form.HAVE_DATA .rowItem-add {
 }
 .panel-title .trigger.collapsed:before { content: '\f054'; }
 
+/*icons*/
+span.fa {
+	font-size: 18px;
+}
 
 /* From tablet portrait to mobile */
 @media (max-width: 767px) {

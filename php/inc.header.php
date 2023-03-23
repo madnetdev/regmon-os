@@ -1,4 +1,6 @@
-<?php if (!isset($PATH_2_ROOT)) $PATH_2_ROOT = ''; ?>
+<?php // inc Header
+if (!isset($PATH_2_ROOT)) $PATH_2_ROOT = '';
+?>
 	<header id="header-logo">
 		<div class="container-logo">
 			<table style="width:100%; border-spacing:0;"><tr>

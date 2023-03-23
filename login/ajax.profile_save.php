@@ -37,9 +37,9 @@ if (trim($_POST['passwd']) != '') {
 if ($_POST['birth_year'] != '' AND $_POST['birth_month'] != '' AND $_POST['birth_day'] != '') {
 	$values['birth_date'] = $_POST['birth_year'].'-'.$_POST['birth_month'].'-'.$_POST['birth_day'];
 }
-$values['modified'] = date("Y-m-d H:i:s");
+$values['modified'] = get_date_time_SQL('now');
 
-$location_name = $_POST['location'];
+$location_name = $_POST['location_name'];
 $group_id = $_POST['group_id'];
 $group_name = $_POST['group_name'];
 $level_id = $_POST['level_id'];
@@ -129,15 +129,15 @@ if ($sport_new != '') {
 $success = ''.
 '<div class="alert alert-success alert-dismissible" role="alert">
 	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	<strong>'.$LANG->SUCCESS.'!</strong> '.$LANG->FORM_SAVED.' &nbsp; '
+	<strong>'.$LANG->SUCCESS.'!</strong> '.$LANG->PROFILE_SAVED.' &nbsp; '
 	.($sport_new!=''?$sport_new_to_user.' &nbsp; ':'')
-	.'<a href="javascript:void(0)" onclick="jQuery.fancybox.close();" class="alert-link text-nowrap">'.$LANG->FORM_CLOSE.'</a>'
+	.'<a href="javascript:void(0)" onclick="jQuery.fancybox.close();" class="alert-link text-nowrap">'.$LANG->CLOSE.'</a>'
 .'</div>';
 
 $error = ''.
 '<div class="alert alert-danger alert-dismissible" role="alert">
 	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	<strong>'.$LANG->ERROR.'!</strong> '.$LANG->FORM_NOT_SAVED.'
+	<strong>'.$LANG->ERROR.'!</strong> '.$LANG->PROFILE_NOT_SAVED.'
 </div>';
 
 ?>

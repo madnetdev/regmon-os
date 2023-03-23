@@ -1,4 +1,4 @@
-<?php // deletes a dashboard entry from db
+<?php // ajax Dashboard Delete
 require_once('../_settings.regmon.php');
 require('../login/validate.php');
 require('../index/index_functions.php');

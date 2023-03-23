@@ -1,23 +1,23 @@
-<?php
+<?php 
 // load language & database ##########
 require_once('no_validate.php');
 // ###################################
 $PATH_2_ROOT = '../';
 
 if ($_POST) {
-	$sport = filter_input(INPUT_POST, 'sport', FILTER_SANITIZE_STRING);
-	$uname = filter_input(INPUT_POST, 'uname', FILTER_SANITIZE_STRING);
-	$code = filter_input(INPUT_POST, 'code', FILTER_SANITIZE_STRING);
-	$sport_group = filter_input(INPUT_POST, 'sport_group', FILTER_SANITIZE_STRING);
-	if (!$uname OR !$sport OR !$code) exit;
-	if (!$sport_group OR $sport_group == '') $sport_group = 0;
+	$uname = $_POST['uname'] ?? false;
+	$sport = $_POST['sport'] ?? false;
+	$code = $_POST['code'] ?? false;
+	$sport_group = $_POST['sport_group'] ?? false;
 }
 else {
-	$sport = filter_input(INPUT_GET, 'sport', FILTER_SANITIZE_STRING);
-	$uname = filter_input(INPUT_GET, 'uname', FILTER_SANITIZE_STRING);
-	$code = filter_input(INPUT_GET, 'code', FILTER_SANITIZE_STRING);
-	$sport_group = 0;
+	$uname = $_GET['uname'] ?? false;
+	$sport = $_GET['sport'] ?? false;
+	$code = $_GET['code'] ?? false;
+	$sport_group = $_GET['sport_group'] ?? false;
 }
+if (!$uname OR !$sport OR !$code) exit;
+if (!$sport_group OR $sport_group == '') $sport_group = 0;
 
 $mes = '';
 $new_data = false;
@@ -32,10 +32,11 @@ else {
 		if ($_POST) 
 		{
 			//Insert Sport
+			$values = array();
 			$values['sport_group_id'] = $sport_group;
 			$values['name'] = $sport;
-			$values['modified'] = date("Y-m-d H:i:s");
-			$values['created'] = date("Y-m-d H:i:s");
+			$values['modified'] = get_date_time_SQL('now');
+			$values['created'] = get_date_time_SQL('now');
 			
 			$db->insert($values, "sports");
 			
@@ -43,8 +44,12 @@ else {
 			//Update User
 			$user = $db->fetchRow("SELECT * FROM users WHERE uname = ?", array($uname)); 
 			if ($db->numberRows() > 0)  {
-				if ($user['sport'] == '') $valuesU['sport'] = $sport;
-				else $valuesU['sport'] = $user['sport'].','.$sport;
+				$valuesU = array();
+				if ($user['sport'] == '') {
+					$valuesU['sport'] = $sport;
+				} else {
+					$valuesU['sport'] = $user['sport'] . ',' . $sport;
+				}
 				
 				$db->update($valuesU, "users", "uname=?", array($uname));
 			}
@@ -54,10 +59,6 @@ else {
 		$mes = $LANG->REGISTER_ACTIVATE_CODE_ERROR;
 	}
 }
-
-
-$this_color = "";
-$this_color_hover = "";
 
 //#####################################################################################
 $title = $LANG->REGISTER_APPROVE_PROPOSAL;

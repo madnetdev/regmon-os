@@ -1,3 +1,5 @@
+<?php // inc Footer ?>
+
 	<footer class="footer_line" style="text-align:center;">
 		<div class="img_line">
 			<div class="header_img">

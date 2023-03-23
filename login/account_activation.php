@@ -1,9 +1,8 @@
 <?php // account activation
 
-$uname = filter_input(INPUT_GET, 'uname', FILTER_SANITIZE_STRING);
-$adm = filter_input(INPUT_GET, 'adm', FILTER_SANITIZE_STRING);
-$code = filter_input(INPUT_GET, 'code', FILTER_SANITIZE_STRING);
-if (!$uname OR !$adm OR !$code) exit;
+$uname = isset($_GET['uname'])?$_GET['uname']: exit;
+$adm = isset($_GET['adm'])?$_GET['adm']: exit;
+$code = isset($_GET['code'])?$_GET['code']: exit;
 
 // load language & database ##########
 require_once('no_validate.php');
@@ -32,7 +31,7 @@ if ($db->numberRows() > 0)  {
 			$values['status'] = '1';
 			$values['created'] = $user['created'];
 			$values['created_by'] = $user['uname'];
-			$values['modified'] = date("Y-m-d H:i:s");
+			$values['modified'] = get_date_time_SQL('now');
 			$values['modified_by'] = $adm;
 			$save = $db->update($values, "users2groups", "user_id=? AND group_id=?", array($user['id'], $user['group_id']));
 			
@@ -56,10 +55,6 @@ else {
 	//Account not exists
 	$mes = $LANG->REGISTER_ACTIVATE_NO_USER;
 }		
-
-
-$this_color = "";
-$this_color_hover = "";
 
 //#####################################################################################
 $title = $LANG->REGISTER_PAGE_TITLE;

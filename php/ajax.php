@@ -1,5 +1,7 @@
-<?php
+<?php //ajax router
+
 declare(strict_types=1);
+
 $PATH_2_ROOT = '../';
 require_once($PATH_2_ROOT.'_settings.regmon.php');
 require($PATH_2_ROOT.'login/validate.php');
@@ -47,7 +49,7 @@ function check_update_result($result) {
 	if ($result >= 1) {
 		return 'OK_update';
 	}
-	elseif ($result == 0) {
+	elseif ($result === 0) {
 		return $LANG->UPDATE_NOTHING;
 	}
 	else {
@@ -64,7 +66,6 @@ function check_update_result($result) {
 ////////////////////////////////////
 function check_insert_result($insert_id) {
 	global $LANG, $db;
-	
 	if (!$insert_id) { 
 		if (substr_count($db->_error(), 'Duplicate entry') <> 0) {
 			return $LANG->WARN_USERNAME_EXIST;
@@ -76,10 +77,10 @@ function check_insert_result($insert_id) {
 	}
 	else {
 		//we get the error in $insert_id --instead of $db->_error()
-		if (substr_count($insert_id, 'Duplicate entry') <> 0) {
+		if (substr_count($insert_id.'', 'Duplicate entry') <> 0) {
 			return $LANG->WARN_USERNAME_EXIST;
 		}
-		return 'OK_insert'; //$LANG->INSERT_OK;
+		return 'OK_insert';
 	}
 }
 
@@ -91,7 +92,7 @@ function check_delete_result($result) {
 		return $LANG->DELETE_ERROR; //echo mysql_error();
 	}
 	else {
-		return 'OK_delete'; //$LANG->DELETE_OK;
+		return 'OK_delete';
 	}
 }
 

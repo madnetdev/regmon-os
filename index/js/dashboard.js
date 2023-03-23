@@ -1,5 +1,33 @@
+"use strict";
+
+// Dashboard
+
+jQuery(function() 
+{
+	initDashboard();
+	//open_dashboard_onlogin
+	$('#open_dashboard_onlogin').off('change').on('change', function(){
+		let data = { ath_id: V_UID, dashboard: ($(this).is(':checked')?'1':'0') };
+		$.post('php/ajax.php?i=users&oper=dash_onlogin', data, function(data, result){
+		});
+	});
+	$('#dashboard_link, #dashboard_link2').on('click',function() { 
+		if ($("#dashboard_div").css('width') == '0px')
+			openDashboard();
+		else closeDashboard();
+	});
+	if ($.cookie('DASH_ON_LOGIN') == '1') {
+		openDashboard();
+		$.removeCookie('DASH_ON_LOGIN', { path: '/'+V_REGmon_Folder });
+	}
+	else if ($.cookie('DASHBOARD') == '1') {
+		openDashboard();
+	}
+});
+
+
 function openDashboard() {
-	$.cookie('DASHBOARD', '1');
+	$.cookie('DASHBOARD', '1', { path: '/'+V_REGmon_Folder });
 	myNavBar.remove();
 	$("#dashboard").css('width', $(window).width());
 	$('body').css('overflow', 'hidden');
@@ -11,7 +39,7 @@ function openDashboard() {
 }
 
 function closeDashboard() {
-	$.cookie('DASHBOARD', '0');
+	$.cookie('DASHBOARD', '0', { path: '/'+V_REGmon_Folder });
 	$("#dashboard").css('width', $(window).width());
 	$('body').css('overflow', '');
 	$("#dashboard_div").css('width', '0px');
@@ -154,9 +182,9 @@ function get_dash_content(dash) {
 		dash_sort = max + 1;
 	}
 	
-	let dash_date_calendar = moment().format('DD.MM.YYYY');
-	let dash_date_von = moment().add(-1 ,'week').add(1 ,'day').format('DD.MM.YYYY');
-	let dash_date_bis = moment().format('DD.MM.YYYY');
+	let dash_date_calendar = moment().format('YYYY-MM-DD');
+	let dash_date_von = moment().add(-1 ,'week').add(1 ,'day').format('YYYY-MM-DD');
+	let dash_date_bis = moment().format('YYYY-MM-DD');
 	var dash_date_last = '';
 	var dash_date_range = '';
 	var dash_date_last = '';
@@ -264,7 +292,9 @@ function get_dash_content(dash) {
 				'<select id="dash_Options_select" class="dash_option" style="width:187px;">'+
 					'<option value="">'+LANG.DASH.OPTION_SELECT+'</option>'+
 					'<option value="1">'+LANG.DASH.OPTION_1+'</option>'+
-					'<option value="2">'+LANG.DASH.OPTION_2+'</option>'+ //window.location.href = 'export.php';
+					'<option value="2">'+LANG.DASH.OPTION_2+'</option>'+
+					'<option value="15">'+LANG.DASH.OPTION_15+'</option>'+ //window.location.href = 'import.php';
+					'<option value="16">'+LANG.DASH.OPTION_16+'</option>'+ //window.location.href = 'export.php';
 					((V_ADMIN || V_LOCATION_ADMIN || V_GROUP_ADMIN || V_GROUP_ADMIN_2) ? //only this Group Admins
 						'<option value="3">'+LANG.DASH.OPTION_3+'</option>'+
 						'<option value="4">'+LANG.DASH.OPTION_4+'</option>'
@@ -405,7 +435,7 @@ function initDashboard() {
 			else if (range == 'day') $('.fc-agendaDay-button').trigger("click");
 			if (date == '1') //today
 				$('#calendar').fullCalendar('gotoDate', moment().format('YYYY-MM-DD'));
-			else $('#calendar').fullCalendar('gotoDate', moment(date, 'DD.MM.YYYY').format('YYYY-MM-DD')); //date
+			else $('#calendar').fullCalendar('gotoDate', moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD')); //date
 			V_ANIMATE_RUN = true;
 			$('html, body').animate({
 				scrollTop: $('#views').offset().top
@@ -419,12 +449,8 @@ function initDashboard() {
 		else if (dash_type == 'link') {
 			$('#view_options').trigger("click");
 			let el = '';
-			if (dash_options == '1') el = '#C_Athlete_Forms_Select_link'; //Formularauswahl
-			else if (dash_options == '2') {
-				loading.show();
-				window.location.href = 'export.php'; //$('#C_Export_Data_link').trigger("click"); //Datenabfrage (Export)
-				return false;
-			}
+				 if (dash_options == '1') el = '#C_Athlete_Forms_Select_link'; //Formularauswahl
+			else if (dash_options == '2') el = '#C_Import_Export_Data_link'; //Datenabfrage (Import, Export)
 			else if (dash_options == '3') el = '#C_Group_Requests_link'; //Gruppenzugang
 			else if (dash_options == '4') el = '#C_Group_Users_link'; //Gruppennutzer
 			//else if (dash_options == '5') el = '#C_Group_Leave_link'; //Trainingsgruppe verlassen
@@ -437,6 +463,16 @@ function initDashboard() {
 			else if (dash_options == '12') el = '#C_Categories_link'; //Kategorien
 			else if (dash_options == '13') el = '#C_Sports_Dropdowns_link'; //Sportarten - Dropdowns
 			else if (dash_options == '14') el = '#C_Location_Groups_link'; //Location Gruppen
+			else if (dash_options == '15') {
+				loading.show();
+				window.location.href = 'import.php';
+				return false;
+			}
+			else if (dash_options == '16') {
+				loading.show();
+				window.location.href = 'export.php';
+				return false;
+			}
 			if ($(el).hasClass('collapsed')) $(el).trigger("click"); //if closed -> click
 			V_ANIMATE_RUN = true;
 			$('html, body').animate({
@@ -444,16 +480,16 @@ function initDashboard() {
 			}, 1000, function() {
 				setTimeout(function(){
 					V_ANIMATE_RUN = false;
-					//loading.hide();
+					loading.hide();
 				}, 100);
 			});
 		}
 		else if (dash_type == 'form') {
 			let dd = dash_options.split('_');
 			page = 'form.php';
-			option = '?id='+dd[1]+'&cid='+dd[0];
+			option = '?id='+dd[1]+'&catid='+dd[0];
 			V_SELECTED_DATE = moment().format("YYYY-MM-DD HH:mm:ss");
-			$.cookie('SELECTED_DATE', V_SELECTED_DATE);
+			$.cookie('SELECTED_DATE', V_SELECTED_DATE, { path: '/'+V_REGmon_Folder });
 			if (dd[0] == 'Notiz') {
 				$.fancybox($("#create_comment"), $.extend({},fancyBoxDefaults,{minWidth: 300}));
 				init_Comments_Create('Dash_Button');
@@ -474,10 +510,10 @@ function initDashboard() {
 			loading.show();
 			window.location.href = page + option;
 		}
-		//closeDashboard();
+		closeDashboard();
 	});
 	
-	$('#dashboard.navv li').hover(function(){
+	$('#dashboard.navv li').hover(function() {
 		$(this).find('span.das_set').show();
 	}, function(){
 		let el = $(this).find('span.das_set');
@@ -531,7 +567,7 @@ function initDashboard() {
 		$("#dash_date_calendar, #dash_date_von, #dash_date_bis").datepicker({
 			changeMonth:true,
 			changeYear:true,
-			dateFormat: 'dd.mm.yy',
+			dateFormat: LANG.DATEPICKER.DATE,
 			firstDay: 1,
 			showOtherMonths: true,
 			selectOtherMonths: true
@@ -632,25 +668,3 @@ function initDashboard() {
 	});
 	$('.das_set').attr('title', 'bearbeiten'); //adding title bcz popover remove it
 }
-
-
-jQuery(function() {
-	initDashboard();
-	//open_dashboard_onlogin
-	$('#open_dashboard_onlogin').off('change').on('change', function(){
-		let data = { ath_id: V_UID, dashboard: ($(this).is(':checked')?'1':'0') };
-		$.post('php/ajax.php?i=users&oper=dash_onlogin', data, function(data, result){
-		});
-	});
-	$('#dashboard_link, #dashboard_link2').on('click',function() { 
-		if ($("#dashboard_div").css('width') == '0px') openDashboard();
-		else closeDashboard();
-	});
-	if ($.cookie('DASH_ON_LOGIN')=='1') {
-		openDashboard();
-		$.removeCookie('DASH_ON_LOGIN');
-	}
-	else if ($.cookie('DASHBOARD')=='1') {
-		openDashboard();
-	}
-});

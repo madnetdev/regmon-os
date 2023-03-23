@@ -286,7 +286,7 @@ ul#footer-nav li {
 .ui-progressbar { height:2em; text-align: left; }
 .ui-progressbar .ui-progressbar-value {margin: -1px; height:100%; }
 
-#survey_container {
+#wizard_container {
 	background-color:#fff;
 	 box-shadow: 0 0 5px #777;
 	 margin-top:0px;
@@ -294,7 +294,7 @@ ul#footer-nav li {
 	 z-index:9;
 	 position:relative;
 }
-.ie8 #survey_container {
+.ie8 #wizard_container {
 	background-color:#fff;
 	border:1px solid #ddd;
 	margin-top:30px;
@@ -495,7 +495,7 @@ ul#footer-nav li {
 	#top-wizard {padding:15px 30px;}
 	#bottom-wizard {padding:15px 30px;}
 
-	#survey_container {margin-bottom:0;}
+	#wizard_container {margin-bottom:0;}
 
 	#complete{padding: 0 25px 15px 25px;}
 	#complete h3{ font-size:18px; margin-bottom:20px}
@@ -532,7 +532,7 @@ ul#footer-nav li {
 	/* ############################################*/
 
 	.main-title h1{font-size:24px;line-height:26px; margin-top:25px;}
-	#survey_container {margin-bottom:0;}
+	#wizard_container {margin-bottom:0;}
 	#top-nav ul	{float: none; padding:20px 0 10px 0; margin:0; } 
 	ul#footer-nav li {display:block;margin-right:0;}
 	ul#footer-nav li:first-child {margin-right:0;}

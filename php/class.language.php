@@ -1,4 +1,5 @@
-<?php
+<?php //class Language
+
 class Language {
     
     private static $instance;
@@ -73,6 +74,10 @@ class Language {
     }
     
     public function __get($tag) {
+        if (!isset($this->tags[$tag])) {
+            error_log('Missing Language Tag : '.$tag);
+            return '_['.$tag.']_';
+        } 
         return $this->tags[$tag];
     }
 }

@@ -1,4 +1,4 @@
-<?php // return the number of unhandled requests 
+<?php // ajax Requests Count - return the number of unhandled requests 
 require_once('../_settings.regmon.php');
 require('../login/validate.php');
 

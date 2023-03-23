@@ -1,6 +1,7 @@
 <?php
 require_once('../_settings.regmon.php');
 require_once('login_functions.php');
+require_once('../php/date_functions.php');
 
 $login = '../login.php'; //login page
 $success = '../';
@@ -74,7 +75,7 @@ if ($Captcha AND !$Blocked_IP) {
 			//update logincount, lastlogin and last_ip
 			$values = array(
 				'logincount' => $USER['logincount'] + 1,
-				'lastlogin' => date("Y-m-d H:i:s"), 
+				'lastlogin' => get_date_time_SQL('now'),
 				'last_ip' => $UIP
 			);
 			$db->update($values, "users", 'id=?', array($USER['id']));

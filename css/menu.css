@@ -196,7 +196,7 @@ button[disabled].home, button[disabled].logout, button[disabled].edit, button[di
 	right: 10px;
 	font-size:15px;
 }
-#group_user_cancel_access_user:before {
+#group_user_cancel_access:before {
 	content: "\f0c0\A0\f08b";
 	right: 10px;
 	font-size:15px;
@@ -239,7 +239,7 @@ button[disabled].home, button[disabled].logout, button[disabled].edit, button[di
 }
 .home:hover, .edit:hover, .delete:hover, .save:hover, .export:hover, .import:hover, .results:hover, .results2:hover, .results3:hover, .admin:hover, .submit_group:hover, .new_reg:hover, .log_in:hover, .profile:hover, .bttn:hover, .bttnR:hover  {background:#00aeef; color:#fff;}
 #group_user_cancel_request_user:hover,
-#group_user_cancel_access_user:hover {background:#FF2626; color:#fff;}
+#group_user_cancel_access:hover {background:#FF2626; color:#fff;}
 .bttn_red:hover {background:#FF2626; color:#fff;}
 .bttn_dark:hover {background:#222222; color:#fff;}
 .logout:hover {background:#FF2626; color:#fff;}

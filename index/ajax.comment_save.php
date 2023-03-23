@@ -1,4 +1,4 @@
-<?php // saves a comment to db
+<?php // ajax Comment Save
 require_once('../_settings.regmon.php');
 require('../login/validate.php');
 
@@ -6,8 +6,8 @@ $ID = isset($_REQUEST['ID']) ? abs($_REQUEST['ID']) : false; //abs fix negative 
 $group_id = isset($_REQUEST['group_id']) ? $_REQUEST['group_id'] : false;
 $athlete_id = isset($_REQUEST['athlete_id']) ? $_REQUEST['athlete_id'] : false;
 $t_isAllDay = isset($_REQUEST['t_isAllDay']) ? $_REQUEST['t_isAllDay'] : 'true';
-$t_date_start = isset($_REQUEST['t_date_start']) ? $_REQUEST['t_date_start'] : date("Y-m-d");
-$t_date_end = isset($_REQUEST['t_date_end']) ? $_REQUEST['t_date_end'] : date("Y-m-d");
+$t_date_start = isset($_REQUEST['t_date_start']) ? $_REQUEST['t_date_start'] : get_date_SQL('now');
+$t_date_end = isset($_REQUEST['t_date_end']) ? $_REQUEST['t_date_end'] : get_date_SQL('now');
 $t_time_start = isset($_REQUEST['t_time_start']) ? $_REQUEST['t_time_start'] : date("H:i");
 $t_time_end = isset($_REQUEST['t_time_end']) ? $_REQUEST['t_time_end'] : date("H:i");
 $t_title = isset($_REQUEST['t_title']) ? $_REQUEST['t_title'] : '';
@@ -27,7 +27,7 @@ if ($group_id AND $athlete_id)
 {
 	//count num of comments in calendar in that day
 	if (!$ID) { //dont check if is update
-		$selected_date_start_day = date("Y-m-d", strtotime($t_date_start));
+		$selected_date_start_day = get_date_SQL($t_date_start);
 		$row = $db->fetchRow("SELECT COUNT(*) AS count FROM comments WHERE user_id = ? AND group_id = ? AND created LIKE '$selected_date_start_day%'", array($athlete_id, $group_id));
 		if ($row['count'] >= 3) {
 			//not accept more than 3 comments a day
@@ -44,7 +44,7 @@ if ($group_id AND $athlete_id)
 	$values['name'] = $t_title;
 	$values['comments'] = $t_comment;
 	$values['color'] = $t_color;
-	$values['modified'] = date("Y-m-d H:i:s");
+	$values['modified'] = get_date_time_SQL('now');
 	$values['created'] = $selected_date_start;
 	$values['created_end'] = $selected_date_end;
 	

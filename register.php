@@ -1,18 +1,17 @@
-<?php
+<?php // Register
+
 declare(strict_types=1);
 // load language & database ##########
 require_once('login/no_validate.php');
 // ###################################
 require_once('php/functions.php');
 
-$this_color = "#446f91";
-$this_color_hover = "#446f91";
 
 //Locations-Groups Select Options
 $GP_select_options_grp = '';
 $GP_select_options = '';
 $private_groups = array();
-$rows = $db->fetch("SELECT gr.id, gr.location_id, gr.status, gr.private_key, gr.stop_date, gr.name, u.email, st.name AS location 
+$rows = $db->fetch("SELECT gr.id, gr.location_id, gr.status, gr.private_key, gr.stop_date, gr.name, u.email, st.name AS location_name 
 FROM groups gr 
 LEFT JOIN locations st ON st.id = gr.location_id 
 LEFT JOIN users u ON u.id IN (gr.admins_id) 
@@ -24,17 +23,17 @@ if ($db->numberRows() > 0)  {
 	foreach ($rows as $row) 
 	{
 		$location_id = $row['location_id'];
-		$location = $row['location'];
+		$location_name = $row['location_name'];
 		$group_id = $row['id'];
 		$group_name = htmlspecialchars($row['name']);
 		$group_email = $row['email'];
 		
 		//Group
-		if ($location != $location_tmp) {
+		if ($location_name != $location_tmp) {
 			if ($location_open) {
 				$GP_select_options_grp .= '</optgroup>';
 			}
-			$GP_select_options_grp .= '<optgroup label="'.$location.'">';
+			$GP_select_options_grp .= '<optgroup label="'.$location_name.'">';
 			$location_open = true;
 		}
 		
@@ -59,7 +58,7 @@ if ($db->numberRows() > 0)  {
 			$t_option = '';
 		}
 		else {
-			$t_option = '<option value="'.$location_id.'|'.$location.'|'.$group_id.'|'.$group_name.'"'.$t_disabled.'>'.$group_name.'</option>';
+			$t_option = '<option value="'.$location_id.'|'.$location_name.'|'.$group_id.'|'.$group_name.'"'.$t_disabled.'>'.$group_name.'</option>';
 		}
 		if ($location_id == '0') {
 			$GP_select_options .= $t_option;
@@ -67,7 +66,7 @@ if ($db->numberRows() > 0)  {
 			$GP_select_options_grp .= $t_option;
 		}
 		
-		$location_tmp = $location;
+		$location_tmp = $location_name;
 	}
 	if ($location_open) {
 		$GP_select_options_grp .= '</optgroup>';
@@ -89,7 +88,7 @@ $title = $LANG->REGISTER_PAGE_TITLE;
 require('php/inc.head.php');
 //#####################################################################################
 ?>
-<link rel="stylesheet" type="text/css" href="index/css/index_sticky_navbar.css<?=$G_VER;?>" />
+<link rel="stylesheet" type="text/css" href="index/css/sticky_navbar.css<?=$G_VER;?>" />
 <script type="text/javascript" src="node_modules/jquery.cookie/jquery.cookie.js"></script>
 
 <script type="text/javascript" src="node_modules/jquery-wizard/src/jquery.wizard.js"></script>
@@ -101,8 +100,9 @@ require('php/inc.head.php');
 <script type="text/javascript" src="node_modules/chosen-js/chosen.jquery.min.js"></script>
 
 <script type="text/javascript" src="node_modules/jquery-validation/dist/jquery.validate.js"></script>
-<?php /*<script type="text/javascript" src="node_modules/jquery-validation/dist/localization/messages_de.min.js"></script>*/?>
-<script type="text/javascript" src="js/overrides/query-validation/messages_de.min.js"></script>
+<?php if ($LANG->LANG_CURRENT != 'en') { ?>
+<script type="text/javascript" src="js/overrides/query-validation/messages_<?=$LANG->LANG_CURRENT;?>.min.js"></script>
+<?php } ?>
 <script type="text/javascript" src="node_modules/jquery-placeholder/jquery.placeholder.js"></script>
 
 <link rel="stylesheet" type="text/css" href="node_modules/intl-tel-input/build/css/intlTelInput.min.css">
@@ -110,7 +110,11 @@ require('php/inc.head.php');
 
 <script type="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
-<script type="text/javascript" src="js/lang_de.js<?=$G_VER;?>"></script>
+<script type="text/javascript" src="js/lang_<?=$LANG->LANG_CURRENT;?>.js<?=$G_VER;?>"></script>
+<script type="text/javascript" src="js/common.js<?=$G_VER;?>"></script>
+<script>
+var V_REGmon_Folder = '<?=$CONFIG['REGmon_Folder'];?>';
+</script>
 <script type="text/javascript" src="login/js/register.js<?=$G_VER;?>"></script>
 <style>
 /*loading*/
@@ -166,7 +170,7 @@ select.required.form-control { border-right: 3px solid rgba(255, 0, 0, 0.7); }
 	
 	<section class="container" id="main">
 
-		<div id="survey_container">
+		<div id="wizard_container">
 
 
 <form name="form1" id="wrapped" action="" method="POST">
@@ -330,7 +334,7 @@ select.required.form-control { border-right: 3px solid rgba(255, 0, 0, 0.7); }
 	</div>
 	
 	<div id="bottom-wizard">
-		<button type="button" name="backward" class="backward" style="display:none;"><?=$LANG->BACKWARD;?></button>
+		<button type="button" name="backward" class="backward" style="display:none;"><?=$LANG->REGISTER_BACKWARD;?></button>
 		<button type="button" name="forward" class="forward"><?=$LANG->REGISTER_SUBMIT;?>&nbsp; &nbsp;</button>
 	</div>
 </form>

@@ -1,6 +1,9 @@
-<?php if (!isset($PATH_2_ROOT)) $PATH_2_ROOT = ''; ?>
+<?php // inc Head 
+
+if (!isset($PATH_2_ROOT)) $PATH_2_ROOT = '';
+?>
 <!DOCTYPE html>
-<html lang="de">
+<html lang="<?=$LANG->LANG_CURRENT;?>">
 <head>
 <meta charset="utf-8" />
 <META HTTP-EQUIV="content-type" CONTENT="text/html; charset=utf-8">

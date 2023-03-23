@@ -1,9 +1,10 @@
-<?php // Templates
+<?php // ajax Templates
+
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
 switch ($action) {
-	case 'add': // INSERT /////////////////////////////////////////////////////////////////
-	case 'edit': // UPDATE /////////////////////////////////////////////////////////////////
+	case 'add': // INSERT 
+	case 'edit': // UPDATE 
 		$template = isset($_REQUEST['template']) ? $_REQUEST['template'] : false;
 		$is_axis = '0';
 			if ($template == 'forms_templates') $is_axis = '0';
@@ -33,19 +34,19 @@ switch ($action) {
 		
 	  break;
 	
-	case 'del': // DELETE /////////////////////////////////////////////////////////////////
+	case 'del': // DELETE 
 
 	  break;
 
-	case 'template_duplicate': // Duplicate Template //////////////////////////////////////////////////////////////
+	case 'template_duplicate': // INSERT - Duplicate Template 
 		
 		$row = $db->fetchRow("SELECT * FROM graphs WHERE id = ?", array($ID));
 		if ($db->numberRows() > 0)  {
 			unset($row['id']);
 			$row['name'] .= '_kopie';
-			$row['modified'] = date("Y-m-d H:i:s");
+			$row['modified'] = get_date_time_SQL('now');
 			$row['modified_by'] = $USERNAME;
-			$row['created'] = date("Y-m-d H:i:s");
+			$row['created'] = get_date_time_SQL('now');
 			$row['created_by'] = $USERNAME;
 			
 			$insert_id = $db->insert($row, "graphs");
@@ -56,7 +57,7 @@ switch ($action) {
 	  break;
 	  
 
-	case 'forms_templates': // SELECT /////////////////////////////////////////////////////////////////
+	case 'forms_templates': // SELECT 
 		if ($where != '') $where = ' WHERE 1 ' .$where;
 		$responce = new stdClass();
 		$forms = $db->fetchAllwithKey("SELECT id, name, name2, status FROM forms f $where ORDER BY id", array() ,'id');
@@ -104,7 +105,7 @@ switch ($action) {
 	  break;
 	  
 	  
-	case 'templates2': // SELECT /////////////////////////////////////////////////////////////////
+	case 'templates2': // SELECT 
 		
 		$responce = new stdClass();
 		$saves3 = $db->fetchAllwithKey("SELECT id, user_id, location_id, group_id, form_id, name, GlobalView, GlobalEdit, LocationView, LocationEdit, GroupView, GroupEdit, TrainerView, TrainerEdit, Private, created, created_by, modified, modified_by FROM graphs WHERE is_axis=3 ORDER BY form_id, name", array(), 'id'); 
@@ -145,7 +146,7 @@ switch ($action) {
 			
 	  break;
 
-	case 'axis': // SELECT /////////////////////////////////////////////////////////////////
+	case 'axis': // SELECT 
 		
 		$responce = new stdClass();
 		$axis = $db->fetchAllwithKey("SELECT id, user_id, location_id, group_id, form_id, name, GlobalView, GlobalEdit, LocationView, LocationEdit, GroupView, GroupEdit, TrainerView, TrainerEdit, Private, created, created_by, modified, modified_by FROM graphs WHERE is_axis=1 ORDER BY name", array(), 'id'); 

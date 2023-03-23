@@ -9,7 +9,7 @@ if (!isset($_SERVER['HTTP_X_FANCYBOX']) AND !isset($_SERVER['HTTP_X_REQUESTED_WI
 
 $uid = '';
 $uname = '';
-$name = '';
+$lastname = '';
 $firstname = '';
 $email = '';
 $telephone = '';
@@ -38,7 +38,7 @@ $i=0;
 if ($db->numberRows() > 0)  {
 	$uid = $row['id'];
 	$uname = $row['uname'];
-	$name = $row['lastname'];
+	$lastname = $row['lastname'];
 	$firstname = $row['firstname'];
 	$birth_date = get_date_SQL($row['birth_date'].'');
 	if ($birth_date != '') {
@@ -86,7 +86,7 @@ $user_height_options = get_User_Height_Options($body_height);
 
 ?>
 	<form id="profile_edit" style="width:100%;" role="form" autocomplete="off">
-		<h3 style="text-align:center;width:100%;"><?=$LANG->USER_PROFILE;?></h3>
+		<h3 style="text-align:center;width:100%;"><?=$LANG->PROFILE_USER_ACCOUNT;?></h3>
 		<input type="hidden" name="uid" value="<?=$uid;?>">
 		<input type="text" style="display:none">
 		<input type="password" style="display:none"><?php /*hack to disable autocomplete*/?>
@@ -97,7 +97,7 @@ $user_height_options = get_User_Height_Options($body_height);
 		<div class="form-group">
 			<label for="passwd"><?=$LANG->REGISTER_PASSWORD;?></label><br>
 			<input type="password" name="passwd" class="form-control" placeholder="<?=$LANG->REGISTER_PASSWORD;?>" value="" autocomplete="off"<?php /*readonly onfocus="this.removeAttribute('readonly');" - hack to disable autocomplete*/?>>
-			<small class="text-muted"><?=$LANG->PASSWORD_NOT_CHANGE;?></small>
+			<small class="text-muted"><?=$LANG->PROFILE_NO_CHANGE_PASSWORD;?></small>
 		</div>
 		<div class="form-group">
 			<label for="pass_confirm"><?=$LANG->REGISTER_PASS_CONFIRM;?></label><br>
@@ -112,8 +112,8 @@ $user_height_options = get_User_Height_Options($body_height);
 			<input type="text" name="firstname" class="form-control" placeholder="<?=$LANG->REGISTER_FIRST_NAME;?>" value="<?=$firstname;?>">
 		</div>
 		<div class="form-group">
-			<label for="name"><?=$LANG->REGISTER_LAST_NAME;?></label><br>
-			<input type="text" name="name" class="form-control" placeholder="<?=$LANG->REGISTER_LAST_NAME;?>" value="<?=$name;?>">
+			<label for="lastname"><?=$LANG->REGISTER_LAST_NAME;?></label><br>
+			<input type="text" name="lastname" class="form-control" placeholder="<?=$LANG->REGISTER_LAST_NAME;?>" value="<?=$lastname;?>">
 		</div>
 		<div class="form-group">
 			<label for="sport"><?=$LANG->REGISTER_SPORT;?></label><br>
@@ -129,7 +129,7 @@ $user_height_options = get_User_Height_Options($body_height);
 			</select>
 		</div>
 		<div class="form-group">
-			<label for="sex"><?=$LANG->SEX;?></label>
+			<label for="sex"><?=$LANG->REGISTER_SEX;?></label>
 			<div class="btn-group" data-toggle="buttons" style="width:100%;">
 				<label class="btn btn-default<?=($sex=='0'?' active':'');?>" style="width:33%;">
 					<input type="radio" name="sex" class="required" value="0"<?=($sex=='0'?' checked':'');?>><?=$LANG->REGISTER_MALE;?>
@@ -179,42 +179,42 @@ $user_height_options = get_User_Height_Options($body_height);
 			</div>
 		</div>
 		<br>
-		<div class="form-group">
-			<label style="display:inline-block; width:40%;"><?=$LANG->PROFILE_LOCATION;?></label>
-			<span style="display:inline-block; width:55%;"><?=$location_name;?></span>
-			<input type="hidden" name="location" value="<?=$location_name;?>">
+		<div class="form-group only_text">
+			<label><?=$LANG->PROFILE_LOCATION;?></label>
+			<span><?=$location_name;?></span>
+			<input type="hidden" name="location_name" value="<?=$location_name;?>">
 		</div>
-		<div class="form-group">
-			<label style="display:inline-block; width:40%;"><?=$LANG->PROFILE_GROUP;?></label>
-			<span style="display:inline-block; width:55%;"><?=$group_name;?></span>
+		<div class="form-group only_text">
+			<label><?=$LANG->PROFILE_GROUP;?></label>
+			<span><?=$group_name;?></span>
 			<input type="hidden" name="group_id" value="<?=$group_id;?>">
 			<input type="hidden" name="group_name" value="<?=$group_name;?>">
 		</div>
-		<div class="form-group">
-			<label style="display:inline-block; width:40%;"><?=$LANG->PROFILE_LEVEL;?></label>
-			<span style="display:inline-block; width:55%;"><?=$profile;?></span>
+		<div class="form-group only_text">
+			<label><?=$LANG->PROFILE_LEVEL;?></label>
+			<span><?=$profile;?></span>
 			<input type="hidden" name="level_id" value="<?=$level_id;?>">
 			<input type="hidden" name="profile" value="<?=$profile;?>">
 		</div>
-		<div class="form-group">
-			<label style="display:inline-block; width:40%;"><?=$LANG->LAST_LOGIN;?></label>
-			<span style="display:inline-block; width:55%;"><?=$lastlogin;?></span>
+		<div class="form-group only_text">
+			<label><?=$LANG->PROFILE_LAST_LOGIN;?></label>
+			<span><?=$lastlogin;?></span>
 		</div>
-		<div class="form-group">
-			<label style="display:inline-block; width:40%;"><?=$LANG->LAST_IP;?></label>
-			<span style="display:inline-block; width:55%;"><?=$last_ip;?></span>
+		<div class="form-group only_text">
+			<label><?=$LANG->PROFILE_LAST_IP;?></label>
+			<span><?=$last_ip;?></span>
 		</div>
-		<div class="form-group">
-			<label style="display:inline-block; width:40%;"><?=$LANG->LOGIN_COUNT;?></label>
-			<span style="display:inline-block; width:55%;"><?=$logincount;?></span>
+		<div class="form-group only_text">
+			<label><?=$LANG->PROFILE_LOGIN_COUNT;?></label>
+			<span><?=$logincount;?></span>
 		</div>
-		<div class="form-group">
-			<label style="display:inline-block; width:40%;"><?=$LANG->MODIFIED;?></label>
-			<span style="display:inline-block; width:55%;"><?=$modified;?></span>
+		<div class="form-group only_text">
+			<label><?=$LANG->MODIFIED;?></label>
+			<span><?=$modified;?></span>
 		</div>
-		<div class="form-group">
-			<label style="display:inline-block; width:40%;"><?=$LANG->CREATED;?></label>
-			<span style="display:inline-block; width:55%;"><?=$created;?></span>
+		<div class="form-group only_text">
+			<label><?=$LANG->CREATED;?></label>
+			<span><?=$created;?></span>
 		</div>
 		<div class="clearfix"></div>
 		<br>

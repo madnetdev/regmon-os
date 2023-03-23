@@ -76,6 +76,6 @@ Thumbs.db
 !.sass-lint.yml
 !.htaccess
 
-!_regmondb_init.sql
 !_vendor.zip
 !_node_modules.zip
+!_regmondb_*.sql

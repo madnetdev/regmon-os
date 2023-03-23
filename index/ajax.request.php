@@ -1,4 +1,4 @@
-<?
+<?php // ajax Request
 require_once('../_settings.regmon.php');
 require_once("../login/validate.php");
 
@@ -36,9 +36,9 @@ switch ($request) {
 				$values['group_id'] = $group_id;
 				$values['status'] = '9';
 				if ($ADMIN OR $THIS_LOCATION_ADMIN) $values['status'] = '1';
-				$values['created'] = date("Y-m-d H:i:s");
+				$values['created'] = get_date_time_SQL('now');
 				$values['created_by'] = $USERNAME;
-				$values['modified'] = date("Y-m-d H:i:s");
+				$values['modified'] = get_date_time_SQL('now');
 				$values['modified_by'] = $USERNAME;
 				$save = $db->insert($values, "users2groups");
 			}
@@ -46,7 +46,7 @@ switch ($request) {
 			{ //update - send again - rejected before
 				$values['status'] = '8';
 				if ($ADMIN OR $THIS_LOCATION_ADMIN) $values['status'] = '1';
-				$values['modified'] = date("Y-m-d H:i:s");
+				$values['modified'] = get_date_time_SQL('now');
 				$values['modified_by'] = $USERNAME;
 				$save = $db->update($values, "users2groups", "user_id=? AND group_id=?", array($UID, $group_id));
 			}
@@ -54,7 +54,7 @@ switch ($request) {
 			{ //update - send again - leave before
 				$values['status'] = '7';
 				if ($ADMIN OR $THIS_LOCATION_ADMIN) $values['status'] = '1';
-				$values['modified'] = date("Y-m-d H:i:s");
+				$values['modified'] = get_date_time_SQL('now');
 				$values['modified_by'] = $USERNAME;
 				$save = $db->update($values, "users2groups", "user_id=? AND group_id=?", array($UID, $group_id));
 			}
@@ -62,7 +62,7 @@ switch ($request) {
 			{ //update - send again - leave by groupadmin before
 				$values['status'] = '17';
 				if ($ADMIN OR $THIS_LOCATION_ADMIN) $values['status'] = '1';
-				$values['modified'] = date("Y-m-d H:i:s");
+				$values['modified'] = get_date_time_SQL('now');
 				$values['modified_by'] = $USERNAME;
 				$save = $db->update($values, "users2groups", "user_id=? AND group_id=?", array($UID, $group_id));
 			}
@@ -78,7 +78,7 @@ switch ($request) {
 					elseif ($row['status'] == '9') $values['status'] = '-1';
 					
 					if ($values['status'] != '-1') {
-						$values['modified'] = date("Y-m-d H:i:s");
+						$values['modified'] = get_date_time_SQL('now');
 						$values['modified_by'] = $USERNAME;
 						$save = $db->update($values, "users2groups", "user_id=? AND group_id=?", array($UID, $group_id));
 					}
@@ -91,10 +91,10 @@ switch ($request) {
 			}
 			
 			//user want to leave the group
-			elseif ($action == 'group_user_cancel_access_user') //1
+			elseif ($action == 'group_user_cancel_access') //1
 			{ //update - leave - ok before
 				$values['status'] = '5';
-				$values['modified'] = date("Y-m-d H:i:s");
+				$values['modified'] = get_date_time_SQL('now');
 				$values['modified_by'] = $USERNAME;
 				$save = $db->update($values, "users2groups", "user_id=? AND group_id=?", array($UID, $group_id));
 			}
@@ -104,7 +104,7 @@ switch ($request) {
 		
 		//message
 		if ($message == '') {
-			$message = str_replace('{DATE_TIME}', '<b>'.date("d.m.Y H:i:s").'</b>', $LANG->REQUEST_WAS_SENT_AT);
+			$message = str_replace('{DATE_TIME}', '<b>'.get_date_time('now').'</b>', $LANG->REQUEST_WAS_SENT_AT);
 		}
 		
 		echo $message;
@@ -123,21 +123,21 @@ switch ($request) {
 			if ($action == 'group_user_accept' AND $user_id) {
 				$req_status = isset($_REQUEST['req_status']) ? $_REQUEST['req_status'] : false;
 				$values['status'] = '1';
-				$values['modified'] = date("Y-m-d H:i:s");
+				$values['modified'] = get_date_time_SQL('now');
 				$values['modified_by'] = $USERNAME;
 				$save = $db->update($values, "users2groups", "user_id=? AND group_id=?", array($user_id, $group_id));
 				if (!$save) $message = $LANG->REQUEST_ANSWER_ERROR;
 				if ($req_status == '10') {
 					$values2 = array();			
 					$values2['status'] = '1';
-					$values2['modified'] = date("Y-m-d H:i:s");
+					$values2['modified'] = get_date_time_SQL('now');
 					$save = $db->update($values2, "users", "id=?", array($user_id));
 					
 					//send activation OK email
 					$user = $db->fetchRow("SELECT uname, email FROM users WHERE id = ?", array($user_id)); 
 					if ($db->numberRows() > 0)  {
-						// Email ///////////////////////////////////////////////////////////////////////////
-						require('email.php');
+						// Email
+						require('../php/email.php');
 						$Subject = str_replace('{Username}', $user['uname'], $LANG->EMAIL_ACCOUNT_ACTIVATE_SUBJECT);
 						$Message = str_replace('{Username}', $user['uname'], $LANG->EMAIL_ACCOUNT_ACTIVATE_MESSSAGE);
 						$Message = str_replace('{HTTP}', $CONFIG['HTTP'], $Message);
@@ -159,7 +159,7 @@ switch ($request) {
 				elseif ($req_status == '9') $status = '0';
 				elseif ($req_status == '10')$status = '11';
 				$values['status'] = $status;
-				$values['modified'] = date("Y-m-d H:i:s");
+				$values['modified'] = get_date_time_SQL('now');
 				$values['modified_by'] = $USERNAME;
 				$save = $db->update($values, "users2groups", "user_id=? AND group_id=?", array($user_id, $group_id));
 				if (!$save) $message = $LANG->REQUEST_ANSWER_ERROR;
@@ -179,7 +179,7 @@ switch ($request) {
 					if ($db->numberRows() > 0)  {
 						if ($row['status'] == $user_status) { //if not already changed from another request
 							$values['status'] = '15';
-							$values['modified'] = date("Y-m-d H:i:s");
+							$values['modified'] = get_date_time_SQL('now');
 							$values['modified_by'] = $USERNAME;
 							$save = $db->update($values, "users2groups", "user_id=? AND group_id=?", array($user_id, $group_id));
 						}
@@ -205,18 +205,18 @@ switch ($request) {
 			'<div class="alert alert-success alert-dismissible" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<strong>'.$LANG->SUCCESS.'!</strong> '
-				.str_replace('{DATE_TIME}', '<b>'.date("d.m.Y H:i:s").'</b>', $LANG->REQUEST_WAS_SENT_AT)
+				.str_replace('{DATE_TIME}', '<b>'.get_date_time('now').'</b>', $LANG->REQUEST_WAS_SENT_AT)
 			.'</div>';
 		}
 		
 	  break;
 	  
 
-	/////////////////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////////////
+	//################################################################
+	//################################################################
+	//################################################################
 	  
-	// Users 2 Trainer /////////////////////////////////////////////////////////////////
+	// Users 2 Trainer 
 	//a Trainer ask an Athlete for Access
 	case 'user2trainer':
 		$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : false;
@@ -249,9 +249,9 @@ switch ($request) {
 						$values['group_id'] = $group_id;
 						$values['trainer_id'] = $trainer_id;
 						$values['status'] = '9';
-						$values['modified'] = date("Y-m-d H:i:s");
+						$values['modified'] = get_date_time_SQL('now');
 						$values['modified_by'] = $USERNAME;
-						$values['created'] = date("Y-m-d H:i:s");
+						$values['created'] = get_date_time_SQL('now');
 						$values['created_by'] = $USERNAME;
 						$save = $db->insert($values, "users2trainers");
 					}
@@ -268,7 +268,7 @@ switch ($request) {
 						{ //update - send again - leave before
 							$values['status'] = '17';
 						}
-						$values['modified'] = date("Y-m-d H:i:s");
+						$values['modified'] = get_date_time_SQL('now');
 						$values['modified_by'] = $USERNAME;
 						$save = $db->update($values, "users2trainers", "user_id=? AND group_id=? AND trainer_id=?", array($athlete_id, $group_id, $trainer_id));
 					}
@@ -285,7 +285,7 @@ switch ($request) {
 							elseif ($athlete_status == '9') $values['status'] = '-1';
 							
 							if ($values['status'] != '-1') {
-								$values['modified'] = date("Y-m-d H:i:s");
+								$values['modified'] = get_date_time_SQL('now');
 								$values['modified_by'] = $USERNAME;
 								$save = $db->update($values, "users2trainers", "user_id=? AND group_id=? AND trainer_id=?", array($athlete_id, $group_id, $trainer_id));
 							}
@@ -306,7 +306,7 @@ switch ($request) {
 					if ($db->numberRows() > 0)  {
 						if ($row['status'] == $athlete_status) { //an den exei alaksei endiamesa sta request
 							$values['status'] = '5';
-							$values['modified'] = date("Y-m-d H:i:s");
+							$values['modified'] = get_date_time_SQL('now');
 							$values['modified_by'] = $USERNAME;
 							$save = $db->update($values, "users2trainers", "user_id=? AND group_id=? AND trainer_id=?", array($athlete_id, $group_id, $trainer_id));
 						}
@@ -331,7 +331,7 @@ switch ($request) {
 			'<div class="alert alert-success alert-dismissible" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<strong>'.$LANG->SUCCESS.'!</strong> '
-				.($message == $LANG->REQUEST_FOR_ACCESS_CANCEL ? $LANG->REQUEST_FOR_ACCESS_CANCEL : str_replace('{DATE_TIME}', '<b>'.date("d.m.Y H:i:s").'</b>', $LANG->REQUEST_WAS_SENT_AT))
+				.($message == $LANG->REQUEST_FOR_ACCESS_CANCEL ? $LANG->REQUEST_FOR_ACCESS_CANCEL : str_replace('{DATE_TIME}', '<b>'.get_date_time('now').'</b>', $LANG->REQUEST_WAS_SENT_AT))
 			.'</div>';
 		}
 		
@@ -359,7 +359,7 @@ switch ($request) {
 				elseif ($req_status == '9') $status = '0';
 			}
 			$values['status'] = $status;
-			$values['modified'] = date("Y-m-d H:i:s");
+			$values['modified'] = get_date_time_SQL('now');
 			$values['modified_by'] = $USERNAME;
 			$save = $db->update($values, "users2trainers", "user_id=? AND group_id=? AND trainer_id=?", array($athlete_id, $group_id, $trainer_id));
 			if (!$save) $message = $LANG->REQUEST_ANSWER_ERROR;
@@ -377,7 +377,7 @@ switch ($request) {
 		
 	  break;
 	  
-	// New /////////////////////////////////////////////////////////////////
+	// New 
 	case 'new':
 	
 	  break;

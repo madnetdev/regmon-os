@@ -22,7 +22,7 @@ if (isset($_COOKIE['USERNAME']) AND isset($_COOKIE['UID'])) {
 	
 	//Get values from cookies
 	$UID = (int)($_COOKIE['UID'] ?? 0);
-	$USERNAME = filter_input(INPUT_COOKIE, 'USERNAME', FILTER_SANITIZE_STRING) ?? '';
+	$USERNAME = $_COOKIE['USERNAME'] ?? '';
 	$HASH = $_COOKIE['HASH'] ?? '';
 	$UIP = $_SERVER['REMOTE_ADDR'] ?? '';	
 
@@ -33,7 +33,7 @@ if (isset($_COOKIE['USERNAME']) AND isset($_COOKIE['UID'])) {
 		$LEVEL = $USER['level'];
 		$STATUS = $USER['status'];
 		$GROUP = $USER['group_id'];
-		$LOCATION = $USER['location'];
+		$LOCATION = $USER['location_id'];
 		
 		/**
 		 * check if user HASH match
@@ -82,10 +82,10 @@ if (isset($_COOKIE['USERNAME']) AND isset($_COOKIE['UID'])) {
 			
 			//check if it is the Current Group Admin
 			//at results.php it takes another group_id
-			if ($this_page == 'results.php' AND isset($_REQUEST['gid'])) $THIS_GROUP = $_REQUEST['gid'];
+			if ($this_page == 'results.php' AND isset($_REQUEST['groupid'])) $THIS_GROUP = $_REQUEST['groupid'];
 			$GR_admin = $db->fetchRow('SELECT id, name, admins_id FROM groups WHERE id = ? AND location_id = ? AND status > 0 ORDER BY id', array($THIS_GROUP, $LOCATION)); 
 			if ($db->numberRows() > 0)  {
-				if (in_array($UID, explode(',', $GR_admin['admins_id']))) {
+				if (in_array($UID, explode(',', $GR_admin['admins_id']??''))) {
 					if ($LEVEL == 45) {
 						$THIS_GROUP_ADMIN = true;
 					}
@@ -119,10 +119,10 @@ if ($USER === false) {
 	if ($this_page == 'ajax.php') {
 		echo 'session expired';
 	}
-	elseif ($this_page == 'grid.users_group.php') {
+	elseif ($this_page == 'grid.group_users.php') {
 		echo 'session expired';
 	}
-	elseif ($this_page == 'forms.menu.php') {
+	elseif ($this_page == 'ajax.forms_menu.php') {
 		echo '<script>parent.location.href="'.$login.'";</script>';
 	}
 	elseif ($this_page == 'ajax.requests_count.php') {
