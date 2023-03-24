@@ -143,7 +143,7 @@ let _Template_Page = ''+ //{PAGE_NUM}
 				'</h3>'+
 				'<span class="main_font">'+
 					'<ul class="row_sortable"></ul>'+
-					'<div style="text-align:center; margin-top:10px;"><button type="button" id="page_{PAGE_NUM}_newRow" class="newRow" data-page="{PAGE_NUM}"> &nbsp; '+LANG.FORMS.ADD_NEW_ITEM+'</button></div>'+
+					'<div style="text-align:center; margin-top:10px;"><button type="button" id="page_{PAGE_NUM}_newRow" class="newRow" data-page="{PAGE_NUM}"> &nbsp; '+LANG.FORMS.FORM_ROW_ADD+'</button></div>'+
 				'</span>'+
 			'</div>'+
 		'</fieldset><br><br>'+
@@ -161,9 +161,9 @@ let _Template_Row = ''+ //{ROW_NUM}
 			'</tbody></table>'+
 		'</div>'+
 		'<div class="row_actions">'+
-			'<span class="rowItem-add trans5 hid" data-row="{ROW_NUM}" title="Zeile hinzufügen"><i class="fa fa-plus-circle"></i></span>'+
-			'<span class="Row-copy trans5 hid" data-row="{ROW_NUM}" title="Zeile duplizieren"><span class="fa-stack"><i class="fa fa-circle-thin fa-stack-2x"></i><i class="fa fa-copy fa-stack-1x" style="font-weight:bold;"></i></span></span>'+
-			'<span class="Row-remove trans5 hid"><i class="fa fa-times-circle" title="Zeile löschen"></i></span>'+
+			'<span class="rowItem-add trans5 hid" data-row="{ROW_NUM}" title="'+LANG.FORMS.FORM_ITEM_ADD+'"><i class="fa fa-plus-circle"></i></span>'+
+			'<span class="Row-copy trans5 hid" data-row="{ROW_NUM}" title="'+LANG.FORMS.FORM_ROW_DUPLICATE+'"><span class="fa-stack"><i class="fa fa-circle-thin fa-stack-2x"></i><i class="fa fa-copy fa-stack-1x" style="font-weight:bold;"></i></span></span>'+
+			'<span class="Row-remove trans5 hid"><i class="fa fa-times-circle" title="'+LANG.FORMS.FORM_ROW_DELETE+'"></i></span>'+
 		'</div>'+
 	'</li>';
 
@@ -172,12 +172,12 @@ let _Template_Item__Main = ''+ //{ROW_ITEM},{ROW_ITEM_NUM},{ROW_ITEM_TYPE},{ROW_
 		'<input type="hidden" name="rowItem_type" value="{ROW_ITEM_TYPE}" class="c_type">'+
 		'<div class="c_handler trans50">'+
 			'<span class="rowItem_Drag trans10"><i class="fa fa-arrows"></i></span>'+
-			'<a class="rowItem_EditLink trans30" data-id="{ROW_ITEM}" data-type="{ROW_ITEM_TYPE}"  style="cursor:pointer;">'+
+			'<a class="rowItem_EditLink trans30" data-id="{ROW_ITEM}" data-type="{ROW_ITEM_TYPE}" style="cursor:pointer;">'+
 			'{ROW_ITEM_TYPE_NAME}</a>'+
 		'</div>';
 
 let _Template_Item__Empty = ''+ //{ROW_ITEM}
-	'<td id="rowItem_{ROW_ITEM}" class="rowItem s_input cm_it empty" style="text-align: left; width: 100%;" row-item="{ROW_ITEM}">'+
+	'<td id="rowItem_{ROW_ITEM}" class="rowItem s_input cm_it empty" style="text-align: left; width: 100%;" data-row_item="{ROW_ITEM}">'+
 		'<div class="rowItem_edit">'+
 			_Template_Item__Main+
 			'<div class="c_content hidden">'+
@@ -202,36 +202,7 @@ let _Template_Item__Empty = ''+ //{ROW_ITEM}
 			'<span class="c_empty"></span>'+
 		'</div>'+
 	'</td>';
-	
-let _Template_Item__Space = ''+ //{ROW_NUM},{ROW_ITEM},{ROW_ITEM_NUM},{ROW_ITEM_WIDTH}
-	'<td id="rowItem_{ROW_ITEM}" class="rowItem s_input cm_it" style="width:{ROW_ITEM_WIDTH}%;" data-row_item="{ROW_ITEM}">'+
-		'<div class="rowItem_edit">'+
-			_Template_Item__Main+
-			'<div class="c_content hidden">'+
-				'<div>'+
-					LANG.FORMS.ITEM_WIDTH+' : <input name="c_{ROW_ITEM}_width" value="{ROW_ITEM_WIDTH}" class="c_width"><br>'+
-				'</div>'+
-			'</div>'+
-		'</div>'+
-		'<div class="rowItem_div">'+
-			'<span class="c_space"></span>'+
-		'</div>'+
-	'</td>';
-	
-let _Template_Item__Line = ''+ //{ROW_NUM},{ROW_ITEM},{ROW_ITEM_NUM},{ROW_ITEM_WIDTH}
-	'<td id="rowItem_{ROW_ITEM}" class="rowItem s_input cm_it" style="width:{ROW_ITEM_WIDTH}%;" data-row_item="{ROW_ITEM}">'+
-		'<div class="rowItem_edit">'+
-			_Template_Item__Main+
-			'<div class="c_content hidden">'+
-				'<div>'+
-					LANG.FORMS.ITEM_WIDTH+' : <input name="c_{ROW_ITEM}_width" value="{ROW_ITEM_WIDTH}" class="c_width"><br>'+
-				'</div>'+
-			'</div>'+
-		'</div>'+
-		'<div class="rowItem_div">'+
-			'<span class="c_line"></span>'+
-		'</div>'+
-	'</td>';
+
 //TEMPLATES ###########################
 //#####################################
 
@@ -554,8 +525,8 @@ button_Copy_Row_Click = function (element) {
 			}
 		});
 		//selects update
-		//$('#Row_'+new_row_num+' .c_content select').each(function(){
-		$('#Row_'+new_row_num+' .row_div > table > tbody > tr > td > div.rowItem_edit > div.c_content select').each(function(){
+		//$('#Row_'+new_row_num+' .c_content select').each(function(){  --select:not(.rowItem_Select)
+		$('#Row_'+new_row_num+' .row_div > table > tbody > tr > td > div.rowItem_edit > div.c_content select:not(.rowItem_Select)').each(function(){
 			let new_name = this.name;
 			let old_name = new_name.replace(new_row_num, old_row_num);
 			$(this).val( $('select[name='+old_name+']').val() );
@@ -976,7 +947,7 @@ function rowItem_EditLink_init($element, $type, $item) {
 		} else {
 			$element.popover({
 				html: true,
-				placement: 'top',
+				placement: 'auto',
 				container: $('body'),
 				title: function () { return item_type_arr[$type]; },
 				content: function () {

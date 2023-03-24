@@ -104,7 +104,7 @@ function get_Form_Row_Item($type, $row, $item, $Accordion_Type = '0') {
 		"_Time" 	=> $LANG->FORM_ITEM_TIME,
 		"_Period" 	=> $LANG->FORM_ITEM_PERIOD,
 		"_Dropdown" => $LANG->FORM_ITEM_DROPDOWN,
-		"_RadioButtons"	 	=>  $LANG->FORM_ITEM_RADIO,
+		"_RadioButtons"	 	=> $LANG->FORM_ITEM_RADIO,
 		"_Accordion" 		=> $LANG->FORM_ITEM_ACCORDION,
 		"_Accordion_Panel" 	=> $LANG->FORM_ITEM_ACCORDION_PANEL,
 		"_Dropdown_Select_Only" 	=> "_Dropdown_Select_Only",
@@ -152,7 +152,7 @@ function get_Form_Row_Item($type, $row, $item, $Accordion_Type = '0') {
 		$HTML_edit_link = ''.
 				'<div class="c_handler trans50">'.
 					'<span class="rowItem_Drag trans10"><i class="fa fa-arrows"></i></span>'.
-					'<a class="rowItem_EditLink trans30" data-id="'.$id.'" data-type="'.$type.'"  style="cursor:pointer;">'.$type_arr[$type].'</a>'.
+					'<a class="rowItem_EditLink trans30" data-id="'.$id.'" data-type="'.$type.'" style="cursor:pointer;">'.$type_arr[$type].'</a>'.
 				'</div>';
 		$rc = 'textfield'; //class
 
@@ -160,7 +160,7 @@ function get_Form_Row_Item($type, $row, $item, $Accordion_Type = '0') {
 		//rest standard fields in case of EDIT
 		//unid
 		$HTML_edit_unid = ''.
-				'<input name="c_'.$id.'_unid" type="hidden" value="'.$unid.'" class="c_unid">'.
+				'<input name="c_'.$id.'_unid" type="hidden" value="'.$unid.'" class="c_unid">';
 
 		//name
 		$HTML_edit_name = ''.
