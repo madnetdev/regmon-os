@@ -53,13 +53,13 @@ switch ($action) {
 		
 		$where_id = '';
 		if ($id != 0) $where_id = "AND id != ".((int)$id); //if edit = have id
-		$row = $db->fetchRow("SELECT * FROM groups WHERE name=? $where_id", array($values['name']));
+		$row = $db->fetchRow("SELECT * FROM `groups` WHERE name=? $where_id", array($values['name']));
 		if ($db->numberRows() > 0)  {
 			echo $LANG->WARN_GROUP_EXIST;
 			exit;
 		}
 		if ($values['private_key'] != '') {
-			$row = $db->fetchRow("SELECT * FROM groups WHERE private_key=? $where_id", array($values['private_key']));
+			$row = $db->fetchRow("SELECT * FROM `groups` WHERE private_key=? $where_id", array($values['private_key']));
 			if ($db->numberRows() > 0)  {
 				echo $LANG->WARN_PRIVATE_KEY_EXIST;
 				exit;
@@ -75,7 +75,7 @@ switch ($action) {
 			$values['modified'] = get_date_time_SQL('now');
 			$values['created'] = get_date_time_SQL('now');
 			
-			$insert_id = $db->insert($values, "groups");
+			$insert_id = $db->insert($values, "`groups`");
 			echo check_insert_result($insert_id);
 			
 			if ($insert_id) {
@@ -110,7 +110,7 @@ switch ($action) {
 		{
 			$values['modified'] = get_date_time_SQL('now');
 			
-			$result = $db->update($values, "groups", "id=?", array($id));
+			$result = $db->update($values, "`groups`", "id=?", array($id));
 			echo check_update_result($result);
 			
 			//register the selected Group Admins in this Group automatic
@@ -146,9 +146,9 @@ WHERE s.id = ? AND u.level = 50 AND u.id = ?", array($id, $UID));
 			}
 		}
 
-		$row = $db->fetchRow("SELECT * FROM groups WHERE id=?", array($id));
+		$row = $db->fetchRow("SELECT * FROM `groups` WHERE id=?", array($id));
 		
-		$result = $db->delete("groups", "id=?", array($id));
+		$result = $db->delete("`groups`", "id=?", array($id));
 			
 		echo check_delete_result($result);
 
@@ -175,7 +175,7 @@ WHERE s.id = ? AND u.level = 50 AND u.id = ?", array($id, $UID));
 		
 		//Groups Select Options
 		$group_options = '0:'; 
-		$rows = $db->fetch("SELECT id, name FROM groups WHERE status > 0 ORDER BY name", array()); 
+		$rows = $db->fetch("SELECT id, name FROM `groups` WHERE status > 0 ORDER BY name", array()); 
 		if ($db->numberRows() > 0)  {
 			foreach ($rows as $row) {
 				$group_options .=  ';' . $row['id'].':'.addslashes($row['name']);
@@ -201,7 +201,7 @@ WHERE s.id = ? AND u.level = 50 AND u.id = ?", array($id, $UID));
 		if (trim($sidx) != '') {
 			$order = "ORDER BY $sidx $sord";
 		}
-		$rows = $db->fetch("SELECT * FROM groups $where $order", array());
+		$rows = $db->fetch("SELECT * FROM `groups` $where $order", array());
 		$i=0;
 		if ($db->numberRows() > 0)  {
 			foreach ($rows as $row) {

@@ -16,12 +16,12 @@ if ($edit) {
 		//Location Admin
 		$st_admin = $db->fetchRow("SELECT u.id FROM users u 
 LEFT JOIN locations s ON u.id = s.admin_id 
-LEFT JOIN groups g ON g.location_id = s.id 
+LEFT JOIN `groups` g ON g.location_id = s.id 
 WHERE g.id = ? AND u.level = 50 AND u.id = ?", array($group_id, $UID)); 
 		if (!$db->numberRows() > 0)  {
 			//Group Admin
 			$gr_admin = $db->fetchRow("SELECT u.id FROM users u 
-LEFT JOIN groups gr ON gr.id = ? 
+LEFT JOIN `groups` gr ON gr.id = ? 
 WHERE FIND_IN_SET( u.id, gr.admins_id ) 
 AND (u.level = 40 OR u.level = 45) AND u.id = ?", array($group_id, $UID));
 			if (!$db->numberRows() > 0)  {
@@ -89,7 +89,7 @@ $group_forms_standard_arr = array();
 $group_forms_selected_str = '0';
 //$group_forms_standard_str = '0'; //not used
 $location_id = 0;
-$group_forms = $db->fetchRow("SELECT location_id, forms_select, forms_standard FROM groups WHERE id=?", array($group_id)); 
+$group_forms = $db->fetchRow("SELECT location_id, forms_select, forms_standard FROM `groups` WHERE id=?", array($group_id)); 
 if ($db->numberRows() > 0)  {
 	$location_id = $group_forms['location_id'];
 	if ($group_forms['forms_select'] != '') {

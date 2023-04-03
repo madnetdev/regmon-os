@@ -12,7 +12,7 @@ $GP_select_options_grp = '';
 $GP_select_options = '';
 $private_groups = array();
 $rows = $db->fetch("SELECT gr.id, gr.location_id, gr.status, gr.private_key, gr.stop_date, gr.name, u.email, st.name AS location_name 
-FROM groups gr 
+FROM `groups` gr 
 LEFT JOIN locations st ON st.id = gr.location_id 
 LEFT JOIN users u ON u.id IN (gr.admins_id) 
 WHERE gr.status > 0 ORDER BY gr.location_id, gr.name", array()); 

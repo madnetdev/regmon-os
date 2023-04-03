@@ -23,7 +23,7 @@ $fields = isset($_POST['fields']) ? $_POST['fields'] : array();
 function get_All_Groups() {
 	global $db;
 	$groups = array();
-	$groups_db = $db->fetch("SELECT id, name, status FROM groups WHERE status <> 0", array()); 
+	$groups_db = $db->fetch("SELECT id, name, status FROM `groups` WHERE status <> 0", array()); 
 	if ($db->numberRows() > 0)  {
 		foreach ($groups_db as $row) {
 			$groups[$row['id']] = $row['name'].($row['status']==3? ' (privat)':'');

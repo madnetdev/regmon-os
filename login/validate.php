@@ -83,7 +83,7 @@ if (isset($_COOKIE['USERNAME']) AND isset($_COOKIE['UID'])) {
 			//check if it is the Current Group Admin
 			//at results.php it takes another group_id
 			if ($this_page == 'results.php' AND isset($_REQUEST['groupid'])) $THIS_GROUP = $_REQUEST['groupid'];
-			$GR_admin = $db->fetchRow('SELECT id, name, admins_id FROM groups WHERE id = ? AND location_id = ? AND status > 0 ORDER BY id', array($THIS_GROUP, $LOCATION)); 
+			$GR_admin = $db->fetchRow('SELECT id, name, admins_id FROM `groups` WHERE id = ? AND location_id = ? AND status > 0 ORDER BY id', array($THIS_GROUP, $LOCATION)); 
 			if ($db->numberRows() > 0)  {
 				if (in_array($UID, explode(',', $GR_admin['admins_id']??''))) {
 					if ($LEVEL == 45) {

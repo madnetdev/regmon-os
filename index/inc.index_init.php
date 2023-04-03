@@ -21,7 +21,7 @@ $groups2location = array(array('0','','','',''));
 $private_groups = array();
 $groups_where = '';
 if (!$ADMIN) $groups_where = 'AND location_id = "'.$LOCATION.'"';
-$rows = $db->fetch("SELECT id, location_id, name, status, private_key, admins_id, stop_date FROM groups WHERE status > 0 $groups_where ORDER BY location_id, name", array()); 
+$rows = $db->fetch("SELECT id, location_id, name, status, private_key, admins_id, stop_date FROM `groups` WHERE status > 0 $groups_where ORDER BY location_id, name", array()); 
 if ($db->numberRows() > 0)  {
 	$GP_open_group = false;
 	$GP_group = '';

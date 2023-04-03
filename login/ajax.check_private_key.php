@@ -14,7 +14,7 @@ if ($location_id) { //registered user
 }  
 
 if ($private_key != '') {
-	$group = $db->fetchRow("SELECT id FROM groups WHERE status = 3 AND private_key = ? $where", array($private_key)); 
+	$group = $db->fetchRow("SELECT id FROM `groups` WHERE status = 3 AND private_key = ? $where", array($private_key)); 
 	if ($db->numberRows() > 0)  {
 		if ($location_id) echo $group['id'];
 		else echo 'true';

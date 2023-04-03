@@ -29,7 +29,7 @@ if (isset($_POST['group_id']) AND isset($_POST['forms_select']))
 		$values['forms_standard'] = $forms_standard;
 		$values['modified'] = get_date_time_SQL('now');
 		$values['modified_by'] = $USERNAME;
-		$save = $db->update($values, "groups", "id=?", array($group_id));
+		$save = $db->update($values, "`groups`", "id=?", array($group_id));
 	}
 	//users2trainers - athlete save Trainer Access
 	elseif (isset($_POST['trainer']) AND $_POST['trainer'] AND isset($_POST['trainer_id']) AND $_POST['trainer_id']) {

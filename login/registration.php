@@ -67,7 +67,7 @@ else {
 
 	if ($_POST['location_group'] == 'Private') {
 		$grst = $db->fetchRow("SELECT gr.id, gr.location_id, gr.status, gr.private_key, gr.name, st.name AS location_name 
-FROM groups gr 
+FROM `groups` gr 
 LEFT JOIN locations st ON st.id = gr.location_id 
 WHERE gr.status = 3 AND gr.private_key = ?", array($_POST['private_key'])); 
 		if ($db->numberRows() > 0)  {
@@ -192,7 +192,7 @@ WHERE gr.status = 3 AND gr.private_key = ?", array($_POST['private_key']));
 			$admin_email = array();
 			//$group_admins = $db->fetchRow("SELECT GROUP_CONCAT( u.email ) AS emails FROM users u
 			$admin_rows = $db->fetch("SELECT u.lastname, u.email FROM users u
-				LEFT JOIN groups gr ON gr.id = ?
+				LEFT JOIN `groups` gr ON gr.id = ?
 				WHERE FIND_IN_SET( u.id, gr.admins_id )", array($values['group_id']));
 			if (!$db->numberRows()) {
 				//get the admin email if the group is not enabled for registration

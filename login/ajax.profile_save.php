@@ -99,7 +99,7 @@ if ($sport_new != '') {
 	//Admin email for activation of new user account
 	//$group_admins = $db->fetchRow("SELECT GROUP_CONCAT( u.email ) AS emails FROM users u
 	$admin_rows = $db->fetch("SELECT u.lastname, u.email FROM users u
-		LEFT JOIN groups gr ON gr.id = ?
+		LEFT JOIN `groups` gr ON gr.id = ?
 		WHERE FIND_IN_SET( u.id, gr.admins_id )", array($group_id));
 	if ($db->numberRows() > 0)  {} //group admins exist
 	else { //else get the admin email
