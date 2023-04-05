@@ -300,9 +300,8 @@ form.HAVE_DATA .rowItem-add {
 .panel-title .trigger.collapsed:before { content: '\f054'; }
 
 /*icons*/
-span.fa {
-	font-size: 18px;
-}
+span.fa { font-size: 18px; }
+#top-wizard span.fa { font-size: 14px; }
 
 /* From tablet portrait to mobile */
 @media (max-width: 767px) {

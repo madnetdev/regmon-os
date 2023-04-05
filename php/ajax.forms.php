@@ -119,22 +119,6 @@ switch ($action) {
 	  break;
 
 
-	case 'get_tags_select': // SELECT - Get Tags 
-		
-		$options = '<select>'; 
-		$rows = $db->fetch("SELECT name FROM tags ORDER BY name", array()); 
-		if ($db->numberRows() > 0)  {
-			foreach ($rows as $row) {
-				$options .= '<option value="'.addslashes($row['name']).'">'.addslashes($row['name']).'</option>';
-			}
-		}
-		$options .= '</select>'; 
-		
-		echo $options;
-		
-	  break;
-
-
 	case 'get_forms_select': // SELECT - Get Forms 
 	case 'get_forms_select_empty': // SELECT - Get Forms with empty option  
 		
@@ -174,9 +158,9 @@ FROM forms f $where ORDER BY name", array()); //$sidx $sord
 					$row['name'],
 					$row['name2'],
 					$row['tags'],
-					'', //we do it on grid 
-					$row['status'],
 					$row['categories_ids'], //($row['categories_ids']!=''?$row['categories_ids']:''),
+					$row['status'],
+					'', //details icon --we do it on grid 
 					get_date_time_SQL($row['created'].''),
 					$row['created_by'],
 					get_date_time_SQL($row['modified'].''),

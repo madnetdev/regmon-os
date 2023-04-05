@@ -23,10 +23,13 @@ switch ($action) {
 			echo $LANG->EMPTY_LOCATION_NAME;
 			exit;
 		}
+		if (trim($values['admin_id']) == '') {
+			$values['admin_id'] = '0';
+		}
 
 		//check admin user
 		if (!$ADMIN) {
-			//this may not needed because only admins can have access
+			//this may not needed because only admin can have access
 			//Location Admin
 			$admin = $db->fetchRow("SELECT u.id, u.lastname FROM users u
 					LEFT JOIN locations s ON u.id = s.admin_id
@@ -38,7 +41,7 @@ switch ($action) {
 		}
 		
 		$where_id = '';
-		if ($id != 0) $where_id = "AND id != $id"; //if edit = have id
+		if ($id != 0) $where_id = "AND id != $id"; //if edit = we have id  --not include the current id in the name exist check
 		$row = $db->fetchRow("SELECT * FROM locations WHERE name=? $where_id", array($values['name']));
 		if ($db->numberRows() > 0)  {
 			echo $LANG->WARN_LOCATION_EXIST;
@@ -69,6 +72,7 @@ switch ($action) {
 
 	  break;
 	  
+
 	case 'del': // DELETE 
 		
 		//check admin user
@@ -95,35 +99,19 @@ switch ($action) {
 
 	  break;
 	  
-	case 'location_admins': // SELECT 
-		
-		//Admin Select Options
-		$admins_options = ':'; 
-		$rows = $db->fetch("SELECT id, uname FROM users WHERE status = 1 AND level = 50 ORDER BY id", array()); 
-		if ($db->numberRows() > 0)  {
-			foreach ($rows as $row) {
-				$admins_options .=  ';' . $row['id'].':'.addslashes($row['uname']);
-			}
-		}
 
-		echo $admins_options;
-			
+	case 'locations_admins_select': // SELECT
+		echo get_locations_admins_select();
 	  break;
-	  
-	case 'location_options': // SELECT 
-		
-		//Location Select Options
-		$location_options = ':'; 
-		$stnd = $db->fetch("SELECT id, name FROM locations WHERE status = 1 ORDER BY name", array()); 
-		if ($db->numberRows() > 0)  {
-			foreach ($stnd as $stn) {
-				$location_options .=  ';' . $stn['id'].':'.addslashes($stn['name']);
-			}
-		}
-		
-		echo $location_options;
-			
+
+	case 'locations_select': // SELECT
+		echo get_locations_select();
 	  break;
+
+	case 'locations_options_grid': // SELECT
+		echo get_locations_select(true);
+	  break;
+
 	  
 	case 'view': // SELECT 
 	default: //view
@@ -161,4 +149,5 @@ switch ($action) {
 			
 	  break;
 }
+
 ?>

@@ -1,6 +1,5 @@
 if (!PRODUCTION) "use strict"; //remove on production so "const" works on iOS Safari 
 
-var V_GRID_SAVE = false;
 var V_SELECTED_DATE;
 var V_ANIMATE_RUN = false;
 var V_requestsCount = 0;
@@ -541,7 +540,14 @@ function disable_Athletes_Select() {
 //############################################################
 //User Profile ###############################################
 function init_Profile_Edit() {
-	$("#SPORTS_select").chosen({width:'100%', multiple:true, create_option:true, create_option_text:LANG.NEW_OPTION, no_results_text:LANG.NO_RESULTS, search_contains:true}).change(function() {
+	$("#SPORTS_select").chosen({
+		width: '100%',
+		multiple: true,
+		create_option: true,
+		create_option_text: LANG.NEW_OPTION,
+		no_results_text: LANG.NO_RESULTS,
+		search_contains: true
+	}).on('change', function () {
 		$(this).parent('div').find('label.error').remove(); //remove required error if select something
 	});
 	$("#telephone").intlTelInput({

@@ -34,10 +34,7 @@ a.fc-event { cursor: pointer; }
 .event_deactivated { border:1px dashed white !important; opacity:0.8; }
 /*.ui-jqgrid-showHideColumnMenu { z-index: 20; }*/
 
-.select2-results__option {
-    font-size: 13px;
-    padding: 3px;
-}
+
 .red { color: red; }
 .green { color: green; }
 .orange { color: orange; }

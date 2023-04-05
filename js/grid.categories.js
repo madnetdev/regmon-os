@@ -7,41 +7,21 @@ var V_CATEGORIES_FORMS = {};
 jQuery(function() 
 {
 
-const LC = LANG.CATEGORIES;
-const LF2C = LANG.FORMS2CATEGORIES;
-
-//Categories Forms data
-$.ajax({url:'php/ajax.php?i=forms2categories&oper=cat_forms_all', dataType:'json', success:function(data, result) {
+//Categories Forms data init
+$.ajax({url:'php/ajax.php?i=forms2categories&oper=categories_forms_all', dataType:'json', success:function(data, result) {
 	V_CATEGORIES_FORMS = data;
 }});
 
-const initColor = function (el) {
-	setTimeout(function () {
-		$(el).colorPicker();
-	}, 100);
-};
-const initDate = function (el) {
-	setTimeout(function () {
-		$(el).after(' <i class="fa fa-calendar" style="font-size:14px;"></i>').next().on('click',function(e) {
-				$(el).datepicker('show');
-				return false;
-			});
-		$(el).datepicker({
-			changeMonth: true,
-			changeYear: true,
-			//showButtonPanel: true,
-			dateFormat: LANG.DATEPICKER.DATE
-		});
-		$('.ui-datepicker').css({'font-size':'75%'});
-	}, 100);
-};
+const grid_width_Max = 900;
+const LC = LANG.CATEGORIES;
+const LF2C = LANG.FORMS2CATEGORIES;
 
 const idPrefix = "c_";
 const pager = '#Cpager';
 let $categories = $("#categories");
 let start_hidden = true;
 let header = 'Categories';
-if (index_categories) { //for index options
+if (V_is_Index_Options) { //for index options
 	start_hidden = false;
 	header = '';
 }
@@ -66,7 +46,7 @@ $categories.jqGrid({
 		{ //inline editing buttons and options
 			name:'acc', hidden:(V_GROUP_ADMIN_2?true:false), width:22, fixed:true, sortable:false, editable:false, search: false, resizable:false, formatter:'actions', 
 			formatoptions:{
-				keys:true, //[Enter]=save,[Esc]=cancel
+				keys:true,
 				delbutton:false,
 				editformbutton:true,
 				editOptions : {
@@ -86,32 +66,31 @@ $categories.jqGrid({
 		},
 		{name:'name', width:150/*, editrules:{required:true}*/},
 		{name:'sort', width:20, align:"center", 
-			editoptions: { type: "number", step: "1", min: "0", pattern: "[0-9]+([\.|,][0-9]+)?" }
+			editoptions: { type: "number", step: "1", min: "0", pattern: "[0-9]+([\.|,][0-9]+)?" },
+			cellattr: function(rowId, val, rawObject, opts, row) {
+				//console.log(rowId, val, rawObject, opts, row, row.parent_id);
+				if (row.parent_id != '0') return ' style="padding-left:10px;"';
+				else return ' style="padding-left:0px;"';
+			}
 		},
 		{name:'color', width:45, fixed:true, search:false, editoptions:{dataInit:initColor, style:"width:65px"},
 			cellattr: (rowId, val)  => { return ` style="background-color:${val}; color:${val}"`; }
 		},
-		{name:'status', width:45, fixed:true, align:"center",
-			formatter:"select", edittype:"select", stype:'select', 
-			editoptions:{value:"1:"+LANG.ST_ACTIVE+";0:"+LANG.ST_INACTIVE, defaultValue:'1', size:1},
-			cellattr: function(rowId, val) {
-				if (val==1) return ' class="green"'; //active
-				else return ' class="red"'; //inactive
-			}
-		},
+		{name:'status', width:45, template: aktivInaktivTemplate },
 		{name:'forms_count', width:25, fixed:true, align:"center", editoptions:{readonly:'readonly'} },
 		{name:'forms', width:100, hidden:true, editrules:{edithidden:true},
-			formatter:"select", edittype:"select", 
-			editoptions:{multiple:true, size:1, dataUrl:'php/ajax.php?i=forms&oper=get_forms_select',
+			formatter:"select", edittype:"select",
+			editoptions: {
+				multiple: true, disabled: true, size: 1, dataUrl: 'php/ajax.php?i=forms&oper=get_forms_select',
 				selectFilled:function(options) {
-					$(options.elem).select2({language:LANG.LANG_CURRENT, disabled:true});
+					$(options.elem).chosen({width:'100%', placeholder_text_multiple: ' ', no_results_text: LANG.NO_RESULTS});
 				}
 			}
 		},
-		{name:'created',	width:64, hidden:true, editrules:{edithidden:true}, editoptions:{readonly:'readonly'} },
-		{name:'created_by', width:80, hidden:true, editrules:{edithidden:true}, editoptions:{readonly:'readonly'}, align:"center" },
-		{name:'modified', 	width:64, hidden:true, editrules:{edithidden:true}, editoptions:{readonly:'readonly'} },
-		{name:'modified_by',width:85, hidden:true, editrules:{edithidden:true}, editoptions:{readonly:'readonly'}, align:"center" }
+		{name:'created',	width:40, hidden:V_is_Index_Options, editrules:{edithidden:true}, editoptions:{readonly:'readonly'} },
+		{name:'created_by', width:50, hidden:V_is_Index_Options, editrules:{edithidden:true}, editoptions:{readonly:'readonly'}, align:"center" },
+		{name:'modified', 	width:40, hidden:V_is_Index_Options, editrules:{edithidden:true}, editoptions:{readonly:'readonly'} },
+		{name:'modified_by',width:50, hidden:V_is_Index_Options, editrules:{edithidden:true}, editoptions:{readonly:'readonly'}, align:"center" }
 	],
 	//loadComplete: function(data) {},
 	//gridview: true, //no for treeGrid with subGrid
@@ -154,35 +133,34 @@ $categories.jqGrid({
 	//Forms subGrid #############################
 	subGridRowExpanded: function(subgrid_id, row_id)
 	{
-		//var sub_idPrefix = "cf_"+rowid+"_"; //not needed bcz I have unique ids for each item
 		var sub_idPrefix = "cf_"; //categories/forms
 		var subgrid_table_id = subgrid_id+"_t"; 
 		var sub_pager = "p_"+subgrid_table_id;
 		$("#"+subgrid_id).html("<table id='"+subgrid_table_id+"' class='scroll'></table><div id='"+sub_pager+"' class='scroll'></div>");
 		var cat_id = $categories.jqGrid('getRowData', row_id)['id'];
-		var forms_url = "php/ajax.php?i=forms2categories&ID="+cat_id;
-		
+		var forms_url = "php/ajax.php?i=forms2categories&ID=" + cat_id;
+		//local data
+		var grid_data = V_CATEGORIES_FORMS[cat_id];
+
 		$("#"+subgrid_table_id).jqGrid({
 			url: forms_url,
 			editurl: forms_url,
 			datatype: "local",
-			//datatype: "json",
-			data: V_CATEGORIES_FORMS[cat_id],
-			//loadonce: true,
+			data: grid_data,
+			sortname: 'sort',
 			gridview: true,
 			idPrefix: sub_idPrefix,
-			iconSet: 'fontAwesome',
 			pager: '#'+sub_pager,
 			pgtext: '',
 			altRows: false, //for zebra rows
 			pgbuttons: false,
 			cmTemplate: { editoptions:{size:22}, editable:true },
-			colNames:['', LANG.ID, LF2C.CATEGORY, LF2C.FORM_SELECT, LF2C.FORM_NAME, LF2C.ORDER, LANG.STATUS, LF2C.STOP_DATE, LANG.CREATED, LANG.CREATED_BY, LANG.MODIFIED, LANG.MODIFIED_BY],
+			colNames:['', LANG.ID, LF2C.CATEGORY, LF2C.FORM_ID, LF2C.FORM_SELECT, LF2C.FORM_NAME, LF2C.ORDER, LANG.STATUS, LF2C.STOP_DATE, LANG.CREATED, LANG.CREATED_BY, LANG.MODIFIED, LANG.MODIFIED_BY],
 			colModel:[
 				{ //inline editing buttons and options
 					name:'acc', hidden:(V_GROUP_ADMIN_2?true:false), width:22, fixed:true, sortable:false, editable:false, search: false, resizable:false, formatter:'actions', 
 					formatoptions:{
-						keys:true, //[Enter]=save,[Esc]=cancel
+						keys:true,
 						delbutton:false,
 						editformbutton:true, editOptions:{}
 					}
@@ -190,25 +168,26 @@ $categories.jqGrid({
 				{name:'id', width:32, key:true, search:false, hidden:true },
 				{name:'category_id', width:30, hidden:true, editrules:{edithidden:true}, editoptions:{readonly:'readonly'},
 					formatter:"select", edittype:"select", 
-					editoptions:{size:1, dataUrl:'php/ajax.php?i=categories&oper=get_Categories_Select',
+					editoptions: {
+						size: 1, dataUrl: 'php/ajax.php?i=categories&oper=get_Categories_Select',
 						selectFilled:function(options) {
-							//.prop('readonly', 'readonly') //not work
-							$(options.elem).prop('disabled', 'disabled')
-											.css({'background-color':'#eee','background-image':'none'});
+							$(options.elem).prop('disabled', 'disabled').css({'background-color':'#eee','background-image':'none'});
 							//on add
 							if (options.rowid === '_empty') {
 								//select the right category
-								const cat_id = row_id.split('_');
+								const cat_id = row_id.split('_'); //c_12
 								$('#category_id').val(cat_id[1]);
 							}
 						}
 					}
 				},
-				{name:'form_id', width:150, hidden:true, editrules:{edithidden:true},
+				{name:'form_id', width:20, editoptions:{readonly:'readonly'}},
+				{name:'form_select', width:150, hidden:true, editrules:{edithidden:true},
 					formatter:"select", edittype:"select", 
-					editoptions:{size:1, dataUrl:'php/ajax.php?i=forms&oper=get_forms_select_empty',
+					editoptions: {
+						size: 1, dataUrl: 'php/ajax.php?i=forms&oper=get_forms_select_empty',
 						selectFilled:function(options) {
-							// on add
+							// on add --show only on add
 							if (options.rowid === '_empty') {
 								//disable any existing form from the select list
 								if (V_CATEGORIES_FORMS.hasOwnProperty(cat_id)) {
@@ -222,38 +201,24 @@ $categories.jqGrid({
 										}
 									});
 								}
-								//on select copy option to form_name
+								//on select update form_name and form_id
 								$(options.elem).on('change', function(){
+									$('#form_id').val($(this).find("option:selected").val());
 									$('#form_name').val($(this).find("option:selected").text());
 								});
 							} 
 							else { // on edit
 								$(options.elem).parents('tr').hide(); //hide on edit 
 							}
-					}
+						}
 					}
 				},
-				{name:'form_name', width:150, editoptions:{readonly:'readonly'}},
+				{name:'form_name', width:250, editoptions:{readonly:'readonly'}},
 				{name:'sort', width:30, align:"center", 
 					editoptions: { type: "number", step: "1", min: "0", pattern: "[0-9]+([\.|,][0-9]+)?" }
 				},
-				{name:'status', width:45, fixed:true, align:"center",
-					formatter:"select", edittype:"select", stype:'select', 
-					editoptions:{value:"1:"+LANG.ST_ACTIVE+";0:"+LANG.ST_INACTIVE, defaultValue:'1', size:1},
-					cellattr: function(rowId, val) {
-						if (val==1) return ' class="green"';
-						else return ' class="red"';
-					}
-				},
-				{name:'stop_date', width:64, align:"right", 
-					sorttype:"date", formatter:"date", formatoptions:{srcformat:"Y-m-d", newformat:LANG.GRID.DATE},
-					editoptions:{ dataInit:initDate, style:"width:120px" },
-					cellattr: function(rowId, val) {
-						if (moment(val, 'YYYY-MM-DD').isSame(moment(),'day')) return ' class="orange"';
-						else if (moment(val, 'YYYY-MM-DD').isAfter()) return ' class="green"';
-						else if (moment(val, 'YYYY-MM-DD').isBefore()) return ' class="red"';
-					}
-				},
+				{name:'status', width:45, template: aktivInaktivTemplate },
+				{name:'stop_date', width:64, align:"right", template: stopDateTemplate},
 				{name:'created', width:64, hidden:true, editrules:{edithidden:true}, editoptions:{readonly:'readonly'} },
 				{name:'created_by', width:80, hidden:true, editrules:{edithidden:true}, editoptions:{readonly:'readonly'}, align:"center" },
 				{name:'modified', width:64, hidden:true, editrules:{edithidden:true}, editoptions:{readonly:'readonly'} },
@@ -262,7 +227,7 @@ $categories.jqGrid({
 			loadComplete: function(data) {
 				//Categories Forms data --load again to get fresh data
 				if (this.p.datatype === 'json') { // only after add/edit/delete
-					$.ajax({url:'php/ajax.php?i=forms2categories&oper=cat_forms_all', dataType:'json', success:function(data, result) {
+					$.ajax({url:'php/ajax.php?i=forms2categories&oper=categories_forms_all', dataType:'json', success:function(data, result) {
 						V_CATEGORIES_FORMS = data;
 					}});
 				}
@@ -271,11 +236,11 @@ $categories.jqGrid({
 		.jqGrid('navGrid',"#"+sub_pager,{
 			//iconsOverText: true,
 			edit:false, edittext: LANG.BUTTON_EDIT,
-			add:!V_GROUP_ADMIN_2, //addtext: LANG.BUTTON_ADD,
-			del:V_ADMIN, //deltext: LANG.BUTTON_DELETE,
+			add:!V_GROUP_ADMIN_2, addtext: LANG.BUTTON_ADD,
+			del:V_ADMIN, deltext: LANG.BUTTON_DELETE,
 			search:false, searchtext: LANG.BUTTON_SEARCH,
 			view:false, viewtext: LANG.BUTTON_VIEW,
-			refresh:true, //refreshtext: LANG.BUTTON_RELOAD,
+			refresh:true, refreshtext: LANG.BUTTON_RELOAD,
 			reloadGridOptions: { fromServer: true }
 		},
 		{},
@@ -286,30 +251,21 @@ $categories.jqGrid({
 			}
 		});
 		
+		//subgrid remove rounded conters and set background color
 		$('#gbox_'+subgrid_table_id).removeClass('ui-corner-all');
 		$('#'+sub_pager).removeClass('ui-corner-bottom');
 		const parent_color = $categories.jqGrid('getRowData', row_id)['color'];
 		$("#"+subgrid_id).parent().css('padding', '2px').css("background", parent_color).prev().css("background", parent_color);
+		//set subgid width
+		$('#'+subgrid_table_id).jqGrid('setGridWidth', $categories.width()-30);
 		
-		Responsive_Forms($("#"+subgrid_table_id));
-		
-	}, //subGridRowExpanded Forms
-	subGridRowColapsed: function(subgrid_id, row_id) {
-		$("#"+subgrid_id+"_t").remove();
-		Responsive_Categories();
-	}
+	} //subGridRowExpanded Forms end
 	//end categories subGrid #############################
 	
-	
-}) //$categories.jqGrid({
-//Column Search --not work as treeGrid --need more search
-/*.jqGrid('filterToolbar',{
-	stringResult:true, //send as Json //filters
-	searchOnEnter:false,
-	defaultSearch: 'cn'
-})*/
+}) //$categories.jqGrid({ end
+//Column Search --not work as treeGrid 
 .jqGrid('navGrid',pager,{ //bottom bar
-	iconsOverText: true,
+	//iconsOverText: true,
 	edit:false, edittext: LANG.BUTTON_EDIT,
 	add:!V_GROUP_ADMIN_2, addtext: LANG.BUTTON_ADD,
 	del:V_ADMIN, deltext: LANG.BUTTON_DELETE,
@@ -330,15 +286,16 @@ $categories.jqGrid({
 
 $(pager).children().children().css('table-layout', 'auto'); //fix pager width
 
-if (index_categories) { //for index options
-	$('#gbox_categories').removeClass('ui-corner-all').addClass('ui-corner-bottom')
+if (V_is_Index_Options) { //for index options
+	//remove rounded corners
+	$('#gbox_categories').removeClass('ui-corner-all').addClass('ui-corner-bottom');
 }
 else { //admin page
 	//set Caption from table title/alt
 	$categories.jqGrid('setCaption', $categories.attr('alt'))
-	.closest("div.ui-jqgrid-view") //center Caption and change font-size
-		.children("div.ui-jqgrid-titlebar").css({"text-align":"center", "cursor":"pointer"})
-		.children("span.ui-jqgrid-title").css({"float":"none", "font-size": "17px"});
+		.closest("div.ui-jqgrid-view") //center Caption and change font-size
+			.children("div.ui-jqgrid-titlebar").css({"text-align":"center", "cursor":"pointer"})
+			.children("span.ui-jqgrid-title").css({"float":"none", "font-size": "17px"});
 
 	//Expand/Colapse grid from Caption click
 	$($categories[0].grid.cDiv).on('click',function() {
@@ -349,36 +306,37 @@ else { //admin page
 	}).addClass('ui-corner-all');
 }
 
-
 function Responsive_Categories() { 
-    var p_width = $('#C_Categories_link').prop('clientWidth')||500;// Get width of parent container
-    if (p_width == null || p_width < 1){
-        p_width = $('#C_Categories_link').prop('offsetWidth')||500; // For IE, revert to offsetWidth if necessary
-    }
-    p_width = p_width - 3; //prevent horizontal scrollbars
-	if (p_width != $categories.width()) {
-		$categories.jqGrid('setGridWidth', p_width);
-	
-		 //if have subs opened
+	if (V_is_Index_Options) { //for index options
+		var p_width = $('#C_Categories_link').prop('clientWidth');// Get width of parent container
+		if (p_width == null || p_width < 1){
+			p_width = $('#C_Categories_link').prop('offsetWidth'); // For IE, revert to offsetWidth if necessary
+		}
+		p_width = p_width - 3; //prevent horizontal scrollbars
+		if (p_width != $categories.width()) {
+			$categories.jqGrid('setGridWidth', p_width);
+			//if have subs opened
+			if ($("div[id^=categories_c_]").length > 0) { 
+				$("div[id^=categories_c_]").each(function(){
+					$('#'+this.id+'_t').jqGrid('setGridWidth', $categories.width()-30);
+				});
+			}
+		}
+	}
+	else { //admin page
+		if (grid_width_Max > $(window).width()) {
+			$categories.jqGrid('setGridWidth', $(window).width()-30);
+		} else {
+			$categories.jqGrid('setGridWidth', grid_width_Max);
+		}
 		if ($("div[id^=categories_c_]").length > 0) { 
 			$("div[id^=categories_c_]").each(function(){
-				Responsive_Forms($('#'+this.id+'_t'));
+				$('#'+this.id+'_t').jqGrid('setGridWidth', $categories.width()-30);
 			});
 		}
 	}
 }
 Responsive_Categories();
-
-function Responsive_Forms(sub) { 
-    var p_width = $('#C_Categories_link').prop('clientWidth')||500;// Get width of parent container
-    if (p_width == null || p_width < 1){
-        p_width = $('#C_Categories_link').prop('offsetWidth')||500; // For IE, revert to offsetWidth if necessary
-    }
-    p_width = p_width - 30; //prevent horizontal scrollbars
-	if (p_width != sub.width()) {
-		sub.jqGrid('setGridWidth', p_width);
-	}
-}
 
 //on window resize -> resize grids
 $(window).on('resize', function() {

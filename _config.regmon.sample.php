@@ -119,6 +119,14 @@ $CONFIG['SEC_Encrypt_Secret'] = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTU
 $CONFIG['SEC_Hash_IP'] = true; 
 
 /**
+ * Use_VisualCaptcha - helps us to limit bruteforces attacks.
+ * In some apache configuration is not working
+ * set Use_VisualCaptcha = false to bypass captcha validation
+ * ===================================================
+ */
+$CONFIG['Use_VisualCaptcha'] = true;
+
+/**
  * LogLimiter - helps us to limit bruteforces attacks.
  * ===================================================
  */

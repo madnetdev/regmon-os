@@ -19,7 +19,7 @@ var st_waitLR = '<span class="req G_waitLR" title="'+LANG.R_STATUS.REQ_WAIT_CANC
 var st_waitLA = '<span class="req G_waitLA" title="'+LANG.R_STATUS.REQ_WAIT_CANCELED_ATHLETE+'">17</span>'; //17
 var st_waitN = '<span class="req G_waitN" title="'+LANG.R_STATUS.REQ_WAIT_REJECTED_ATHLETE+'">8</span>'; //8
 var st_wait = '<span class="req G_wait" title="'+LANG.R_STATUS.REQUEST_WAIT+'">9</span>'; //9
-var req_status = ':X;null:'+st_null+';1:'+st_yes+';5:'+st_leaveR+';15:'+st_leaveA+';0:'+st_no+';7:'+st_waitLR+';17:'+st_waitLA+';8:'+st_waitN+';9:'+st_wait;
+var request_status = ':X;null:'+st_null+';1:'+st_yes+';5:'+st_leaveR+';15:'+st_leaveA+';0:'+st_no+';7:'+st_waitLR+';17:'+st_waitLA+';8:'+st_waitN+';9:'+st_wait;
 
 var LU = LANG.USERS;
 var currentPage = 1;
@@ -53,18 +53,15 @@ $trainer_users.jqGrid({
 			searchoptions: { sopt: ['cn', 'eq', 'ne', 'lt', 'le', 'gt', 'ge'] }
 		},
 		{name:'u.sport',		width:90, formatter:"select", edittype:"select", align:"center"},
-		{name:'u.sex', 			width:65, formatter:"select", edittype:"select", align:"center",
-			editoptions:{value: "0:"+LU.SEX_MALE+";1:"+LU.SEX_FEMALE},
-			stype:'select', searchoptions: {sopt:['eq', 'ne'], value:":;0:"+LU.SEX_MALE+";1:"+LU.SEX_FEMALE},
-		},
+		{name:'u.sex', 			width:65, template: sexTemplate},
 		{name:'u.body_height',	width:45, formatter:"select", edittype:"select", align:"center"},
 		{name:'u.created', 		width:64, hidden:true},
 		{name:'u.modified', 	width:64, hidden:true},
 		{name:'freigaben_link', width:24, fixed:true, sortable:false, editable:false, resizable:false, search:false, align:"center"},
 		{name:'u2t.status',		width:30, formatter:"select", edittype:"select", align:"center",
 			fixed:true, editable:false, resizable:false,
-			editoptions:{value: req_status},
-			stype:'select', searchoptions: {sopt:['eq', 'ne'], value: req_status}
+			editoptions:{value: request_status},
+			stype:'select', searchoptions: {sopt:['eq', 'ne'], value: request_status}
 		}
 	],
 	loadComplete: function(data) {
@@ -110,14 +107,6 @@ $('#gbox_trainer_users .ui-jqgrid-hdiv').css('overflow', 'visible'); //fix pager
 //Request Status Select ###############################################################
 $('select[name="u2t.status"]').chosen({width:'26px', disable_search:true, disable_search_threshold:15});
 
-
-/*$("#selectAll").on('click',function(){
-	$trainer_users.jqGrid('resetSelection'); //clear select
-	var ids = $trainer_users.jqGrid('getDataIDs');
-	for (var i=0, il=ids.length; i < il; i++) {
-		$trainer_users.jqGrid('setSelection',ids[i], true);
-	}
-});*/
 
 var athletes_ids = [];
 var Athletes_Confirm_Header = '';

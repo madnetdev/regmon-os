@@ -35,16 +35,16 @@ function get_Trainers_2_Groups() {
 	return $trainers_2_groups;
 }
 
-function get_Locations() {
+function get_Locations_array() {
 	global $db;
-	$locations = array();
+	$locations_arr = array();
 	$rows = $db->fetch("SELECT id, name, admin_id FROM locations WHERE status = 1 ORDER BY id", array()); 
 	if ($db->numberRows() > 0)  {
 		foreach ($rows as $row) {
-			$locations[$row['id']] = array($row['name'], $row['admin_id']);
+			$locations_arr[$row['id']] = array($row['name'], $row['admin_id']);
 		}
 	}
-	return $locations;
+	return $locations_arr;
 }
 
 function get_Group_Request_Status_Class($group_status) {

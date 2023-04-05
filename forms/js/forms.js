@@ -101,7 +101,7 @@ $(window).on('scroll',function() {
 $(window).on('beforeunload', function(){
 	if (!V_PREVIEW && !V_VIEW) {
 		//Do you really want to leave the page? \n All changes will be lost
-		return "\n\n"+LEAVE_PAGE_WARNING+"\n\n"; 
+		return "\n\n"+LANG.LEAVE_PAGE_WARNING+"\n\n"; 
 	}
 });
 

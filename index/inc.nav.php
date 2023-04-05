@@ -16,9 +16,9 @@
 				<ul class="nav navbar-nav navbar-right">
 					<?php /*<li><a href="offline/" class="nav_offline" style="color:#ddd;" target="_blank"><i class="fa fa-wifi" style="font-size:14px; color:#ddd;"></i> &nbsp; Offline</a></li>@@@@@@@@@@@@@ offline disabled for now*/?>
 					
-				<?php /* if ($ADMIN) { ?>
+				<?php if ($ADMIN) { ?>
 					<li><a href="administration.php" class="nav_link nav_admin"><i class="fa fa-cogs"></i> &nbsp; <?=$LANG->BUTTON_ADMINISTRATION;?></a></li>
-				<?php  } @@@@@@@@@@@@@@@@ admin page disabled for now*/?>
+				<?php } ?>
 
 					<?php /*<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bar-chart"></i> &nbsp; <?=$LANG->BUTTON_RESULTS;?> &nbsp; <b class="caret"></b></a>
@@ -36,8 +36,8 @@
 						</ul>
 					</li>
 					
-					<li><a href="index/box.regman_info.php" class="nav_link nav_profile fancybox fancybox.ajax"><i class="fa fa-info-circle"></i></a></li>
-					<li><a href="login/box.profile_edit.php" class="nav_link nav_profile fancybox fancybox.ajax"><i class="fa fa-user"></i> &nbsp; <?=$LANG->BUTTON_USER_ACCOUNT;?></a></li>
+					<li><a href="index/ajax.page.regman_info.php" class="nav_link nav_profile fancybox fancybox.ajax"><i class="fa fa-info-circle"></i></a></li>
+					<li><a href="login/ajax.page.profile_edit.php" class="nav_link nav_profile fancybox fancybox.ajax"><i class="fa fa-user"></i> &nbsp; <?=$LANG->BUTTON_USER_ACCOUNT;?></a></li>
 					<li><a href="login/logout.php" class="nav_link nav_logout"><i class="fa fa-lock"></i> &nbsp; <?=$LANG->BUTTON_LOGOUT;?></a></li>
 				</ul>
 			</div>

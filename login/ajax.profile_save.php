@@ -2,8 +2,6 @@
 require_once('../_settings.regmon.php');
 require('validate.php');
 
-//print_r($_POST); exit;
-
 $values = array();			
 foreach ($_POST as $key => $val) {
 	$key = trim((string)$key); 
@@ -28,9 +26,15 @@ foreach ($_POST as $key => $val) {
 }		
 
 // Check if all fields are filled up
-if (trim($values['uname']) == '') { echo $LANG->WARN_EMPTY_USERNAME; exit;}
+if (trim($values['uname']) == '') {
+	echo $LANG->WARN_EMPTY_USERNAME;
+	exit;
+}
 if (trim($_POST['passwd']) != '') {
-	if (trim($_POST['passwd']) != trim($_POST['pass_confirm'])) { echo $LANG->WARN_CONFIRM_PASSWORD; exit;}
+	if (trim($_POST['passwd']) != trim($_POST['pass_confirm'])) {
+		echo $LANG->WARN_CONFIRM_PASSWORD;
+		exit;
+	}
 	$values['passwd'] = MD5($_POST['passwd']);
 }
 
@@ -45,45 +49,33 @@ $group_name = $_POST['group_name'];
 $level_id = $_POST['level_id'];
 $profile = $_POST['profile'];
 
-//sport
-$sports = array();
-$rows = $db->fetch("SELECT name FROM sports WHERE status = 1", array()); 
-if ($db->numberRows() > 0)  {
-	foreach ($rows as $row) {
-		$sports[] = $row['name'];
-	}
-}
+//check if we have a new sport to activate
 $values['sport'] = '';
 $sport_new = '';
-$sport_all = '';
-$sport_new_to_user = '';
-$i = $ii = $iii = 0;
+$sport_to_admin = '';
 if (isset($_POST['sport']) AND count($_POST['sport'])) {
-	foreach ($_POST['sport'] as $sport) {
-		$i++;
-		if ($i != 1) {
-			$sport_all .= ', ';
+	$sports_arr = array();
+	$rows = $db->fetch("SELECT options FROM sports WHERE status = 1 AND parent_id != 0 ORDER BY options", array()); 
+	if ($db->numberRows() > 0)  {
+		foreach ($rows as $row) {
+			$sports_arr[] = $row['options'];
 		}
-		if (!in_array($sport, $sports)) { //if new sport
-			$iii++;
-			if ($iii != 1) {
-				$sport_new .= ', ';
-				$sport_new_to_user .= ', ';
-			}
+	}
+	foreach ($_POST['sport'] as $sport) {
+		if ($values['sport'] != '') $values['sport'] .= ', ';
+		if ($sport_to_admin != '') $sport_to_admin .= ', ';
+		if ($sport_new != '') $sport_new .= ', ';
+		//if sport not exist
+		if (!in_array($sport, $sports_arr)) {
 			$activate_sport_code = MD5($CONFIG['SEC_Encrypt_Secret'] . $values['uname'].$sport);
 			$activate_sport_link = "<a href='".$CONFIG['HTTP'].$CONFIG['DOMAIN'].'/'.$CONFIG['REGmon_Folder']."login/new_sport_suggestion.php?sport=".$sport."&uname=".$values['uname']."&code=".$activate_sport_code."' target='_blank'>".$LANG->REGISTER_APPROVE_PROPOSAL."</a>";
+
 			$sport_new .= $sport;
-			$sport_new_to_user .= '<u style="color:blue;">'.$sport.' ('.$LANG->REGISTER_APPROVE_WAIT.')</u>';
-			$sport_all .= '<u style="color:blue;">'.$sport.' ('.$activate_sport_link.')</u>';
+			$sport_to_admin .= '<u style="color:blue;">'.$sport.' ('.$activate_sport_link.')</u>';
 		}
 		else {
-			$ii++;
-			if ($ii != 1) {
-				$values['sport'] .= ',';
-			}
 			$values['sport'] .= $sport;
-			//$sport_new .= $sport;
-			$sport_all .= $sport;
+			$sport_to_admin .= $sport;
 		}
 	}
 }
@@ -93,11 +85,10 @@ $update = $db->update($values, "users", "id=?", array($UID));
 
 
 if ($sport_new != '') {
-	// Email ///////////////////////////////////////////////////////////////////////////
+	// Email #######################################################
 	require('../php/email.php');
 
-	//Admin email for activation of new user account
-	//$group_admins = $db->fetchRow("SELECT GROUP_CONCAT( u.email ) AS emails FROM users u
+	//Admin email for activation of new sport
 	$admin_rows = $db->fetch("SELECT u.lastname, u.email FROM users u
 		LEFT JOIN `groups` gr ON gr.id = ?
 		WHERE FIND_IN_SET( u.id, gr.admins_id )", array($group_id));
@@ -106,6 +97,7 @@ if ($sport_new != '') {
 		$admin_rows = $db->fetch("SELECT name, email FROM users WHERE level='99'", array());
 	}
 	
+	//sent email to each group admin
 	foreach ($admin_rows as $admin) {
 		//Admin email for activation of new Sport
 		$profile = ($level_id>10?'<b>'.$profile.'</b>':$profile);
@@ -113,7 +105,7 @@ if ($sport_new != '') {
 		$Message_admin = str_replace('{Username}', $_POST['uname'], $LANG->EMAIL_NEW_SPORTART_ADMIN_MESSSAGE);
 		$Message_admin = str_replace('{Lastname}', $_POST['lastname'], $Message_admin);
 		$Message_admin = str_replace('{Firstname}', $_POST['firstname'], $Message_admin);
-		$Message_admin = str_replace('{Sport}', $sport_all, $Message_admin);
+		$Message_admin = str_replace('{Sport}', $sport_to_admin, $Message_admin);
 		$Message_admin = str_replace('{Email}', $_POST['email'], $Message_admin);
 		$Message_admin = str_replace('{Telephone}', $_POST['telephone'], $Message_admin);
 		$Message_admin = str_replace('{Location}', $location_name, $Message_admin);
@@ -126,43 +118,34 @@ if ($sport_new != '') {
 }
 
 
-$success = ''.
-'<div class="alert alert-success alert-dismissible" role="alert">
-	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	<strong>'.$LANG->SUCCESS.'!</strong> '.$LANG->PROFILE_SAVED.' &nbsp; '
-	.($sport_new!=''?$sport_new_to_user.' &nbsp; ':'')
-	.'<a href="javascript:void(0)" onclick="jQuery.fancybox.close();" class="alert-link text-nowrap">'.$LANG->CLOSE.'</a>'
-.'</div>';
-
-$error = ''.
-'<div class="alert alert-danger alert-dismissible" role="alert">
-	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	<strong>'.$LANG->ERROR.'!</strong> '.$LANG->PROFILE_NOT_SAVED.'
-</div>';
-
+$success = '<strong>'.$LANG->SUCCESS.'!</strong> '.$LANG->PROFILE_SAVED.' &nbsp; ';
+if ($sport_new != '') {
+	$success = '<br><br>'.$LANG->SPORTS_NEW_NEED_APPROVE.'<br>'.$sport_new.' &nbsp; ';
+}
+$error = '<strong>'.$LANG->ERROR.'!</strong> '.$LANG->PROFILE_NOT_SAVED;
 ?>
 <script>
-<?php if ($update) { //echo $success; ?>
+<?php if ($update) { ?>
 	parent.Swal({
 		type: 'success',
-		title: 'Änderungen gespeichert.',
-		showConfirmButton: false,
-		timer: 2000
+		title: '<?=$success;?>',
+		width: '450px'
+		//showConfirmButton: false,
+		//timer: 2000
 	});
 	//update dashboard checkbox
 	<?php if ($values['dashboard'] == '0') { ?>
-		//$('#open_dashboard_onlogin:checked').trigger("click"); //we not need click/trigger just change
 		$('#open_dashboard_onlogin').prop('checked', false);
 	<?php } else { ?>
-		//$('#open_dashboard_onlogin').not(':checked').trigger("click"); //we not need click/trigger just change
 		$('#open_dashboard_onlogin').prop('checked', true);
 	<?php } ?>
-<?php } else { //echo $error; ?>
+<?php } else { ?>
 	parent.Swal({
 		type: 'error',
-		title: 'Error!',
-		showConfirmButton: false,
-		timer: 2000
+		title: '<?=$error;?>',
+		width: '450px'
+		//showConfirmButton: false,
+		//timer: 2000
 	});
 <?php } ?>
 </script>

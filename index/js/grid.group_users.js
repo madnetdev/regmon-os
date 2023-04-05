@@ -7,40 +7,32 @@ var $group_users = false;
 jQuery(function() 
 {
 
-var st_all = '<span class="req">.</span>'; //all
-var st_no = '<span class="req G_no" title="'+LANG.R_STATUS.REQUEST_REJECTED+'">0</span>'; //0
-var st_yes = '<span class="req G_yes" title="'+LANG.R_STATUS.REQUEST_ACCEPTED+'">1</span>'; //1
-var st_leaveR = '<span class="req G_leaveR" title="'+LANG.R_STATUS.CANCELED_ACCESS_USER+'">5</span>'; //5
-var st_leaveA = '<span class="req G_leaveA" title="'+LANG.R_STATUS.CANCELED_ACCESS_GROUP+'">15</span>'; //15
-var st_waitLR = '<span class="req G_waitLR" title="'+LANG.R_STATUS.REQ_WAIT_CANCELED_USER+'">7</span>'; //7
-var st_waitLA = '<span class="req G_waitLA" title="'+LANG.R_STATUS.REQ_WAIT_CANCELED_GROUP+'">17</span>'; //17
-var st_waitN = '<span class="req G_waitN" title="'+LANG.R_STATUS.REQ_WAIT_REJECTED_USER+'">8</span>'; //8
-var st_wait = '<span class="req G_wait" title="'+LANG.R_STATUS.REQUEST_WAIT+'">9</span>'; //9
-var st_new = '<span class="req G_new" title="'+LANG.R_STATUS.REQ_WAIT_NEW_USER+'">10</span>'; //10
-var st_newx = '<span class="req G_newx" title="'+LANG.R_STATUS.REQ_WAIT_USER_INACTIVE+'">11</span>'; //11
-var req_status = ':X;1:'+st_yes+';5:'+st_leaveR+';15:'+st_leaveA+';0:'+st_no+';7:'+st_waitLR+';17:'+st_waitLA+';8:'+st_waitN+';9:'+st_wait+';10:'+st_new+';11:'+st_newx;
+var rs_no = LANG.R_STATUS.REQUEST_REJECTED; //0
+var rs_yes = LANG.R_STATUS.REQUEST_ACCEPTED; //1
+var rs_leaveR = LANG.R_STATUS.CANCELED_ACCESS_USER; //5
+var rs_leaveA = LANG.R_STATUS.CANCELED_ACCESS_GROUP; //15
+var rs_waitLR = LANG.R_STATUS.REQ_WAIT_CANCELED_USER; //7
+var rs_waitLA = LANG.R_STATUS.REQ_WAIT_CANCELED_GROUP; //17
+var rs_waitN = LANG.R_STATUS.REQ_WAIT_REJECTED_USER; //8
+var rs_wait = LANG.R_STATUS.REQUEST_WAIT; //9
+var rs_new = LANG.R_STATUS.REQ_WAIT_NEW_USER; //10
+var rs_newx = LANG.R_STATUS.REQ_WAIT_USER_INACTIVE; //11
+var request_status = ':;1:'+rs_yes+';5:'+rs_leaveR+';15:'+rs_leaveA+';0:'+rs_no+';7:'+rs_waitLR+';17:'+rs_waitLA+';8:'+rs_waitN+';9:'+rs_wait+';10:'+rs_new+';11:'+rs_newx;
+
+var rs_H_all = '<span class="req">.</span>'; //all
+var rs_H_no = '<span class="req G_no" title="'+rs_no+'">0</span>'; //0
+var rs_H_yes = '<span class="req G_yes" title="'+rs_yes+'">1</span>'; //1
+var rs_H_leaveR = '<span class="req G_leaveR" title="'+rs_leaveR+'">5</span>'; //5
+var rs_H_leaveA = '<span class="req G_leaveA" title="'+rs_leaveA+'">15</span>'; //15
+var rs_H_waitLR = '<span class="req G_waitLR" title="'+rs_waitLR+'">7</span>'; //7
+var rs_H_waitLA = '<span class="req G_waitLA" title="'+rs_waitLA+'">17</span>'; //17
+var rs_H_waitN = '<span class="req G_waitN" title="'+rs_waitN+'">8</span>'; //8
+var rs_H_wait = '<span class="req G_wait" title="'+rs_wait+'">9</span>'; //9
+var rs_H_new = '<span class="req G_new" title="'+rs_new+'">10</span>'; //10
+var rs_H_newx = '<span class="req G_newx" title="'+rs_newx+'">11</span>'; //11
+var request_status_Html = ':;1:'+rs_H_yes+';5:'+rs_H_leaveR+';15:'+rs_H_leaveA+';0:'+rs_H_no+';7:'+rs_H_waitLR+';17:'+rs_H_waitLA+';8:'+rs_H_waitN+';9:'+rs_H_wait+';10:'+rs_H_new+';11:'+rs_H_newx;
 
 var LU = LANG.USERS;
-var initDate = function (el) {
-	setTimeout(function () {
-		$(el).after(' <i class="fa fa-calendar" style="font-size:14px;"></i>').next()
-			.on('click',function(e) {
-				$(el).datepicker('show');
-				return false;
-			});
-		$(el).datepicker({
-			changeMonth: true,
-			changeYear: true,
-			yearRange: "-85:-5",
-			//showButtonPanel: true,
-			dateFormat:LANG.DATEPICKER.DATE
-		});
-		$('.ui-datepicker').css({'font-size':'75%'});
-	}, 100);
-};
-//var V_USER_LVL_OPTIONS = "0:"; //from index.php
-//var V_SPORTS_OPTIONS = "0:"; //from grid.group_users.php
-//var V_BODY_HEIGHT_OPTIONS = "0:"; //from grid.group_users.php
 var currentPage = 1;
 var idPrefix = "ug_";
 var pager = "#UGpager";
@@ -68,28 +60,9 @@ $group_users.jqGrid({
 		{ //inline editing buttons and options
 			name: 'acc', hidden:!(V_ADMIN||V_LOCATION_ADMIN||V_GROUP_ADMIN||V_GROUP_ADMIN_2), width:22, fixed:true, sortable:false, editable:false, search: false, resizable:false, formatter:'actions', 
 			formatoptions:{
-				keys:true, //[Enter]=save,[Esc]=cancel
+				keys:true,
 				delbutton:false,
-				editformbutton:true, 
-				editOptions:{
-					width:400,
-					afterShowForm: function(form) {
-						//gray out not used fields
-						$('input[readonly], select[readonly]').css({'background-color':'#eee','background-image':'none'});
-						$('#sport').chosen({placeholder_text_multiple: LU.SPORT, no_results_text:'Nichts gefunden!'});
-						$('#sport_chosen .chosen-results').css('max-height', '195px');
-						$('.navButton').hide();
-					},
-					afterComplete: function (response, postdata, formid) {
-						if (V_GROUP_ADMINS_OPTIONS != undefined) {
-							//Group Admins Reset
-							$.ajax({url:'php/ajax.php?i=groups&oper=groups_admins&location_id='+V_Group_2_Location[V_GROUP][0], success:function(data, result) {
-								V_GROUP_ADMINS_OPTIONS = data;
-								$location_groups.jqGrid('setColProp', 'admins_id', { editoptions: { value: V_GROUP_ADMINS_OPTIONS } });
-							}});
-						}
-					}
-				}
+				editformbutton:true
 			}
 		},
 		{name:'id',key:true, width:35, align:"center", hidden:true, /*formatter:'number',*/ sorttype:'int'},
@@ -100,18 +73,20 @@ $group_users.jqGrid({
 		{name:'name', 	 	width:90},
 		{name:'birth_date', width:98, align:"right", 
 			sorttype:"date", formatter:"date", formatoptions:{srcformat:"Y-m-d", newformat:LANG.GRID.DATE},
-			editoptions:{ dataInit:initDate, style:"width:120px" },
+			editoptions:{ dataInit:initDate, style:"width:70%" },
 			searchoptions: { sopt: ['cn', 'eq', 'ne', 'lt', 'le', 'gt', 'ge'] }
 		},
 		{name:'sport', width:80,
-				formatter:"select", edittype:"select", align:"center",
-				editoptions:{value: V_SPORTS_OPTIONS, defaultValue: '000', size:3, style:"width:200px", multiple:true}
+				formatter:"select", edittype:"select", stype:'select',
+				searchoptions: {sopt:['cn','eq','ne'], value:V_SPORTS_OPTIONS},	
+				editoptions:{
+					value:V_SPORTS_OPTIONS, multiple:true, size:1, dataUrl:'php/ajax.php?i=sports&oper=sports_select', 
+					selectFilled:function(options) {
+						$(options.elem).chosen({width:'100%', placeholder_text_multiple: ' ', no_results_text: LANG.NO_RESULTS});
+					}
+				}
 		},
-		{name:'sex', width:60,
-				formatter:"select", edittype:"select", align:"center",
-				editoptions:{value: "0:"+LU.SEX_MALE+";1:"+LU.SEX_FEMALE, defaultValue: '0', size:1, style:"width:120px"},
-				stype:'select', searchoptions: {sopt:['eq', 'ne'], value:":;0:"+LU.SEX_MALE+";1:"+LU.SEX_FEMALE},
-		},
+		{name:'sex', width:60, template: sexTemplate},
 		{name:'body_height', width:40,
 				formatter:"select", edittype:"select", align:"center",
 				editoptions:{value: V_BODY_HEIGHT_OPTIONS, defaultValue: '100 cm', size:1}
@@ -120,7 +95,7 @@ $group_users.jqGrid({
 		{name:'telephone', width:130, hidden:true, editrules:{edithidden:true} },
 		{name:'level', width:65,
 				formatter:"select", edittype:"select", align:"center",
-				editoptions:{value: V_USER_LVL_OPTIONS, defaultValue: '10', size:1, style:"width:180px"},
+				editoptions:{value: V_USER_LVL_OPTIONS, defaultValue: '10', size:1, style:"width:100%"},
 				stype:'select', searchoptions: {sopt:['eq', 'ne'], value:":;"+V_USER_LVL_OPTIONS},
 		},
 		{name:'lastlogin', 	width:64, hidden:true, editrules:{edithidden:true}, editoptions:{readonly:'readonly'} },
@@ -129,8 +104,8 @@ $group_users.jqGrid({
 		{name:'modified', 	width:64, hidden:true, editrules:{edithidden:true}, editoptions:{readonly:'readonly'} },
 		{name:'status',		width:30, formatter:"select", edittype:"select", align:"center",
 			fixed:true, editable:false, resizable:false,
-			editoptions:{value: req_status},
-			stype:'select', searchoptions: {sopt:['eq', 'ne'], value: req_status}
+			editoptions:{value: request_status_Html},
+			stype:'select', searchoptions: {sopt:['eq', 'ne'], value: request_status}
 		}
 	],
 	loadComplete: function(data) {
@@ -160,63 +135,14 @@ $group_users.jqGrid({
 	add: (V_ADMIN||V_LOCATION_ADMIN||V_GROUP_ADMIN||V_GROUP_ADMIN_2), addtext: LANG.BUTTON_ADD,
 	del: false, 	deltext: LANG.BUTTON_DELETE,
 	search: false, 	searchtext: LANG.BUTTON_SEARCH,
-	view: false, 	viewtext: LANG.BUTTON_VIEW,
-	refresh: false, refreshtext: LANG.BUTTON_RELOAD
-},
-{}, //edit
-{ //add
-	width:400,
-	afterShowForm: function(form) {
-		//gray out not used fields
-		$('input[readonly], select[readonly]').css({'background-color':'#eee','background-image':'none'});
-		$('#sport').chosen({placeholder_text_multiple: LU.SPORT, no_results_text:'Nichts gefunden!'});
-		$('#sport_chosen .chosen-results').css('max-height', '195px');
-		currentPage = $group_users.jqGrid("getGridParam", "page"); //for loadComplete
-	},
-	afterComplete: function (response, postdata, formid) {
-		if (V_GROUP_ADMINS_OPTIONS != undefined) {
-			//Group Admins Reset
-			$.ajax({url:'php/ajax.php?i=groups&oper=groups_admins&location_id='+V_Group_2_Location[V_GROUP][0], success:function(data, result) {
-				V_GROUP_ADMINS_OPTIONS = data;
-				$location_groups.jqGrid('setColProp', 'admins_id', { editoptions: { value: V_GROUP_ADMINS_OPTIONS } });
-			}});
-		}
-	}
-},
-{}, //del
-{}, //search
-{}  //view
-);
+	view: true, 	viewtext: LANG.BUTTON_VIEW,
+	refresh: true, refreshtext: LANG.BUTTON_RELOAD
+});
 
-
-/* //get it from grid.group_users.php
-//Sports Options Reset
-$.ajax({url:'php/ajax.php?i=sports&oper=sports_options', success:function(data, result) {
-	V_SPORTS_OPTIONS = '00'+data;
-	$group_users.jqGrid('setColProp', 'sport', { editoptions: { value: V_SPORTS_OPTIONS } });
-}});
-//BodyHeight Options Reset
-$.ajax({url:'php/ajax.php?i=dropdowns&oper=user_height', success:function(data, result) {
-	V_BODY_HEIGHT_OPTIONS = data;
-	$group_users.jqGrid('setColProp', 'body_height', { editoptions: { value: V_BODY_HEIGHT_OPTIONS } });
-}});
-*/
 
 $(pager).children().children().css('table-layout', 'auto'); //fix pager width
 $('#gbox_group_users').removeClass('ui-corner-all').addClass('ui-corner-bottom')
 $('#gbox_group_users .ui-jqgrid-hdiv').css('overflow', 'visible'); //fix header for chosen
-
-//Request Status Select ###############################################################
-$('select[name="status"]').chosen({width:'26px', disable_search:true});
-
-
-/*$("#selectAll").on('click',function(){
-	$group_users.jqGrid('resetSelection'); //clear select
-	var ids = $group_users.jqGrid('getDataIDs');
-	for (var i=0, il=ids.length; i < il; i++) {
-		$group_users.jqGrid('setSelection',ids[i], true);
-	}
-});*/
 
 
 var group_users_ids = [];

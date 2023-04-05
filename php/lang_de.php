@@ -93,7 +93,7 @@ array(
 	'REGISTER_PRIVATE_KEY_ERROR'=> 'Privat Schlüssel Fehler',
 	'REGISTER_BACK' 			=> 'Zurück',
     'REGISTER_BACKWARD'			=> 'rückwärts',
-	//User Account - box.profile_edit.php
+	//User Account - ajax.page.profile_edit.php
 	'PROFILE_USER_ACCOUNT' 		=> 'Benutzerkonto',
 	'PROFILE_LOCATION' 			=> 'Standort (aktiv)',
 	'PROFILE_GROUP' 			=> 'Gruppe (aktiv)',
@@ -205,20 +205,31 @@ array(
 	//ajax.sports
 	'EMPTY_SPORT_NAME' 		=> 'Warnung! Leere Sportart',
 	'WARN_SPORT_EXIST' 		=> 'Warnung! Dieses Sportart ist bereits vorhanden. <br> Bitte benutzen Sie einen anderen Namen.',
+	'EMPTY_SPORT_GROUP' 	=> 'Warnung! Leere Sportgruppe',
+	'WARN_SPORT_GROUP_EXIST'=> 'Warnung! Dieses Sportgruppe ist bereits vorhanden. <br> Bitte benutzen Sie einen anderen Namen.',
+	//ajax.tags
+	'EMPTY_TAG_NAME' 		=> 'Warnung! Leere Tag Name',
+	'WARN_TAG_EXIST' 		=> 'Warnung! Dieses Tag ist bereits vorhanden. <br> Bitte benutzen Sie einen anderen Namen.',
 	//ajax.dropdowns
-	'EMPTY_DROPDOWN_NAME' 	=> 'Warnung! Leere Name',
-	'WARN_DROPDOWN_EXIST' 	=> 'Warnung! Dieses Dropdown ist bereits vorhanden. <br> Bitte benutzen Sie einen anderen Namen.',
+	'EMPTY_DROPDOWN_NAME' 	=> 'Warnung! Leere Dropdown name',
+	'WARN_DROPDOWN_NAME_EXIST'=> 'Warnung! Dieses Dropdown name ist bereits vorhanden. <br> Bitte benutzen Sie einen anderen Namen.',
+	'EMPTY_DROPDOWN_OPTION' => 'Warnung! Leere Dropdown option',
+	'WARN_DROPDOWN_OPTION_EXIST'=> 'Warnung! Dieses Dropdown option ist bereits vorhanden. <br> Bitte benutzen Sie einen anderen Namen.',
 	'WARN_DROPDOWN_DELETE' 	=> 'Warnung! Kann nicht löschen. <br> Habe ({OPTIONS_NUM}) Optionen.',
 	'WARN_DROPDOWN_NOT_DELETE'	=> 'Warnung! Kann nicht löschen diese',
 	'WARN_DROPDOWN_NOT_CHANGE'	=> 'Warnung! Kann nicht ändern',
 
 	//VERWALTUNG  //admin - //benutzerkonten.php
 	'ADMIN_PAGE_TITLE'		=> 'Verwaltung - REGmon',
-	'ADMIN_USERS' 			=> 'Benutzerkonten',
 	'ADMIN_LOCATIONS' 		=> 'Standorte',
 	'ADMIN_GROUPS' 			=> 'Gruppen',
-	'ADMIN_SPORTS' 			=> 'Sportarten',
+	'ADMIN_USERS' 			=> 'Benutzerkonten',
 	'ADMIN_DROPDOWNS' 		=> 'Dropdowns und Fragebogenformat',
+	'ADMIN_SPORTS' 			=> 'Sportarten',
+	'ADMIN_TAGS' 			=> 'Tags',
+	'ADMIN_TEMPLATES_FORMS' => 'Formulare Vorlagen',
+	'ADMIN_TEMPLATES_GROUPS'=> 'Gruppen Vorlagen',
+	'ADMIN_TEMPLATES_Y_AXIS'=> 'Y-Achsen Vorlagen',
 
 	//trainers
 	'TRAINER_USERS' 		=> 'Benutzerkonten',
@@ -227,8 +238,9 @@ array(
 	'LOCATION_GROUPS'		=> 'Standort Gruppen',
 
 	//sports
-	'SPORT' 				=> 'Sportart',
-	'SPORTS' 				=> 'Sportarten',
+	'SPORT' 					=> 'Sportart',
+	'SPORTS' 					=> 'Sportarten',
+	'SPORTS_NEW_NEED_APPROVE'	=> 'Die folgenden Sportarten müssen von einem Administrator genehmigt werden:',
 
 	//dropdowns
 	'DROPDOWNS' 			=> 'Dropdowns und Fragebogenformat',
@@ -493,7 +505,6 @@ array(
 'Sie haben sich auf <a href="{HTTP}{DOMAIN}/{REGmon_Folder}" target="_blank">{DOMAIN}/{REGmon_Folder}</a> ein Benutzerkonto als {Profile} erstellt.
 <br>
 <br>Benutzername: {Username}
-<br>Passwort: {Password}
 <br>
 <br>Nachname: {Firstname}
 <br>Vorname: {Lastname}
@@ -527,7 +538,6 @@ array(
 'Es wurde ein neues Benutzerkonto auf <a href="{HTTP}{DOMAIN}/{REGmon_Folder}" target="_blank">{DOMAIN}/{REGmon_Folder}</a> erstellt.
 <br>
 <br>Benutzername: {Username}
-<br>Passwort: {Password}
 <br>
 <br>Nachname: {Firstname}
 <br>Vorname: {Lastname}

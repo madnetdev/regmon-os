@@ -3,8 +3,17 @@
 declare(strict_types=1);
 require_once('_settings.regmon.php');
 require('login/validate.php');
+require_once('php/functions.php');
 require_once('index/index_functions.php');
-require('index/inc.index_init.php');
+
+$groups_admins_options_grid = get_groups_admins_select(true);
+
+$sports_groups_options_grid = get_Sports_Groups(true);
+$sports_options_grid = get_Sports_Select_Options(true);
+
+$body_height_options_grid = get_Body_Height_Options('', true);
+
+require('index/inc.groups_athletes_select.php');
 ?>
 <!DOCTYPE html>
 <html lang="<?=$LANG->LANG_CURRENT;?>">
@@ -71,11 +80,8 @@ require('index/inc.index_init.php');
 <link rel="stylesheet" type="text/css" href="css/overrides/icheck/skins/flat/green2s.css">
 <script type="text/javascript" src="node_modules/icheck/icheck.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="node_modules/chosen-js/chosen.min.css" />
-<script type="text/javascript" src="node_modules/chosen-js/chosen.jquery.min.js"></script>
-
-<link rel="stylesheet" type="text/css" href="node_modules/select2/dist/css/select2.min.css" />
-<script type="text/javascript" src="node_modules/select2/dist/js/select2.min.js"></script>
+<link type="text/css" rel="stylesheet" href="js/plugins/chosen/chosen.min.css" />
+<script type="text/javascript" src="js/plugins/chosen/chosen.jquery.min.js"></script>
 
 <script type="text/javascript" src="node_modules/jquery-validation/dist/jquery.validate.js"></script>
 <?php if ($LANG->LANG_CURRENT != 'en') { ?>
@@ -149,9 +155,11 @@ window.addEventListener( "pageshow", function (event) {
 var V_REGmon_Folder = '<?=$CONFIG['REGmon_Folder'];?>';
 var PRODUCTION = <?=($CONFIG['PRODUCTION']?'true':'false');?>;
 var V_ONLINE = true;
+
 <?php echo 'var'
 .' V_VER='.$G_Version
 .',V_Group_2_Location='.$Group_2_Location_json
+.',V_GROUPS_ADMINS_OPTIONS="'.$groups_admins_options_grid.'"'
 .',V_IS_ADMIN='.(int)($ADMIN OR $LOCATION_ADMIN OR $GROUP_ADMIN OR $GROUP_ADMIN_2)
 .',V_IS_TRAINER='.(int)($TRAINER)
 .',V_IS_ATHLETE='.(int)($ATHLETE)
@@ -168,10 +176,14 @@ var V_ONLINE = true;
 .',V_TRAINER_R_PERMS=""'
 .',V_TRAINER_W_PERMS=""'
 .',V_DASHBOARD=[]'
+.',V_SPORTS_GROUPS_OPTIONS="'.$sports_groups_options_grid.'"'
+.',V_SPORTS_OPTIONS="'.$sports_options_grid.'"'
+.',V_BODY_HEIGHT_OPTIONS="'.$body_height_options_grid.'"'
 .',V_SAVED_DATA_OPTIONS=""'
 .',V_SAVED_DATA3_OPTIONS=""'
 .',V_CATEGORIES_FORMS_OPTIONS=""'
-.',V_USER_LVL_OPTIONS = "10:'.$LANG->LVL_ATHLETE.';30:'.$LANG->LVL_TRAINER.(($THIS_LOCATION_ADMIN OR $ADMIN)?';40:'.$LANG->LVL_GROUP_ADMIN_2:'').(($THIS_LOCATION_ADMIN OR $ADMIN)?';45:'.$LANG->LVL_GROUP_ADMIN:'').($ADMIN?';50:'.$LANG->LVL_LOCATION:'').'"'
+.',V_USER_LVL_OPTIONS="10:'.$LANG->LVL_ATHLETE.';30:'.$LANG->LVL_TRAINER.(($THIS_LOCATION_ADMIN OR $ADMIN)?';40:'.$LANG->LVL_GROUP_ADMIN_2:'').(($THIS_LOCATION_ADMIN OR $ADMIN)?';45:'.$LANG->LVL_GROUP_ADMIN:'').($ADMIN?';50:'.$LANG->LVL_LOCATION:'').'"'
+.',V_is_Index_Options=true'
 .',V_User_2_Groups='.$User_2_Groups_json.';'."\n";
 ?>
 </script>

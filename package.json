@@ -19,7 +19,6 @@
     "bootstrap-confirmation2": "^2.4.4",
     "bootstrap-multiselect": "^0.9.15",
     "bs-confirmation": "^1.0.7",
-    "chosen-js": "^1.8.7",
     "clockpicker": "^0.0.7",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "excelFormulaUtilitiesJS": "git+https://github.com/joshatjben/excelFormulaUtilitiesJS.git#v1.4.2",
@@ -44,7 +43,6 @@
     "offline-js": "^0.7.19",
     "offlinejs-simulate-ui": "git+https://github.com/craigshoemaker/offlinejs-simulate-ui.git",
     "really-simple-colorpicker": "^1.0.1",
-    "select2": "^4.0.6",
     "sweetalert2": "^7.26.12",
     "trumbowyg": "^2.18.0"
   }

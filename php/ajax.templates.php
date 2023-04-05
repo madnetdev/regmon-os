@@ -5,12 +5,11 @@ if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 switch ($action) {
 	case 'add': // INSERT 
 	case 'edit': // UPDATE 
-		$template = isset($_REQUEST['template']) ? $_REQUEST['template'] : false;
-		$is_axis = '0';
-			if ($template == 'forms_templates') $is_axis = '0';
-		elseif ($template == 'templates2') $is_axis = '3';
-		elseif ($template == 'axis') $is_axis = '1';
-		
+		$template_type = '0';
+		if (isset($_REQUEST['template_type'])) {
+				if ($_REQUEST['template_type'] == '1') $template_type = '1';
+			elseif ($_REQUEST['template_type'] == '2') $template_type = '2';
+		}
 		$values = array();
 		$id = isset($_REQUEST['id']) ? (int)$_REQUEST['id'] : '0';
 		$values['user_id'] = isset($_REQUEST['user_id']) ? $_REQUEST['user_id'] : '0';
@@ -27,29 +26,31 @@ switch ($action) {
 		$values['TrainerView'] = isset($_REQUEST['TrainerView']) ? ($_REQUEST['TrainerView']=='Ja'?'1':'0') : '1';
 		$values['TrainerEdit'] = isset($_REQUEST['TrainerEdit']) ? ($_REQUEST['TrainerEdit']=='Ja'?'1':'0') : '0';
 		$values['Private'] = isset($_REQUEST['Private']) ? ($_REQUEST['Private']=='Ja'?'1':'0') : '0';
-		$values['is_axis'] = $is_axis;
-		$update = $db->update($values, "graphs", "id=?", array($id));
+		$values['template_type'] = $template_type;
+		$update = $db->update($values, "templates", "id=?", array($id));
 		
 		echo check_update_result($update);
 		
 	  break;
 	
+
 	case 'del': // DELETE 
 
 	  break;
 
+	  
 	case 'template_duplicate': // INSERT - Duplicate Template 
 		
-		$row = $db->fetchRow("SELECT * FROM graphs WHERE id = ?", array($ID));
+		$row = $db->fetchRow("SELECT * FROM templates WHERE id = ?", array($ID));
 		if ($db->numberRows() > 0)  {
 			unset($row['id']);
-			$row['name'] .= '_kopie';
+			$row['name'] .= '_copy';
 			$row['modified'] = get_date_time_SQL('now');
 			$row['modified_by'] = $USERNAME;
 			$row['created'] = get_date_time_SQL('now');
 			$row['created_by'] = $USERNAME;
 			
-			$insert_id = $db->insert($row, "graphs");
+			$insert_id = $db->insert($row, "templates");
 			
 			echo check_insert_result($insert_id);
 		}
@@ -63,7 +64,7 @@ switch ($action) {
 		$forms = $db->fetchAllwithKey("SELECT id, name, name2, status FROM forms f $where ORDER BY id", array() ,'id');
 		//echo "<pre>";print_r($forms);exit;
 
-		$saves = $db->fetchAllwithKey("SELECT id, user_id, location_id, group_id, form_id, name, GlobalView, GlobalEdit, LocationView, LocationEdit, GroupView, GroupEdit, TrainerView, TrainerEdit, Private, created, created_by, modified, modified_by FROM graphs WHERE is_axis=0 ORDER BY form_id, name", array(), 'id'); //fetchAllwithKey2,'form_id', 'id'
+		$saves = $db->fetchAllwithKey("SELECT id, user_id, location_id, group_id, form_id, name, GlobalView, GlobalEdit, LocationView, LocationEdit, GroupView, GroupEdit, TrainerView, TrainerEdit, Private, created, created_by, modified, modified_by FROM templates WHERE template_type=0 ORDER BY form_id, name", array(), 'id'); //fetchAllwithKey2,'form_id', 'id'
 		$i=0;
 		if ($db->numberRows() > 0)  {
 			foreach ($saves as $save) {
@@ -105,10 +106,10 @@ switch ($action) {
 	  break;
 	  
 	  
-	case 'templates2': // SELECT 
+	case 'groups_templates': // SELECT 
 		
 		$responce = new stdClass();
-		$saves3 = $db->fetchAllwithKey("SELECT id, user_id, location_id, group_id, form_id, name, GlobalView, GlobalEdit, LocationView, LocationEdit, GroupView, GroupEdit, TrainerView, TrainerEdit, Private, created, created_by, modified, modified_by FROM graphs WHERE is_axis=3 ORDER BY form_id, name", array(), 'id'); 
+		$saves3 = $db->fetchAllwithKey("SELECT id, user_id, location_id, group_id, form_id, name, GlobalView, GlobalEdit, LocationView, LocationEdit, GroupView, GroupEdit, TrainerView, TrainerEdit, Private, created, created_by, modified, modified_by FROM templates WHERE template_type=2 ORDER BY form_id, name", array(), 'id'); 
 		$i=0;
 		if ($db->numberRows() > 0)  {
 			foreach ($saves3 as $save) {
@@ -149,7 +150,7 @@ switch ($action) {
 	case 'axis': // SELECT 
 		
 		$responce = new stdClass();
-		$axis = $db->fetchAllwithKey("SELECT id, user_id, location_id, group_id, form_id, name, GlobalView, GlobalEdit, LocationView, LocationEdit, GroupView, GroupEdit, TrainerView, TrainerEdit, Private, created, created_by, modified, modified_by FROM graphs WHERE is_axis=1 ORDER BY name", array(), 'id'); 
+		$axis = $db->fetchAllwithKey("SELECT id, user_id, location_id, group_id, form_id, name, GlobalView, GlobalEdit, LocationView, LocationEdit, GroupView, GroupEdit, TrainerView, TrainerEdit, Private, created, created_by, modified, modified_by FROM templates WHERE template_type=1 ORDER BY name", array(), 'id'); 
 		$i=0;
 		if ($db->numberRows() > 0)  {
 			foreach ($axis as $save) {

@@ -1638,16 +1638,13 @@ get_Form_JSON = function()
 $("button.preview").on('click',function() {
 	if ($('form#wrapped').valid()) {
 		get_Form_JSON();
-		//$('form#wrapped').prop('action', 'form.php?id='+V_SRV_ID+'&preview').prop('target', 'preview-iframe');
-		//$('form#wrapped').trigger('submit');
-		
 		//in order to send the data with POST we open an iframe and then we POST the data there
 		$.fancybox($.extend(fancyBoxDefaults_iframe, {
 			type:'iframe', 
 			href: 'forms/form_data_preview.php', 
 			afterLoad:function() {
-				$('form#wrapped').prop('action', 'form.php?id='+V_SRV_ID+'&preview&form_name2').prop('target', $('.fancybox-iframe').attr('name'));
-				$('form#wrapped').trigger('submit');
+				$('form#form_data').prop('action', 'form.php?id='+V_SRV_ID+'&preview&form_name2').prop('target', $('.fancybox-iframe').attr('name'));
+				$('form#form_data').trigger('submit');
 				loading.hide();
 			}
 		}));
@@ -1673,6 +1670,7 @@ $("button.preview").on('click',function() {
 
 //button Save Form Creator
 $("button.save").on('click',function() {
+	loading.show();
 	let c_name_missing = false;
 	let page_display_times_conflic = false;
 	let page_display_times_conflic2 = false;
@@ -1725,16 +1723,14 @@ $("button.save").on('click',function() {
 				}, 300);
 			}
 		});
+		
+		loading.hide();
+
 		if (!c_name_missing && !page_display_times_conflic && !page_display_times_conflic2) {
 			get_Form_JSON();
 			if (!$(':input').not('.c_content :input').not('.popover :input').valid() && $('label.error:visible').length != 0) {
 				$("html, body").animate({ scrollTop: $('label.error:visible').offset().top-50 }, "slow");
 			} else {
-				loading.show();
-				//submit Post to iframe
-				//$('form#wrapped').prop('action', 'form.php?id='+V_SRV_ID+'&save').prop('target', 'save-iframe'); //_blank
-				//$('form#wrapped').trigger('submit');
-
 				//post with ajax
 				let data = {
 					group_id: $('input[name="group_id"]').val(),

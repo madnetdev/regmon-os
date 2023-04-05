@@ -20,6 +20,7 @@ switch ($action) {
 				  break;
 				case 'stop_date':	
 					if ($val != '') $values[$key] = get_date_SQL($val.'');
+					//we need to pass NULL as array
 					else $values[$key] = array("NULL"); //=NULL
 				  break;
 			}
@@ -66,10 +67,10 @@ switch ($action) {
 	  break;
 
 	
-	case 'cat_forms_all': // SELECT json for local 
-	case 'view': // SELECT 
+	case 'categories_forms_all': // SELECT all -json for local 
+	case 'view': // SELECT one category forms
 	default: //view 
-		if ($action == 'cat_forms_all') {
+		if ($action == 'categories_forms_all') {
 			$responce = array();
 			$where = "";
 		} else {
@@ -79,19 +80,21 @@ switch ($action) {
 		$rows = $db->fetch("SELECT f2c.id, f2c.form_id, f2c.category_id, f2c.sort, f2c.status, f2c.stop_date, f2c.created, f2c.created_by, f2c.modified, f2c.modified_by, f.name, f.name2, f.status as form_status 
 FROM forms2categories f2c 
 LEFT JOIN forms f ON f.id = f2c.form_id 
-$where ORDER BY f2c.sort, f.name", array());
+$where 
+ORDER BY f2c.sort, f.name", array());
 		$i=0;
 		if ($db->numberRows() > 0)  {
 			foreach ($rows as $row) {
 				// if form is inactiv put the same to category/form
 				$status = ($row['form_status']==1 ? $row['status'] : 0);
-				// cat_forms_all --json for local
-				if ($action == 'cat_forms_all') {
+				// categories_forms_all --json for local
+				if ($action == 'categories_forms_all') {
 					$responce[$row['category_id']][] = array(
 						'acc'			=> '',
 						'id'			=> $row['id'],
 						'category_id'	=> $row['category_id'],
 						'form_id'		=> $row['form_id'],
+						'form_select'	=> $row['form_id'],
 						'form_name'		=> $row['name'].' ('.$row['name2'].')', //extern (intern)
 						'sort'			=> $row['sort'],
 						'status'		=> $status,
@@ -109,6 +112,7 @@ $where ORDER BY f2c.sort, f.name", array());
 						$row['id'],
 						$row['category_id'],
 						$row['form_id'],
+						$row['form_id'],
 						$row['name'],
 						$row['sort'],
 						$status,
@@ -125,7 +129,7 @@ $where ORDER BY f2c.sort, f.name", array());
 		
 		$responce = json_encode($responce);
 		
-		if ($action == 'cat_forms_all') {
+		if ($action == 'categories_forms_all') {
 			if ($responce == '[]') //if empty
 				echo '{}';
 			else 

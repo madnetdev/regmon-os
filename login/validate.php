@@ -119,7 +119,7 @@ if ($USER === false) {
 	if ($this_page == 'ajax.php') {
 		echo 'session expired';
 	}
-	elseif ($this_page == 'grid.group_users.php') {
+	elseif ($this_page == 'ajax.grid.group_users.php') {
 		echo 'session expired';
 	}
 	elseif ($this_page == 'ajax.forms_menu.php') {

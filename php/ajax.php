@@ -31,10 +31,11 @@ switch($ajax) {
 	case 'forms_data':
 	case 'categories':
 	case 'forms2categories':
+	case 'dropdowns':
+	case 'sports':
+	case 'tags':
 	case 'templates':
 	case 'importTrackers':
-	case 'sports':
-	case 'dropdowns':
 		if (file_exists('ajax.'.$ajax.'.php')) {
 			include('ajax.'.$ajax.'.php');
 		}

@@ -14,9 +14,15 @@ $visualCaptcha_session = new \visualCaptcha\Session();
 $url_arr = explode('?r=', $_SERVER['REQUEST_URI']);
 $request_page = $url_arr[0];
 
+//for loading visualCaptcha language texts
+$LANG = $_COOKIE['LANG'] ?? 'en';
+$assetsPath = null;
+$filePath = 'js/images_'.$LANG.'.json';
+$defaultImages = json_decode( file_get_contents( $filePath ), true ); 
+
 //start request
 if (substr_count($request_page, 'start')) {
-	$captcha = new \visualCaptcha\Captcha( $visualCaptcha_session );
+	$captcha = new \visualCaptcha\Captcha( $visualCaptcha_session, $assetsPath, $defaultImages );
 	//$howmany = explode('start/', $request_page)[1] ?? 5;
 	//$captcha->generate( $args['howmany'] ); //not secure to leave this in url params
 	$captcha->generate( 5 ); //5 hardcoded
@@ -24,7 +30,7 @@ if (substr_count($request_page, 'start')) {
 }
 //image request
 elseif (substr_count($request_page, 'image')) {
-    $captcha = new \visualCaptcha\Captcha( $visualCaptcha_session );
+    $captcha = new \visualCaptcha\Captcha( $visualCaptcha_session, $assetsPath, $defaultImages);
 	$index = explode('image/', $request_page)[1];
     $retina = '';
     $headers = array();

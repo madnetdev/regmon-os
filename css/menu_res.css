@@ -58,7 +58,7 @@ a, button, li {
 .nav > ul li .span_rs div, .anav li .span_rs div {
 	margin-left: 5px; /*10px*/
 }
-.nav > ul li .span_rs div.icheckbox_flat-yellow2, .anav li .span_rs div.icheckbox_flat-yellow2 {
+.nav > ul li .span_rs div.icheckbox_flat-yellow2s, .anav li .span_rs div.icheckbox_flat-yellow2s {
 	height: 23px;
 }
 .nav > ul li .span_rs div.icheckbox_polaris2, .anav li .span_rs div.icheckbox_polaris2 {
@@ -333,31 +333,31 @@ a, button, li {
 #profile_edit { padding: 20px; }
 #profile_edit label { vertical-align: top; }
 
-#gbox_trainer_users .ui-jqgrid-view { font-size: 13px; }
-#gbox_group_users .ui-jqgrid-view { font-size: 13px; }
-#gbox_forms .ui-jqgrid-view { font-size: 13px; }
-#gbox_categories .ui-jqgrid-view { font-size: 13px; }
-#gbox_location_groups .ui-jqgrid-view { font-size: 13px; }
-#gbox_sports .ui-jqgrid-view { font-size: 13px; }
-#gbox_dropdowns .ui-jqgrid-view { font-size: 13px; }
+#group_data #gbox_trainer_users .ui-jqgrid-view { font-size: 13px; }
+#group_data #gbox_group_users .ui-jqgrid-view { font-size: 13px; }
+#group_data #gbox_forms .ui-jqgrid-view { font-size: 13px; }
+#group_data #gbox_categories .ui-jqgrid-view { font-size: 13px; }
+#group_data #gbox_location_groups .ui-jqgrid-view { font-size: 13px; }
+#group_data #gbox_sports .ui-jqgrid-view { font-size: 13px; }
+#group_data #gbox_dropdowns .ui-jqgrid-view { font-size: 13px; }
 
 @media (min-width: 1199px) {
-	#gbox_trainer_users .ui-jqgrid-view { font-size: 15px; }
-	#gbox_trainer_users span.req:before { font-size: 20px !important; }
-	#gbox_group_users .ui-jqgrid-view { font-size: 15px; }
-	#gbox_group_users span.req:before { font-size: 20px !important; }
-	#gbox_forms .ui-jqgrid-view { font-size: 15px; }
-	#gbox_categories .ui-jqgrid-view { font-size: 15px; }
-	#gbox_location_groups .ui-jqgrid-view { font-size: 15px; }
-	#gbox_sports .ui-jqgrid-view { font-size: 15px; }
-	#gbox_dropdowns .ui-jqgrid-view { font-size: 15px; }
-	#A_Requests_From_Trainers span.req:before { font-size: 23px; }
-	#A_Group_Requests span.req:before { font-size: 23px; }
+	#group_data #gbox_trainer_users .ui-jqgrid-view { font-size: 15px; }
+	#group_data #gbox_trainer_users span.req:before { font-size: 20px !important; }
+	#group_data #gbox_group_users .ui-jqgrid-view { font-size: 15px; }
+	#group_data #gbox_group_users span.req:before { font-size: 20px !important; }
+	#group_data #gbox_forms .ui-jqgrid-view { font-size: 15px; }
+	#group_data #gbox_categories .ui-jqgrid-view { font-size: 15px; }
+	#group_data #gbox_location_groups .ui-jqgrid-view { font-size: 15px; }
+	#group_data #gbox_sports .ui-jqgrid-view { font-size: 15px; }
+	#group_data #gbox_dropdowns .ui-jqgrid-view { font-size: 15px; }
+	#group_data #A_Requests_From_Trainers span.req:before { font-size: 23px; }
+	#group_data #A_Group_Requests span.req:before { font-size: 23px; }
 }
 @media (min-width: 992px) and (max-width: 1199px) {
 	.nav > ul {font-size: 1.3em;}
 	.nav [data-toggle="collapse"]:before {font-size: 0.7em;}
-	.nav > ul li .span_rs div.icheckbox_flat-yellow2 {
+	.nav > ul li .span_rs div.icheckbox_flat-yellow2s {
 		height: 24px;
 	}
 	/*.nav li a span {height:30px;}
@@ -367,7 +367,7 @@ a, button, li {
 @media (min-width: 768px) and (max-width: 991px) {
 	.nav > ul {font-size: 1.1em;}
 	.nav [data-toggle="collapse"]:before {font-size: 0.6em;}
-	.nav > ul li .span_rs div.icheckbox_flat-yellow2 {
+	.nav > ul li .span_rs div.icheckbox_flat-yellow2s {
 		height: 23px;
 	}
 	/*.nav li a span {height:27px;}
@@ -377,50 +377,50 @@ a, button, li {
 		padding-right: 3px;
 		font-size: 16px;
 	}*/
-	#A_Training_Menu.nav > ul li .span_act {width: 28px;}
-	#A_Training_Menu.nav > ul li a.training_view .span_act {padding-left:4px;}
-	#A_Training_Menu.nav > ul li a.training_delete .span_act {padding-left:6px;}
-	#A_Requests_From_Trainers span.req:before { font-size: 17px; }
-	#A_Group_Requests span.req:before { font-size: 17px; }
+	#group_data #A_Training_Menu.nav > ul li .span_act {width: 28px;}
+	#group_data #A_Training_Menu.nav > ul li a.training_view .span_act {padding-left:4px;}
+	#group_data #A_Training_Menu.nav > ul li a.training_delete .span_act {padding-left:6px;}
+	#group_data #A_Requests_From_Trainers span.req:before { font-size: 17px; }
+	#group_data #A_Group_Requests span.req:before { font-size: 17px; }
 }
 @media (min-width: 671px) and (max-width: 767px) {
-	#gbox_trainer_users .ui-jqgrid-view { font-size: 17px; }
-	#gbox_trainer_users span.req:before { font-size: 20px !important; }
-	#gbox_group_users .ui-jqgrid-view { font-size: 17px; }
-	#gbox_group_users span.req:before { font-size: 20px !important; }
-	#gbox_forms .ui-jqgrid-view { font-size: 17px; }
-	#gbox_categories .ui-jqgrid-view { font-size: 17px; }
-	#gbox_location_groups .ui-jqgrid-view { font-size: 17px; }
-	#gbox_sports .ui-jqgrid-view { font-size: 17px; }
-	#gbox_dropdowns .ui-jqgrid-view { font-size: 17px; }
-	#A_Requests_From_Trainers span.req:before { font-size: 23px; }
-	#A_Group_Requests span.req:before { font-size: 23px; }
+	#group_data #gbox_trainer_users .ui-jqgrid-view { font-size: 17px; }
+	#group_data #gbox_trainer_users span.req:before { font-size: 20px !important; }
+	#group_data #gbox_group_users .ui-jqgrid-view { font-size: 17px; }
+	#group_data #gbox_group_users span.req:before { font-size: 20px !important; }
+	#group_data #gbox_forms .ui-jqgrid-view { font-size: 17px; }
+	#group_data #gbox_categories .ui-jqgrid-view { font-size: 17px; }
+	#group_data #gbox_location_groups .ui-jqgrid-view { font-size: 17px; }
+	#group_data #gbox_sports .ui-jqgrid-view { font-size: 17px; }
+	#group_data #gbox_dropdowns .ui-jqgrid-view { font-size: 17px; }
+	#group_data #A_Requests_From_Trainers span.req:before { font-size: 23px; }
+	#group_data #A_Group_Requests span.req:before { font-size: 23px; }
 }
 @media (min-width: 616px) and (max-width: 670px) {
-	#gbox_trainer_users .ui-jqgrid-view { font-size: 16px; }
-	#gbox_trainer_users span.req:before { font-size: 20px !important; }
-	#gbox_group_users .ui-jqgrid-view { font-size: 16px; }
-	#gbox_group_users span.req:before { font-size: 20px !important; }
-	#gbox_forms .ui-jqgrid-view { font-size: 16px; }
-	#gbox_categories .ui-jqgrid-view { font-size: 16px; }
-	#gbox_location_groups .ui-jqgrid-view { font-size: 16px; }
-	#gbox_sports .ui-jqgrid-view { font-size: 16px; }
-	#gbox_dropdowns .ui-jqgrid-view { font-size: 16px; }
-	#A_Requests_From_Trainers span.req:before { font-size: 23px; }
-	#A_Group_Requests span.req:before { font-size: 23px; }
+	#group_data #gbox_trainer_users .ui-jqgrid-view { font-size: 16px; }
+	#group_data #gbox_trainer_users span.req:before { font-size: 20px !important; }
+	#group_data #gbox_group_users .ui-jqgrid-view { font-size: 16px; }
+	#group_data #gbox_group_users span.req:before { font-size: 20px !important; }
+	#group_data #gbox_forms .ui-jqgrid-view { font-size: 16px; }
+	#group_data #gbox_categories .ui-jqgrid-view { font-size: 16px; }
+	#group_data #gbox_location_groups .ui-jqgrid-view { font-size: 16px; }
+	#group_data #gbox_sports .ui-jqgrid-view { font-size: 16px; }
+	#group_data #gbox_dropdowns .ui-jqgrid-view { font-size: 16px; }
+	#group_data #A_Requests_From_Trainers span.req:before { font-size: 23px; }
+	#group_data #A_Group_Requests span.req:before { font-size: 23px; }
 }
 @media (min-width: 580px) and (max-width: 615px) {
-	#gbox_trainer_users .ui-jqgrid-view { font-size: 14px; }
-	#gbox_group_users .ui-jqgrid-view { font-size: 14px; }
-	#gbox_forms .ui-jqgrid-view { font-size: 14px; }
-	#gbox_categories .ui-jqgrid-view { font-size: 14px; }
-	#gbox_location_groups .ui-jqgrid-view { font-size: 14px; }
-	#gbox_sports .ui-jqgrid-view { font-size: 14px; }
-	#gbox_dropdowns .ui-jqgrid-view { font-size: 14px; }
+	#group_data #gbox_trainer_users .ui-jqgrid-view { font-size: 14px; }
+	#group_data #gbox_group_users .ui-jqgrid-view { font-size: 14px; }
+	#group_data #gbox_forms .ui-jqgrid-view { font-size: 14px; }
+	#group_data #gbox_categories .ui-jqgrid-view { font-size: 14px; }
+	#group_data #gbox_location_groups .ui-jqgrid-view { font-size: 14px; }
+	#group_data #gbox_sports .ui-jqgrid-view { font-size: 14px; }
+	#group_data #gbox_dropdowns .ui-jqgrid-view { font-size: 14px; }
 }
 @media (min-width: 520px) and (max-width: 615px) {
 	.nav > ul {font-size: 1.3em;}
-	.nav > ul li .span_rs div.icheckbox_flat-yellow2 {
+	.nav > ul li .span_rs div.icheckbox_flat-yellow2s {
 		height: 24px;
 	}
 	/*.nav li a span {height:30px;}
@@ -430,7 +430,7 @@ a, button, li {
 }
 @media (min-width: 410px) and (max-width: 519px) {
 	.nav > ul {font-size: 1.1em;}
-	.nav > ul li .span_rs div.icheckbox_flat-yellow2 {
+	.nav > ul li .span_rs div.icheckbox_flat-yellow2s {
 		height: 21px;
 	}
 	/*.nav li a span {height:27px;}
@@ -450,7 +450,7 @@ a, button, li {
 
 @media (max-width: 409px) {
 	.nav > ul {font-size: 1em;}
-	.nav > ul li .span_rs div.icheckbox_flat-yellow2 {
+	.nav > ul li .span_rs div.icheckbox_flat-yellow2s {
 		height: 21px;
 	}
 	/*.nav li a span {height:24px;}

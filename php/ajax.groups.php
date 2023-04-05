@@ -132,14 +132,15 @@ switch ($action) {
 
 	  break;
 	  
+
 	case 'del': // DELETE 
 		
 		//check admin user
 		if (!$ADMIN) {
 			//Location Admin
 			$admin = $db->fetchRow("SELECT u.id, u.lastname FROM users u
-LEFT JOIN locations s ON u.id = s.admin_id
-WHERE s.id = ? AND u.level = 50 AND u.id = ?", array($id, $UID)); 
+					LEFT JOIN locations s ON u.id = s.admin_id
+					WHERE s.id = ? AND u.level = 50 AND u.id = ?", array($id, $UID)); 
 			if (!$db->numberRows() > 0)  {
 				echo $LANG->NEED_ADMIN_RIGHTS;
 				exit; //no admin user
@@ -154,38 +155,21 @@ WHERE s.id = ? AND u.level = 50 AND u.id = ?", array($id, $UID));
 
 	  break;
 	
-	case 'grp_admins': // SELECT 
+
+	case 'groups_admins_select': // SELECT
 		$where = '';
-		if (isset($_REQUEST['location_id'])) $where = 'AND location_id = '.((int)$_REQUEST['location_id']);
-		
-		//Admins Select Options
-		$admins_options = ':'; 
-		$rows = $db->fetch("SELECT id, uname FROM users WHERE status = 1 AND (level = 40 OR level = 45) $where ORDER BY id", array()); 
-		if ($db->numberRows() > 0)  {
-			foreach ($rows as $row) {
-				$admins_options .=  ';' . $row['id'].':'.addslashes($row['uname']);
-			}
+		if (isset($_REQUEST['location_id'])) {
+			$where = ' AND location_id = ' . ((int) $_REQUEST['location_id']);
 		}
-
-		echo $admins_options;
-			
+		echo get_groups_admins_select(false, $where);
 	  break;
-	  
-	case 'grp_options': // SELECT 
-		
-		//Groups Select Options
-		$group_options = '0:'; 
-		$rows = $db->fetch("SELECT id, name FROM `groups` WHERE status > 0 ORDER BY name", array()); 
-		if ($db->numberRows() > 0)  {
-			foreach ($rows as $row) {
-				$group_options .=  ';' . $row['id'].':'.addslashes($row['name']);
-			}
-		}
 
-		echo $group_options;
-			
+
+	case 'groups_select': // SELECT
+		echo get_groups_select();
 	  break;
-	  
+
+
 	case 'view': // SELECT /////////////////////////////////////////////////////////////////
 	default: //view
 		
@@ -240,4 +224,5 @@ WHERE s.id = ? AND u.level = 50 AND u.id = ?", array($id, $UID));
 			
 	  break;
 }
+
 ?>

@@ -121,13 +121,13 @@ switch ($request) {
 		{
 			//accepted
 			if ($action == 'group_user_accept' AND $user_id) {
-				$req_status = isset($_REQUEST['req_status']) ? $_REQUEST['req_status'] : false;
+				$request_status = isset($_REQUEST['request_status']) ? $_REQUEST['request_status'] : false;
 				$values['status'] = '1';
 				$values['modified'] = get_date_time_SQL('now');
 				$values['modified_by'] = $USERNAME;
 				$save = $db->update($values, "users2groups", "user_id=? AND group_id=?", array($user_id, $group_id));
 				if (!$save) $message = $LANG->REQUEST_ANSWER_ERROR;
-				if ($req_status == '10') {
+				if ($request_status == '10') {
 					$values2 = array();			
 					$values2['status'] = '1';
 					$values2['modified'] = get_date_time_SQL('now');
@@ -151,13 +151,13 @@ switch ($request) {
 			}
 			//rejected
 			elseif ($action == 'group_user_reject' AND $user_id) {
-				$req_status = isset($_REQUEST['req_status']) ? $_REQUEST['req_status'] : false;
+				$request_status = isset($_REQUEST['request_status']) ? $_REQUEST['request_status'] : false;
 				$status = '0';
-					if ($req_status == '7') $status = '0';
-				elseif ($req_status == '17')$status = '0';
-				elseif ($req_status == '8') $status = '0';
-				elseif ($req_status == '9') $status = '0';
-				elseif ($req_status == '10')$status = '11';
+					if ($request_status == '7') $status = '0';
+				elseif ($request_status == '17')$status = '0';
+				elseif ($request_status == '8') $status = '0';
+				elseif ($request_status == '9') $status = '0';
+				elseif ($request_status == '10')$status = '11';
 				$values['status'] = $status;
 				$values['modified'] = get_date_time_SQL('now');
 				$values['modified_by'] = $USERNAME;
@@ -351,12 +351,12 @@ switch ($request) {
 			if ($action == 'trainer_accept') $status = '1'; //(7,17,8,9->1)
 			//rejected
 			elseif ($action == 'trainer_reject') {
-				$req_status = isset($_REQUEST['req_status']) ? $_REQUEST['req_status'] : false;
-					if ($req_status == '1') $status = '15';
-				elseif ($req_status == '7') $status = '0';
-				elseif ($req_status == '17')$status = '0';
-				elseif ($req_status == '8') $status = '0';
-				elseif ($req_status == '9') $status = '0';
+				$request_status = isset($_REQUEST['request_status']) ? $_REQUEST['request_status'] : false;
+					if ($request_status == '1') $status = '15';
+				elseif ($request_status == '7') $status = '0';
+				elseif ($request_status == '17')$status = '0';
+				elseif ($request_status == '8') $status = '0';
+				elseif ($request_status == '9') $status = '0';
 			}
 			$values['status'] = $status;
 			$values['modified'] = get_date_time_SQL('now');

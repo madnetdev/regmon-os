@@ -10,17 +10,17 @@ $success = '../';
 session_cache_limiter( false );
 session_start();
 
-//Init DB ///////////////////////////////////////////////////////////
+//Init DB #######################
 require_once('../php/class.db.php');	
 $db = db::open('mysqli', $CONFIG['DB_Name'], $CONFIG['DB_User'], $CONFIG['DB_Pass'], $CONFIG['DB_Host']);
 if ($CONFIG['DB_Debug']) $db->logToFile($CONFIG['DB_Debug_File']); //enable query logging
-//Init DB ///////////////////////////////////////////////////////////
+//Init DB #######################
 
 //global vars
 $ADMIN = $LOCATION_ADMIN = $GROUP_ADMIN = $GROUP_ADMIN_2 = $TRAINER = $ATHLETE = false;
 $USER = $ACCOUNT = $UID = $USERNAME = false;
 
-// LogLimiter ////////////////////////////////////////////////////////
+// LogLimiter #######################
 require_once('class.loglimiter.php');
 $Blocked_IP = false;
 $CLL = $CONFIG['LogLimiter'];
@@ -30,18 +30,23 @@ if ($LogLimiter->checkBlock()) { // if true this IP is blocked
 	$Blocked_IP = true;
 }
 
-//validate CAPTCHA /////////////////////////////////////////////////////
-$Captcha = false;
-require ('../vendor/autoload.php');
-$visualCaptcha_session = new \visualCaptcha\Session();
-$app_captcha = new \visualCaptcha\Captcha($visualCaptcha_session);
-$app_frontendData = $app_captcha->getFrontendData();
-if (isset($_POST['form_submit']) && $_POST['form_submit'] == '1') {
-	if ($imageAnswer = ($_REQUEST[$app_frontendData['imageFieldName']] ?? '')) {
-		if ($app_captcha->validateImage($imageAnswer)) {
-			$Captcha = true;
-		}
-	} 
+if ($CONFIG['Use_VisualCaptcha']) {
+	//validate CAPTCHA #######################
+	$Captcha = false;
+	require ('../vendor/autoload.php');
+	$visualCaptcha_session = new \visualCaptcha\Session();
+	$app_captcha = new \visualCaptcha\Captcha($visualCaptcha_session);
+	$app_frontendData = $app_captcha->getFrontendData();
+	if (isset($_POST['form_submit']) && $_POST['form_submit'] == '1') {
+		if ($imageAnswer = ($_REQUEST[$app_frontendData['imageFieldName']] ?? '')) {
+			if ($app_captcha->validateImage($imageAnswer)) {
+				$Captcha = true;
+			}
+		} 
+	}
+}
+else {
+	$Captcha = true;
 }
 
 $Inactive_User = false;

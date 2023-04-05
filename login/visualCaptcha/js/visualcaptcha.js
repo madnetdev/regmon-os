@@ -1,25 +1,6 @@
 ( function( window, $ ) {
     $( function() {
 	
-		if ($.cookie('LANG') != 'de') {
-			var
-				LANG_accessibilityAlt = 'Sound icon',
-				LANG_accessibilityTitle = 'Accessibility option: listen to a question and answer it!',
-				LANG_accessibilityDescription = 'Type below the <strong>answer</strong> to what you hear. Numbers or words:',
-				LANG_explanation = 'Click or touch the <strong>ANSWER</strong>',
-				LANG_refreshAlt = 'Refresh/reload icon',
-				LANG_refreshTitle = 'Refresh/reload: get new images!'; // and accessibility option!'
-		}
-		else {
-			var
-				LANG_accessibilityAlt = 'Sound-Symbol',
-				LANG_accessibilityTitle = 'Option Erreichbarkeit: hören Sie eine Frage-Antwort-it!',
-				LANG_accessibilityDescription = 'Typ unter dem <strong> Antwort </strong>, was Sie hören. Zahlen oder Wörter:',
-				LANG_explanation = 'Berühren Sie folgendes Symbol: <strong>ANSWER</strong>',
-				LANG_refreshAlt = 'Erfrischen/Nachladen',
-				LANG_refreshTitle = 'Erfrischen/Nachladen';
-		}
-		
         var captchaEl = $( '#login-captcha' ).visualCaptcha({
             imgPath: 'login/visualCaptcha/img/',
             captcha: {
@@ -31,12 +12,12 @@
 				}
             },
 			language: {
-				accessibilityAlt: LANG_accessibilityAlt,
-				accessibilityTitle: LANG_accessibilityTitle,
-				accessibilityDescription: LANG_accessibilityDescription,
-				explanation: LANG_explanation,
-				refreshAlt: LANG_refreshAlt,
-				refreshTitle: LANG_refreshTitle
+				accessibilityAlt: LANG.LOGIN.ACCESSIBILITY_ALT,
+				accessibilityTitle: LANG.LOGIN.ACCESSIBILITY_TITLE,
+				accessibilityDescription: LANG.LOGIN.ACCESSIBILITY_DESCRIPTION,
+				explanation: LANG.LOGIN.CAPTCHA_EXPLANATION,
+				refreshAlt: LANG.LOGIN.CAPTCHA_REFRESH_ALT,
+				refreshTitle: LANG.LOGIN.CAPTCHA_REFRESH_TITLE
 			}
 		} );
         var captcha = captchaEl.data( 'captcha' );

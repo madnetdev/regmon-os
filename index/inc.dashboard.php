@@ -27,9 +27,9 @@ $where_forms .= ")";
 $dash_saves_options = '';
 //can see all at the moment
 $saves = $db->fetchAllwithKey2("SELECT g.id, g.form_id, g.name, f.name AS form_name 
-FROM graphs g 
+FROM templates g 
 LEFT JOIN forms f ON f.id = g.form_id 
-WHERE g.is_axis=0 $where_forms ORDER BY g.form_id, g.name", array(), 'form_id', 'id'); 
+WHERE g.template_type=0 $where_forms ORDER BY g.form_id, g.name", array(), 'form_id', 'id'); 
 if ($db->numberRows() > 0) {
 	foreach ($saves as $fid => $save_id) {
 		$saves_tmp = '';
@@ -43,7 +43,7 @@ if ($db->numberRows() > 0) {
 //Results Group Templates
 $dash_saves3_options = '';
 //can see all at the moment
-$saves3 = $db->fetchAllwithKey("SELECT id, name FROM graphs WHERE is_axis=3 ORDER BY form_id, name", array(), 'id'); 
+$saves3 = $db->fetchAllwithKey("SELECT id, name FROM templates WHERE template_type=2 ORDER BY form_id, name", array(), 'id'); 
 if ($db->numberRows() > 0) {
 	foreach ($saves3 as $save_id => $save) {
 		$dash_saves3_options .= '<option value="'.$save_id.'">'.$save['name'].'</option>';

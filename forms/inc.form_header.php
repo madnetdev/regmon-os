@@ -24,14 +24,11 @@ require('php/inc.head.php');
 <script type="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="node_modules/bs-confirmation/bootstrap-confirmation.min.js"></script>
 
-<link type="text/css" rel="stylesheet" href="node_modules/chosen-js/chosen.min.css">
-<script type="text/javascript" src="node_modules/chosen-js/chosen.jquery.min.js"></script> 
- 
+<link type="text/css" rel="stylesheet" href="js/plugins/chosen/chosen.min.css" />
+<script type="text/javascript" src="js/plugins/chosen/chosen.jquery.min.js"></script>
+
 <link type="text/css" rel="stylesheet" href="css/coolfieldset.css?<?=$G_VER;?>" />
 <script type="text/javascript" src="js/plugins/jquery.collapsibleFieldset.js?<?=$G_VER;?>"></script>
-
-<link type="text/css" rel="stylesheet" href="node_modules/select2/dist/css/select2.min.css">
-<script type="text/javascript" src="node_modules/chosen-js/chosen.jquery.min.js"></script>
 
 <link type="text/css" rel="stylesheet" href="js/plugins/clockpicker/clockpicker.css" />
 <script type="text/javascript" src="js/plugins/clockpicker/clockpicker.js"></script>
@@ -134,7 +131,7 @@ var V_GROUP = <?=$group_id;?>;
 
 	<br>
 
-	<form name="form1" id="wrapped" action="" method="POST"<?=($HAVE_DATA?' class="HAVE_DATA"':'');?>>
+	<form name="form_data" id="form_data" action="" method="POST">
 		<input name="form_id" type="hidden" value="<?=$form_id;?>">
 		<input name="category_id" type="hidden" value="<?=$category_id;?>">
 		<input name="group_id" type="hidden" value="<?=$group_id;?>">
@@ -147,7 +144,9 @@ var V_GROUP = <?=$group_id;?>;
 		<input name="change" type="hidden" value="true">
 		<input name="change_id" type="hidden" value="<?=$FORM_DATA['id'];?>">
 	<?php } ?>
-		<?php /*<input name="selected_date" type="hidden" value="<?=$selected_date;?>">*/?>
+	</form>
+
+	<form name="form1" id="wrapped" action="" method="POST"<?=($HAVE_DATA?' class="HAVE_DATA"':'');?>>
 
 <?php } //if (!$VIEW) //######################################## ?>
 

@@ -8,8 +8,8 @@ $user_2_groups = get_User_2_Groups($UID);
 //Trainers All in groups --need this info for groups
 $trainers2groups = get_Trainers_2_Groups();
 
-//Locations
-$locations = get_Locations();
+//Locations array
+$locations_arr = get_Locations_array();
 
 //Groups Select Options
 $selected_LOCATION_name = '';
@@ -31,9 +31,9 @@ if ($db->numberRows() > 0)  {
 		$location_id = $row['location_id'];
 		$location_name = '';
 		$location_admin = '';
-		if (isset($locations[$location_id]) AND isset($locations[$location_id][0])) {
-			$location_name = $locations[$location_id][0];
-			$location_admin = $locations[$location_id][1];
+		if (isset($locations_arr[$location_id]) AND isset($locations_arr[$location_id][0])) {
+			$location_name = $locations_arr[$location_id][0];
+			$location_admin = $locations_arr[$location_id][1];
 		}
 		$GP_group = $location_name;
 		$group_admins = $row['admins_id'];
@@ -198,8 +198,4 @@ else {
 	//give just the name
 	$Athletes_Select = '<div class="just_name">'.$a_vorname.' &nbsp; '.$a_name.'</div>';
 }
-
-
-$DIS = ' style="display:none;"';
-$DIS2 = ' display:none;';
 ?>

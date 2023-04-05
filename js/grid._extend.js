@@ -1,13 +1,32 @@
-var V_LOCATION_OPTIONS,
-	V_LOCATION_ADMINS_OPTIONS,
-	V_GROUP_OPTIONS,
-	V_GROUP_ADMINS_OPTIONS,
-	V_SPORTS_GROUP_OPTIONS,
-	V_SPORTS_OPTIONS,
-	V_BODY_HEIGHT_OPTIONS,
-	V_TIME_OUT_AFTER_SAVE = 2000,
+"use strict";
+
+// Grid -extend default grid options
+
+var V_TIME_OUT_AFTER_SAVE = 2000,
 	V_GRID_SAVE = false,
 	V_ADMIN_VIEW = false;
+
+var initColor = function (el) {
+	setTimeout(function () {
+		$(el).colorPicker();
+	}, 100);
+};
+var initDate = function (el) {
+	setTimeout(function () {
+		$(el).after(' <i class="fa fa-calendar" style="font-size:14px;"></i>').next().on('click',function(e) {
+				$(el).datepicker('show');
+				return false;
+			});
+		$(el).datepicker({
+			changeMonth: true,
+			changeYear: true,
+			//yearRange: "-85:-5",
+			//showButtonPanel: true,
+			dateFormat: LANG.DATEPICKER.DATE
+		});
+		$('.ui-datepicker').css({'font-size':'75%'});
+	}, 100);
+};
 
 var numberTemplate = {
 	formatter: "number", align: "right", sorttype: "number",
@@ -29,6 +48,31 @@ var aktivInaktivTemplate = {
 		else return " style='color:red;'"; //inactive
 	}
 };
+var aktivInaktivPrivateTemplate = {
+	fixed:true, align:"center",
+	formatter:"select", edittype:"select", stype:'select', 
+	searchoptions: {sopt:['eq','ne'], value:":;1:"+LANG.ST_ACTIVE+";3:"+LANG.ST_PRIVATE+";0:"+LANG.ST_INACTIVE},	
+	editoptions:{value: "1:"+LANG.ST_ACTIVE+";3:"+LANG.ST_PRIVATE+";0:"+LANG.ST_INACTIVE, defaultValue: LANG.ST_ACTIVE, size:1},
+	cellattr: function(rowId, val) {
+			 if(val==1) return " style='color:green;'"; //active
+		else if(val==3) return " style='color:blue;'"; //private
+		else return " style='color:red;'"; //inactive
+	}
+};
+var stopDateTemplate = {
+	formatter:"date", sorttype:"date", formatoptions:{srcformat:"Y-m-d", newformat:LANG.GRID.DATE},
+	editoptions:{ dataInit:initDate, style:"width:70%" },
+	cellattr: function(rowId, val) {
+			 if (moment(val, 'YYYY-MM-DD').isSame(moment(),'day')) return ' class="orange"';
+		else if (moment(val, 'YYYY-MM-DD').isAfter()) return ' class="green"';
+		else if (moment(val, 'YYYY-MM-DD').isBefore()) return ' class="red"';
+	}
+};
+var sexTemplate = {
+	formatter:"select", edittype:"select", align:"center",
+	editoptions:{value: "0:"+LANG.USERS.SEX_MALE+";1:"+LANG.USERS.SEX_FEMALE+";2:"+LANG.USERS.SEX_OTHER, defaultValue: LANG.USERS.SEX_MALE, size:1},
+	stype:'select', searchoptions: {sopt:['eq', 'ne'], value:":;0:"+LANG.USERS.SEX_MALE+";1:"+LANG.USERS.SEX_FEMALE+";2:"+LANG.USERS.SEX_OTHER}
+};
 var hiddenReadonlyTemplate = { hidden:true, editrules:{edithidden:true}, editoptions:{readonly:'readonly'}};
 
 jQuery(function() {
@@ -43,7 +87,7 @@ jQuery(function() {
 		sortname: 'id',
 		sortorder: "asc",
 		iconSet: 'fontAwesome',
-		pgbuttons: false, //look nice with arrows
+		pgbuttons: false, 
 		//pgtext: '',
 		viewrecords: true, //view 1 - 1 of 10
 		rowNum: 999,
@@ -51,15 +95,13 @@ jQuery(function() {
 		multiselect: false,
 		altRows: true,
 		//height: '100%', //def
+		//forceClientSorting: true,
 		headertitles:true,
 		sortable: true, //reorder columns
-		//multiSort: true, //gives error
 		sortIconsBeforeText: true,
 		searching: { searchOnEnter: false, searchOperators: false },
 		ignoreCase: true,
 		autoencode: false,
-		//autowidth: true, //width: '100%',
-		//shrinkToFit: true,
 		loadError: function(xhr,st,err) { 
 			if (xhr.responseText == 'session expired') window.location.href = ".";
 		},
@@ -74,13 +116,18 @@ jQuery(function() {
 		recreateForm:true,
 		closeOnEscape:true,
 		//closeAfterAdd: true,
+		beforeShowForm: function(form) {
+			$('.ui-jqdialog-content .FormData td.CaptionTD').each(function(){
+				$(this).html($(this).html().replace('<br>',' ')); //replace <br> with ' ' in CaptionTD
+			});
+		},
 		afterShowForm: function(form) {
 			//gray out not used fields
 			$('input[readonly], select[readonly], textarea[readonly]').css({'background-color':'#eee','background-image':'none'});
 			$('select[readonly]').attr("disabled", "disabled");
 		},
 		beforeSubmit : function(postdata, formid) {
-			if (V_ADMIN_VIEW) $.blockUI({ message: '' }); ////////////////////////
+			if (V_ADMIN_VIEW) $.blockUI({ message: '' }); 
 			else {
 				V_GRID_SAVE = true;
 			}
@@ -96,8 +143,9 @@ jQuery(function() {
 
 			if (jqXHR.responseText !== "OK_insert" && jqXHR.responseText !== "OK_update") {
 				V_GRID_SAVE = false;
-				if (V_ADMIN_VIEW) {$.unblockUI();} ////////////////////////
-				else loading.hide();
+				if (V_ADMIN_VIEW) {
+					$.unblockUI();
+				} else loading.hide();
 				return [false, '<span class="ui-icon ui-icon-alert" style="float:left;"></span>'+
 									'<span style="display:block; padding:1px 0px 0px 20px;">'+jqXHR.responseText+'</span>'];
 			}
@@ -113,8 +161,9 @@ jQuery(function() {
 					$infoTr.hide();
 					$('#edithd'+ this_id +' > a').trigger("click"); //close after add is ok
 					V_GRID_SAVE = false;
-					if (V_ADMIN_VIEW) $.unblockUI(); ////////////////////////
-					else loading.hide();
+					if (V_ADMIN_VIEW) {
+						$.unblockUI();
+					} else loading.hide();
 				});
 			}, V_TIME_OUT_AFTER_SAVE);
 			$(this).jqGrid('setGridParam', {datatype:'json'}); //if loadonce:true need this to reload grid
@@ -128,17 +177,21 @@ jQuery(function() {
 		//recreateForm: true,
 		//reloadAfterSubmit: true,
 		beforeSubmit : function(postdata, formid) {
-			if (V_ADMIN_VIEW) $.blockUI({ message: '' }); ////////////////////////
+			if (V_ADMIN_VIEW) {
+				$.blockUI({ message: '' });
+			}
 			else loading.show();
 			return [true, ''];
 		},
 		afterSubmit: function (jqXHR) {
-			if (V_ADMIN_VIEW) $.unblockUI(); ////////////////////////
+			if (V_ADMIN_VIEW) {
+				$.unblockUI();
+			}
 			else loading.hide();
 			
 			if (jqXHR.responseText !== "OK_delete") {
 				return [false, '<span class="ui-icon ui-icon-alert" style="float:left;"></span>'+
-									'<span style="display:block; padding:1px 0px 0px 20px;">'+jqXHR.responseText+'</span>'];
+								'<span style="display:block; padding:1px 0px 0px 20px;">'+jqXHR.responseText+'</span>'];
 			}
 			$(this).jqGrid('setGridParam', {datatype:'json'}); //if loadonce:true need this to reload grid
 			return [true, "", ""]; //response should be interpreted as successful
@@ -151,7 +204,8 @@ jQuery(function() {
 		beforeShowForm: function(form) {
 			//hide the edit icon inside id value
 			setTimeout(function () {
-				$('#v_id').find('span:first').css('display','none');
+				//$('#v_id').find('span:first').css('display','none');
+				$('span#acc').hide();
 			}, 100);
 		}
 	});

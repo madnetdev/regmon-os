@@ -36,11 +36,13 @@ $LANG = Language::getInstance($CONFIG['REGmon_Folder']);
 <script type="text/javascript" src="node_modules/jquery-ui/dist/jquery-ui.min.js"></script>
 <script type="text/javascript" src="node_modules/jquery.cookie/jquery.cookie.js"></script>
 <script type="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/lang_<?=$LANG->LANG_CURRENT;?>.js<?=$G_VER;?>"></script>
 
-<?php /*<!-- Visual Captcha -->*/?>
-<link href="login/visualCaptcha/css/visualcaptcha.css" media="all" rel="stylesheet">
-<script src="login/visualCaptcha/js/visualcaptcha.jquery.js"></script>
-<script src="login/visualCaptcha/js/visualcaptcha.js"></script>
+<?php if ($CONFIG['Use_VisualCaptcha']) { ?>
+	<link href="login/visualCaptcha/css/visualcaptcha.css" media="all" rel="stylesheet">
+	<script src="login/visualCaptcha/js/visualcaptcha.jquery.js"></script>
+	<script src="login/visualCaptcha/js/visualcaptcha.js"></script>
+<?php }  ?>
 
 <script type="text/javascript" src="js/common.js<?=$G_VER;?>"></script>
 <script>
@@ -99,35 +101,35 @@ font-weight:100;margin:0 0 24px}
 					<input type="password" id="password" name="password" placeholder="<?=$LANG->LOGIN_PASSWORD;?>">
 				</p>
 				<p class="clearfix" style="padding-top:90px;">
-					<?php //visualcaptcha ///////////////////////////////////////////////////////////////////?>
+					<?php //login messages #################################################?>
 					<input type="hidden" name="form_submit" value="1" readonly="readonly" />
 					<div class="wrap">
 						<div class="pre-captcha-wrapper">
 							<div class="captcha-wrapper">
 								<div id="status-message">
-			<?php
-				if (isset($_GET['failure']) AND $_GET['failure'] == '1') {
-					echo '<div class="status">'.$LANG->LOGIN_FAIL_TXT_1.'<br>'.$LANG->LOGIN_FAIL_TXT_2.'</div>';
-				} 
-				elseif (isset($_GET['captchaError']) AND $_GET['captchaError'] == '1') {
-					echo '<div class="status">'.$LANG->LOGIN_FAIL_TXT_3.'<br>'.$LANG->LOGIN_FAIL_TXT_4.'</div>';
-				}
-				elseif (isset($_GET['inactive']) AND $_GET['inactive'] == '1') {
-					echo '<div class="status">'.$LANG->LOGIN_FAIL_TXT_5.'<br>'.$LANG->LOGIN_FAIL_TXT_6.'</div>';
-				}
-				elseif (isset($_GET['blockedIP']) AND $_GET['blockedIP'] == '1') {
-					echo '<div class="status">'.
-							str_replace('{Max_Attempts}', $CONFIG['LogLimiter']['Max_Attempts'], $LANG->LOGIN_FAIL_TXT_7).'<br>'.
-							str_replace('{Block_Minutes}', $CONFIG['LogLimiter']['Block_Minutes'], $LANG->LOGIN_FAIL_TXT_8).
-						'</div>';
-				}
-			?>				
+	<?php
+		if (isset($_GET['failure']) AND $_GET['failure'] == '1') {
+			echo '<div class="status">'.$LANG->LOGIN_FAIL_TXT_1.'<br>'.$LANG->LOGIN_FAIL_TXT_2.'</div>';
+		} 
+		elseif (isset($_GET['captchaError']) AND $_GET['captchaError'] == '1') {
+			echo '<div class="status">'.$LANG->LOGIN_FAIL_TXT_3.'<br>'.$LANG->LOGIN_FAIL_TXT_4.'</div>';
+		}
+		elseif (isset($_GET['inactive']) AND $_GET['inactive'] == '1') {
+			echo '<div class="status">'.$LANG->LOGIN_FAIL_TXT_5.'<br>'.$LANG->LOGIN_FAIL_TXT_6.'</div>';
+		}
+		elseif (isset($_GET['blockedIP']) AND $_GET['blockedIP'] == '1') {
+			echo '<div class="status">'.
+					str_replace('{Max_Attempts}', $CONFIG['LogLimiter']['Max_Attempts'], $LANG->LOGIN_FAIL_TXT_7).'<br>'.
+					str_replace('{Block_Minutes}', $CONFIG['LogLimiter']['Block_Minutes'], $LANG->LOGIN_FAIL_TXT_8).
+				'</div>';
+		}
+	?>				
 								</div>
 								<div id="login-captcha"></div>
 							</div>
 						</div> 
 					</div>
-					<?php //visualcaptcha ///////////////////////////////////////////////////////////////////?>
+					<?php //end login messages #################################################?>
 				</p>
 				<div style="text-align:center;">
 					<div style="float:left; width:50%; text-align:center;">

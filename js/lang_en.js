@@ -38,6 +38,7 @@ LANG = {
 	STATUS 			: 'Status',
 	ST_ACTIVE 		: 'Active',
 	ST_INACTIVE		: 'Inactive',
+	ST_PRIVATE 		: 'Private',
 	CREATED			: 'Created',
 	CREATED_BY		: 'Created by',
 	MODIFIED		: 'Changed',
@@ -90,6 +91,15 @@ LANG = {
 	INSERT_OK	: 'Inserted successfully!',
 	DELETE_OK	: 'Deleted successfully!',
 
+	LOGIN : {
+		ACCESSIBILITY_ALT 			: 'Sound icon',
+		ACCESSIBILITY_TITLE 		: 'Accessibility option: listen to a question and answer it!',
+		ACCESSIBILITY_DESCRIPTION 	: 'Type below the <strong>answer</strong> to what you hear. Numbers or words:',
+		CAPTCHA_EXPLANATION 		: 'Click or touch the <strong>ANSWER</strong>',
+		CAPTCHA_REFRESH_ALT 		: 'Refresh/reload icons',
+		CAPTCHA_REFRESH_TITLE 		: 'Refresh/reload icons'
+	},
+
 	LOCATIONS : {
 		HEADER 		: 'Locations',
 		NAME 		: 'Location Name',
@@ -107,6 +117,40 @@ LANG = {
 		STOP_DATE 			: 'Available<br> Until',
 	},
 	
+	USERS : {
+		HEADER 			: 'Users',
+		ACCOUNT 		: 'Account',
+		USERNAME 		: 'Username',
+		PASSWORD 		: 'Password',
+		PASS_CONFIRM	: 'Password Confirm',
+		LASTNAME 		: 'Last Name',
+		FIRSTNAME 		: 'First name',
+		BIRTH_DATE 		: 'Birth date',
+		SPORT 			: 'Sport',
+		SEX 			: 'Gender',
+		SEX_MALE 		: 'Male',
+		SEX_FEMALE		: 'Female',
+		SEX_OTHER		: 'Other',
+		BODY_HEIGHT 	: 'Body height',
+		EMAIL 			: 'Email',
+		TELEPHONE 		: 'Mobile',
+		LEVEL 			: 'Level',
+		GROUP 			: 'Group (active)',
+		LOCATION 		: 'Location (active)',
+		LAST_LOGIN 		: 'Last Login',
+		LOGIN_COUNT 	: 'Number of Logins',
+		LAST_IP 		: 'Last IP',
+		ERGEBNISSE 		: 'Results',
+		
+		//LEVELS
+		LVL_ADMIN 			: 'Admin',
+		LVL_LOCATION 		: 'Location Admin',
+		LVL_GROUP_ADMIN		: 'Group Admin',
+		LVL_GROUP_ADMIN_2	: 'Group Admin (reduced)',
+		LVL_ATHLETE			: 'Athlete',
+		LVL_TRAINER 		: 'Trainer'
+	},
+
 	CATEGORIES : {
 		HEADER 		: 'Categories',
 		NAME 		: 'Category',
@@ -196,67 +240,68 @@ LANG = {
 		ATHLETES_SELECT_ALL 		: 'Select All',
 		ATHLETES_ALL_SELECTED 		: 'All Selected',
 		ATHLETES_SELECT_NO_ATHLETE 	: 'No Athlete',
-	},
-	
-	RESULTS : {
-		DEFAULT_TEMPLATE_SELECT : 'Please select default template',
+		
+		DEFAULT_TEMPLATE_SELECT : 'Please select default form template',
 		PARENTHESES_ERROR 		: 'Parentheses Error',
 		ALLOWED_CHARS_ERROR 	: 'only allowed "({+-*/._})" and numbers',
 	},
-
+	
 	FORMS2CATEGORIES : {
 		CATEGORY 	: 'Category',
 		FORM_SELECT : 'Form<br> Select',
+		FORM_ID		: 'Form<br> ID',
 		FORM_NAME	: 'Form',
 		ORDER 		: 'Order',
 		STOP_DATE 	: 'Available<br> Until',
-	},
-	
-	SPORTS : {
-		HEADER 		: 'Sports',
-		OPTIONGROUP : 'Sport Groups',
-		NAME 		: 'Sport Names'
 	},
 	
 	DROPDOWN : {
 		HEADER 		: 'Dropdown menu',
 		NAME 		: 'Name',
 		OPTIONS 	: 'Options',
-		FOR_FORMS	: 'for Forms'
+		PARENT_ID 	: 'Parent ID',
+		OPTION_PLACEHOLDER : 'Option or NUM__Option'
 	},
 	
-	USERS : {
-		HEADER 			: 'Users',
-		ACCOUNT 		: 'Account',
-		USERNAME 		: 'Username',
-		PASSWORD 		: 'Password',
-		PASS_CONFIRM	: 'Password Confirm',
-		LASTNAME 		: 'Last Name',
-		FIRSTNAME 		: 'First name',
-		BIRTH_DATE 		: 'Birth date',
-		SPORT 			: 'Sport',
-		SEX 			: 'Gender',
-		SEX_MALE 		: 'Male',
-		SEX_FEMALE		: 'Female',
-		SEX_OTHER		: 'Other',
-		BODY_HEIGHT 	: 'Body height',
-		EMAIL 			: 'Email',
-		TELEPHONE 		: 'Mobile',
-		LEVEL 			: 'Level',
-		GROUP 			: 'Group (active)',
-		LOCATION 		: 'Location (active)',
-		LAST_LOGIN 		: 'Last Login',
-		LOGIN_COUNT 	: 'Number of Logins',
-		LAST_IP 		: 'Last IP',
-		ERGEBNISSE 		: 'Results',
-		
-		//LEVELS
-		LVL_ADMIN 			: 'Admin',
-		LVL_LOCATION 		: 'Location Admin',
-		LVL_GROUP_ADMIN		: 'Group Admin',
-		LVL_GROUP_ADMIN_2	: 'Group Admin (reduced)',
-		LVL_ATHLETE			: 'Athlete',
-		LVL_TRAINER 		: 'Trainer'
+	SPORTS : {
+		HEADER 		: 'Sports',
+		OPTIONGROUP : 'Sport Groups',
+		OPTIONS 	: 'Sports',
+		NAME 		: 'Sport Names',
+		PARENT_ID 	: 'Parent ID'
+	},
+	
+	TAGS : {
+		HEADER 		: 'Tags',
+		NAME 		: 'Tag Names'
+	},
+	
+	TEMPLATES : {
+		FORM_ID 		: 'Form<br>ID',
+		FORM_NAME 		: 'Form Name',
+		FORM_STATUS 	: 'Form<br>Status',
+		USER_ID 		: 'User<br>ID',
+		LOCATION_ID 	: 'Location<br>ID',
+		GROUP_ID 		: 'Group<br>ID',
+		TEMPLATE_ID 	: 'Template<br>ID',
+		TEMPLATE_NAME 	: 'Template Name',
+		Y_AXIS_ID 		: 'Y-Axis<br>ID',
+		Y_AXIS_NAME 	: 'Y-Axis Name',
+	},
+
+	PERMISSIONS : {
+		GLOBAL_VIEW 	: 'Global<br>View',
+		GLOBAL_EDIT 	: 'Global<br>Edit',
+		LOCATION_VIEW 	: 'Location<br>View',
+		LOCATION_EDIT 	: 'Location<br>Edit',
+		GROUP_VIEW 		: 'Group<br>View',
+		GROUP_EDIT 		: 'Group<br>Edit',
+		TRAINER_VIEW 	: 'Trainer<br>View',
+		TRAINER_EDIT 	: 'Trainer<br>Edit',
+		PRIVATE 		: 'Private',
+	},
+
+	RESULTS : {
 	},
 
 	//Dashboard

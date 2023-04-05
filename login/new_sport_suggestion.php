@@ -17,13 +17,13 @@ else {
 	$sport_group = $_GET['sport_group'] ?? false;
 }
 if (!$uname OR !$sport OR !$code) exit;
-if (!$sport_group OR $sport_group == '') $sport_group = 0;
+if (!$sport_group OR $sport_group == '') $sport_group = 1; //put in the first group that should be 'without group'
 
-$mes = '';
+$message = '';
 $new_data = false;
-$rows = $db->fetchRow("SELECT name FROM sports WHERE status = 1 AND name = ?", array($sport)); 
+$rows = $db->fetchRow("SELECT options FROM sports WHERE status = 1 AND parent_id != 0 AND name = ?", array($sport)); 
 if ($db->numberRows() > 0)  {
-	$mes = $LANG->REGISTER_SPORT_EXIST; //'Already Exist Sport';
+	$message = $LANG->REGISTER_SPORT_EXIST; //'Already Exist Sport';
 }
 else {
 	$activate_sport_code = MD5($CONFIG['SEC_Encrypt_Secret'] . $uname.$sport);
@@ -33,7 +33,7 @@ else {
 		{
 			//Insert Sport
 			$values = array();
-			$values['sport_group_id'] = $sport_group;
+			$values['parent_id'] = $sport_group;
 			$values['name'] = $sport;
 			$values['modified'] = get_date_time_SQL('now');
 			$values['created'] = get_date_time_SQL('now');
@@ -56,7 +56,17 @@ else {
 		}
 	}
 	else {
-		$mes = $LANG->REGISTER_ACTIVATE_CODE_ERROR;
+		$message = $LANG->REGISTER_ACTIVATE_CODE_ERROR;
+	}
+}
+
+
+//Sports Groups Select Options
+$sports_groups_options_grid = ''; 
+$rows = $db->fetch("SELECT id, name FROM sports WHERE status = 1 AND parent_id = 0 ORDER BY name", array()); 
+if ($db->numberRows() > 0)  {
+	foreach ($rows as $row) {
+		$sports_groups_options_grid .= '<option value="'.$row['id'].'">'.$row['name'].'</option>';
 	}
 }
 
@@ -80,36 +90,22 @@ require($PATH_2_ROOT.'php/inc.head.php');
          	<h1 style="color:#333"><?=$LANG->REGISTER_APPROVE_PROPOSAL;?></h1>
 			<br>
 			<h3 style="color: #0000ff"><?=$LANG->REGISTER_SPORT;?> : <b><u><?=$sport;?></u></b></h3>
-	<?php if ($mes != '') { ?>
-			<h3 style="color: #ff0000"><?=$mes;?></h3>
+	<?php if ($message != '') { ?>
+			<h3 style="color: #ff0000"><?=$message;?></h3>
 	<?php } else { ?>
 		<?php if (!$_POST) { ?>
 			<form name="form1" id="wrapped" action="new_sport_suggestion.php" method="POST">
 				<input type="hidden" name="sport" value="<?=$sport;?>">
 				<input type="hidden" name="uname" value="<?=$uname;?>">
 				<input type="hidden" name="code" value="<?=$code;?>">
-				<h4>
-					<?=$LANG->REGISTER_SPORT_GROUP_SEL;?> : 
-					<div class="styled-select" style="margin:15px 0;">
-						<select name="sport_group" class="form-control">
-							<option value=""><?=$LANG->REGISTER_SPORT_GROUP;?></option>
-							<?php
-								//Sports Groups Select Options
-								$sport_groups_options = ''; 
-								$rows = $db->fetch("SELECT o.id, o.options 
-										FROM dropdowns d
-										LEFT JOIN dropdowns o ON o.idd = d.id
-										WHERE d.name='Sport_Groups' AND o.status=1 ORDER BY o.options", array()); 
-								if ($db->numberRows() > 0)  {
-									foreach ($rows as $row) {
-										$sport_groups_options .= '<option value="'.$row['id'].'">'.$row['options'].'</option>';
-									}
-								}
-								echo $sport_groups_options;
-							?>
-						</select>
-					</div>
-				</h4>
+				<h4><?=$LANG->REGISTER_SPORT_GROUP_SEL;?> : </h4>
+				<div class="styled-select">
+					<select name="sport_group" class="form-control">
+						<option value=""><?=$LANG->REGISTER_SPORT_GROUP;?></option>
+						<?=$sports_groups_options_grid;?>
+					</select>
+				</div>
+				<br>
 				<button type="submit" name="forward" class="forward"><?=$LANG->REGISTER_SUBMIT;?>&nbsp; &nbsp;</button>
 			</form>
 		<?php } else { ?>

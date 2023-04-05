@@ -1,4 +1,4 @@
-<?php // ajax Trainer Requests Grid/List
+<?php // ajax Trainer Requests List
 require_once('../_settings.regmon.php');
 require('../login/validate.php');
 
@@ -22,7 +22,7 @@ $req_text = array(
 
 $html = '';
 
-$rows = $db->fetch("SELECT u2t.status AS req_status, u2t.modified, u2t.created, u.id, u.lastname, u.firstname, u.sport FROM users2groups u2g 
+$rows = $db->fetch("SELECT u2t.status AS request_status, u2t.modified, u2t.created, u.id, u.lastname, u.firstname, u.sport FROM users2groups u2g 
 JOIN users u ON (u.id = u2g.user_id AND u.level > 10 AND u.status = 1) 
 JOIN users2trainers u2t ON (u.id = u2t.trainer_id AND u2g.group_id = u2t.group_id AND u2t.user_id = ?) 
 WHERE u2g.group_id = ? AND u2g.status = 1 ORDER BY u2t.id", array($UID, $group_id)); 
@@ -34,7 +34,7 @@ if ($db->numberRows() > 0)  {
 		$lastname = $row['lastname'];
 		$firstname = $row['firstname'];
 		$sport = str_replace(',', ', ', $row['sport']);
-		$req_status = $row['req_status'];
+		$request_status = $row['request_status'];
 		$modified = get_date_time($row['modified'].'');
 		$created = get_date_time($row['created'].'');
 		//$link = ' href="javascript:void(0)" target="_blank"';
@@ -46,14 +46,14 @@ if ($db->numberRows() > 0)  {
 		$status1 = '';
 		$status2 = '';
 		$status3 = '';
-			if ($req_status == '0') { $status1 = 'G_no';  	 $status2 = ''; 	 	$status3 = ''; }
-		elseif ($req_status == '1') { $status1 = 'G_yes'; 	 $status2 = ''; 	 	$status3 = 'G_no_trainer'; $status = ''; }
-		elseif ($req_status == '5') { $status1 = 'G_leaveR'; $status2 = ''; 	 	$status3 = ''; }
-		elseif ($req_status == '15'){ $status1 = 'G_leaveA'; $status2 = ''; 	 	$status3 = ''; }
-		elseif ($req_status == '7') { $status1 = 'G_waitLR'; $status2 = 'G_yes_ans'; $status3 = 'G_no_ans'; $status = ''; $answer = 1; }
-		elseif ($req_status == '17'){ $status1 = 'G_waitLA'; $status2 = 'G_yes_ans'; $status3 = 'G_no_ans'; $status = ''; $answer = 1; }
-		elseif ($req_status == '8') { $status1 = 'G_waitN';  $status2 = 'G_yes_ans'; $status3 = 'G_no_ans'; $status = ''; $answer = 1; }
-		elseif ($req_status == '9') { $status1 = 'G_wait'; 	 $status2 = 'G_yes_ans'; $status3 = 'G_no_ans'; $status = ''; $answer = 1; }
+			if ($request_status == '0') { $status1 = 'G_no';  	 $status2 = ''; 	 	$status3 = ''; }
+		elseif ($request_status == '1') { $status1 = 'G_yes'; 	 $status2 = ''; 	 	$status3 = 'G_no_trainer'; $status = ''; }
+		elseif ($request_status == '5') { $status1 = 'G_leaveR'; $status2 = ''; 	 	$status3 = ''; }
+		elseif ($request_status == '15'){ $status1 = 'G_leaveA'; $status2 = ''; 	 	$status3 = ''; }
+		elseif ($request_status == '7') { $status1 = 'G_waitLR'; $status2 = 'G_yes_ans'; $status3 = 'G_no_ans'; $status = ''; $answer = 1; }
+		elseif ($request_status == '17'){ $status1 = 'G_waitLA'; $status2 = 'G_yes_ans'; $status3 = 'G_no_ans'; $status = ''; $answer = 1; }
+		elseif ($request_status == '8') { $status1 = 'G_waitN';  $status2 = 'G_yes_ans'; $status3 = 'G_no_ans'; $status = ''; $answer = 1; }
+		elseif ($request_status == '9') { $status1 = 'G_wait'; 	 $status2 = 'G_yes_ans'; $status3 = 'G_no_ans'; $status = ''; $answer = 1; }
 		if ($answer) $ans = ' answer';
 		$request = array(
 			'G_no' => '<span class="req G_no'.$status.'" title="'.$req_text['G_no'].'"></span>', //0
@@ -73,13 +73,13 @@ if ($db->numberRows() > 0)  {
 		$status2 = ($status2==''?'':$request[$status2]);
 		$status3 = ($status3==''?'':$request[$status3]);
 		
-		if ($req_status=='1') $link .= ' class="trainer_link" data-id="'.$trainer_id.'"';
+		if ($request_status=='1') $link .= ' class="trainer_link" data-id="'.$trainer_id.'"';
 
-		$html .= '<tr><td><a'.$link.'><span class="'.($answer?'answer':($status?$status:'')).'">'.$firstname.' '.$lastname.($req_status=='1'?'<i class="fa fa-list-alt" style="float:right; margin-top:6px;" title="Trainerfreigaben"></i>':'').'</span></a></td>';
+		$html .= '<tr><td><a'.$link.'><span class="'.($answer?'answer':($status?$status:'')).'">'.$firstname.' '.$lastname.($request_status=='1'?'<i class="fa fa-list-alt" style="float:right; margin-top:6px;" title="Trainerfreigaben"></i>':'').'</span></a></td>';
 
 		$link_view = ' class="trainer_status" href="javascript:void(0)" data-toggle="popover" data-placement="bottom" data-html="true" title="<b>'.$firstname.' '.$lastname.'</b>" data-content="'.$LANG->STATUS.': <b>'.$req_text[$status1].'</b><br>'.$LANG->SPORT.': <b>'.$sport.'</b><br><span class=popover_nowrap>'.$LANG->CREATED.': <b>'.$created.'</b><br>'.$LANG->MODIFIED.': <b>'.$modified.'</b></span>"';
 		$link_accept = ' class="trainer_accept" href="javascript:void(0)" data-id="'.$trainer_id.'"';
-		$link_reject = ' class="trainer_reject" href="javascript:void(0)" data-id="'.$trainer_id.'" data-status="'.$req_status.'"';
+		$link_reject = ' class="trainer_reject" href="javascript:void(0)" data-id="'.$trainer_id.'" data-status="'.$request_status.'"';
 		$html .= '<td class="req_act" style="padding-right:10px"><a'.$link_view.'>'.$status11.'</a></td>';
 		$html .= '<td class="req_act"><a'.$link_accept.'>'.$status2.'</a></td>';
 		$html .= '<td class="req_act"><a'.$link_reject.'>'.$status3.'</a></td>';

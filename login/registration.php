@@ -90,40 +90,34 @@ WHERE gr.status = 3 AND gr.private_key = ?", array($_POST['private_key']));
 	$values['created'] = get_date_time_SQL('now');
 	$activate_code = MD5($values['account'].$values['uname'].$values['passwd']);
 	
-	//sport
-	$sports = array();
-	$rows = $db->fetch("SELECT name FROM sports WHERE status = 1", array()); 
-	if ($db->numberRows() > 0)  {
-		foreach ($rows as $row) {
-			$sports[] = $row['name'];
-		}
-	}
+	//check if we have a new sport to activate
 	$values['sport'] = '';
-	$sport_user = '';
-	$sport_admin = '';
-	$i = $ii = 0;
+	$sport_to_user = '';
+	$sport_to_admin = '';
 	if (isset($_POST['sport']) AND count($_POST['sport'])) {
-		foreach ($_POST['sport'] as $sport) {
-			$i++;
-			if ($i != 1) {
-				$sport_user .= ', ';
-				$sport_admin .= ', ';
+		$sports_arr = array();
+		$rows = $db->fetch("SELECT options FROM sports WHERE status = 1 AND parent_id != 0 ORDER BY options", array()); 
+		if ($db->numberRows() > 0)  {
+			foreach ($rows as $row) {
+				$sports_arr[] = $row['options'];
 			}
+		}
+		foreach ($_POST['sport'] as $sport) {
+			if ($values['sport'] != '') $values['sport'] .= ', ';
+			if ($sport_to_user != '') $sport_to_user .= ', ';
+			if ($sport_to_admin != '') $sport_to_admin .= ', ';
 			//if sport not exist
-			if (!in_array($sport, $sports)) {
+			if (!in_array($sport, $sports_arr)) {
 				$activate_sport_code = MD5($CONFIG['SEC_Encrypt_Secret'] . $values['uname'].$sport);
 				$activate_sport_link = "<a href='".$CONFIG['HTTP'].$CONFIG['DOMAIN'].'/'.$CONFIG['REGmon_Folder']."login/new_sport_suggestion.php?sport=".$sport."&uname=".$values['uname']."&code=".$activate_sport_code."' target='_blank'>".$LANG->REGISTER_APPROVE_PROPOSAL."</a>";
-				$sport_user .= '<u style="color:blue;">'.$sport.' ('.$LANG->REGISTER_APPROVE_WAIT.')</u>';
-				$sport_admin .= '<u style="color:blue;">'.$sport.' ('.$activate_sport_link.')</u>';
+				
+				$sport_to_user .= '<u style="color:blue;">'.$sport.' ('.$LANG->REGISTER_APPROVE_WAIT.')</u>';
+				$sport_to_admin .= '<u style="color:blue;">'.$sport.' ('.$activate_sport_link.')</u>';
 			}
 			else {
-				$ii++;
-				if ($ii != 1) {
-					$values['sport'] .= ',';
-				}
 				$values['sport'] .= $sport;
-				$sport_user .= $sport;
-				$sport_admin .= $sport;
+				$sport_to_user .= $sport;
+				$sport_to_admin .= $sport;
 			}
 		}
 	}
@@ -166,10 +160,9 @@ WHERE gr.status = 3 AND gr.private_key = ?", array($_POST['private_key']));
 
 			$params_Message = [
 				'{Username}' => $_POST['uname'],
-				'{Password}' => $_POST['passwd'],
 				'{Lastname}' => $_POST['lastname'],
 				'{Firstname}' => $_POST['firstname'],
-				'{Sport}' => $sport_user,
+				'{Sport}' => $sport_to_user,
 				'{Body_Height}' => $_POST['body_height'],
 				'{Gender}' => ($_POST['sex']=='0' ? 'Männlich' : ($_POST['sex']=='1' ? 'Weiblich' : 'Divers')),
 				'{Email}' => $_POST['email'],
@@ -190,12 +183,11 @@ WHERE gr.status = 3 AND gr.private_key = ?", array($_POST['private_key']));
 			
 			//Admin email for activation of new user account
 			$admin_email = array();
-			//$group_admins = $db->fetchRow("SELECT GROUP_CONCAT( u.email ) AS emails FROM users u
 			$admin_rows = $db->fetch("SELECT u.lastname, u.email FROM users u
 				LEFT JOIN `groups` gr ON gr.id = ?
 				WHERE FIND_IN_SET( u.id, gr.admins_id )", array($values['group_id']));
 			if (!$db->numberRows()) {
-				//get the admin email if the group is not enabled for registration
+				//get the admin email if the group not have an group admin
 				$admin_rows = $db->fetch("SELECT lastname, email FROM users WHERE account = 'admin' AND level = 99", array());
 			}
 			foreach ($admin_rows as $admin) {
@@ -204,7 +196,7 @@ WHERE gr.status = 3 AND gr.private_key = ?", array($_POST['private_key']));
 				$Subject_admin = strtr($LANG->EMAIL_NEW_ACCOUNT_ADMIN_SUBJECT, $params_Subject);
 
 				//overwrite some admin vals
-				$params_Message['{Sport}'] = $sport_admin;
+				$params_Message['{Sport}'] = $sport_to_admin;
 				//here may have new sports activation link
 				$params_Message['{Activate_Link}'] = $activate_link;
 

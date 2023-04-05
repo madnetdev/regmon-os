@@ -1,15 +1,18 @@
 "use strict";
 
+// Forms Grid
+
 jQuery(function() 
 {
 
+const grid_width_Max = 1400;
 const LF = LANG.FORMS;
 const idPrefix = "f_";
 const pager = '#Fpager';
 let $forms = $("#forms");
 let start_hidden = true;
 let header = 'Forms';
-if (user_forms) { //for users options
+if (V_is_Index_Options) { //for index options
 	start_hidden = false;
 	header = '';
 }
@@ -34,14 +37,14 @@ $forms.jqGrid({
 	viewrecords: true, //view 1 - 1 of 10
 	headertitles:true,
 	cmTemplate: { editoptions:{size:22}, editable:true },
-	colNames:['', LANG.ID, LF.NAME, LF.NAME2, LF.TAGS, LF.DETAILS, LANG.STATUS, LF.CATEGORIES, LANG.CREATED, LANG.CREATED_BY, LANG.MODIFIED, LANG.MODIFIED_BY],
+	colNames:['', LANG.ID, LF.NAME, LF.NAME2, LF.TAGS, LF.CATEGORIES, LANG.STATUS, LF.DETAILS, LANG.CREATED, LANG.CREATED_BY, LANG.MODIFIED, LANG.MODIFIED_BY],
 	colModel:[
 		{ //inline editing buttons and options
 			name:'acc', hidden:(V_GROUP_ADMIN_2?true:false), width:22, fixed:true, sortable:false, editable:false, search: false, resizable:false, formatter:'actions', 
 			formatoptions:{
-				keys:true, //[Enter]=save,[Esc]=cancel
+				keys:true,
 				delbutton:false,
-				editformbutton:true, editOptions:{}
+				editformbutton:true
 			}
 		},
 		{name:'id',key:true, width:32, align:"center", sorttype:"int", editoptions:{readonly:'readonly'} },
@@ -49,12 +52,29 @@ $forms.jqGrid({
 		{name:'name2',		 width:100},
 		{name:'tags',		 width:100,
 			formatter:"select", edittype:"select",
-			editoptions:{multiple:true, size:1, dataUrl:'php/ajax.php?i=forms&oper=get_tags_select',
+			editoptions: {
+				multiple: true, size: 1, dataUrl: 'php/ajax.php?i=tags&oper=get_tags_select',
 				selectFilled:function(options) {
-					$(options.elem).select2({tags:true, tokenSeparators:[','], language:LANG.LANG_CURRENT});
+					$(options.elem).chosen({
+						width:'100%', placeholder_text_multiple: ' ', no_results_text: LANG.NO_RESULTS,
+						multiple: true,
+						create_option: true,
+						create_option_text: LANG.NEW_OPTION,
+						search_contains: true
+					});
 				}
 			}
 		},
+		{name:'categories',	 width:30, hidden:V_is_Index_Options, editrules:{edithidden:true},
+			formatter:"select", edittype:"select", 
+			editoptions: {
+				multiple: true, disabled: true, size: 1, dataUrl: 'php/ajax.php?i=categories&oper=get_Categories_Select',
+				selectFilled:function(options) {
+					$(options.elem).chosen({width:'100%', placeholder_text_multiple: ' ', no_results_text: LANG.NO_RESULTS});
+				}
+			}
+		},
+		{name:'status',	 	 width:45, template: aktivInaktivTemplate },
 		{name:'details',	 width:32, fixed:true, hidden:(V_GROUP_ADMIN_2?true:false), 
 			editable:false, search:false,
 			formatter: function (cellValue, option, rowObject) {
@@ -69,29 +89,12 @@ $forms.jqGrid({
 				'</div>';
 			}
 		},
-		{name:'status',	 	 width:45, fixed:true, align:"center",
-			formatter:"select", edittype:"select", stype:'select', 
-			searchoptions: {sopt:['eq','ne'], value:":;1:"+LANG.ST_ACTIVE+";0:"+LANG.ST_INACTIVE},	
-			editoptions:{value:"1:"+LANG.ST_ACTIVE+";0:"+LANG.ST_INACTIVE, defaultValue:'1', size:1},
-			cellattr: function(rowId, val) {
-				if (val==1) return " style='color:green;'"; //active
-				else return " style='color:red;'"; //inactive
-			}
-		},
-		{name:'categories',	 width:100, hidden:true, editrules:{edithidden:true},
-			formatter:"select", edittype:"select", 
-			editoptions:{multiple:true, size:1, dataUrl:'php/ajax.php?i=categories&oper=get_Categories_Select',
-				selectFilled:function(options) {
-					$(options.elem).select2({language:LANG.LANG_CURRENT, disabled:true});
-				}
-			}
-		},
-		{name:'created',	 width:64, hidden:true, editrules:{edithidden:true}, editoptions:{readonly:'readonly'} },
-		{name:'created_by',  width:80, hidden:true, editrules:{edithidden:true}, editoptions:{readonly:'readonly'}, align:"center" },
-		{name:'modified', 	 width:64, hidden:true, editrules:{edithidden:true}, editoptions:{readonly:'readonly'} },
-		{name:'modified_by', width:85, hidden:true, editrules:{edithidden:true}, editoptions:{readonly:'readonly'}, align:"center" }
+		{name:'created',	 width:40, hidden:V_is_Index_Options, editrules:{edithidden:true}, editoptions:{readonly:'readonly'} },
+		{name:'created_by',  width:50, hidden:V_is_Index_Options, editrules:{edithidden:true}, editoptions:{readonly:'readonly'}, align:"center" },
+		{name:'modified', 	 width:40, hidden:V_is_Index_Options, editrules:{edithidden:true}, editoptions:{readonly:'readonly'} },
+		{name:'modified_by', width:50, hidden:V_is_Index_Options, editrules:{edithidden:true}, editoptions:{readonly:'readonly'}, align:"center" }
 	]
-}) //$forms.jqGrid({
+}) //end $forms.jqGrid({
 //Column Search
 .jqGrid('filterToolbar',{
 	stringResult:true,
@@ -116,7 +119,6 @@ $forms.jqGrid({
 		$('input[readonly], select[readonly]').css({'background-color':'#eee','background-image':'none'});
 	}
 });
-//.jqGrid("showHideColumnMenu");
 
 if (!V_GROUP_ADMIN_2) {
 	//dublicate button
@@ -144,7 +146,7 @@ if (!V_GROUP_ADMIN_2) {
 
 $(pager).children().children().css('table-layout', 'auto'); //fix pager width
 
-if (user_forms) { //for users options
+if (V_is_Index_Options) { //for index options
 	$('#gbox_forms').removeClass('ui-corner-all').addClass('ui-corner-bottom')
 }
 else { //admin page
@@ -165,13 +167,22 @@ else { //admin page
 
 
 function Responsive_Forms() { 
-    var p_width = $('#C_Forms_link').prop('clientWidth');// Get width of parent container
-    if (p_width == null || p_width < 1){
-        p_width = $('#C_Forms_link').prop('offsetWidth'); // For IE, revert to offsetWidth if necessary
-    }
-    p_width = p_width - 3; //prevent horizontal scrollbars
-	if (p_width != $forms.width()) {
-		$forms.jqGrid('setGridWidth', p_width);
+	if (V_is_Index_Options) { //for index options
+		var p_width = $('#C_Forms_link').prop('clientWidth');// Get width of parent container
+		if (p_width == null || p_width < 1){
+			p_width = $('#C_Forms_link').prop('offsetWidth'); // For IE, revert to offsetWidth if necessary
+		}
+		p_width = p_width - 3; //prevent horizontal scrollbars
+		if (p_width != $forms.width()) {
+			$forms.jqGrid('setGridWidth', p_width);
+		}
+	}
+	else { //admin page
+		if (grid_width_Max > $(window).width()) {
+			$forms.jqGrid('setGridWidth', $(window).width()-30);
+		} else {
+			$forms.jqGrid('setGridWidth', grid_width_Max);
+		}
 	}
 }
 Responsive_Forms();

@@ -10,53 +10,79 @@ switch ($action) {
 			$key = trim((string)$key); 
 			$val = trim((string)$val); 
 			switch($key) {
-				case 'sport_group_id': 
+				case 'parent_id': 
 				case 'name': 
+				case 'options': 
 				case 'status': 
 					$values[$key] = $val;
 				  break;
 			}
 		}		
 				
-		// Check if all fields are filled up
-		if (trim($values['name']) == '') {
-			echo $LANG->EMPTY_SPORT_NAME;
-			exit;
-		}
-
 		$where_id = '';
 		if ($id != 0) {
-			$where_id = "AND id != " . ((int)$id); //if edit = have id
+			$where_id = "AND id != " . ((int)$id); //if edit = have id --not check the same entry
 		}
-		$row = $db->fetchRow("SELECT * FROM sports WHERE name=? AND sport_group_id=? $where_id", array($values['name'], $values['sport_group_id']));
-		if ($db->numberRows() > 0)  {
-			echo $LANG->WARN_SPORT_EXIST;
-		}
-		else {
-			// INSERT
-			if ($action == 'add') {
-				$values['modified'] = get_date_time_SQL('now');
-				$values['created'] = get_date_time_SQL('now');
-				
-				$insert_id = $db->insert($values, "sports");
-				
-				echo check_insert_result($insert_id);
-			}
-			// UPDATE
-			elseif ($action == 'edit') {
-				$values['modified'] = get_date_time_SQL('now');
-				
-				$result = $db->update($values, "sports", "id=?", array($id));
 
-				echo check_update_result($result);
+		//sport options
+		if (isset($_GET['oper']) AND $_GET['oper'] == 'options') {
+			// Check if all fields are filled up
+			if (trim($values['options']) == '') {
+				echo $LANG->EMPTY_SPORT_NAME;
+				exit;
 			}
+
+			$row = $db->fetchRow("SELECT id FROM sports WHERE options=? $where_id", array($values['options']));
+			if ($db->numberRows() > 0)  {
+				echo $LANG->WARN_SPORT_EXIST;
+				exit;
+			}
+		}
+		//sport groups
+		else {
+			// Check if all fields are filled up
+			if (trim($values['name']) == '') {
+				echo $LANG->EMPTY_SPORT_GROUP;
+				exit;
+			}
+
+			$row = $db->fetchRow("SELECT id FROM sports WHERE name=? $where_id", array($values['name']));
+			if ($db->numberRows() > 0)  {
+				echo $LANG->WARN_SPORT_GROUP_EXIST;
+				exit;
+			}
+
+			$values['parent_id'] = '0';
+		}
+
+		// INSERT
+		if ($action == 'add') {
+			if (isset($ID)) {
+				$values['parent_id'] = $ID;
+			}
+			$values['modified'] = get_date_time_SQL('now');
+			$values['created'] = get_date_time_SQL('now');
+			
+			$insert_id = $db->insert($values, "sports");
+			
+			echo check_insert_result($insert_id);
+		}
+		// UPDATE
+		elseif ($action == 'edit') {
+			$values['modified'] = get_date_time_SQL('now');
+			
+			$result = $db->update($values, "sports", "id=?", array($id));
+
+			echo check_update_result($result);
 		}
 
 	  break;
 	  
+	  
 	case 'del': // DELETE 
 		
 		//TODO: what if any users already selected this sport ??? @@@@@@@@
+		//TODO: what if delete a parent_id ??? @@@@@@@@
 
 		$result = $db->delete("sports", "id=?", array($id));
 			
@@ -64,39 +90,58 @@ switch ($action) {
 
 	  break;
 	  
-	case 'sports_options': // SELECT 
-		
-		//Sports Select Options
-		$ajax_options = true;
-		$sports_options = get_Sports_Select_Options($ajax_options);
-		echo $sports_options;
-			
+
+	case 'sports_groups_select': // SELECT 
+		echo get_Sports_Groups();
+	  break;
+
+
+	case 'sports_select': // SELECT 
+		echo '<select>'.get_Sports_Select_Options_By_Group().'</select>';
 	  break;
 	  
-	case 'sports_options_grp': // SELECT 
-		
-		//Sports Select Options
-		$SP_select = '<select id="SP_select" name="SP_select"><option value=""></option>';
-		$SP_select .= get_Sports_Select_Options_By_Group();
-		$SP_select .= '</select>';
-		echo $SP_select;
-			
-	  break;
-	  
-	case 'view': // SELECT 
-	default: //view
+
+	case 'options': // SELECT 
 		
 		$responce = new stdClass();
-		$sidx = $sidx ?? '';
-		$sord = $sord ?? '';
-		$rows = $db->fetch("SELECT * FROM sports ORDER BY $sidx $sord", array()); 
+		$rows = $db->fetch("SELECT * FROM sports WHERE parent_id=? ORDER BY options", array($ID)); 
 		$i=0;
 		if ($db->numberRows() > 0)  {
 			foreach ($rows as $row) {
 				$responce->rows[$i] = $responce->rows[$i]['cell'] = array(
 					'',
 					$row['id'],
-					$row['sport_group_id'],
+					$row['parent_id'],
+					$row['options'],
+					$row['status'],
+					get_date_time_SQL($row['created'].''),
+					get_date_time_SQL($row['modified'].'')
+				);
+				$i++;
+			}
+		}
+		
+		$responce = json_encode($responce);
+		
+		if ($responce == '""') //if empty
+			echo '{"rows":[]}';
+		else 
+			echo $responce;
+
+	break;
+	  
+
+	case 'view': // SELECT 
+	default: //view
+		
+		$responce = new stdClass();
+		$rows = $db->fetch("SELECT * FROM sports WHERE parent_id = 0 ORDER BY name", array()); 
+		$i=0;
+		if ($db->numberRows() > 0)  {
+			foreach ($rows as $row) {
+				$responce->rows[$i] = $responce->rows[$i]['cell'] = array(
+					'',
+					$row['id'],
 					$row['name'],
 					$row['status'],
 					get_date_time_SQL($row['created'].''),

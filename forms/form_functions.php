@@ -1011,7 +1011,7 @@ function get_Accordion_Panels($rw, $Panels, $accType) {
 function get_Available_Dropdowns($dds) {
 	global $db;
 	$dd = ''; 
-	$rows = $db->fetch("SELECT id, name FROM dropdowns WHERE for_forms=1 AND status=1 AND name IS NOT NULL ORDER BY name", array()); 
+	$rows = $db->fetch("SELECT id, name FROM dropdowns WHERE status=1 AND name IS NOT NULL ORDER BY name", array()); 
 	if ($db->numberRows() > 0)  {
 		foreach ($rows as $row) {
 			$dd .= '<option value="'.$row['id'].'"'.($dds==$row['id']?' selected':'').'>'.$row['name'].'</option>';
@@ -1027,26 +1027,14 @@ function get_Dropdown_Options($dd, $val='', $only_vals=false, $only_val=false, $
 	$only_val_txt = ''; 
 	$rows = $db->fetch("SELECT o.id, o.options 
 FROM dropdowns d
-LEFT JOIN dropdowns o ON o.idd = d.id
+LEFT JOIN dropdowns o ON o.parent_id = d.id
 WHERE d.id=? AND o.status=1 ORDER BY o.options", array($dd)); 
 	if ($db->numberRows() > 0)  {
 		$arr = array();
 		$rows_count = count($rows);
 		$color_val_single = 0;
 		foreach ($rows as $row) {
-			//RangeOfValues(100->250) cm //range of values
-			if (substr_count($row['options'], 'RangeOfValues') != 0) {
-				$tmp1 = explode('(', $row['options']??'');
-				$tmp2 = explode(')', $tmp1[1]??'');
-				$range = explode('->',$tmp2[0]??'');
-				$unit = $tmp2[1];
-				for ($i = $range[0]; $i <= $range[1]; $i++) {
-					$ddn .=  '<option value="'.$i.$unit.'"'.($val==$i.$unit?' selected':'').'>'.$i.$unit.'</option>';
-					$only_vals_arr[$i.$unit] = $i.$unit;
-					if ($val==$i.$unit) $only_val_txt = $i.$unit;
-				}
-			}
-			elseif (substr_count($row['options'], '__') != 0) {
+			if (substr_count($row['options'], '__') != 0) {
 				$tmp = explode('__', $row['options']??'');
 				$arr[$tmp[0]] = $tmp[1];
 			}

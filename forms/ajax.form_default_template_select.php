@@ -22,7 +22,7 @@ if ($db->numberRows() > 0)  {
 //$html .= '<select id="select_template_'.$ath_id.'_'.$group_id.'_'.$cat_id.'_'.$form_id.'">';
 $html .= $LANG->FORM_DEFAULT_TEMPLATE.' : <br><select class="select_template" style="width:100%;">';
 //get available group form templates
-$templates = $db->fetchAll("SELECT id, name FROM graphs WHERE is_axis=0 AND group_id=? AND form_id=? ORDER BY name", array($group_id, $form_id)); 
+$templates = $db->fetchAll("SELECT id, name FROM templates WHERE template_type=0 AND group_id=? AND form_id=? ORDER BY name", array($group_id, $form_id)); 
 if ($db->numberRows() > 0) {
 	foreach ($templates as $temp) {
 		$html .= '<option value="'.$temp['id'].'"'.($form_default_template == $temp['id'] ? ' selected' : '').'>'.$temp['name'].'</option>';

@@ -35,6 +35,9 @@ button.btn-danger, button.btn-default, button.btn-info, button.btn-primary, butt
 .empty_message { margin:20px 0; text-align:center; }
 
 /*chosen overwrites*/
+.chosen-container { font-size:11px; }
+
+#SPORTS_select_chosen.chosen-container {font-size:13px;}
 #SPORTS_select_chosen.chosen-container .chosen-choices {border-radius:4px; padding:2px 5px; font-size:14px;}
 
 #TRN_select_chosen.chosen-container { font-size:16px; min-width:190px; max-width: 100%; text-align:left; box-shadow:0 0 5px #777;}
@@ -243,13 +246,14 @@ span.req.G_newx:before { content:"\f007"; color:#aaaaaa; }
     text-decoration: none;
     font-weight: bold;
 }
+
 .panel-body {padding:1px;}
 
 
 #group_data {
 	padding:15px 0;
 }
-#group_data .panel-body {
+#C_Group_Users .panel-body {
 	padding:2px;
 }
 

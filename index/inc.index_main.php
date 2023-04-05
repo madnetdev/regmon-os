@@ -1,5 +1,9 @@
-<?php // inc index main ?>
+<?php // inc index main 
 
+$DIS = ' style="display:none;"';
+$DIS2 = ' display:none;';
+
+?>
 	<div id="main_container" class="container">	
 		<?php /*<header><h1><b><?=$LANG->APP_NAME;?></b><span><?=$LANG->APP_INFO;?></span></h1></header>*/?>
 		<?php /*<h3 style="text-align:center;"><b><u><?=$selected_LOCATION_name;?></u></b></h3>*/?>

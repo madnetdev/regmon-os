@@ -82,7 +82,7 @@ if ($db->numberRows() > 0)  {
 
 $SP_select_options = get_Sports_Select_Options_By_Group($sport);
 
-$user_height_options = get_User_Height_Options($body_height);
+$body_height_options = get_Body_Height_Options($body_height);
 
 ?>
 	<form id="profile_edit" style="width:100%;" role="form" autocomplete="off">
@@ -125,7 +125,7 @@ $user_height_options = get_User_Height_Options($body_height);
 			<label for="body_height"><?=$LANG->REGISTER_BODY_HEIGHT;?></label><br>
 			<select name="body_height" class="form-control">
 				<option value=""><?=$LANG->REGISTER_BODY_HEIGHT;?></option>
-				<?=$user_height_options;?>
+				<?=$body_height_options;?>
 			</select>
 		</div>
 		<div class="form-group">

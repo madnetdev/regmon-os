@@ -49,9 +49,11 @@ This project ...
 
 3. Create Database and Import :
 
-    use **"extra/_regmondb_init v3.002.sql"** file for a new installation
+    use **"extra/_regmondb_init v3.006.sql"** file for a new installation
     
     use **"extra/_regmondb_update_to_v3.002.sql"** file for update from a v3.000 installation
+
+    use **"extra/_regmondb_update_to_v3.006.sql"** file for update from a v3.002 installation
 
 4. Create a folder for exports/imports and users uploads.
 

@@ -10,12 +10,14 @@ require_once('php/functions.php');
 //Locations-Groups Select Options
 $GP_select_options_grp = '';
 $GP_select_options = '';
+$private_option = '';
 $private_groups = array();
 $rows = $db->fetch("SELECT gr.id, gr.location_id, gr.status, gr.private_key, gr.stop_date, gr.name, u.email, st.name AS location_name 
 FROM `groups` gr 
 LEFT JOIN locations st ON st.id = gr.location_id 
 LEFT JOIN users u ON u.id IN (gr.admins_id) 
-WHERE gr.status > 0 ORDER BY gr.location_id, gr.name", array()); 
+WHERE gr.status > 0 
+ORDER BY gr.location_id, gr.name", array()); 
 if ($db->numberRows() > 0)  {
 	$location_open = false;
 	$GP_group = '';
@@ -81,7 +83,7 @@ $PUG_json = json_encode($private_groups); //PrivateUserGroups
 
 $SP_select_options = get_Sports_Select_Options_By_Group();
 
-$user_height_options = get_User_Height_Options();
+$body_height_options = get_Body_Height_Options();
 
 //#####################################################################################
 $title = $LANG->REGISTER_PAGE_TITLE;
@@ -96,8 +98,8 @@ require('php/inc.head.php');
 <link type="text/css" rel="stylesheet" href="css/overrides/icheck/skins/square/aero_new.css">
 <script type="text/javascript" src="node_modules/icheck/icheck.min.js"></script>
 
-<link type="text/css" rel="stylesheet" href="node_modules/chosen-js/chosen.min.css" />
-<script type="text/javascript" src="node_modules/chosen-js/chosen.jquery.min.js"></script>
+<link type="text/css" rel="stylesheet" href="js/plugins/chosen/chosen.min.css" />
+<script type="text/javascript" src="js/plugins/chosen/chosen.jquery.min.js"></script>
 
 <script type="text/javascript" src="node_modules/jquery-validation/dist/jquery.validate.js"></script>
 <?php if ($LANG->LANG_CURRENT != 'en') { ?>
@@ -227,7 +229,7 @@ select.required.form-control { border-right: 3px solid rgba(255, 0, 0, 0.7); }
 							<div class="styled-select">
 								<select name="body_height" class="form-control">
 									<option value="" selected><?=$LANG->REGISTER_BODY_HEIGHT;?></option>
-									<?=$user_height_options;?>
+									<?=$body_height_options;?>
 								</select>
 							</div>
 						</li>

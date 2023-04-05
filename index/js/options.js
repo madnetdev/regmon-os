@@ -135,7 +135,7 @@ function load_New_Info(show_loading) {
 //Trainers Requests - Athletes Answer 
 function load_Trainer_Requests() {
 	if (hasAccess()) {
-		$("#A_Requests_From_Trainers").load("index/grid.trainer_requests.php", {group_id: V_GROUP});
+		$("#A_Requests_From_Trainers").load("index/ajax.list.trainer_requests.php", {group_id: V_GROUP});
 	}
 }
 function init_Trainer_Requests() {
@@ -161,8 +161,8 @@ function init_Trainer_Requests() {
 		btnCancelLabel: LANG.NO, btnCancelClass: 'btn btn-sm btn-danger',
 		onConfirm: function(e, button) {
 			var trainer_id = $(button).attr('data-id');
-			var req_status = $(button).attr('data-status');
-			var data = {request: 'user2trainer_Answer', action: 'trainer_reject', group_id: V_GROUP, trainer_id: trainer_id, req_status: req_status};
+			var request_status = $(button).attr('data-status');
+			var data = {request: 'user2trainer_Answer', action: 'trainer_reject', group_id: V_GROUP, trainer_id: trainer_id, request_status: request_status};
 			$.post('index/ajax.request.php', data, function(data, result){
 				if (data) $("#trainer_status_message").html(data);//.show();
 				load_Trainer_Requests();
@@ -178,7 +178,7 @@ function init_Trainer_Requests() {
 //Group Requests - GroupAdmin Answer Requests here
 function load_Group_Requests() {
 	if (hasAccess()) {
-		$("#A_Group_Requests").load("index/grid.group_requests.php", {group_id: V_GROUP});
+		$("#A_Group_Requests").load("index/ajax.list.group_requests.php", {group_id: V_GROUP});
 	}
 }
 function init_Group_Requests() {
@@ -186,8 +186,8 @@ function init_Group_Requests() {
 	$('.group_user_accept').off('click').on('click',function() {
 		loading.show();
 		var user_id = $(this).attr('data-id');
-		var req_status = $(this).attr('data-status');
-		var data = {request: 'user2group_Answer', action: 'group_user_accept', group_id: V_GROUP, user_id: user_id, req_status: req_status};
+		var request_status = $(this).attr('data-status');
+		var data = {request: 'user2group_Answer', action: 'group_user_accept', group_id: V_GROUP, user_id: user_id, request_status: request_status};
 		$.post('index/ajax.request.php', data, function(data, result){
 			if (data) $("#group_user_status_message").html(data);//.show();
 			load_Group_Requests();
@@ -203,8 +203,8 @@ function init_Group_Requests() {
 		btnCancelLabel: LANG.NO, btnCancelClass: 'btn btn-sm btn-danger',
 		onConfirm: function(e, button) {
 			var user_id = $(button).attr('data-id');
-			var req_status = $(button).attr('data-status');
-			var data = {request: 'user2group_Answer', action: 'group_user_reject', group_id: V_GROUP, user_id: user_id, req_status: req_status};
+			var request_status = $(button).attr('data-status');
+			var data = {request: 'user2group_Answer', action: 'group_user_reject', group_id: V_GROUP, user_id: user_id, request_status: request_status};
 			$.post('index/ajax.request.php', data, function(data, result){
 				if (data) $("#group_user_status_message").html(data);//.show();
 				load_Group_Requests();
@@ -218,42 +218,42 @@ function init_Group_Requests() {
 //Request_Access by Athletes from Trainers ######################
 function load_Users_2_Trainers() {
 	if (hasAccess()) {
-		$("#A_Request_Access_From_Athletes").load("index/grid.trainer_users.php", {group_id: V_GROUP});
+		$("#A_Request_Access_From_Athletes").load("index/ajax.grid.trainer_users.php", {group_id: V_GROUP});
 	}
 }
 
 //Group Users ###################################################
 function load_Users_2_Group() {
 	if (hasAccess()) {
-		$("#A_Group_Users").load("index/grid.group_users.php", {group_id: V_GROUP, location_id: V_Group_2_Location[V_GROUP][0]});
+		$("#A_Group_Users").load("index/ajax.grid.group_users.php", {group_id: V_GROUP, location_id: V_Group_2_Location[V_GROUP][0]});
 	}
 }
 
 //Location Groups ###############################################
 function load_Location_Groups() {
 	if (hasAccess()) {
-		$("#A_Location_Groups").load("index/grid.location_groups.php", {location_id: V_Group_2_Location[V_GROUP][0]});
+		$("#A_Location_Groups").load("index/ajax.grid.location_groups.php", {location_id: V_Group_2_Location[V_GROUP][0]});
 	}
 }
 
 //Forms #########################################################
 function load_Forms() {
 	if (hasAccess()) {
-		$("#A_Forms").load("index/grid.forms.php");
+		$("#A_Forms").load("index/ajax.grid.forms.php");
 	}
 }
 
 //Categories ####################################################
 function load_Categories() {
 	if (hasAccess()) {
-		$("#A_Categories").load("index/grid.categories.php");
+		$("#A_Categories").load("index/ajax.grid.categories.php");
 	}
 }
 
 //Sports Dropdowns ##############################################
 function load_Sports_Dropdowns() {
 	if (hasAccess()) {
-		$("#A_Sports_Dropdowns").load("index/grid.sports_n_dropdowns.php");
+		$("#A_Sports_Dropdowns").load("index/ajax.grid.dropdowns_n_sports.php");
 	}
 }
 

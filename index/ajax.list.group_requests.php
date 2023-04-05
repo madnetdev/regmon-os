@@ -1,4 +1,4 @@
-<?php // Group Requests Grid/List
+<?php // Group Requests List
 require_once('../_settings.regmon.php');
 require('../login/validate.php');
 
@@ -27,7 +27,7 @@ $req_text = array(
 $html = '';
 
 //group requests
-$rows = $db->fetch("SELECT u2g.status AS req_status, u2g.modified, u2g.created, u.id, u.uname, u.lastname, u.firstname, u.sport, u.body_height, u.sex, u.birth_date, u.email, u.telephone, u.level FROM users2groups u2g 
+$rows = $db->fetch("SELECT u2g.status AS request_status, u2g.modified, u2g.created, u.id, u.uname, u.lastname, u.firstname, u.sport, u.body_height, u.sex, u.birth_date, u.email, u.telephone, u.level FROM users2groups u2g 
 JOIN users u ON u.id = u2g.user_id
 WHERE u2g.group_id = ? AND u2g.status > 5 AND u2g.status != 15 AND u2g.status != 11 ORDER BY u2g.id", array($group_id)); 
 //print_r($rows); 
@@ -41,7 +41,7 @@ if (count($rows)) {
 		$lastname = $row['lastname'];
 		$firstname = $row['firstname'];
 		$sport = str_replace(',', ', ', $row['sport']);
-		$req_status = $row['req_status'];
+		$request_status = $row['request_status'];
 		$profil = ($row['level']=='10' ? $LANG->LVL_ATHLETE : ($row['level']=='30' ? $LANG->LVL_TRAINER : ($row['level']=='40' ? $LANG->LVL_GROUP_ADMIN_2 : ($row['level']=='45' ? $LANG->LVL_GROUP_ADMIN : ($row['level']=='50' ? $LANG->LVL_LOCATION : ($row['level']=='99' ? $LANG->LVL_ADMIN :''))))));
 
 		//$link = ' href="javascript:void(0)" target="_blank"';
@@ -53,16 +53,16 @@ if (count($rows)) {
 		$status1 = '';
 		$status2 = '';
 		$status3 = '';
-			if ($req_status == '0') { $status1 = 'G_no';  	 $status2 = ''; 	 	$status3 = ''; }
-		elseif ($req_status == '1') { $status1 = 'G_yes'; 	 $status2 = ''; 	 	$status3 = 'G_no_group_user'; $status = ''; }
-		elseif ($req_status == '5') { $status1 = 'G_leaveR'; $status2 = ''; 	 	$status3 = ''; }
-		elseif ($req_status == '15'){ $status1 = 'G_leaveA'; $status2 = ''; 	 	$status3 = ''; }
-		elseif ($req_status == '7') { $status1 = 'G_waitLR'; $status2 = 'G_yes_ans'; $status3 = 'G_no_ans'; $status = ''; $answer = 1; }
-		elseif ($req_status == '17'){ $status1 = 'G_waitLA'; $status2 = 'G_yes_ans'; $status3 = 'G_no_ans'; $status = ''; $answer = 1; }
-		elseif ($req_status == '8') { $status1 = 'G_waitN';  $status2 = 'G_yes_ans'; $status3 = 'G_no_ans'; $status = ''; $answer = 1; }
-		elseif ($req_status == '9') { $status1 = 'G_wait'; 	 $status2 = 'G_yes_ans'; $status3 = 'G_no_ans'; $status = ''; $answer = 1; }
-		elseif ($req_status == '10'){ $status1 = 'G_new'; 	 $status2 = 'G_yes_ans'; $status3 = 'G_no_ans'; $status = ''; $answer = 1; }
-		//elseif ($req_status == '11'){ $status1 = 'G_newx'; 	 $status2 = ''; 		 $status3 = ''; 		$status = ''; $answer = 1; }
+			if ($request_status == '0') { $status1 = 'G_no';  	 $status2 = ''; 	 	$status3 = ''; }
+		elseif ($request_status == '1') { $status1 = 'G_yes'; 	 $status2 = ''; 	 	$status3 = 'G_no_group_user'; $status = ''; }
+		elseif ($request_status == '5') { $status1 = 'G_leaveR'; $status2 = ''; 	 	$status3 = ''; }
+		elseif ($request_status == '15'){ $status1 = 'G_leaveA'; $status2 = ''; 	 	$status3 = ''; }
+		elseif ($request_status == '7') { $status1 = 'G_waitLR'; $status2 = 'G_yes_ans'; $status3 = 'G_no_ans'; $status = ''; $answer = 1; }
+		elseif ($request_status == '17'){ $status1 = 'G_waitLA'; $status2 = 'G_yes_ans'; $status3 = 'G_no_ans'; $status = ''; $answer = 1; }
+		elseif ($request_status == '8') { $status1 = 'G_waitN';  $status2 = 'G_yes_ans'; $status3 = 'G_no_ans'; $status = ''; $answer = 1; }
+		elseif ($request_status == '9') { $status1 = 'G_wait'; 	 $status2 = 'G_yes_ans'; $status3 = 'G_no_ans'; $status = ''; $answer = 1; }
+		elseif ($request_status == '10'){ $status1 = 'G_new'; 	 $status2 = 'G_yes_ans'; $status3 = 'G_no_ans'; $status = ''; $answer = 1; }
+		//elseif ($request_status == '11'){ $status1 = 'G_newx'; 	 $status2 = ''; 		 $status3 = ''; 		$status = ''; $answer = 1; }
 		if ($answer) $ans = ' answer';
 		$request = array(
 			'G_no' => '<span class="req G_no'.$status.'" title="'.$req_text['G_no'].'"></span>', //0
@@ -83,7 +83,7 @@ if (count($rows)) {
 		$status2 = ($status2==''?'':$request[$status2]);
 		$status3 = ($status3==''?'':$request[$status3]);
 		
-		if ($req_status=='1') $link .= ' class="group_user_link" data-id="'.$group_user_id.'"';
+		if ($request_status=='1') $link .= ' class="group_user_link" data-id="'.$group_user_id.'"';
 
 		$html .= '<tr><td><a'.$link.'><span class="'.($answer?'answer':($status?$status:'')).'">('.$uname.') '.$firstname.' '.$lastname.'</span></a></td>';
 
@@ -102,8 +102,8 @@ if (count($rows)) {
 				.$LANG->REGISTER_TELEPHONE.': <b>'.$row['telephone'].'</b><br><hr>'
 				.$LANG->CREATED.': <b>'.get_date_time($row['created'].'').'</b><br>'
 				.$LANG->MODIFIED.': <b>'.get_date_time($row['modified'].'').'</b></span>"';
-		$link_accept = ' class="group_user_accept" href="javascript:void(0)" data-id="'.$group_user_id.'" data-status="'.$req_status.'"';
-		$link_reject = ' class="group_user_reject" href="javascript:void(0)" data-id="'.$group_user_id.'" data-status="'.$req_status.'"';
+		$link_accept = ' class="group_user_accept" href="javascript:void(0)" data-id="'.$group_user_id.'" data-status="'.$request_status.'"';
+		$link_reject = ' class="group_user_reject" href="javascript:void(0)" data-id="'.$group_user_id.'" data-status="'.$request_status.'"';
 		$html .= '<td class="req_act" style="padding-right:10px"><a'.$link_view.'>'.$status11.'</a></td>';
 		$html .= '<td class="req_act"><a'.$link_accept.'>'.$status2.'</a></td>';
 		$html .= '<td class="req_act"><a'.$link_reject.'>'.$status3.'</a></td>';

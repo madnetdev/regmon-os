@@ -93,7 +93,7 @@ array(
 	'REGISTER_PRIVATE_KEY_ERROR'=> 'Private Key Error',
 	'REGISTER_BACK' 			=> 'Back',
     'REGISTER_BACKWARD'			=> 'Backward',
-	//User Account - box.profile_edit.php
+	//User Account - ajax.page.profile_edit.php
 	'PROFILE_USER_ACCOUNT' 		=> 'User Account',
 	'PROFILE_LOCATION' 			=> 'Location (active)',
 	'PROFILE_GROUP' 			=> 'Group (active)',
@@ -205,6 +205,11 @@ array(
 	//ajax.sports
 	'EMPTY_SPORT_NAME' 		=> 'Warning! Empty Sport Name',
 	'WARN_SPORT_EXIST' 		=> 'Warning! This Sport already exists. <br> Please use a different name.',
+	'EMPTY_SPORT_GROUP' 	=> 'Warning! Empty Sport Group',
+	'WARN_SPORT_GROUP_EXIST'=> 'Warning! This Sport Group already exists. <br> Please use a different name.',
+	//ajax.tag
+	'EMPTY_TAG_NAME' 		=> 'Warning! Empty Tag Name',
+	'WARN_TAG_EXIST' 		=> 'Warning! This Tag already exists. <br> Please use a different name.',
 	//ajax.dropdowns
 	'EMPTY_DROPDOWN_NAME' 	=> 'Warning! Empty Dropdown Name',
 	'WARN_DROPDOWN_EXIST' 	=> 'Warning! This Dropdown already exists. <br> Please use a different name.',
@@ -214,11 +219,15 @@ array(
 		
 	//VERWALTUNG  //admin - //benutzerkonten.php
 	'ADMIN_PAGE_TITLE'		=> 'Administration - REGmon',
-	'ADMIN_USERS' 			=> 'Users Accounts',
 	'ADMIN_LOCATIONS' 		=> 'Locations',
 	'ADMIN_GROUPS' 			=> 'Groups',
-	'ADMIN_SPORTS' 			=> 'Sports',
+	'ADMIN_USERS' 			=> 'Users Accounts',
 	'ADMIN_DROPDOWNS' 		=> 'Drop-downs and Questionnaires',
+	'ADMIN_SPORTS' 			=> 'Sports',
+	'ADMIN_TAGS' 			=> 'Tags',
+	'ADMIN_TEMPLATES_FORMS'	=> 'Forms Templates',
+	'ADMIN_TEMPLATES_GROUPS'=> 'Groups Templates',
+	'ADMIN_TEMPLATES_Y_AXIS'=> 'Y-Axis Templates',
 
 	//trainers
 	'TRAINER_USERS' 		=> 'Users Accounts',
@@ -227,8 +236,9 @@ array(
 	'LOCATION_GROUPS'		=> 'Location Groups',
 
 	//sports
-	'SPORT' 				=> 'Sport',
-	'SPORTS' 				=> 'Sports',
+	'SPORT' 					=> 'Sport',
+	'SPORTS' 					=> 'Sports',
+	'SPORTS_NEW_NEED_APPROVE'	=> 'The following sports must be approved by an administrator:',
 
 	//dropdowns
 	'DROPDOWNS' 			=> 'Drop-downs and Questionnaires',
@@ -493,7 +503,6 @@ array(
 'A new {Profile} user account has been created for you. <br><a href="{HTTP}{DOMAIN}/{REGmon_Folder}" target="_blank">{DOMAIN}/{REGmon_Folder}</a>
 <br>
 <br>Username: {Username}
-<br>Password: {Password}
 <br>
 <br>First Name: {Firstname}
 <br>Last Name: {Lastname}

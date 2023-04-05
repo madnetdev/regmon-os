@@ -217,7 +217,7 @@ switch ($action) {
 		$wher = "";
 		$where = $wher . $where;
 		$where = str_replace("u2t.status = 'null'", "u2t.status IS NULL", $where);
-		$rows = $db->fetch("SELECT u2t.status AS req_status, u.* FROM `users2groups` u2g 
+		$rows = $db->fetch("SELECT u2t.status AS request_status, u.* FROM `users2groups` u2g 
 				JOIN `users` u ON u.id = u2g.user_id AND $where_level AND u.status = 1
 				LEFT JOIN `users2trainers` u2t ON u.id = u2t.user_id AND u2g.group_id = u2t.group_id AND u2t.trainer_id = ?
 				WHERE u2g.group_id = ? AND u2g.status = 1 $where ORDER BY $sidx $sord ", array($trainer_id, $group_id)); 
@@ -234,8 +234,8 @@ switch ($action) {
 					$row['body_height'],
 					get_date_time_SQL($row['created'].''),
 					get_date_time_SQL($row['modified'].''),
-					$row['req_status']==1?'<img class="checklist" data-id="'.$row['id'].'" src="img/checklist.png" style="cursor:pointer;" title="'.$LANG->TRAINER_2_ATHLETES_ACCESS.'">':'',
-					$row['req_status']
+					$row['request_status']==1?'<img class="checklist" data-id="'.$row['id'].'" src="img/checklist.png" style="cursor:pointer;" title="'.$LANG->TRAINER_2_ATHLETES_ACCESS.'">':'',
+					$row['request_status']
 				);
 				$i++;
 			}
@@ -271,7 +271,7 @@ switch ($action) {
 		$where = $wher . $where;
 				
 		//users 2 group
-		$rows = $db->fetch("SELECT u2g.status AS req_status, u.* FROM `users2groups` u2g 
+		$rows = $db->fetch("SELECT u2g.status AS request_status, u.* FROM `users2groups` u2g 
 				JOIN `users` u ON u.id = u2g.user_id $where_level
 				WHERE u2g.group_id = ? $where ORDER BY $sidx $sord ", array($group_id)); 
 		
@@ -298,7 +298,7 @@ switch ($action) {
 					$row['logincount'],
 					get_date_time_SQL($row['created'].''),
 					get_date_time_SQL($row['modified'].''),
-					$row['req_status']
+					$row['request_status']
 				);
 				$i++;
 			}
