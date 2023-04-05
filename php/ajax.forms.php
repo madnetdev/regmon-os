@@ -127,7 +127,7 @@ switch ($action) {
 		$rows = $db->fetch("SELECT id, name, name2 FROM forms ORDER BY name", array()); 
 		if ($db->numberRows() > 0)  {
 			foreach ($rows as $row) {
-				$options .= '<option value="'.$row['id'].'">'.addslashes($row['name']).' ('.addslashes($row['name2']).')</option>'; //extern (intern)
+				$options .= '<option value="'.$row['id'].'">'.htmlspecialchars($row['name']??'').' ('.htmlspecialchars($row['name2']??'').')</option>'; //extern (intern)
 			}
 		}
 		$options .= '</select>'; 

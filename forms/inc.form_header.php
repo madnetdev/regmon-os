@@ -174,7 +174,7 @@ var V_GROUP = <?=$group_id;?>;
 
 <?php if ($EDIT) { ?>
 				<br> <?php //give some space for popups ?>
-				<p id="form_name" style="margin-top:15px;"><input type="text" name="form_title" value="<?=htmlspecialchars($form_title);?>" style="width:100%; height:42px; text-align:center; font-weight:bold;" disabled></p>
+				<p id="form_name" style="margin-top:15px;"><input type="text" name="form_title" value="<?=htmlspecialchars($form_title??'');?>" style="width:100%; height:42px; text-align:center; font-weight:bold;" disabled></p>
 <?php } else { ?>
 				<p id="form_name" style="margin-top:15px;"><b><?=$form_title;?></b></p>
 <?php } ?>

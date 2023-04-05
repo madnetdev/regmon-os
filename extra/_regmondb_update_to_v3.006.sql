@@ -48,12 +48,6 @@ DELETE FROM `dropdowns` WHERE `dropdowns`.`id` = 8;
 DELETE FROM `dropdowns` WHERE `dropdowns`.`id` = 9;
 DELETE FROM `dropdowns` WHERE `dropdowns`.`id` = 10;
 
--- rename sport_group_id to parent_id
-ALTER TABLE `sports` CHANGE `sport_group_id` `parent_id` INT(11) NULL DEFAULT '1';
-
--- add options
-ALTER TABLE `sports` ADD `options` VARCHAR(64) NULL AFTER `name`;
-
 -- delete field for_forms
 ALTER TABLE `dropdowns` DROP `for_forms`;
 
@@ -61,10 +55,16 @@ ALTER TABLE `dropdowns` DROP `for_forms`;
 ALTER TABLE `dropdowns` DROP `can_del_edit`;
 
 -- rename idd to parent_id
-ALTER TABLE `sports` CHANGE `idd` `parent_id` INT(11) NULL DEFAULT '1';
+ALTER TABLE `dropdowns` CHANGE `idd` `parent_id` INT(11) NULL DEFAULT '0';
+
+-- rename sport_group_id to parent_id
+ALTER TABLE `sports` CHANGE `sport_group_id` `parent_id` INT(11) NULL DEFAULT '1';
+
+-- add options
+ALTER TABLE `sports` ADD `options` VARCHAR(64) NULL AFTER `name`;
 
 -- empty table sports
-TRUNCATE TABLE `sports`
+TRUNCATE TABLE `sports`;
 
 -- table sports entries 
 INSERT INTO `sports` (`id`, `parent_id`, `name`, `options`, `status`, `created`, `modified`) VALUES

@@ -345,7 +345,7 @@ function get_Form_Row_Item($type, $row, $item, $Accordion_Type = '0') {
 	'<div class="c_content hidden">'.
 		'<div>'.
 			$LANG->FORM_ITEM_TITLE.':<br>'.
-			'<input name="c_'.$id.'_label" type="text" value="'.htmlspecialchars($label).'" class="c_label"><br>'.
+			'<input name="c_'.$id.'_label" type="text" value="'.htmlspecialchars($label??'').'" class="c_label"><br>'.
 		'</div>'.
 		'<div class="btn-group btn_group_3" data-toggle="buttons">'.
 			'<label class="btn btn-default'.($align=='left'?' active':'').'">'.
@@ -380,7 +380,7 @@ function get_Form_Row_Item($type, $row, $item, $Accordion_Type = '0') {
 				($EDIT 
 				? $HTML_edit_div.
 				'<div class="rowItem_div">'.
-					'<span class="label_txt">'.htmlspecialchars($label).'</span>'
+					'<span class="label_txt">'.htmlspecialchars($label??'').'</span>'
 				: 	$label
 				).
 				($EDIT ? '</div>' :'').

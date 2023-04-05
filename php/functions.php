@@ -8,8 +8,8 @@ function get_locations_select($options_grid=false) {
 	$rows = $db->fetch("SELECT id, name FROM locations WHERE status = 1 ORDER BY name", array()); 
 	if ($db->numberRows() > 0)  {
 		foreach ($rows as $row) {
-			$locations_select .= '<option value="'.$row['id'].'">'.addslashes($row['name']).'</option>';
-			$locations_options_grid .=  ';' . $row['id'].':'.addslashes($row['name']);
+			$locations_select .= '<option value="'.$row['id'].'">'.htmlspecialchars($row['name']??'').'</option>';
+			$locations_options_grid .=  ';' . $row['id'].':'.htmlspecialchars($row['name']??'');
 		}
 	}
 	$locations_select .= '</select>'; 
@@ -31,8 +31,8 @@ function get_locations_admins_select($options_grid=false) {
 	$rows = $db->fetch("SELECT id, uname FROM users WHERE status = 1 AND level = 50 ORDER BY id", array()); 
 	if ($db->numberRows() > 0)  {
 		foreach ($rows as $row) {
-			$locations_admins_select .= '<option value="'.$row['id'].'">'.addslashes($row['uname']).'</option>';
-			$locations_admins_options_grid .=  ';' . $row['id'].':'.addslashes($row['uname']);
+			$locations_admins_select .= '<option value="'.$row['id'].'">'.htmlspecialchars($row['uname']??'').'</option>';
+			$locations_admins_options_grid .=  ';' . $row['id'].':'.htmlspecialchars($row['uname']??'');
 		}
 	}
 	$locations_admins_select .= '</select>'; 
@@ -53,8 +53,8 @@ function get_groups_select($options_grid=false) {
 	$rows = $db->fetch("SELECT id, name FROM `groups` WHERE status > 0 ORDER BY name", array()); 
 	if ($db->numberRows() > 0)  {
 		foreach ($rows as $row) {
-			$groups_select .= '<option value="'.$row['id'].'">'.addslashes($row['name']).'</option>';
-			$groups_options_grid .=  ';' . $row['id'].':'.addslashes($row['name']);
+			$groups_select .= '<option value="'.$row['id'].'">'.htmlspecialchars($row['name']??'').'</option>';
+			$groups_options_grid .=  ';' . $row['id'].':'.htmlspecialchars($row['name']??'');
 		}
 	}
 	$groups_select .= '</select>'; 
@@ -75,8 +75,8 @@ function get_groups_admins_select($options_grid=false, $where='') {
 	$rows = $db->fetch("SELECT id, uname FROM users WHERE status = 1 AND (level = 40 OR level = 45) $where ORDER BY id", array()); 
 	if ($db->numberRows() > 0)  {
 		foreach ($rows as $row) {
-			$groups_admins_select .= '<option value="'.$row['id'].'">'.addslashes($row['uname']).'</option>';
-			$groups_admins_options_grid .=  ';' . $row['id'].':'.addslashes($row['uname']);
+			$groups_admins_select .= '<option value="'.$row['id'].'">'.htmlspecialchars($row['uname']??'').'</option>';
+			$groups_admins_options_grid .=  ';' . $row['id'].':'.htmlspecialchars($row['uname']??'');
 		}
 	}
 
@@ -98,8 +98,8 @@ function get_Sports_Groups($grid_options=false, $get_array=false) {
 	if ($db->numberRows() > 0) {
 		foreach ($rows as $row) {
 			$sport_groups_array[$row['id']] = $row['name'];
-			$sports_groups_select .= '<option value="'.$row['id'].'">'.addslashes($row['name']).'</option>';
-			$sport_groups_grid_options .=  ';' . $row['id'].':'.addslashes($row['name']);
+			$sports_groups_select .= '<option value="'.$row['id'].'">'.htmlspecialchars($row['name']??'').'</option>';
+			$sport_groups_grid_options .=  ';' . $row['id'].':'.htmlspecialchars($row['name']??'');
 		}
 	}
 	$sports_groups_select .= '</select>';
@@ -121,8 +121,8 @@ function get_Sports_Select_Options($grid_options = false) {
 	$rows = $db->fetch("SELECT options FROM sports WHERE status = 1 AND parent_id != 0 ORDER BY options", array()); 
 	if ($db->numberRows() > 0)  {
 		foreach ($rows as $row) {
-			$sports_select .= '<option value="'.$row['options'].'">'.$row['options'].'</option>';
-			$sports_grid_options .=  ';' . $row['options'].':'.addslashes($row['options']);
+			$sports_select .= '<option value="'.htmlspecialchars($row['options']??'').'">'.htmlspecialchars($row['options']??'').'</option>';
+			$sports_grid_options .=  ';' . htmlspecialchars($row['options']??'').':'.htmlspecialchars($row['options']??'');
 		}
 	}
 	$sports_select .= '</select>';
@@ -160,15 +160,15 @@ function get_Sports_Select_Options_By_Group($sport_selected = '') {
 				if ($Sports_open_group) {
 					$Sports_select_options_group .= '</optgroup>';
 				}
-				$Sports_select_options_group .= '<optgroup label="'.$Sports_group.'">';
+				$Sports_select_options_group .= '<optgroup label="'.htmlspecialchars($Sports_group??'').'">';
 				$Sports_open_group = true;
 			}
 			
 			//option
 			if ($Sports_group == '') { //no group -put at the end
-				$Sports_select_options .= '<option value="'.$row['options'].'"'.$t_selected.'>'.$row['options'].'</option>';
+				$Sports_select_options .= '<option value="'.htmlspecialchars($row['options']??'').'"'.$t_selected.'>'.htmlspecialchars($row['options']??'').'</option>';
 			} else {
-				$Sports_select_options_group .= '<option value="'.$row['options'].'"'.$t_selected.'>'.$row['options'].'</option>';
+				$Sports_select_options_group .= '<option value="'.htmlspecialchars($row['options']??'').'"'.$t_selected.'>'.htmlspecialchars($row['options']??'').'</option>';
 			}
 			
 			$Sports_group_tmp = $Sports_group;

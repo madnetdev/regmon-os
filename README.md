@@ -6,7 +6,9 @@ This project ...
  1. [Requirements](#requirements)
  2. [Installation](#installation)
  3. [FAQs](#faqs)
+
  3.1 [How to set my Database configuration](#How-to-set-my-Database-configuration)
+ 
  3.2 [How to set my Email configuration](#How-to-set-my-Email-configuration)
 
 

@@ -91,7 +91,7 @@ switch ($action) {
 				if (isset($categories_array['parent_categories'][$parent])) {
 					foreach ($categories_array['parent_categories'][$parent] as $cat_id) {
 						$dis = (($action=='get_Categories_Select_Root' AND $level==3)? ' disabled' : '');
-						$html .= '<option value="'.$cat_id.'"'.$dis.'>'.$space.addslashes($categories_array['categories'][$cat_id]['name']).'</option>';
+						$html .= '<option value="'.$cat_id.'"'.$dis.'>'.$space.htmlspecialchars($categories_array['categories'][$cat_id]['name']??'').'</option>';
 						if (isset($categories_array['parent_categories'][$cat_id])) { //have childs
 							$html .= buildCategorySelect($cat_id, $categories_array, $level+1); //get childs
 						}

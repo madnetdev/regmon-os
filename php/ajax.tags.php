@@ -74,7 +74,7 @@ switch ($action) {
 		$rows = $db->fetch("SELECT name FROM tags ORDER BY name", array()); 
 		if ($db->numberRows() > 0)  {
 			foreach ($rows as $row) {
-				$options .= '<option value="'.addslashes($row['name']).'">'.addslashes($row['name']).'</option>';
+				$options .= '<option value="'.htmlspecialchars($row['name']??'').'">'.htmlspecialchars($row['name']??'').'</option>';
 			}
 		}
 		$options .= '</select>'; 
