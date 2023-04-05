@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace REGmon;
 
 //Version
-$G_Version = "3.008";
+$G_Version = "3.009";
 $G_VER = "?ver=".$G_Version;
 
 
@@ -15,6 +15,11 @@ else {
 	//__config.regmon.php missing --run install script
 	//TODO: @@@@@@@@@@@ make install script
 	die('"__config.regmon.php" is missing!');
+}
+
+//remove when the db config done
+if (!isset($CONFIG['Use_VisualCaptcha'])) {
+	$CONFIG['Use_VisualCaptcha'] = true;
 }
 
 	
