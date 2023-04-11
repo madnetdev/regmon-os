@@ -1,4 +1,4 @@
-<?php // index functions
+<?php // index Functions
 
 // print_r alias function
 function PR($array) {

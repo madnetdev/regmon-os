@@ -6,19 +6,24 @@ class Language {
     
     public   $language = '';
     public   $Languages = array('en','de');
-    public   $DefaultLanguage = 'en';
+    public   $Default_Language = 'en';
+    public   $Use_Multi_Language_Selector = true;
     private  $tags = array();
     
-    public static function getInstance($REGmon_Folder) {
+    public static function getInstance($REGmon_Folder, $Default_Language, $Use_Multi_Language_Selector) {
         if (self::$instance === null) {
-            self::$instance = new self($REGmon_Folder);
+            self::$instance = new self($REGmon_Folder, $Default_Language, $Use_Multi_Language_Selector);
         }
         return self::$instance;
     }
     
-    public function __construct($REGmon_Folder) {
+    public function __construct($REGmon_Folder, $Default_Language, $Use_Multi_Language_Selector) {
 
-		if (isset($_REQUEST['lang'])) {
+		if (!$Use_Multi_Language_Selector) {
+            $this->Default_Language = $Default_Language;
+            $this->language = $Default_Language;
+        }
+		elseif (isset($_REQUEST['lang'])) {
             if (in_array($_REQUEST['lang'], $this->Languages)) {
                 $this->language = $_REQUEST['lang'];
             }
@@ -51,16 +56,16 @@ class Language {
                     break; 
                 }
                 else {
-                    $this->language = $this->DefaultLanguage;
+                    $this->language = $this->Default_Language;
                 }			
 			}
 		}
 		else {
-            $this->language = $this->DefaultLanguage;
+            $this->language = $this->Default_Language;
         }
 		
         if (!in_array($this->language, $this->Languages)) { 
-			$this->language = $this->DefaultLanguage;
+			$this->language = $this->Default_Language;
         }
 
 		setcookie ('LANG', $this->language, time() + (2 * 365 * 24 * 60 * 60), '/'.$REGmon_Folder); //2 years

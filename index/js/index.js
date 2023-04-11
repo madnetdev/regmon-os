@@ -40,12 +40,12 @@ jQuery(function()
 	//button Export
 	$("button.export").on('click',function() {
 		loading.show();
-		window.location.href = 'export.php'; //?groupid='+V_GROUP;
+		window.location.href = 'export.php';
 	});
 	//button Import
 	$("button.import").on('click',function() {
 		loading.show();
-		window.location.href = 'import.php'; //?groupid='+V_GROUP;
+		window.location.href = 'import.php';
 	});
 	//button Profile
 	$("a.nav_profile").fancybox(fancyBoxDefaults);
@@ -343,7 +343,7 @@ jQuery(function()
 			if (hasWriteAccess()) {
 				if (jsEvent.target.tagName == "TD") { //bcz it opens with a click to popover
 					if (view.name != 'month' && V_SELECTED_DATE.indexOf('T')==-1){ //all-day comment
-						if (V_TRAINER_W_PERMS.indexOf('All') != -1 || V_TRAINER_W_PERMS.indexOf('Notiz_n') != -1) {
+						if (V_TRAINER_W_PERMS.indexOf('All') != -1 || V_TRAINER_W_PERMS.indexOf('Note_n') != -1) {
 							$.fancybox($("#create_comment"), $.extend({},fancyBoxDefaults,{minWidth: 300}));
 							init_Comments_Create('Cal_'+view.name);
 						}
@@ -403,7 +403,7 @@ jQuery(function()
 		$(this).removeClass('fc-state-hover');
 	});
 	$('#addComment').on('click',function() {
-		if (V_TRAINER_W_PERMS.indexOf('All') != -1 || V_TRAINER_W_PERMS.indexOf('Notiz_n') != -1) {
+		if (V_TRAINER_W_PERMS.indexOf('All') != -1 || V_TRAINER_W_PERMS.indexOf('Note_n') != -1) {
 			$.fancybox($("#create_comment"), $.extend({},fancyBoxDefaults,{minWidth: 300}));
 			init_Comments_Create('Cal_Button');
 		}

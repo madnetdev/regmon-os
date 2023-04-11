@@ -3,7 +3,7 @@
 function get_locations_select($options_grid=false) {
 	global $db;
 	$locations_select = '<select>'; 
-	$locations_select .= '<option>&nbsp</option>'; 
+	$locations_select .= '<option></option>'; 
 	$locations_options_grid = ':'; 
 	$rows = $db->fetch("SELECT id, name FROM locations WHERE status = 1 ORDER BY name", array()); 
 	if ($db->numberRows() > 0)  {
@@ -198,6 +198,26 @@ function get_Body_Height_Options($body_height_selected = '', $grid_options = fal
 		return $user_height_grid_options;
 	}
 	return $body_height_options;
+}
+
+function get_Forms_with_Forms_Data_count_array($user_id, $group_id=false) {
+	global $db;
+
+	$Forms_with_Forms_Data_arr = array();
+	$where_group = '';
+	if ($group_id) {
+		$where_group = "AND group_id = ?";
+	}
+	$forms_data = $db->fetch("SELECT COUNT(*) AS count, form_id 
+FROM forms_data 
+WHERE user_id=? $where_group AND form_id > 0 AND status = 1 
+GROUP BY form_id", array($user_id, $group_id)); 
+	if ($db->numberRows() > 0)  {
+		foreach ($forms_data as $form_data) {
+			$Forms_with_Forms_Data_arr[$form_data['form_id']] = $form_data['count'];
+		}
+	}
+	return $Forms_with_Forms_Data_arr;
 }
 
 ?>

@@ -1,7 +1,7 @@
 /** Buttons **/
 
 /** Wizard Buttons **/
-.bttn, .bttnR, .backward, .forward, .home, .preview, .edit, .delete, .save, .saveSubmit, .newPage, .newRow, .accPanel-add, .newItemValue, .newCustomItem, #toTop {
+.bttn, .bttnR, .backward, .forward, .home, .home_parent, .preview, .edit, .delete, .save, .saveSubmit, .newPage, .newRow, .accPanel-add, .newItemValue, .newCustomItem, #toTop {
 	border:none;
 	color:#fff;
 	padding:7px 20px;
@@ -24,18 +24,18 @@
 	background-position: center; /*ripple efe*/
 }
 .bttn, .bttnR, .newPage, .newRow, .accPanel-add, .newItemValue, .newCustomItem {font-size: 13px;} 
-.backward, .home, .newPage, .newRow, .accPanel-add, .newItemValue, .newCustomItem {padding:7px 20px 7px 30px;} 
+.backward, .home, .home_parent, .newPage, .newRow, .accPanel-add, .newItemValue, .newCustomItem {padding:7px 20px 7px 30px;} 
 .forward, .edit, .delete, .save, .saveSubmit, .preview, #toTop {padding:7px 30px 7px 20px;}  
 #toTop {width:30px; padding:5px 7px; position:fixed; bottom:10px; right:10px; display:none; z-index:999;}
 .saveSubmit {background:green;}
 
-button[disabled].bttn, button[disabled].bttnR, button[disabled].backward, button[disabled].forward, button[disabled].home, button[disabled].preview, button[disabled].edit, button[disabled].delete, button[disabled].save, button[disabled].saveSubmit, button[disabled].newPage, button[disabled].newRow, button[disabled].accPanel-add, button[disabled].newItemValue, button[disabled].newCustomItem, button[disabled]#toTop {
+button[disabled].bttn, button[disabled].bttnR, button[disabled].backward, button[disabled].forward, button[disabled].home, button[disabled].home_parent, button[disabled].preview, button[disabled].edit, button[disabled].delete, button[disabled].save, button[disabled].saveSubmit, button[disabled].newPage, button[disabled].newRow, button[disabled].accPanel-add, button[disabled].newItemValue, button[disabled].newCustomItem, button[disabled]#toTop {
 	border:none;
 	background:#ccc;
 	outline:none;
 }
 
-.home:before, .backward:before, .forward:before, .preview:before, .edit:before, .delete:before, .save:before, .saveSubmit:before, .newPage:before, .newRow:before, .accPanel-add:before, .newItemValue:before, .newCustomItem:before, #toTop:before, .close_page:before, .close_item:before, .get_item:before {
+.home:before, .home_parent:before, .backward:before, .forward:before, .preview:before, .edit:before, .delete:before, .save:before, .saveSubmit:before, .newPage:before, .newRow:before, .accPanel-add:before, .newItemValue:before, .newCustomItem:before, #toTop:before, .close_page:before, .close_item:before, .get_item:before {
     font-family: FontAwesome;
     text-decoration: inherit;
     position: absolute;
@@ -44,7 +44,7 @@ button[disabled].bttn, button[disabled].bttnR, button[disabled].backward, button
 	text-transform:none;
 	font-size:9px
 }
-.home:before {
+.home:before, .home_parent:before {
 	content: "\f060";
     left: 20px;
 }
@@ -121,12 +121,12 @@ button[disabled].bttn, button[disabled].bttnR, button[disabled].backward, button
   background-size: 100%;
   transition: background 0s;
 }
-.bttn:hover, .bttnR:hover, .home:hover, .backward:hover, .forward:hover , .preview:hover, .edit:hover, .save:hover, .saveSubmit:hover, .newPage:hover, .newRow:hover, .accPanel-add:hover, .newItemValue:hover, .newCustomItem:hover, #toTop:hover  {
+.bttn:hover, .bttnR:hover, .home:hover, .home_parent:hover, .backward:hover, .forward:hover , .preview:hover, .edit:hover, .save:hover, .saveSubmit:hover, .newPage:hover, .newRow:hover, .accPanel-add:hover, .newItemValue:hover, .newCustomItem:hover, #toTop:hover  {
 	background: #00aeef radial-gradient(circle, transparent 1%, #00aeef 1%) center/15000%; /*ripple efe*/ /*background:#00aeef;*/
 	color:#fff;
 }
 .bttnR:hover { background: #990000 radial-gradient(circle, transparent 1%, #990000 1%) center/15000%; }
-.bttn:active, .bttnR:active, .home:active, .backward:active, .forward:active , .preview:active, .edit:active, .save:active, .saveSubmit:active, .newPage:active, .newRow:active, .accPanel-add:active, .newItemValue:active, .newCustomItem:active, #toTop:active  {
+.bttn:active, .bttnR:active, .home:active, .home_parent:active, .backward:active, .forward:active , .preview:active, .edit:active, .save:active, .saveSubmit:active, .newPage:active, .newRow:active, .accPanel-add:active, .newItemValue:active, .newCustomItem:active, #toTop:active  {
   background-color: #00baff;
   background-size: 100%;
   transition: background 0s;
@@ -183,13 +183,13 @@ button[disabled].bttn, button[disabled].bttnR, button[disabled].backward, button
 
 /* Mobile Landscape */
 @media (max-width: 480px) {
-	.home, .backward, .forward, .preview, /*.save,*/ .saveSubmit, .newPage, .newRow, .accPanel-add, .newItemValue, .newCustomItem, button[disabled].home, button[disabled].backward, button[disabled].forward, button[disabled].preview, /*button[disabled].save,*/ button[disabled].saveSubmit, button[disabled].newPage, button[disabled].newRow, button[disabled].accPanel-add, button[disabled].newItemValue, button[disabled].newCustomItem  {
+	.home, .home_parent, .backward, .forward, .preview, /*.save,*/ .saveSubmit, .newPage, .newRow, .accPanel-add, .newItemValue, .newCustomItem, button[disabled].home, button[disabled].home_parent, button[disabled].backward, button[disabled].forward, button[disabled].preview, /*button[disabled].save,*/ button[disabled].saveSubmit, button[disabled].newPage, button[disabled].newRow, button[disabled].accPanel-add, button[disabled].newItemValue, button[disabled].newCustomItem  {
 		text-indent:-9999px;
 		width:50px;
 		padding:0;
 		height:40px;
 	} 
-	.home:before, .backward:before, .forward:before, .preview:before, /*.save:before,*/ .saveSubmit:before, .newPage:before, .newRow:before, .accPanel-add:before, .newItemValue:before, .newCustomItem:before, button[disabled].home:before, button[disabled].backward:before, button[disabled].forward:before, button[disabled].preview:before, /*button[disabled].save:before,*/ button[disabled].saveSubmit:before, button[disabled].newPage:before, button[disabled].newRow:before, button[disabled].accPanel-add:before, button[disabled].newItemValue:before, button[disabled].newCustomItem:before {
+	.home:before, .home_parent:before, .backward:before, .forward:before, .preview:before, /*.save:before,*/ .saveSubmit:before, .newPage:before, .newRow:before, .accPanel-add:before, .newItemValue:before, .newCustomItem:before, button[disabled].home:before, button[disabled].home_parent:before, button[disabled].backward:before, button[disabled].forward:before, button[disabled].preview:before, /*button[disabled].save:before,*/ button[disabled].saveSubmit:before, button[disabled].newPage:before, button[disabled].newRow:before, button[disabled].accPanel-add:before, button[disabled].newItemValue:before, button[disabled].newCustomItem:before {
 		text-indent:0;
 		top:12px;
 		font-size:16px;

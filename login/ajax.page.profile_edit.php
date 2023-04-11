@@ -67,9 +67,9 @@ if ($db->numberRows() > 0)  {
 	$modified = get_date_time($row['modified'].'');
 	
 	//location/group name
-	$st_gr = $db->fetchRow("SELECT st.name AS location_name, gr.name AS group_name 
-		FROM locations st 
-		LEFT JOIN `groups` gr ON st.id = gr.location_id 
+	$st_gr = $db->fetchRow("SELECT l.name AS location_name, gr.name AS group_name 
+		FROM locations l 
+		LEFT JOIN `groups` gr ON l.id = gr.location_id 
 		WHERE gr.id = ?", array($row['group_id']));
 	if ($db->numberRows() > 0)  {
 		$location_name = $st_gr['location_name'];

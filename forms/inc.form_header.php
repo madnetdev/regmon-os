@@ -132,9 +132,9 @@ var V_GROUP = <?=$group_id;?>;
 	<br>
 
 	<form name="form_data" id="form_data" action="" method="POST">
-		<input name="form_id" type="hidden" value="<?=$form_id;?>">
-		<input name="category_id" type="hidden" value="<?=$category_id;?>">
-		<input name="group_id" type="hidden" value="<?=$group_id;?>">
+		<input name="form_id" id="form_id" type="hidden" value="<?=$form_id;?>">
+		<input name="category_id" id="category_id" type="hidden" value="<?=$category_id;?>">
+		<input name="group_id" id="group_id" type="hidden" value="<?=$group_id;?>">
 		<input name="athlete_id" id="athlete_id" type="hidden" value="<?=$athlete_id;?>">
 	<?php if ($EDIT) { ?>
 		<input name="form_json" type="hidden" value="">
@@ -327,7 +327,7 @@ $Athletes_2_Group = array();
 $GroupsNames = array();
 $Trainer_Group_in = '';
 //User2Group
-$GP_select_options = '';
+$Groups_select_options = '';
 $rows = $db->fetch("SELECT u2g.group_id, u2g.forms_select, g.name  
 FROM users2groups u2g
 LEFT JOIN `groups` g ON (u2g.group_id = g.id)
@@ -338,7 +338,7 @@ if ($db->numberRows() > 0)  {
 		$t_selected = ($row['group_id']==$group_id?' selected':'');
 		$t_disabled = (substr_count(','.$row['forms_select'].',', ','.$category_id.'_'.$form_id.',') ? '' : ' disabled');
 		if (!$t_disabled) { //not show disabled bcz problems later in js
-			$GP_select_options .= '<option value="'.$row['group_id'].'"'.$t_selected/*.$t_disabled*/.'>'.$row['name'].'</option>';
+			$Groups_select_options .= '<option value="'.$row['group_id'].'"'.$t_selected/*.$t_disabled*/.'>'.$row['name'].'</option>';
 			$GroupsNames[$row['group_id']] = $row['name'];
 			$Athletes_2_Group[$UID][] = $row['group_id'];
 			if ($Trainer_Group_in != '') $Trainer_Group_in .= ',';
@@ -417,7 +417,7 @@ echo '<script>var V_GroupsNames = '.json_encode($GroupsNames).'; var V_Athletes_
 					<span id="GRP_title" style="font-size:14px; font-weight:bold; vertical-align:middle;"><?=$LANG->FORM_GROUP_S;?> : </span> 
 					<span class="input-group-addon" style="width:25px; height:28px; padding:5px; display:inline-table; margin-right:-5px; border-top-left-radius:4px; border-bottom-left-radius:4px; "><span class="fa fa-users"></span></span>
 					<select name="GRP_select[]" id="GRP_select" multiple style="width:100%; max-width:350px; font-size:17px; vertical-align:middle; color:#444; font-weight:bold;">
-						<?=$GP_select_options;?>
+						<?=$Groups_select_options;?>
 					</select>
 					<span class="input-group-addon" style="width:25px; height:28px; padding:5px; display:inline-table; margin-left:-5px; border:2px solid #ccc;"><span class="fa fa-users"></span></span>
 				</div>

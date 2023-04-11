@@ -66,9 +66,9 @@ else {
 	$profile = $level[1];
 
 	if ($_POST['location_group'] == 'Private') {
-		$grst = $db->fetchRow("SELECT gr.id, gr.location_id, gr.status, gr.private_key, gr.name, st.name AS location_name 
+		$grst = $db->fetchRow("SELECT gr.id, gr.location_id, gr.status, gr.private_key, gr.name, l.name AS location_name 
 FROM `groups` gr 
-LEFT JOIN locations st ON st.id = gr.location_id 
+LEFT JOIN locations l ON l.id = gr.location_id 
 WHERE gr.status = 3 AND gr.private_key = ?", array($_POST['private_key'])); 
 		if ($db->numberRows() > 0)  {
 			$values['location_id'] 	= $grst['location_id'];

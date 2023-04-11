@@ -140,7 +140,7 @@ switch ($action) {
 			}
 
 			//comments in calendar
-			if ($athlete_id == $UID OR $ADMIN OR ($trainer_view AND (in_array('Notiz_n', $trainer_read_arr)))) {
+			if ($athlete_id == $UID OR $ADMIN OR ($trainer_view AND (in_array('Note_n', $trainer_read_arr)))) {
 				$rows = $db->fetch("SELECT * FROM comments WHERE user_id = ? AND group_id = ? ORDER BY created", array($athlete_id, $group_id));
 				if ($db->numberRows() > 0)  {
 					foreach ($rows as $row) {
@@ -167,7 +167,7 @@ switch ($action) {
 							"showInGraph"=> $row['showInGraph']=='1'?true:false,
 							"text" => $row['comments'],
 							"msg" => '<span>'.$row['comments'].'</span>'.
-								(($athlete_id == $UID OR ($trainer_view AND in_array('Notiz_n', $trainer_write_arr)))?
+								(($athlete_id == $UID OR ($trainer_view AND in_array('Note_n', $trainer_write_arr)))?
 									'<div class="clearfix"></div>'.
 									'<div style="text-align:center; margin-top:10px;">'.
 										'<button type="button" id="comment_delete" class="delete" style="margin:5px; padding:5px 30px 5px 10px; font-size:12px;">'.$LANG->DELETE.'</button>'.

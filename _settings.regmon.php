@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace REGmon;
 
 //Version
-$G_Version = "3.009";
+$G_Version = "3.460";
 $G_VER = "?ver=".$G_Version;
 
 
@@ -17,10 +17,18 @@ else {
 	die('"__config.regmon.php" is missing!');
 }
 
+//new $CONFIG values ######################
 //remove when the db config done
 if (!isset($CONFIG['Use_VisualCaptcha'])) {
 	$CONFIG['Use_VisualCaptcha'] = true;
 }
+if (!isset($CONFIG['Use_Multi_Language_Selector'])) {
+	$CONFIG['Use_Multi_Language_Selector'] = true;
+}
+if (!isset($CONFIG['Default_Language'])) {
+	$CONFIG['Default_Language'] = 'en';
+}
+//end new $CONFIG values ##################
 
 	
 // localhost config

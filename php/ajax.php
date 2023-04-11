@@ -35,7 +35,8 @@ switch($ajax) {
 	case 'sports':
 	case 'tags':
 	case 'templates':
-	case 'importTrackers':
+	//case 'users_files':
+	//case 'importTrackers':
 		if (file_exists('ajax.'.$ajax.'.php')) {
 			include('ajax.'.$ajax.'.php');
 		}
@@ -67,7 +68,11 @@ function check_update_result($result) {
 ////////////////////////////////////
 function check_insert_result($insert_id) {
 	global $LANG, $db;
-	if (!$insert_id) { 
+	
+	if ($insert_id AND $insert_id == (int)$insert_id) {
+		return 'OK_insert';
+	}
+	elseif (!$insert_id) { 
 		if (substr_count($db->_error(), 'Duplicate entry') <> 0) {
 			return $LANG->WARN_USERNAME_EXIST;
 		}

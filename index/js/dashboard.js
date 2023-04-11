@@ -341,7 +341,7 @@ function get_dash_content(dash) {
 				'<label>'+LANG.DASH.TEMPLATE+' :&nbsp;</label>'+
 				'<select id="dash_ResultsGroup_select" class="dash_option" style="width:182px;">'+
 					'<option value="">'+LANG.DASH.TEMPLATE_SELECT+'</option>'+
-					V_SAVED_DATA3_OPTIONS+
+					V_SAVED_DATA2_OPTIONS+
 				'</select>'+
 			'</div>'+
 			//Results + Results Group
@@ -404,7 +404,7 @@ function initDashboard() {
 			 if (type == 'calendar') name = '<i class="fa fa-calendar"></i><br>'+name;
 		else if (type == 'link') name = '<i class="fa fa-gear"></i><br>'+name;
 		else if (type == 'form') {
-			if (option == 'Notiz_n') name = '<i class="fa fa-commenting"></i><br>'+name;
+			if (option == 'Note_n') name = '<i class="fa fa-commenting"></i><br>'+name;
 			else name = '<i class="fa fa-file-text-o"></i><br>'+name;
 		}
 		else if (type == 'results') name = '<i class="fa fa-bar-chart"></i><br>'+name;
@@ -490,7 +490,7 @@ function initDashboard() {
 			option = '?id='+dd[1]+'&catid='+dd[0];
 			V_SELECTED_DATE = moment().format("YYYY-MM-DD HH:mm:ss");
 			$.cookie('SELECTED_DATE', V_SELECTED_DATE, { path: '/'+V_REGmon_Folder });
-			if (dd[0] == 'Notiz') {
+			if (dd[0] == 'Note') {
 				$.fancybox($("#create_comment"), $.extend({},fancyBoxDefaults,{minWidth: 300}));
 				init_Comments_Create('Dash_Button');
 				loading.hide();
@@ -587,7 +587,7 @@ function initDashboard() {
 		});
 		$('#dash_Forms_select').off('change').on('change', function () {
 			if ($(this).val() == '') $(this).css('background', 'white');
-			else if ($(this).val() == 'Notiz_n') $(this).css('background', $(':selected', $(this)).css('background-color'));
+			else if ($(this).val() == 'Note_n') $(this).css('background', $(':selected', $(this)).css('background-color'));
 			else $(this).css('background', $(':selected', $(this)).parent().css('background-color'));
 			get_dash_data(false);
 		});

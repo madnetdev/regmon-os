@@ -94,7 +94,7 @@ a:hover {
 /*#######################################################################################*/
 
 /** Buttons **/
-.home, .logout, .edit, .delete, .save, .export, .import, .results, .results2, .results3, .admin, .new_reg, .log_in, .submit_group, .profile, .bttn, .bttnR {
+.home, .home_parent, .logout, .edit, .delete, .save, .export, .import, .results, .results2, .results3, .admin, .new_reg, .log_in, .submit_group, .profile, .bttn, .bttnR {
 	border:none;
 	color:#fff;
 	padding:7px 20px;
@@ -133,12 +133,12 @@ a:hover {
 	padding: 0 5px;
 
 }
-button[disabled].home, button[disabled].logout, button[disabled].edit, button[disabled].delete, button[disabled].save, button[disabled].export, button[disabled].import, button[disabled].results, button[disabled].results2, button[disabled].results3, button[disabled].admin, button[disabled].new_reg, button[disabled].submit_group, button[disabled].profile, button[disabled].bttn, button[disabled].bttnR {
+button[disabled].home, button[disabled].home_parent, button[disabled].logout, button[disabled].edit, button[disabled].delete, button[disabled].save, button[disabled].export, button[disabled].import, button[disabled].results, button[disabled].results2, button[disabled].results3, button[disabled].admin, button[disabled].new_reg, button[disabled].submit_group, button[disabled].profile, button[disabled].bttn, button[disabled].bttnR {
 	border:none;
 	background:#ccc;
 	outline:none;
 }
-.home:before, .logout:before, .edit:before, .delete:before, .save:before, .export:before, .import:before, .results:before, .results2:before,  .results3:before, .results_sf:before, .admin:before, .new_reg:before, .log_in_ico:before, .submit_group:before, .profile:before {
+.home:before, .home_parent:before, .logout:before, .edit:before, .delete:before, .save:before, .export:before, .import:before, .results:before, .results2:before,  .results3:before, .results_sf:before, .admin:before, .new_reg:before, .log_in_ico:before, .submit_group:before, .profile:before {
     font-family: FontAwesome;
     text-decoration: inherit;
     position: absolute;
@@ -147,7 +147,7 @@ button[disabled].home, button[disabled].logout, button[disabled].edit, button[di
 	text-transform:none;
 	font-size:13px
 }
-.home:before {
+.home:before, .home_parent:before {
 	content: "\f060";
     left: 17px;
 	top: 10px;
@@ -237,7 +237,7 @@ button[disabled].home, button[disabled].logout, button[disabled].edit, button[di
 	right: 15px;
 	font-size:15px;
 }
-.home:hover, .edit:hover, .delete:hover, .save:hover, .export:hover, .import:hover, .results:hover, .results2:hover, .results3:hover, .admin:hover, .submit_group:hover, .new_reg:hover, .log_in:hover, .profile:hover, .bttn:hover, .bttnR:hover  {background:#00aeef; color:#fff;}
+.home:hover, .home_parent:hover, .edit:hover, .delete:hover, .save:hover, .export:hover, .import:hover, .results:hover, .results2:hover, .results3:hover, .admin:hover, .submit_group:hover, .new_reg:hover, .log_in:hover, .profile:hover, .bttn:hover, .bttnR:hover  {background:#00aeef; color:#fff;}
 #group_user_cancel_request_user:hover,
 #group_user_cancel_access:hover {background:#FF2626; color:#fff;}
 .bttn_red:hover {background:#FF2626; color:#fff;}
@@ -248,7 +248,7 @@ button[disabled].home, button[disabled].logout, button[disabled].edit, button[di
 .log_in{background:#008800; padding:7px 25px 7px 10px; text-shadow: 1px 1px 1px black; min-width: 130px;}
 .log_in:hover{background:#00DD00;}
 .log_in_ico{position:relative; color:#ffffff;}
-.home, .logout, .new_reg {padding:7px 10px 7px 25px;}
+.home, .home_parent, .logout, .new_reg {padding:7px 10px 7px 25px;}
 .edit, .delete {padding:7px 30px 7px 20px;}
 .save, .results, .results2, .results3, .admin, .submit_group {padding:7px 30px 7px 20px;}
 .export {padding:7px 45px 7px 15px;}
@@ -256,13 +256,13 @@ button[disabled].home, button[disabled].logout, button[disabled].edit, button[di
 
 /* Mobile Landscape */
 @media (max-width: 480px) {
-	.home, button[disabled].home, .logout, button[disabled].logout, /*.save, button[disabled].save,*/ .export, button[disabled].export, .import, button[disabled].import, .results, button[disabled].results, .results2, button[disabled].results2, .results3, button[disabled].results3, .admin, button[disabled].admin, /*.submit_group, button[disabled].submit_group,*/ .profile, button[disabled].profile  {
+	.home, button[disabled].home, .home_parent, button[disabled].home_parent, .logout, button[disabled].logout, /*.save, button[disabled].save,*/ .export, button[disabled].export, .import, button[disabled].import, .results, button[disabled].results, .results2, button[disabled].results2, .results3, button[disabled].results3, .admin, button[disabled].admin, /*.submit_group, button[disabled].submit_group,*/ .profile, button[disabled].profile  {
 		text-indent:-9999px;
 		width:50px;
 		padding:0;
 		height:40px;
 	} 
-	.home:before, button[disabled].home:before, /*.save:before, button[disabled].save:before,*/ .export:before, button[disabled].export:before, .import:before, button[disabled].import:before, .results:before, button[disabled].results:before, .results2:before, button[disabled].results2:before, .results3:before, button[disabled].results3:before, .admin:before, button[disabled].admin:before, /*.submit_group:before, button[disabled].submit_group:before,*/ .profile:before, button[disabled].profile:before {
+	.home:before, button[disabled].home:before, .home_parent:before, button[disabled].home_parent:before, /*.save:before, button[disabled].save:before,*/ .export:before, button[disabled].export:before, .import:before, button[disabled].import:before, .results:before, button[disabled].results:before, .results2:before, button[disabled].results2:before, .results3:before, button[disabled].results3:before, .admin:before, button[disabled].admin:before, /*.submit_group:before, button[disabled].submit_group:before,*/ .profile:before, button[disabled].profile:before {
 		text-indent:0;
 		top:12px;
 		font-size:16px;

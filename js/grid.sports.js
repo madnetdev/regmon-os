@@ -23,8 +23,6 @@ $sports.jqGrid({
 	idPrefix: idPrefix,
 	loadonce: true,
 	hiddengrid: true,
-	sortname: 'name',
-	forceClientSorting: true,
 	caption: LS.HEADER,
 	pager: pager,
 	pgtext: '',
@@ -75,7 +73,7 @@ $sports.jqGrid({
 						editformbutton: true
 					}
 				},
-				{name:'id',key:true,width:30,  align:"center", editoptions:{readonly:'readonly'} },
+				{name:'id',key:true,width:30, sorttype:'int',  align:"center", editoptions:{readonly:'readonly'} },
 				{name:'parent_id',width:100, align:"center", hidden:true, editrules:{edithidden:true},
 						formatter:"select", edittype:"select", stype:'select',
 						searchoptions: {sopt:['cn','eq','ne'], value:V_SPORTS_GROUPS_OPTIONS},	
@@ -117,8 +115,7 @@ $sports.jqGrid({
 	del: !V_GROUP_ADMIN_2, deltext: LANG.BUTTON_DELETE,
 	search: false, 	searchtext: LANG.BUTTON_SEARCH,
 	view: true, 	viewtext: LANG.BUTTON_VIEW,
-	refresh: true, 	refreshtext: LANG.BUTTON_RELOAD,
-	reloadGridOptions: { fromServer: true }
+	refresh: true, 	refreshtext: LANG.BUTTON_RELOAD
 });
 
 

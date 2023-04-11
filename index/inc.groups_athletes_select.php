@@ -14,14 +14,14 @@ $locations_arr = get_Locations_array();
 //Groups Select Options
 $selected_LOCATION_name = '';
 $selected_GROUP_name = '';
-$GP_select_options_grp = '';
-$GP_select_options = '';
+$Groups_select_options_optgroup = '';
+$Groups_select_options = '';
 $private_option = '';
 $groups2location = array(array('0','','','',''));
 $private_groups = array();
-$groups_where = '';
-if (!$ADMIN) $groups_where = 'AND location_id = "'.$LOCATION.'"';
-$rows = $db->fetch("SELECT id, location_id, name, status, private_key, admins_id, stop_date FROM `groups` WHERE status > 0 $groups_where ORDER BY location_id, name", array()); 
+$where_groups = '';
+if (!$ADMIN) $where_groups = 'AND location_id = "'.$LOCATION.'"';
+$rows = $db->fetch("SELECT id, location_id, name, status, private_key, admins_id, stop_date FROM `groups` WHERE status > 0 $where_groups ORDER BY location_id, name", array()); 
 if ($db->numberRows() > 0)  {
 	$GP_open_group = false;
 	$GP_group = '';
@@ -78,9 +78,9 @@ if ($db->numberRows() > 0)  {
 		//Group
 		if ($GP_group <> $GP_group_tmp) {
 			if ($GP_open_group) {
-				$GP_select_options_grp .= '</optgroup>';
+				$Groups_select_options_optgroup .= '</optgroup>';
 			}
-			$GP_select_options_grp .= '<optgroup label="'.$GP_group.'">';
+			$Groups_select_options_optgroup .= '<optgroup label="'.$GP_group.'">';
 			$GP_open_group = true;
 		}
 		
@@ -101,22 +101,22 @@ if ($db->numberRows() > 0)  {
 		}
 
 		if ($GP_group == '') {
-			$GP_select_options .= $t_option;
+			$Groups_select_options .= $t_option;
 		} else {
-			$GP_select_options_grp .= $t_option;
+			$Groups_select_options_optgroup .= $t_option;
 		}
 		
 		$GP_group_tmp = $GP_group;
 	}
 	if ($GP_open_group) {
-		$GP_select_options_grp .= '</optgroup>';
+		$Groups_select_options_optgroup .= '</optgroup>';
 	}
 	//if we have private groups give an option for that
 	if (count($private_groups)) {
 		$private_option = '<option value="Private"'.'>'.$LANG->INDEX_PRIVATE_GROUP.'...</option>';
 	}
 }
-$GP_select_options = $GP_select_options_grp . $GP_select_options . $private_option;
+$Groups_select_options = $Groups_select_options_optgroup . $Groups_select_options . $private_option;
 $Group_2_Location_json = json_encode($groups2location);
 $User_2_Groups_json = json_encode($user_2_groups);
 

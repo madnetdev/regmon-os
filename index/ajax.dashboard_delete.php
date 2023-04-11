@@ -13,8 +13,8 @@ if ($dash_id AND $dash_id != '') { //delete dashboard entry
 }
 
 //return the new Dashboard Links Array
-$Dashboard_Links_Array = get_Dashboard_Links_Array($ath_id, $group_id);
+$Dashboard_Links_Arr = get_Dashboard_Links_Array($ath_id, $group_id);
 ?>
 <script>
-V_DASHBOARD=[<?=$Dashboard_Links_Array;?>];
+V_DASHBOARD=[<?=$Dashboard_Links_Arr;?>];
 </script>

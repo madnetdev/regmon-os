@@ -45,7 +45,7 @@ $trainer_users.jqGrid({
 	multiselect:true,
 	colNames:[LANG.ID, LU.FIRSTNAME, LU.LASTNAME, LU.BIRTH_DATE, LU.SPORT, LU.SEX, LU.BODY_HEIGHT, LANG.CREATED, LANG.MODIFIED, 'Freigaben', LANG.STATUS],
 	colModel:[
-		{name:'u.id',key:true, 	width:35, align:"center", hidden:true, sorttype:'number'},
+		{name:'u.id',key:true, 	width:35, align:"center", hidden:true, sorttype:'int'},
 		{name:'u.firstname', 		width:80},
 		{name:'u.lastname', 	 	width:80},
 		{name:'u.birth_date',	width:85, align:"right", 

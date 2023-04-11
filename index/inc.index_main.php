@@ -18,8 +18,8 @@ $DIS2 = ' display:none;';
 								<div id="GRP_select_div">
 									<span id="GRP_select_title"><?=$LANG->INDEX_GROUP;?> : &nbsp; </span> 
 									<select name="GRP_select" id="GRP_select">
-										<?=(substr_count($GP_select_options, '<option') AND count($private_groups)) ? '<option></option>' : '';?>
-										<?=$GP_select_options;?>
+										<?=(substr_count($Groups_select_options, '<option') AND count($private_groups)) ? '<option></option>' : '';?>
+										<?=$Groups_select_options;?>
 									</select>
 									<div id="private_group" class="form-group">
 										<div class="input-group">
@@ -91,14 +91,14 @@ $DIS2 = ' display:none;';
 								</div>
 								<div id="C_Import_Export_Data" class="panel-collapse collapse">
 									<div class="panel-body">
-										<?php /*###### Export Data Button ######
+										<?php /*###### Export Data Button ######*/?>
 										<div style="text-align:center; padding:15px;">
 											<button type="button" class="export"><?=$LANG->INDEX_EXPORT_LINK;?> &nbsp; </button>
-										</div>@@@@@@@@@@@@ disable for now*/?>
+										</div>
 										<?php /*###### Import Data Button ######
 										<div style="text-align:center; padding:15px;">
 											<button type="button" class="import"><?=$LANG->INDEX_IMPORT_LINK;?> &nbsp; </button>
-										</div>@@@@@@@@@@@@ disable for now*/?>
+										</div>*/?>
 									</div>
 								</div>
 							</div>

@@ -33,6 +33,10 @@ switch ($action) {
 		if ($ID != 0) { //from interface
 			$values['location_id'] = $ID;
 		}
+		if (trim($values['location_id']) == '') {
+			echo $LANG->EMPTY_LOCATION_ID;
+			exit;
+		}
 		$location_id = $values['location_id'];
 		
 		//remove first and last commas
@@ -40,7 +44,7 @@ switch ($action) {
 		$group_admins_ids_arr = explode(',', $values['admins_id']);
 		
 		$standord_admin = $db->fetchRow("SELECT admin_id FROM locations WHERE id=?", array($location_id));
-		$standord_admin = $standord_admin['admin_id'];
+		$standord_admin = $standord_admin['admin_id']??'';
 		
 		//check if admin user
 		if (!$ADMIN) {
@@ -78,7 +82,7 @@ switch ($action) {
 			$insert_id = $db->insert($values, "`groups`");
 			echo check_insert_result($insert_id);
 			
-			if ($insert_id) {
+			if ($insert_id AND $insert_id == (int)$insert_id) {
 				//register Admins in this Group automatic
 				$values = array();
 				$values['group_id'] = $insert_id;
@@ -139,8 +143,8 @@ switch ($action) {
 		if (!$ADMIN) {
 			//Location Admin
 			$admin = $db->fetchRow("SELECT u.id, u.lastname FROM users u
-					LEFT JOIN locations s ON u.id = s.admin_id
-					WHERE s.id = ? AND u.level = 50 AND u.id = ?", array($id, $UID)); 
+					LEFT JOIN locations l ON u.id = l.admin_id
+					WHERE l.id = ? AND u.level = 50 AND u.id = ?", array($id, $UID)); 
 			if (!$db->numberRows() > 0)  {
 				echo $LANG->NEED_ADMIN_RIGHTS;
 				exit; //no admin user

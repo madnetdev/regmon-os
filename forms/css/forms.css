@@ -78,28 +78,22 @@ display: none;
 ul.floated {
 	padding:0;
 	margin:0 0 0 0;
-   }   
+}   
 ul.floated li {
 	float:left;
 	margin:0; padding:0;
 	width:30%;
-   } 
- label.label_gender {padding-left:50px; line-height:42px;}
- 
- ul.floated li#age {
-	 width:100px;
-	 margin-right:55px;
-   } 
+} 
    
 ul.data-list li {position:relative; } 
 
 ul.data-list-2 li {
-	   position:relative;
-	   height:42px;
-	   margin-bottom:15px;
-	   width:100%;
-	   display:block;
-   }
+	position:relative;
+	height:42px;
+	margin-bottom:15px;
+	width:100%;
+	display:block;
+}
    
 ul.data-list-2 li label {
 	float:left;

@@ -9,7 +9,7 @@ session_start();
 
 //Load languages
 require_once('php/class.language.php');
-$LANG = Language::getInstance($CONFIG['REGmon_Folder']);
+$LANG = Language::getInstance($CONFIG['REGmon_Folder'], $CONFIG['Default_Language'], $CONFIG['Use_Multi_Language_Selector']);
 ?>
 <!DOCTYPE html>
 <html lang="<?=$LANG->LANG_CURRENT;?>">

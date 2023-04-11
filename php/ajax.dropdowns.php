@@ -98,7 +98,9 @@ switch ($action) {
 	case 'options': // SELECT 
 		
 		$responce = new stdClass();
-		$rows = $db->fetch("SELECT * FROM dropdowns WHERE parent_id=? ORDER BY options", array($ID)); 
+		$sidx = $sidx ?? '';
+		$sord = $sord ?? '';
+		$rows = $db->fetch("SELECT * FROM dropdowns WHERE parent_id=? ORDER BY $sidx $sord", array($ID)); 
 		$i=0;
 		if ($db->numberRows() > 0)  {
 			foreach ($rows as $row) {
@@ -129,7 +131,9 @@ switch ($action) {
 	default: //view
 		
 		$responce = new stdClass();
-		$rows = $db->fetch("SELECT * FROM dropdowns WHERE parent_id = 0 ORDER BY name", array()); 
+		$sidx = $sidx ?? '';
+		$sord = $sord ?? '';
+		$rows = $db->fetch("SELECT * FROM dropdowns WHERE parent_id = 0 ORDER BY $sidx $sord", array()); 
 		$i=0;
 		if ($db->numberRows() > 0)  {
 			foreach ($rows as $row) {

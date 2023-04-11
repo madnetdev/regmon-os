@@ -93,14 +93,9 @@ $locations.jqGrid({
 						formatter:"select", edittype:"select", stype:'select',
 						searchoptions: {sopt:['cn','eq','ne'], value:V_LOCATIONS_OPTIONS},	
 						editoptions:{
-							value:V_LOCATIONS_OPTIONS, size:1, dataUrl:'php/ajax.php?i=locations&oper=locations_select', 
+							value:V_LOCATIONS_OPTIONS, size:1, disabled:true, dataUrl:'php/ajax.php?i=locations&oper=locations_select', 
 							selectFilled:function(options) {
 								$(options.elem).chosen({width:'100%', placeholder_text_multiple: ' ', no_results_text: LANG.NO_RESULTS, disable_search_threshold: 10});
-								let disabled = false; //addForm
-								if (options.mode == 'editForm') {
-									disabled = true;
-								}
-								$(options.elem).prop('disabled', disabled).trigger("chosen:updated");
 							}
 						}
 				},

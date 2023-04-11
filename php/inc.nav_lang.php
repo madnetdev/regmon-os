@@ -12,6 +12,7 @@
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
+	<?php if ($CONFIG['Use_Multi_Language_Selector']) { ?>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left:15px; padding-right:10px;"><img src="img/flags/<?=$LANG->LANG_CURRENT;?>.png" title="" style="margin:-10px 0 -5px 0;" />&nbsp;&nbsp;<span class="caret"></span></a>
 						<ul class="dropdown-menu" style="padding:1px; min-width:120px;">
@@ -19,6 +20,7 @@
 							<li <?=($LANG->LANG_CURRENT=='de'?' class="active"':'');?>><a href="javascript:void(0)" id="lang_de"><img src="img/flags/de.png" /> &nbsp;<?=$LANG->LANG_GERMAN;?></a></li>
 						</ul>
 					</li>
+	<?php } ?>
 				</ul>
 			</div>
 		</div>

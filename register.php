@@ -8,13 +8,13 @@ require_once('php/functions.php');
 
 
 //Locations-Groups Select Options
-$GP_select_options_grp = '';
-$GP_select_options = '';
+$Groups_select_options_optgroup = '';
+$Groups_select_options = '';
 $private_option = '';
 $private_groups = array();
-$rows = $db->fetch("SELECT gr.id, gr.location_id, gr.status, gr.private_key, gr.stop_date, gr.name, u.email, st.name AS location_name 
+$rows = $db->fetch("SELECT gr.id, gr.location_id, gr.status, gr.private_key, gr.stop_date, gr.name, u.email, l.name AS location_name 
 FROM `groups` gr 
-LEFT JOIN locations st ON st.id = gr.location_id 
+LEFT JOIN locations l ON l.id = gr.location_id 
 LEFT JOIN users u ON u.id IN (gr.admins_id) 
 WHERE gr.status > 0 
 ORDER BY gr.location_id, gr.name", array()); 
@@ -33,9 +33,9 @@ if ($db->numberRows() > 0)  {
 		//Group
 		if ($location_name != $location_tmp) {
 			if ($location_open) {
-				$GP_select_options_grp .= '</optgroup>';
+				$Groups_select_options_optgroup .= '</optgroup>';
 			}
-			$GP_select_options_grp .= '<optgroup label="'.$location_name.'">';
+			$Groups_select_options_optgroup .= '<optgroup label="'.$location_name.'">';
 			$location_open = true;
 		}
 		
@@ -63,21 +63,21 @@ if ($db->numberRows() > 0)  {
 			$t_option = '<option value="'.$location_id.'|'.$location_name.'|'.$group_id.'|'.$group_name.'"'.$t_disabled.'>'.$group_name.'</option>';
 		}
 		if ($location_id == '0') {
-			$GP_select_options .= $t_option;
+			$Groups_select_options .= $t_option;
 		} else {
-			$GP_select_options_grp .= $t_option;
+			$Groups_select_options_optgroup .= $t_option;
 		}
 		
 		$location_tmp = $location_name;
 	}
 	if ($location_open) {
-		$GP_select_options_grp .= '</optgroup>';
+		$Groups_select_options_optgroup .= '</optgroup>';
 	}
 	if (count($private_groups)) {
 		$private_option = '<option value="Private">'.$LANG->REGISTER_PRIVATE_GROUP.'...</option>';
 	}
 }
-$GP_select_options = $GP_select_options_grp . $GP_select_options . $private_option;
+$Groups_select_options = $Groups_select_options_optgroup . $Groups_select_options . $private_option;
 $PUG_json = json_encode($private_groups); //PrivateUserGroups
 
 
@@ -170,7 +170,7 @@ select.required.form-control { border-right: 3px solid rgba(255, 0, 0, 0.7); }
 	</div>
 
 	
-	<section class="container" id="main">
+	<section class="container">
 
 		<div id="wizard_container">
 
@@ -240,7 +240,7 @@ select.required.form-control { border-right: 3px solid rgba(255, 0, 0, 0.7); }
 			</div>
 			
 			
-			<div class="row" style="width:100%; text-align:center;">
+			<div class="row" style="text-align:center;">
 				<div style="width:70%;margin:auto;">
 					<label><?=$LANG->REGISTER_SEX;?></label>
 					<ul class="data-list floated clearfix">
@@ -252,7 +252,7 @@ select.required.form-control { border-right: 3px solid rgba(255, 0, 0, 0.7); }
 				</div>
 			</div>
 			
-			<div class="row" style="width:100%; text-align:center;">
+			<div class="row" style="text-align:center;">
 				<div style="width:70%;margin:25px auto;">
 					<label><?=$LANG->REGISTER_BIRTH_DATE;?></label>
 					<ul class="data-list" id="terms" style="margin-top:-15px;">
@@ -297,7 +297,7 @@ select.required.form-control { border-right: 3px solid rgba(255, 0, 0, 0.7); }
 							<div class="styled-select">
 								<select id="GRP_select" name="location_group" class="required form-control">
 									<option value="" selected><?=$LANG->REGISTER_GROUP;?></option>
-									<?=$GP_select_options;?>
+									<?=$Groups_select_options;?>
 								</select>
 							</div>
 							<div id="private_group" class="form-group" style="margin-bottom:-15px; display:none;">

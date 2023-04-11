@@ -109,10 +109,10 @@ switch ($action) {
 	case 'groups_templates': // SELECT 
 		
 		$responce = new stdClass();
-		$saves3 = $db->fetchAllwithKey("SELECT id, user_id, location_id, group_id, form_id, name, GlobalView, GlobalEdit, LocationView, LocationEdit, GroupView, GroupEdit, TrainerView, TrainerEdit, Private, created, created_by, modified, modified_by FROM templates WHERE template_type=2 ORDER BY form_id, name", array(), 'id'); 
+		$saves2 = $db->fetchAllwithKey("SELECT id, user_id, location_id, group_id, form_id, name, GlobalView, GlobalEdit, LocationView, LocationEdit, GroupView, GroupEdit, TrainerView, TrainerEdit, Private, created, created_by, modified, modified_by FROM templates WHERE template_type=2 ORDER BY form_id, name", array(), 'id'); 
 		$i=0;
 		if ($db->numberRows() > 0)  {
-			foreach ($saves3 as $save) {
+			foreach ($saves2 as $save) {
 				$responce->rows[$i] = $responce->rows[$i]['cell'] = array(
 					'',
 					$save['id'],

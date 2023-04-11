@@ -23,8 +23,6 @@ $dropdowns.jqGrid({
 	idPrefix: idPrefix,
 	loadonce: true,
 	hiddengrid: true,
-	sortname: 'name',
-	forceClientSorting: true,
 	caption: LD.HEADER,
 	pager: pager,
 	pgtext: '',
@@ -75,7 +73,7 @@ $dropdowns.jqGrid({
 						editformbutton: true
 					}
 				},
-				{name:'id',key:true,width:30,  align:"center", editoptions:{readonly:'readonly'} },
+				{name:'id',key:true,width:30,  align:"center", sorttype:'int', editoptions:{readonly:'readonly'} },
 				{name:'parent_id',	width:100, align:"center", hidden:true, editrules:{edithidden:true}, editoptions:{readonly:'readonly'}},
 				{name:'options', 	width:225, editoptions:{placeholder:LD.OPTION_PLACEHOLDER} },
 				{name:'status', 	width:50, template: aktivInaktivTemplate },

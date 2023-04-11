@@ -32,8 +32,8 @@ switch ($action) {
 			//this may not needed because only admin can have access
 			//Location Admin
 			$admin = $db->fetchRow("SELECT u.id, u.lastname FROM users u
-					LEFT JOIN locations s ON u.id = s.admin_id
-					WHERE s.id = ? AND u.level = 50 AND u.id = ?", array($id, $UID)); 
+					LEFT JOIN locations l ON u.id = l.admin_id
+					WHERE l.id = ? AND u.level = 50 AND u.id = ?", array($id, $UID)); 
 			if (!$db->numberRows() > 0)  {
 				echo $LANG->NEED_ADMIN_RIGHTS;
 				exit; //no admin user
@@ -79,8 +79,8 @@ switch ($action) {
 		if (!$ADMIN) {
 			//Location Admin
 			$admin = $db->fetchRow("SELECT u.id, u.lastname FROM users u
-					LEFT JOIN locations s ON u.id = s.admin_id
-					WHERE s.id = ? AND u.level = 50 AND u.id = ?", array($id, $UID)); 
+					LEFT JOIN locations l ON u.id = l.admin_id
+					WHERE l.id = ? AND u.level = 50 AND u.id = ?", array($id, $UID)); 
 			if (!$db->numberRows() > 0)  {
 				echo $LANG->NEED_ADMIN_RIGHTS;
 				exit; //no admin user

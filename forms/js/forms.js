@@ -222,6 +222,11 @@ $('form#wrapped').on('submit', function(e){
 	
 		//post with ajax
 		let data = $('form#wrapped').serialize();
+		data += '&form_id=' + $('#form_id').val();
+		data += '&category_id=' + $('#category_id').val();
+		data += '&group_id=' + $('#group_id').val();
+		data += '&athlete_id=' + $('#athlete_id').val();
+		
 		$.post('forms/form_data_save.php', data, function(data, result){
 			if ($('#keep_form_open').val() != '1') {
 				$(window).off('beforeunload'); //disable unload warning

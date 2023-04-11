@@ -28,6 +28,7 @@
 						</ul>
 					</li>@@@@@@@@@@@@@@@@ results disabled for now*/?>
 			
+				<?php if ($CONFIG['Use_Multi_Language_Selector']) { ?>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left:15px; padding-right:10px;"><img src="img/flags/<?=$LANG->LANG_CURRENT;?>.png" title="" style="margin:-10px 0 -5px 0;" />&nbsp;&nbsp;<span class="caret"></span></a>
 						<ul class="dropdown-menu" style="padding:1px; min-width:120px;">
@@ -35,6 +36,7 @@
 							<li <?=($LANG->LANG_CURRENT=='de'?' class="active"':'');?>><a href="javascript:void(0)" id="lang_de"><img src="img/flags/de.png" /> &nbsp;<?=$LANG->LANG_GERMAN;?></a></li>
 						</ul>
 					</li>
+				<?php } ?>
 					
 					<li><a href="index/ajax.page.regman_info.php" class="nav_link nav_profile fancybox fancybox.ajax"><i class="fa fa-info-circle"></i></a></li>
 					<li><a href="login/ajax.page.profile_edit.php" class="nav_link nav_profile fancybox fancybox.ajax"><i class="fa fa-user"></i> &nbsp; <?=$LANG->BUTTON_USER_ACCOUNT;?></a></li>

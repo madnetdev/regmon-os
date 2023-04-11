@@ -59,7 +59,7 @@ $categories.jqGrid({
 				}
 			}
 		},
-		{name:'id',key:true, width:25, align:"center", fixed:true, search:false, editoptions:{readonly:'readonly'} },
+		{name:'id',key:true, width:25, align:"center", fixed:true, sorttype:'int', search:false, editoptions:{readonly:'readonly'} },
 		{name:'parent_id', width:30, hidden:true, editrules:{edithidden:true},
 			formatter:"select", edittype:"select", 
 			editoptions:{size:1, dataUrl:'php/ajax.php?i=categories&oper=get_Categories_Select_Root'}
@@ -148,6 +148,7 @@ $categories.jqGrid({
 			datatype: "local",
 			data: grid_data,
 			sortname: 'sort',
+			forceClientSorting: true,
 			gridview: true,
 			idPrefix: sub_idPrefix,
 			pager: '#'+sub_pager,
@@ -165,7 +166,7 @@ $categories.jqGrid({
 						editformbutton:true, editOptions:{}
 					}
 				},
-				{name:'id', width:32, key:true, search:false, hidden:true },
+				{name:'id', width:32, key:true, search:false, hidden:true, sorttype:'int' },
 				{name:'category_id', width:30, hidden:true, editrules:{edithidden:true}, editoptions:{readonly:'readonly'},
 					formatter:"select", edittype:"select", 
 					editoptions: {
@@ -181,7 +182,7 @@ $categories.jqGrid({
 						}
 					}
 				},
-				{name:'form_id', width:20, editoptions:{readonly:'readonly'}},
+				{name:'form_id', width:20, sorttype:'int', editoptions:{readonly:'readonly'}},
 				{name:'form_select', width:150, hidden:true, editrules:{edithidden:true},
 					formatter:"select", edittype:"select", 
 					editoptions: {

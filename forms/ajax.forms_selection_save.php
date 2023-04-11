@@ -52,8 +52,8 @@ if (isset($_POST['group_id']) AND isset($_POST['forms_select']))
 		//update Athlete Trainers Forms Access
 		//remove trainers forms if not available any more in athlete forms selection
 		$athlete_trainers = $db->fetch("SELECT id, forms_select_read, forms_select_write FROM users2trainers WHERE user_id=? AND group_id=?", array($UID, $group_id));
-		//leave Notiz_n out of this check --add it to the array
-		$athlete_forms_selected = explode(',', $forms_select.',Notiz_n');
+		//leave Note_n out of this check --add it to the array
+		$athlete_forms_selected = explode(',', $forms_select.',Note_n');
 		
 		foreach($athlete_trainers as $athlete_trainer) {
 			$forms_trainer_read_arr = explode(',', $athlete_trainer['forms_select_read']??'');

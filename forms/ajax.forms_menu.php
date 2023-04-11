@@ -15,8 +15,8 @@ if ($edit) {
 	if (!$ADMIN) {
 		//Location Admin
 		$st_admin = $db->fetchRow("SELECT u.id FROM users u 
-LEFT JOIN locations s ON u.id = s.admin_id 
-LEFT JOIN `groups` g ON g.location_id = s.id 
+LEFT JOIN locations l ON u.id = l.admin_id 
+LEFT JOIN `groups` g ON g.location_id = l.id 
 WHERE g.id = ? AND u.level = 50 AND u.id = ?", array($group_id, $UID)); 
 		if (!$db->numberRows() > 0)  {
 			//Group Admin
@@ -42,7 +42,6 @@ AND (u.level = 40 OR u.level = 45) AND u.id = ?", array($group_id, $UID));
 // Trainer View of an Athlete forms_select
 $trainer_view = false;
 $trainer_view_id = false;
-$forms_data_done = array(); //forms_data count
 
 if (!$select AND !$trainer AND !$edit) { //normal view
 	if ($athlete_id != $UID) { //not an athlete
@@ -65,14 +64,6 @@ ORDER BY u.id", array($UID, $UID, $group_id, $athlete_id));
 		} else {
 			$trainer_view = true;
 			$trainer_view_id = $UID;
-		}
-	}
-	
-	//forms_data count
-	$forms_data = $db->fetch("SELECT COUNT(*) AS count, form_id FROM forms_data WHERE user_id=? AND group_id=? AND form_id > 0 AND status = 1 GROUP BY form_id", array($athlete_id, $group_id)); 
-	if ($db->numberRows() > 0)  {
-		foreach ($forms_data as $form_data) {
-			$forms_data_done[$form_data['form_id']] = $form_data['count'];
 		}
 	}
 }
@@ -152,7 +143,7 @@ if (($trainer AND $trainer_id) OR ($trainer_view AND $trainer_view_id)) {
 
 
 function getCategoryForms($cat_id, $space='', $options=false) {
-	global $forms, $box, $select, $edit, $trainer, $trainer_view, $group_forms_selected_arr, $group_forms_standard_arr, $trainer_forms_selected_read_arr, $trainer_forms_selected_write_arr, $forms_data_done, $athlete_id, $group_id, $UID, $CONFIG, $LANG;
+	global $forms, $box, $select, $edit, $trainer, $trainer_view, $group_forms_selected_arr, $group_forms_standard_arr, $trainer_forms_selected_read_arr, $trainer_forms_selected_write_arr, $athlete_id, $group_id, $UID, $CONFIG, $LANG;
 	
 	$html = '';
 	foreach ($forms[$cat_id] as $row) {
@@ -211,21 +202,6 @@ function getCategoryForms($cat_id, $space='', $options=false) {
 							'<span class="icheckbox_flat-yellow2s'.(in_array($cat_id.'_'.$id, $trainer_forms_selected_read_arr)?' checked':'').'" style="vertical-align:text-bottom;"></span>&nbsp; '.
 							'<span class="icheckbox_flat-green2s'.(in_array($cat_id.'_'.$id, $trainer_forms_selected_write_arr)?' checked':'').'" style="vertical-align:text-bottom;"></span>'.
 						'</span></a></td>';
-			}
-			else { //if (!$select AND !$trainer AND !$edit) --den yparxei kapou auto
-				$forms_data_count = (isset($forms_data_done[$form_name]) ? $forms_data_done[$form_name] : '');
-				$link_results = ($forms_data_count?' href="results.php?id='.$id.'&groupid='.$group_id.'" class="calendar_menu_box fancybox fancybox.iframe"':' href="javascript:void(0)"');
-				
-				if ($trainer_view) {
-					$link_results = ' href="javascript:void(0)"';
-				} 
-				
-				if (!$box) {
-					$html .= '<td style="width:70px; padding-left:2px;"><a'.$link_results.'>'.
-								'<span class="span_rs"><span class="results_sf">&nbsp;</span> &nbsp; &nbsp; '.
-									'<span class="badge">'.$forms_data_count.'</span></span></a>'.
-							'</td>';
-				}
 			}
 		}
 		if ($options) $html .= '';
@@ -340,14 +316,14 @@ if ($box AND !$trainer_view) {
 if ($trainer OR $trainer_view) {
 	$thtml = '';
 	if ($trainer) { //athlete can see/change what forms trainer have access
-		$select_elem = 'sel_g_'.$group_id.'_c_'.'Notiz_n';
-		$standard_elem = 'std_g_'.$group_id.'_c_'.'Notiz_n';
-		$thtml = '<input name="'.$select_elem.'" type="checkbox" class="check_box"'.(in_array('Notiz_n', $trainer_forms_selected_read_arr)?' checked':'').'>'.
-				'<input name="'.$standard_elem.'" type="checkbox" class="standard"'.(in_array('Notiz_n', $trainer_forms_selected_write_arr)?' checked':'').'>';
+		$select_elem = 'sel_g_'.$group_id.'_c_'.'Note_n';
+		$standard_elem = 'std_g_'.$group_id.'_c_'.'Note_n';
+		$thtml = '<input name="'.$select_elem.'" type="checkbox" class="check_box"'.(in_array('Note_n', $trainer_forms_selected_read_arr)?' checked':'').'>'.
+				'<input name="'.$standard_elem.'" type="checkbox" class="standard"'.(in_array('Note_n', $trainer_forms_selected_write_arr)?' checked':'').'>';
 	}
 	elseif ($trainer_view) { //trainer see what forms have access given by athlete
-		$thtml = '<span class="icheckbox_flat-yellow2s'.(in_array('Notiz_n', $trainer_forms_selected_read_arr)?' checked':'').'" style="vertical-align:text-bottom;"></span>&nbsp; '.
-				'<span class="icheckbox_flat-green2s'.(in_array('Notiz_n', $trainer_forms_selected_write_arr)?' checked':'').'" style="vertical-align:text-bottom;"></span>';
+		$thtml = '<span class="icheckbox_flat-yellow2s'.(in_array('Note_n', $trainer_forms_selected_read_arr)?' checked':'').'" style="vertical-align:text-bottom;"></span>&nbsp; '.
+				'<span class="icheckbox_flat-green2s'.(in_array('Note_n', $trainer_forms_selected_write_arr)?' checked':'').'" style="vertical-align:text-bottom;"></span>';
 	}
 	$thtml = ''.
 		'<ul style="box-shadow:0px 0px 5px 0px black;">'.
@@ -372,7 +348,7 @@ if ($trainer OR $trainer_view) {
 		'</ul>';
 
 	// if has read or write access
-	if ($trainer OR in_array('Notiz_n', $trainer_forms_selected_read_arr) OR in_array('Notiz_n', $trainer_forms_selected_write_arr)) {
+	if ($trainer OR in_array('Note_n', $trainer_forms_selected_read_arr) OR in_array('Note_n', $trainer_forms_selected_write_arr)) {
 		echo $thtml;
 	}
 }
@@ -446,14 +422,14 @@ V_TRAINER_W_PERMS = ['All'];
 
 <?php if (!$select AND !$trainer AND !$edit) { 
 //this changes in every Athlete change, but it only has to do with main user  - check @@@@@@@@@@@@ ?>
-V_CATEGORIES_FORMS_OPTIONS='<option value="Notiz_n" style="background:#aaaaaa;"><?=$LANG->FORM_MENU_COMMENT;?></option><?=buildCategory(0, $collapse_id_prefix, 1, true);?>';
+V_CATEGORIES_FORMS_OPTIONS='<option value="Note_n" style="background:#aaaaaa;"><?=$LANG->FORM_MENU_COMMENT;?></option><?=buildCategory(0, $collapse_id_prefix, 1, true);?>';
 <?php } ?>
 
 jQuery(function() {
 	if (typeof fancyBoxDefaults_iframe !== "undefined") {
 		$("a.calendar_menu_box").fancybox(fancyBoxDefaults_iframe);
 		$('#addComment_Menu, #addComment_Trainer').on('click',function() {
-			if (V_TRAINER_W_PERMS.indexOf('All') != -1 || V_TRAINER_W_PERMS.indexOf('Notiz_n') != -1) {
+			if (V_TRAINER_W_PERMS.indexOf('All') != -1 || V_TRAINER_W_PERMS.indexOf('Note_n') != -1) {
 				$.fancybox($("#create_comment"), $.extend({},fancyBoxDefaults,{minWidth: 300}));
 				init_Comments_Create('Menu_Button');
 			}

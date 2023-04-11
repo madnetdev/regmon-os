@@ -119,14 +119,6 @@ $CONFIG['SEC_Encrypt_Secret'] = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTU
 $CONFIG['SEC_Hash_IP'] = true; 
 
 /**
- * Use_VisualCaptcha - helps us to limit bruteforces attacks.
- * In some apache configuration is not working
- * set Use_VisualCaptcha = false to bypass captcha validation
- * ===================================================
- */
-$CONFIG['Use_VisualCaptcha'] = true;
-
-/**
  * LogLimiter - helps us to limit bruteforces attacks.
  * ===================================================
  */
@@ -147,5 +139,33 @@ $CONFIG['LogLimiter'] = [
 	 */
 	'Block_Minutes' 		=> 10
 ];
+
+/**
+ * Use_VisualCaptcha - helps us to limit bruteforces attacks.
+ * In some apache configuration is not working
+ * set Use_VisualCaptcha = false to bypass captcha validation
+ * ===================================================
+ */
+$CONFIG['Use_VisualCaptcha'] = true;
+
+/**
+ * Use_Multi_Language_Selector - enable/disable the dropdown language selection
+ * ---------------------------------------------------
+ * The inteface can be translated in multiple languages.
+ * But the content (locations, groups, categories, forms, dropdowns, sports, tags) cannot.
+ * This will need a lot of work from users,
+ * that need to deliver the same content for every avalable language.
+ * So with this option you can disable the dropdown language selection
+ * ===================================================
+ */
+$CONFIG['Use_Multi_Language_Selector'] = false;
+
+/**
+ * Default_Language - en, de
+ * set the default language in case you set the Use_Multi_Language_Selector = false
+ * this will lock the Default_Language and not let to be changed from url or cookie
+ * ===================================================
+ */
+$CONFIG['Default_Language'] = 'en'; 
 
 ?>

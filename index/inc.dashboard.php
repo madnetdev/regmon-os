@@ -3,54 +3,53 @@
 //Forms
 //we get forms from the ajax.forms_menu.php
 
+
 //get forms_data counts & sql filters for forms that have data
-$where_forms = "AND g.form_id IN (";
-$forms_data_done = array();
-$forms_data = $db->fetch("SELECT COUNT(*) AS count, form_id FROM forms_data WHERE user_id=? AND form_id > 0 AND status = 1 GROUP BY form_id", array($UID)); 
-if ($db->numberRows() > 0)  {
-	$i = 0;
-	foreach ($forms_data as $form_data) {
-		if ($form_data['count'] != '0') {
-			$forms_data_done[$form_data['form_id']] = $form_data['count'];
-			if ($i != 0) $where_forms .= ',';
-			$where_forms .= $form_data['form_id'];
-			$i++;
-		}
-	}
+$where_forms = '';
+// get Forms with forms_data
+$Forms_with_Forms_Data_arr = get_Forms_with_Forms_Data_count_array($UID);
+if (count($Forms_with_Forms_Data_arr)) {
+	$where_forms = implode(',', array_keys($Forms_with_Forms_Data_arr));
 } else {
-	$where_forms .= "'0'";
+	$where_forms = '0';
 }
-$where_forms .= ")";
+$where_forms = "AND t.form_id IN (".$where_forms.")";
 
 
-//Results Templates
+//get Results Templates options --template_type=0
 $dash_saves_options = '';
 //can see all at the moment
-$saves = $db->fetchAllwithKey2("SELECT g.id, g.form_id, g.name, f.name AS form_name 
-FROM templates g 
-LEFT JOIN forms f ON f.id = g.form_id 
-WHERE g.template_type=0 $where_forms ORDER BY g.form_id, g.name", array(), 'form_id', 'id'); 
+$saves = $db->fetchAllwithKey2("SELECT t.id, t.form_id, t.name, f.name AS form_name 
+FROM templates t 
+LEFT JOIN forms f ON f.id = t.form_id 
+WHERE t.template_type=0 $where_forms 
+ORDER BY t.form_id, t.name", array(), 'form_id', 'id'); 
 if ($db->numberRows() > 0) {
 	foreach ($saves as $fid => $save_id) {
 		$saves_tmp = '';
 		foreach ($save_id as $save_id => $save) {
-			$saves_tmp .= '<option value="'.$save['form_id'].'__'.$save_id.'">'.$save['name'].'</option>';
+			$saves_tmp .= '<option value="'.$save['form_id'].'__'.$save_id.'">'.htmlspecialchars($save['name']).'</option>';
 		}
-		$dash_saves_options .= '<optgroup label="'.$save['form_name'].'">'.$saves_tmp.'</optgroup>';
+		$dash_saves_options .= '<optgroup label="'.htmlspecialchars($save['form_name']).'">'.$saves_tmp.'</optgroup>';
 	}
 }
 
-//Results Group Templates
-$dash_saves3_options = '';
+
+//get Results Group Templates options --template_type=2
+$dash_saves2_options = '';
 //can see all at the moment
-$saves3 = $db->fetchAllwithKey("SELECT id, name FROM templates WHERE template_type=2 ORDER BY form_id, name", array(), 'id'); 
+$saves2 = $db->fetchAllwithKey("SELECT id, name 
+FROM templates 
+WHERE template_type=2 
+ORDER BY form_id, name", array(), 'id'); 
 if ($db->numberRows() > 0) {
-	foreach ($saves3 as $save_id => $save) {
-		$dash_saves3_options .= '<option value="'.$save_id.'">'.$save['name'].'</option>';
+	foreach ($saves2 as $save_id => $save) {
+		$dash_saves2_options .= '<option value="'.$save_id.'">'.htmlspecialchars($save['name']).'</option>';
 	}
 }
 
-$Dashboard_Links_Array = get_Dashboard_Links_Array($UID, $GROUP);
+
+$Dashboard_Links_Arr = get_Dashboard_Links_Array($UID, $GROUP);
 ?>
 
 <div id="dashboard_div" class="dashboard_nav" style="width:0px; height:0px;">
@@ -68,7 +67,7 @@ $Dashboard_Links_Array = get_Dashboard_Links_Array($UID, $GROUP);
 	<nav id="dashboard" class="navv"></nav>
 	<div id="dashboard_script" style="display:none;">
 		<script>
-			V_DASHBOARD=[<?=$Dashboard_Links_Array;?>];
+			V_DASHBOARD=[<?=$Dashboard_Links_Arr;?>];
 		</script>
 	</div>
 </div>
@@ -77,5 +76,5 @@ $Dashboard_Links_Array = get_Dashboard_Links_Array($UID, $GROUP);
 </div>
 <script>
 V_SAVED_DATA_OPTIONS=<?="'".$dash_saves_options."'";?>;
-V_SAVED_DATA3_OPTIONS=<?="'".$dash_saves3_options."'";?>;
+V_SAVED_DATA2_OPTIONS=<?="'".$dash_saves2_options."'";?>;
 </script>

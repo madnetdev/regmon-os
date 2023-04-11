@@ -6,10 +6,8 @@ This project ...
  1. [Requirements](#requirements)
  2. [Installation](#installation)
  3. [FAQs](#faqs)
-
- 3.1 [How to set my Database configuration](#How-to-set-my-Database-configuration)
- 
- 3.2 [How to set my Email configuration](#How-to-set-my-Email-configuration)
+  3.1 [How to set my Database configuration](#How-to-set-my-Database-configuration)
+  3.2 [How to set my Email configuration](#How-to-set-my-Email-configuration)
 
 
 ## Requirements
@@ -35,6 +33,7 @@ This project ...
     $CONFIG['REGmon_Folder'] = 'appFolder/';
     ```
 
+
  2. You can install dependencies using the following
 
     for php :
@@ -49,24 +48,28 @@ This project ...
 
     you can use the files **"extra/_vendor.zip"** and **"extra/_node_modules.zip"** and extract them on your app folder (you can delete those files afterwards)
 
+
 3. Create Database and Import :
 
-    use **"extra/_regmondb_init v3.006.sql"** file for a new installation
+    use **"extra/_regmondb_init_v3.010_en.sql"** or **"extra/_regmondb_init_v3.010_de.sql"** file for a new installation
     
-    use **"extra/_regmondb_update_to_v3.002.sql"** file for update from a v3.000 installation
+    First you may want to replace the **"email@domain.com"** with your email address
 
-    use **"extra/_regmondb_update_to_v3.006.sql"** file for update from a v3.002 installation
 
 4. Create a folder for exports/imports and users uploads.
 
     It should NOT be under DOCUMENT_ROOT, so it is not accessible from outside
     ex.: **"../regmon_files/"**   
 
+
 5. Copy or rename the file **"_config.regmon.sample.php"** to a new file **"__config.regmon.php"**
+
 
 6. Edit the configuration file and set your database and your email configuration
 
+
 7. Go to http://localhost/ 
+
 
 8. Use the following accounts to login :
 
@@ -74,7 +77,9 @@ This project ...
 
     password for all: DemoPass
 
+
 9. You can resister some Athletes and Trainers accounts once you setup your Email configuration
+
 
 
 

@@ -105,6 +105,12 @@ $body_height_options_grid = get_Body_Height_Options('', true);
 	var V_SPORTS_GROUPS_OPTIONS = '<?=$sports_groups_options_grid;?>';
 	var V_SPORTS_OPTIONS = '<?=$sports_options_grid;?>';
 	var V_BODY_HEIGHT_OPTIONS = '<?=$body_height_options_grid;?>';
+jQuery(function() {
+	//button Export
+	$("button.export").on('click',function() {
+		window.location.href = 'export.php';
+	});
+});
 </script>
 <link rel="stylesheet" type="text/css" href="css/style_grid_admin.css<?=$G_VER;?>" />
 <script type="text/javascript" src="admin/grid.locations.js<?=$G_VER;?>"></script>

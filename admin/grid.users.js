@@ -116,7 +116,7 @@ $users.jqGrid({
 
 
 //User Groups
-var user_groups = '<select id="UserGrouping" style="font-size:11px; float:left; margin:4px 0 0 21px; color:black; font-weight:normal; display:none;">\
+var users_Grouping = '<select id="users_Grouping" style="font-size:11px; float:left; margin:4px 0 0 21px; color:black; font-weight:normal; display:none;">\
 <option value="">'+LANG.GROUPING_NO+'</option>\
 <option value="location_id">'+LANG.GROUPING_BY+' '+LU.LOCATION+'</option>\
 <option value="group_id">'+LANG.GROUPING_BY+' '+LU.GROUP+'</option>\
@@ -127,7 +127,7 @@ var user_groups = '<select id="UserGrouping" style="font-size:11px; float:left; 
 
 
 //set Caption from table title/alt
-$users.jqGrid('setCaption', $users.attr('alt') +' '+ user_groups)
+$users.jqGrid('setCaption', $users.attr('alt') +' '+ users_Grouping)
 //center Caption and change font-size
 .closest("div.ui-jqgrid-view")
 	.children("div.ui-jqgrid-titlebar").css({"text-align":"center", "cursor":"pointer"})

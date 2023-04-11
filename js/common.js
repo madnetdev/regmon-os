@@ -146,23 +146,37 @@ jQuery(function ()
 	});
 	
 	//Languages
-	$("#lang_de").on('click', function () {
+	$("#lang_de").off('click').on('click', function () {
 		if ($.cookie('LANG') == 'de') return false;
-		$("#loading").show();
 		$.cookie('LANG', 'de', { expires: 365, path: '/' + V_REGmon_Folder });
 		window.location.reload();
 	});
-	$("#lang_en").on('click', function () {
+	$("#lang_en").off('click').on('click', function () {
 		if ($.cookie('LANG') == 'en') return false;
-		$("#loading").show();
 		$.cookie('LANG', 'en', { expires: 365, path: '/' + V_REGmon_Folder });
 		window.location.reload();
 	});
 
 	//Home Button
-	$("button.home").on('click', function () {
-		loading.show();
+	$("button.home").off('click').on('click', function () {
 		window.location.href = '.';
 	});
 
+	$("button.home_parent").off('click').on('click', function () {
+		window.location.href = '../';
+	});
+
+	// SCROLL TO TOP 
+	$(window).on('scroll',function() {
+		if($(this).scrollTop() != 0) {
+			$('#toTop').fadeIn();	
+		} else {
+			$('#toTop').fadeOut();
+		}
+	});
+	
+	$('#toTop').on('click',function() {
+		$('body,html').animate({scrollTop:0},500);
+	});	
+	
 });
