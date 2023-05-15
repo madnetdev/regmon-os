@@ -2,18 +2,18 @@
 require_once('../_settings.regmon.php');
 require('../login/validate.php');
 
-$ID = isset($_REQUEST['ID']) ? abs($_REQUEST['ID']) : false; //abs fix negative ID
-$group_id = isset($_REQUEST['group_id']) ? $_REQUEST['group_id'] : false;
-$athlete_id = isset($_REQUEST['athlete_id']) ? $_REQUEST['athlete_id'] : false;
-$t_isAllDay = isset($_REQUEST['t_isAllDay']) ? $_REQUEST['t_isAllDay'] : 'true';
-$t_date_start = isset($_REQUEST['t_date_start']) ? $_REQUEST['t_date_start'] : get_date_SQL('now');
-$t_date_end = isset($_REQUEST['t_date_end']) ? $_REQUEST['t_date_end'] : get_date_SQL('now');
-$t_time_start = isset($_REQUEST['t_time_start']) ? $_REQUEST['t_time_start'] : date("H:i");
-$t_time_end = isset($_REQUEST['t_time_end']) ? $_REQUEST['t_time_end'] : date("H:i");
-$t_title = isset($_REQUEST['t_title']) ? $_REQUEST['t_title'] : '';
-$t_comment = isset($_REQUEST['t_comment']) ? $_REQUEST['t_comment'] : '';
-$t_showInGraph = isset($_REQUEST['t_showInGraph']) ? $_REQUEST['t_showInGraph'] : 'false';
-$t_color = isset($_REQUEST['t_color']) ? $_REQUEST['t_color'] : '#aaaaaa';
+$ID 			= isset($_POST['ID']) ? abs($_POST['ID']) : false; //abs fix negative ID
+$group_id 		= isset($_POST['group_id']) ? (int)$_POST['group_id'] : false;
+$athlete_id 	= isset($_POST['athlete_id']) ? (int)$_POST['athlete_id'] : false;
+$t_isAllDay 	= isset($_POST['t_isAllDay']) ? $_POST['t_isAllDay'] : 'true';
+$t_date_start 	= $_POST['t_date_start'] ?? get_date_SQL('now');
+$t_date_end 	= $_POST['t_date_end'] ?? get_date_SQL('now');
+$t_time_start	= $_POST['t_time_start'] ?? date("H:i");
+$t_time_end 	= $_POST['t_time_end'] ?? date("H:i");
+$t_title 		= $_POST['t_title'] ?? '';
+$t_comment 		= $_POST['t_comment'] ?? '';
+$t_showInGraph 	= isset($_POST['t_showInGraph']) ? $_POST['t_showInGraph'] : 'false';
+$t_color 		= $_POST['t_color'] ?? '#aaaaaa';
 
 if ($t_isAllDay == 'true') {
 	$selected_date_start = date("Y-m-d H:i:s", strtotime($t_date_start.' 00:00:00'));

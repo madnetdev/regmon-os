@@ -53,7 +53,22 @@ else {
 		exit;
 	}
 
-	$values['passwd'] = MD5($values['passwd']);
+	//check pass < 8 chars
+	if (strlen($values['passwd']) < 8) {
+		echo $LANG->WARN_PASSWORD_CHARS;
+		exit;
+	}
+
+	//check password strength
+	if (!(preg_match("#[0-9]+#", $values['passwd']) AND //one nubmer
+		  preg_match("#[a-z]+#", $values['passwd']) AND //one a-z
+		  preg_match("#[A-Z]+#", $values['passwd']))) //one A-Z
+	{
+		echo $LANG->WARN_WEAK_PASSWORD;
+		exit;
+	}
+		
+	$values['passwd'] = hash_Password($values['passwd']);
 	$values['account'] = 'user';
 	$values['level'] = 10;
 	$values['status'] = 0;

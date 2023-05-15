@@ -1,32 +1,60 @@
 <?php
 /**
  * hash_Password
- * This function takes two strings as parameters, a password and a pepper. 
- * It then creates a hashed version of the password using 
- * the SHA-256 algorithm and the pepper as a key. 
- * Finally, it hashes the result using the BCRYPT algorithm and returns it.
+ * This function hashes the result using the PASSWORD_DEFAULT algorithm and returns it.
+ * - PASSWORD_DEFAULT use the bcrypt algorithm. Bcz it may change is recommended to store the result 
+ * in a database column that can expand beyond 60 characters (255 characters would be a good choice).
  * @param string $password
- * @param string $pepper
  * @return string
  */
-function hash_Password(string $password, string $pepper) {
-	$password_peppered = hash_hmac("sha256", $password, $pepper);
-	$password_hashed = password_hash($password_peppered, PASSWORD_BCRYPT);
+function hash_Password(string $password) {
+	$password_hashed = password_hash($password, PASSWORD_DEFAULT);
 	return $password_hashed;
 }
 
 /**
  * verify_Password
- * This function verifies a password by hashing it with a pepper 
- * and comparing the result to a hashed version of the password.
- * @param string $password_hashed
+ * This function verifies a password by comparing the result to a hashed version of the password.
  * @param string $password
+ * @param string $password_hashed
+ * @return bool
+ */
+function verify_Password(string $password, string $password_hashed) {
+	if (password_verify($password, $password_hashed)) {
+		return true;
+	}
+	return false;
+}
+
+
+/**
+ * hash_Secret
+ * This function creates a hashed version of the password using 
+ * the SHA-256 algorithm and the pepper as a key. 
+ * Finally, it hashes the result using the PASSWORD_DEFAULT algorithm and returns it.
+ * @param string $password
+ * @param string $pepper
+ * @return string
+ */
+function hash_Secret(string $secret, string $pepper) {
+	$secret_peppered = hash_hmac("sha256", $secret, $pepper);
+	$secret_hashed = hash_Password($secret_peppered);
+	return $secret_hashed;
+}
+
+
+/**
+ * verify_Secret
+ * This function verifies a secret by hashing it with a pepper 
+ * and comparing the result to a hashed version of the secret.
+ * @param string $secret_hashed
+ * @param string $secret
  * @param string $pepper
  * @return bool
  */
-function verify_Password(string $password_hashed, string $password, string $pepper) {
-	$password_peppered = hash_hmac("sha256", $password, $pepper);
-	if (password_verify($password_peppered, $password_hashed)) {
+function verify_Secret(string $secret_hashed, string $secret, string $pepper) {
+	$secret_peppered = hash_hmac("sha256", $secret, $pepper);
+	if (verify_Password($secret_peppered, $secret_hashed)) {
 		return true;
 	}
 	return false;

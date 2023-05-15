@@ -58,6 +58,7 @@ LANG = {
 	NOTHING_SELECTED: 'Nothing selected',
 	GROUPING_NO		: 'No grouping',
 	GROUPING_BY		: 'Grouping by',
+	ERROR			: 'Fehler',
 
 	//Page Warnings
 	PROBLEM_LOADING_PAGE	: 'The requested content cannot be loaded.<br>Please try again later.',
@@ -67,7 +68,7 @@ LANG = {
 	WARN_USERNAME_EXIST 	: 'Warning! This name is already taken. <br> Please use a different name.',
 	
 	CONFIRM_DELETE_ENTRY 	: 'Do you really want to delete the selected entry?',
-	ENTRY_DELETED_SUCCESS 	: 'Entry Deleted.',
+	ENTRY_DELETE_SUCCESS 	: 'Entry Deleted.',
 	NOT_HAVE_ACCESS_RIGHTS 	: 'You do not have access rights',
 
 	//Buttons
@@ -79,6 +80,7 @@ LANG = {
 	BUTTON_SEARCH 			: 'Search',
 	BUTTON_RELOAD 			: 'Reload',
 	BUTTON_SAVE 			: 'Save',
+	BUTTON_LOAD 			: 'Load',
 	BUTTON_DUPLICATE		: 'Form Duplicate',
 	//index buttons
 	BUTTON_DATUM 			: 'Date',
@@ -91,7 +93,36 @@ LANG = {
 	INSERT_OK	: 'Inserted successfully!',
 	DELETE_OK	: 'Deleted successfully!',
 
-	LOGIN : {
+	//selects ###########################################
+	SELECT_SEARCH 		: 'Search...',
+	SELECT_ALL 			: 'Select All',
+	ALL_SELECTED 		: 'All Selected',
+	SELECT_PLACEHOLDER	: ' select...',
+	SELECTED 			: ' selected',
+
+	//groups select
+	GROUP						: 'Group',
+	GROUPS_SELECT_PLACEHOLDER 	: 'Select Group...',
+	GROUPS_SELECTED 			: 'Selected Groups',
+	GROUPS_SELECT_NO_GROUP 		: 'No Group',
+	
+	//athletes select
+	ATHLETE 					: 'Athlete',
+	ATHLETES_SELECT_PLACEHOLDER	: 'Select Athlete...',
+	ATHLETES_SELECTED 			: 'Selected Athletes',
+	ATHLETES_SELECT_NO_ATHLETE 	: 'No Athlete',
+	
+	//forms select
+	FORM					: 'Form',
+	FORMS_SELECT_NO_DATA 	: 'No Form',
+
+	//data select
+	DATA					: 'Data',
+	DATA_SELECT_PLACEHOLDER	: 'Select Data...',
+	DATA_SELECTED 			: 'Selected Data',
+	DATA_SELECT_NO_DATA 	: 'No Data',
+
+	LOGIN: {
 		ACCESSIBILITY_ALT 			: 'Sound icon',
 		ACCESSIBILITY_TITLE 		: 'Accessibility option: listen to a question and answer it!',
 		ACCESSIBILITY_DESCRIPTION 	: 'Type below the <strong>answer</strong> to what you hear. Numbers or words:',
@@ -148,7 +179,12 @@ LANG = {
 		LVL_GROUP_ADMIN		: 'Group Admin',
 		LVL_GROUP_ADMIN_2	: 'Group Admin (reduced)',
 		LVL_ATHLETE			: 'Athlete',
-		LVL_TRAINER 		: 'Trainer'
+		LVL_TRAINER 		: 'Trainer',
+		
+		PASSWORD_MIN_LENGTH : 'less than 8 characters',
+		PASSWORD_CONFIRM 	: 'Password and Password Confirm not Match',
+		PASSWORD_WEAK 		: 'Weak Password (Required [a-z] + [A-Z] + [0-9])',
+		WARN_USERNAME_EXIST : 'Warning! This name is already taken. Please use a different name.'
 	},
 
 	CATEGORIES : {
@@ -227,23 +263,11 @@ LANG = {
 		TIME_BETWEEN_ERROR	: 'Please enter a valid time, between 00:00 and 23:59',
 		TIME_LIMIT_EXCEEDED : 'You have exceeded the time limit. Would you like to fill in the form again?',
 		
-		GROUP_SELECT_SEARCH 	: 'Search...',
-		GROUP_SELECT_PLACEHOLDER: 'Select Group...',
-		GROUPS_SELECTED 		: 'Selected Groups',
-		GROUPS_SELECT_ALL 		: 'Select All',
-		GROUPS_ALL_SELECTED 	: 'All Selected',
-		GROUPS_SELECT_NO_GROUP 	: 'No Group',
-		
-		ATHLETE_SELECT_SEARCH 		: 'Search...',
-		ATHLETE_SELECT_PLACEHOLDER	: 'Select Athlete...',
-		ATHLETES_SELECTED 			: 'Selected Athletes',
-		ATHLETES_SELECT_ALL 		: 'Select All',
-		ATHLETES_ALL_SELECTED 		: 'All Selected',
-		ATHLETES_SELECT_NO_ATHLETE 	: 'No Athlete',
-		
-		DEFAULT_TEMPLATE_SELECT : 'Please select default form template',
 		PARENTHESES_ERROR 		: 'Parentheses Error',
 		ALLOWED_CHARS_ERROR 	: 'only allowed "({+-*/._})" and numbers',
+		
+		DEFAULT_TEMPLATE_SELECT_TITLE 		: 'Please select default form template',
+		DEFAULT_TEMPLATE_SELECT_PLACEHOLDER : 'Select Default Template',
 	},
 	
 	FORMS2CATEGORIES : {
@@ -302,6 +326,182 @@ LANG = {
 	},
 
 	RESULTS : {
+		DATA 					: 'Data',
+		NO_DATA_CHANGE_SELECTION: 'No data available. Please change the selection criteria above.',
+		DATA_EXPORT				: 'Export Data',
+		DATA_EXPORT_CSV 		: 'CSV Document',
+		DATA_EXPORT_XLSX 		: 'XLSX Document',
+		DASH_FORMS_TEMPLATE_NAME: 'Forms Template:',
+		DASH_RESULTS_TEMPLATE_NAME : 'Results Template:',
+		FORMS_TEMPLATE 			: 'Forms Template',
+		RESULTS_TEMPLATE 	 	: 'Results Template',
+		TEMPLATE				: 'Template',
+		TEMPLATES				: 'Templates',
+		TEMPLATE_NAME_EXISTS	: 'Template Name Exists',
+		TEMPLATE_OVERWRITE_CONFIRM : 'Do you really want to overwrite the existing template?',
+		TEMPLATE_FORMS_CHANGED 	: 'The Template of the RAW data has changed. Please check the loaded data.',
+		TEMPLATE_DASH_TITLE 	: 'Link Template to Dashboard',
+		TEMPLATE_ADDED_TO_DASH 	: 'Template: {TEMPLATE_NAME} added to the dashboard.',
+		TEMPLATE_CONFIRM_DELETE	: 'Template: {TEMPLATE_NAME} confirm delete?',
+		TEMPLATE_DELETE_SUCCESS	: 'Template: {TEMPLATE_NAME} deleted successfully.',
+		TEMPLATE_SAVE_SUCCESS	: 'Template: {TEMPLATE_NAME} saved successfully.',
+		NO_AXIS_NAME			: 'No Axis Name',
+		COLLAPSE_EXPAND_ALL 	: 'Collapse All / Expand All',
+		SHOW_ATHLETE_NAME 		: 'Show Athlete name',
+		SHOW_FORM_NAME 			: 'Show Form name',
+		SHOW_IN_GRAPHIC 		: 'Show in Diagram?',
+		AUTO 					: 'Auto',
+		FORMULA 				: 'Formula',
+		FORMULA_BEAUTIFY		: 'Beautify Formula',
+		FORMULA_CALCULATE		: 'Calulate Formula',
+		FORMULA_INDIVIDUAL		: 'Individual',
+		CALCULATION 			: 'Calculation',
+		DIAGRAM_FIELD_NAME 		: 'Name',
+		DIAGRAM_COLOR			: 'Color',
+		//Diagram type
+		DIAGRAM_TYPE : {
+			LABEL 		: 'Diagram Type',
+			LINE 		: 'Line',
+			SPLINE 		: 'Smooth Line',
+			AREA 		: 'Area',
+			AREASPLINE 	: 'Smooth Line with Area',
+			COLUMN 		: 'Column',
+			SCATTER 	: 'Point',
+		},
+		//Line type
+		LINE_TYPE : {
+			LABEL 				: 'Linientyp',
+			SOLID 				: 'Solid',
+			DOT 				: 'Dot',
+			SHORT_DOT 			: 'Short Dot',
+			DASH 				: 'Dash',
+			SHORT_DASH 			: 'Short Dash',
+			LONG_DASH 			: 'Long Dash',
+			DASH_DOT 			: 'Dash Dot',
+			SHORT_DASH_DOT 		: 'Short Dash Dot',
+			LONG_DASH_DOT 		: 'Long Dash Dot',
+			SHORT_DASH_DOT_DOT 	: 'Short Dash Dot Dot',
+			LONG_DASH_DOT_DOT 	: 'Long Dash Dot Dot',
+		},
+		//Column width
+		COLUMN_WIDTH : {
+			LABEL 		: 'Column width',
+			AUTO 		: 'Auto',
+			MINUTES 	: 'Minutes',
+			HOUR 		: 'Hour',
+			HOURS 		: 'Hours',
+			DAY 		: 'Day',
+			DAYS 		: 'Days',
+			WEEK 		: 'Week',
+			WEEKS 		: 'Weeks',
+		},
+		//Point Markers
+		POINT_MARKERS : {
+			LABEL 		: 'Point Markers',
+			AUTO 		: 'Auto',
+			YES 		: 'Yes',
+			NO 			: 'No',
+		},
+		//Data Labels
+		DATA_LABELS : {
+			LABEL 		: 'Labels',
+			YES 		: 'Yes',
+			NO 			: 'No',
+		},
+		//Y-Axis
+		Y_AXIS: {
+			LABEL 			: 'Y-Axis',
+			GROUP_LABEL		: 'Y-AXIS',
+			NAME			: 'Name',
+			POSITION		: 'Position',
+			POSITION_LEFT	: 'Left',
+			POSITION_RIGHT	: 'Right',
+			GRID_WIDTH 		: 'Grid Width',
+			MIN 			: 'Min',
+			MAX 			: 'Max',
+		},
+		//Table
+		TABLE : {
+			COLLAPSE 		: 'Collapse',
+			EXPAND 			: 'Expand',
+			FULL_SCREEN_ON	: 'Fullscreen On',
+			FULL_SCREEN_OFF : 'Fullscreen Off',
+			DATE_TIME		: 'Date Time',
+			DATE			: 'Date',
+			DATE_YEAR		: 'Year',
+			DATE_MONTH		: 'Month',
+			DATE_DAY		: 'Day',
+			TIME			: 'Time',
+			TIME_HOUR		: 'Hour',
+			TIME_MINUTE		: 'Minute',
+			TIME_SECOND		: 'Second',
+			INTERVAL_START	: 'Start',
+			INTERVAL_END 	: 'End',
+			INTERVAL_MIDDLE : 'Middle',
+		},
+		//Intervals
+		BUTTON_CALC_RAW_DATA 		: 'Calculation from Raw data',
+		BUTTON_CALC_INTERVAL 		: 'Calculation in the Interval',
+		BUTTON_CALC_INTERVAL_SINGLE : 'Calculation in the Interval (single column)',
+		INTERVAL			: 'Interval',
+		INTERVALS			: 'Intervals',
+		INTERVAL_1_LINE_PER	: '1 Line per',
+		INTERVAL_PERIOD_LABEL: 'Dauer',
+		INTERVAL_PERIOD_START: 'Start',
+		INTERVAL_PERIOD_END	: 'End',
+		INTERVAL_PERIOD : {
+			DATA_LINES 	: 'Data Line(n)',
+			MINUTES 	: 'Minute',
+			MINUTES 	: 'Minutes',
+			MINUTE_S 	: 'Minute(s)',
+			HOUR 		: 'Hour',
+			HOURS 		: 'Hours',
+			HOUR_S 		: 'Hour(s)',
+			DAY 		: 'Day',
+			DAYS 		: 'Days',
+			DAY_S 		: 'Day(s)',
+			WEEK 		: 'Week',
+			WEEKS 		: 'Weeks',
+			WEEK_S 		: 'Week(s)',
+			MONTH 		: 'Month',
+			MONTHS 		: 'Months',
+			MONTH_S 	: 'Month(s)',
+			YEAR 		: 'Year',
+			YEARS 		: 'Years',
+			YEAR_S 		: 'Year(s)',
+		},
+		INTERVAL_EXTRA_X_AXIS 	: 'Extra X-Axis?',
+		INTERVAL_START_AFTER 	: 'Start after',
+		INTERVAL_FULL_PERIOD	: 'Full Period',
+		INTERVAL_FORM			: 'Form',
+		INTERVAL_FORM_NOT_FOUND	: 'not found',
+		INTERVAL_FIELD 			: 'Field',
+		INTERVAL_USE_IN_FORMULA : 'Use in Formula',
+		INTERVAL_USE_SUB_PERIOD: 'Another time restriction',
+		//
+		EXPORT_FORMS_FILE_NAME 	: '{TODAY}_REGmon_Form_Results_{ATHLETE_NAME}',
+		EXPORT_RESULTS_FILE_NAME: '{TODAY}_REGmon_Results_{ATHLETES_NAMES}',
+	},
+
+	DIAGRAM : {
+		LOADING 				: 'Loading...',
+		NO_DATA_SELECTED 		: 'Nothing selected or displayed.',
+		EXPORT_FORMS_FILE_NAME 	: '{TODAY}_REGmon_Form_Results_Diagram_{ATHLETE_NAME}',
+		EXPORT_RESULTS_FILE_NAME: '{TODAY}_REGmon_Results_Diagram_{ATHLETES_NAMES}',
+		EXPORT_MENU_TITLE		: 'Diagramm Export Menu',
+		DOWNLOAD_PNG_IMAGE 		: 'Download PNG Image',
+		DOWNLOAD_JPEG_IMAGE		: 'Download JPEG Image',
+		DOWNLOAD_PDF_DOC 		: 'Download PDF Document',
+		DOWNLOAD_SVG_IMAGE 		: 'Download SVG Vector Image',
+		DOWNLOAD_CSV_DOC 		: 'Download CSV Document',
+		DOWNLOAD_XLSX_DOC 		: 'Download XLSX Document',
+		PRINT_DIAGRAM 			: 'Print Diagramm',
+		RESET_ZOOM 				: 'Reset Zoom',
+		RESET_ZOOM_LEVEL_1_1 	: 'Reset Zoom level 1:1',
+		MONTHS_ARRAY			: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+		MONTHS_SHORT_ARRAY		: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+		WEEKDAYS_ARRAY			: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+		WEEKDAYS_SHORT_ARRAY	: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
 	},
 
 	//Dashboard
@@ -359,6 +559,7 @@ LANG = {
 		PERIOD_LAST_WEEKS	: 'Weeks',
 		PERIOD_LAST_MONTHS	: 'Months',
 		PERIOD_LAST_YEARS	: 'Years',
+		DETAILS 			: 'Edit details',
 	},
 
 	REQUEST : {

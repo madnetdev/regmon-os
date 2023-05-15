@@ -1,7 +1,7 @@
 
 //fix bfcach problem when browser back button is pressed and page not load properly
 window.addEventListener( "pageshow", function (event) {
-	var historyTraversal = event.persisted || (typeof window.performance != "undefined" && window.performance.navigation.type === 2);
+	const historyTraversal = event.persisted || (typeof window.performance != "undefined" && window.performance.navigation.type === 2);
 	if (historyTraversal) {
 		 // page was restored from the bfcach
 	  window.location.reload(); //reload page

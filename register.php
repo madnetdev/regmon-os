@@ -1,6 +1,7 @@
 <?php // Register
 
 declare(strict_types=1);
+require_once('_settings.regmon.php');
 // load language & database ##########
 require_once('login/no_validate.php');
 // ###################################
@@ -16,7 +17,7 @@ $rows = $db->fetch("SELECT gr.id, gr.location_id, gr.status, gr.private_key, gr.
 FROM `groups` gr 
 LEFT JOIN locations l ON l.id = gr.location_id 
 LEFT JOIN users u ON u.id IN (gr.admins_id) 
-WHERE gr.status > 0 
+WHERE l.status > 0 AND gr.status > 0 
 ORDER BY gr.location_id, gr.name", array()); 
 if ($db->numberRows() > 0)  {
 	$location_open = false;
@@ -27,25 +28,29 @@ if ($db->numberRows() > 0)  {
 		$location_id = $row['location_id'];
 		$location_name = $row['location_name'];
 		$group_id = $row['id'];
-		$group_name = htmlspecialchars($row['name']??'');
+		$group_name = html_chars($row['name']??'');
 		$group_email = $row['email'];
 		
+
 		//Group
 		if ($location_name != $location_tmp) {
 			if ($location_open) {
 				$Groups_select_options_optgroup .= '</optgroup>';
 			}
-			$Groups_select_options_optgroup .= '<optgroup label="'.$location_name.'">';
+			$Groups_select_options_optgroup .= '<optgroup label="' . $location_name . '">';
 			$location_open = true;
 		}
 		
+
 		$t_disabled = '';
 		if ($group_email == '') $t_disabled = ' disabled'; //mark disabled if no admin email
+
 
 		$group_expire = false;
 		if ($row['stop_date'] AND strtotime($row['stop_date']) < strtotime("now")) {
 			$group_expire = true;
 		}
+
 		$group_private = false;
 		if ($row['status'] == '3' AND !$group_expire) { //if private and not expired
 			$group_private = true;
@@ -60,7 +65,7 @@ if ($db->numberRows() > 0)  {
 			$t_option = '';
 		}
 		else {
-			$t_option = '<option value="'.$location_id.'|'.$location_name.'|'.$group_id.'|'.$group_name.'"'.$t_disabled.'>'.$group_name.'</option>';
+			$t_option = '<option value="' . $location_id . '|' . $location_name . '|' . $group_id . '|' . $group_name . '"' . $t_disabled . '>' . $group_name . '</option>';
 		}
 		if ($location_id == '0') {
 			$Groups_select_options .= $t_option;
@@ -74,7 +79,7 @@ if ($db->numberRows() > 0)  {
 		$Groups_select_options_optgroup .= '</optgroup>';
 	}
 	if (count($private_groups)) {
-		$private_option = '<option value="Private">'.$LANG->REGISTER_PRIVATE_GROUP.'...</option>';
+		$private_option = '<option value="Private">' . $LANG->REGISTER_PRIVATE_GROUP . '...</option>';
 	}
 }
 $Groups_select_options = $Groups_select_options_optgroup . $Groups_select_options . $private_option;
@@ -115,7 +120,7 @@ require('php/inc.head.php');
 <script type="text/javascript" src="js/lang_<?=$LANG->LANG_CURRENT;?>.js<?=$G_VER;?>"></script>
 <script type="text/javascript" src="js/common.js<?=$G_VER;?>"></script>
 <script>
-var V_REGmon_Folder = '<?=$CONFIG['REGmon_Folder'];?>';
+const V_REGmon_Folder = '<?=$CONFIG['REGmon_Folder'];?>';
 </script>
 <script type="text/javascript" src="login/js/register.js<?=$G_VER;?>"></script>
 <style>
@@ -295,7 +300,7 @@ select.required.form-control { border-right: 3px solid rgba(255, 0, 0, 0.7); }
 						<li>
 							<label><?=$LANG->REGISTER_GROUP;?></label>
 							<div class="styled-select">
-								<select id="GRP_select" name="location_group" class="required form-control">
+								<select id="Select_Group" name="location_group" class="required form-control">
 									<option value="" selected><?=$LANG->REGISTER_GROUP;?></option>
 									<?=$Groups_select_options;?>
 								</select>

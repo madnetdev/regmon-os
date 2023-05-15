@@ -20,6 +20,7 @@ array(
 	'STATUS' 			=> 'Status',
 	'EDIT'				=> 'Edit',
 	'DELETE'			=> 'Delete',
+	'LOAD'				=> 'Load',
 	'BACK' 				=> 'Back',
 	'CLOSE' 			=> 'Close',
 	'CREATED'			=> 'Created',
@@ -36,6 +37,16 @@ array(
 	'LVL_TRAINER' 		=> 'Trainer',
 	'NOTE'				=> 'Note',
 	'NOTE_PERIOD'		=> 'Period',
+	'FROM' 				=> 'From',
+	'TO' 				=> 'To',
+	'DATE_FROM' 		=> 'Date from',
+	'DATE_TO' 			=> 'Date to',
+	'DASHBOARD'			=> 'Dashboard',
+	'LEFT'				=> 'Links',
+	'CENTER'			=> 'Zentriert',
+	'RIGHT'				=> 'Rechts',
+	'BUTTON_ADD' 		=> 'Add',
+	'CLICK' 			=> 'Click',
 
 	//login.php
 	'LOGIN' 			=> 'Login',
@@ -99,6 +110,10 @@ array(
 	'REGISTER_PRIVATE_KEY_ERROR'=> 'Private Key Error',
 	'REGISTER_BACK' 			=> 'Back',
     'REGISTER_BACKWARD'			=> 'Backward',
+	'REGISTER_MIN_PASS_LEN'		=> 'less than 8 characters',
+	'REGISTER_CONFIRM_PASSWORD' => 'Password and Password Confirm not Match',
+	'REGISTER_WEAK_PASSWORD'	=> 'Weak Password (Required [a-z] + [A-Z] + [0-9])',
+
 	//User Account - ajax.page.profile_edit.php
 	'PROFILE_USER_ACCOUNT' 		=> 'User Account',
 	'PROFILE_LOCATION' 			=> 'Location (active)',
@@ -120,6 +135,7 @@ array(
 	'WARN_CONFIRM_PASSWORD' => 'Warning! Password and Password Confirm do not match',
 	'WARN_EMPTY_PASSWORD' 	=> 'Warning! Empty Password',
 	'WARN_PASSWORD_CHARS' 	=> 'Warning! The password must be at least 8 characters long',
+	'WARN_WEAK_PASSWORD' 	=> 'Warning! Weak Password <br>(Required [a-z] + [A-Z] + [0-9])',
 	'WARN_INVALID_EMAIL' 	=> 'Warning! Invalid E-mail address',
 	'WARN_CHANGE_MAIN_NAME' => 'Warning! You cannot change the username of the main account',
 	'WARN_DEACT_YOUR_ACC' 	=> 'Warning! You cannot deactivate your account',
@@ -136,7 +152,7 @@ array(
 	'INDEX_VIEW_OPTIONS'	=> 'Options',
 	//nav
 	'BUTTON_RESULTS'		=> 'Results',
-	'BUTTON_RESULTS_GROUP'	=> 'Results (Group)',
+	'BUTTON_FORMS_RESULTS'	=> 'Forms Results',
 	'BUTTON_USER_ACCOUNT' 	=> 'User Account',
     'BUTTON_LOGOUT'			=> 'Logout',
 	'BUTTON_ADMINISTRATION'	=> 'Administration',
@@ -175,8 +191,6 @@ array(
 	//calendar comments
 	'COMMENT_ALL_DAY'   => 'All Day',
 	'COMMENT_DATE'  	=> 'Date',
-	'COMMENT_DATE_FROM' => 'From',
-	'COMMENT_DATE_TO'   => 'To',
 	'COMMENT_HOUR'  	=> 'Hour',
 	'COMMENT_HOUR_FROM' => 'From',
 	'COMMENT_HOUR_TO'   => 'To',
@@ -219,7 +233,9 @@ array(
 	'WARN_TAG_EXIST' 		=> 'Warning! This Tag already exists. <br> Please use a different name.',
 	//ajax.dropdowns
 	'EMPTY_DROPDOWN_NAME' 	=> 'Warning! Empty Dropdown Name',
-	'WARN_DROPDOWN_EXIST' 	=> 'Warning! This Dropdown already exists. <br> Please use a different name.',
+	'WARN_DROPDOWN_NAME_EXIST'=> 'Warning! This Dropdown name already exists. <br> Please use a different name.',
+	'EMPTY_DROPDOWN_OPTION' => 'Warning! Empty Dropdown option',
+	'WARN_DROPDOWN_OPTION_EXIST'=> 'Warning! This Dropdown option already exists. <br> Please use a different name.',
 	'WARN_DROPDOWN_DELETE' 	=> 'Warning! Cannot Delete. <br> Have ({OPTIONS_NUM}) options.',
 	'WARN_DROPDOWN_NOT_DELETE'	=> 'Warning! Cannot delete this',
 	'WARN_DROPDOWN_NOT_CHANGE'	=> 'Warning! Cannot change',
@@ -233,7 +249,7 @@ array(
 	'ADMIN_SPORTS' 			=> 'Sports',
 	'ADMIN_TAGS' 			=> 'Tags',
 	'ADMIN_TEMPLATES_FORMS'	=> 'Forms Templates',
-	'ADMIN_TEMPLATES_GROUPS'=> 'Groups Templates',
+	'ADMIN_TEMPLATES_RESULTS'=> 'Results Templates',
 	'ADMIN_TEMPLATES_Y_AXIS'=> 'Y-Axis Templates',
 
 	//trainers
@@ -422,30 +438,6 @@ array(
 	'FORM_MENU_GO_2_FORM_SELECT'=> 'Go to Forms Selection',
 	'FORM_DEFAULT_TEMPLATE' => 'Default Template',
 
-	//results.php - results
-	'RESULTS'					=> 'Results',
-	'RESULTS_PAGE_TITLE' 		=> 'REGmon - Results and Analysis',
-	'RESULTS_SUBMIT_THANKS'		=> 'Thank you!',
-	'RESULTS_SUBMIT_SUCCESS'	=> 'Form submitted successfully.',
-	'RESULTS_USER' 				=> 'User',
-	'RESULTS_CREATED'			=> 'Created',
-	'RESULTS_MODIFIED'			=> 'Modified',
-	'RESULTS_NO_DATA' 			=> 'No Data',
-	'RESULTS_ALL_FORMS'			=> 'All Forms',
-	'RESULTS_SUBFEATURE'		=> 'Form Results',
-	'DATE_FROM' 				=> 'Date from',
-	'DATE_TO' 					=> 'Date to',
-	'GRAPH_HELP_TOOLTIP'		=> "- Hold down the left mouse button and mark an area (horizontally or vertically) to enlarge it.
-- Hold 'Alt' to pan the graphic with the left mouse button pressed.
-- Double-click the graphic with the left mouse button to restore the original view.", //not used
-	'RESULTS_GROUP' 			=> 'Group',
-	'RESULTS_SELECT_GROUP'		=> 'Select Group',
-	'RESULTS_SELECT_FORM'		=> 'Select Form',
-	'RESULTS_SELECT_FIELDS'		=> 'Select Data',
-
-	//import.php
-	'IMPORT' 				=> 'Import',
-
 	//export.php
 	'EXPORT' 				=> 'Data Request (Export)',
 	'EXPORT_PAGE_TITLE'		=> 'REGmon - Data Request',
@@ -492,7 +484,9 @@ array(
 	'EXPORT_FILTER_NO_DATA' 	=> 'No data available for the selected filters. Please, change the filters.',
 
 	//import.php
+	'IMPORT' 				=> 'Import',
     'IMPORT_DATA'			=> 'Import Data',
+    'IMPORT_SAVE_SELECTED'	=> 'Save<br>Selected',
     'VIEW_DATA'				=> 'View Data',
 	'SELECT_FILES' 			=> 'Select files ...',
     'SELECT_DROP' 			=> 'or Drop files here',
@@ -505,6 +499,82 @@ array(
     'FILE_NOT_FOUND' 		=> 'File not found',
     'DELETE_CONFIRM' 		=> 'Confirm Delete ?',
     'ERROR_DELETING'		=> 'Error Deleting',
+
+	//forms_results.php, results.php
+	'RESULTS'					=> 'Results',
+	'RESULTS_PAGE_TITLE' 		=> 'REGmon - Results and Analysis',
+	'RESULTS_PAGE_Y_AXIS'		=> 'Results Y-Axis',
+	'RESULTS_PAGE_HEADER'		=> 'Load Template or select Period / Data',
+	'RESULTS_TAB_PERIOD'		=> 'Period',
+	'RESULTS_TAB_PERIOD_N_DATA'	=> 'Period and Data',
+	'RESULTS_TAB_DIAGRAM'		=> 'Diagram',
+	'RESULTS_TAB_ATHLETE_DATA'	=> 'Athlete Data',
+	'RESULTS_TAB_INTERVAL_DATA'	=> 'Interval Data',
+	'RESULTS_TAB_Y_AXIS' 		=> 'Y-Axis Show / Change',
+	'RESULTS_SELECT_GROUP' 		=> 'Select Group',
+	'RESULTS_SELECT_GROUPS'		=> 'Select Groups',
+	'RESULTS_SELECT_ATHLETES'	=> 'Select Athletes',
+	'RESULTS_SELECT_FORMS'		=> 'Select Forms',
+	'RESULTS_SELECT_FIELDS'		=> 'Select Data',
+	'RESULTS_ATHLETE_DATA_ADD'	=> 'Add Athlete Data',
+	'RESULTS_PERIOD_N_DATA_SELECT' => 'Please select Period and Data',
+	'RESULTS_BUTTON_APPLY_CHANGES'=> 'Apply changes',
+	'RESULTS_NO_DATA_CHANGE_SELECTION'=> 'No data available. Please change the selection criteria above.',
+	'RESULTS_NO_DATA_SELECTED'	=> 'Nothing selected or displayed.',
+	'RESULTS_INFO_STANDAR_COLORS'=> 'Standard Colors',
+	'RESULTS_INFO_LINES'		=> 'Lines',
+	'RESULTS_INFO_FORMULA'		=> 'Formula Info',
+	'RESULTS_UPDATE_DIAGRAM'	=> 'Update Diagram',
+	'RESULTS_DATA_EXPORT'		=> 'Export Data',
+	'RESULTS_INTERVAL_ADD'		=> 'Add Interval',
+	//TEMPLATES
+	'TEMPLATE'					=> 'Template',
+	'TEMPLATES'					=> 'Templates',
+	'FORMS_TEMPLATES'			=> 'Forms Templates',
+	'RESULTS_TEMPLATE'			=> 'Results Template',
+	'RESULTS_TEMPLATES'			=> 'Results Templates',
+	'RESULTS_TEMPLATES_DASH_TITLE'=> 'Link Template to Dashboard',
+	'RESULTS_TEMPLATES_SAVE_TEXT'=> 'Save current configuration as template',
+
+	'RESULTS_CREATED'			=> 'Created',
+	'RESULTS_MODIFIED'			=> 'Modified',
+	'RESULTS_NO_DATA' 			=> 'No Data',
+	'RESULTS_RESET' 			=> 'Reset',
+	'RESULTS_COLOR' 			=> 'Color',
+	'RESULTS_AUTO' 				=> 'Auto',
+	'RESULTS_CALCULATION' 		=> 'Calculation',
+	'RESULTS_Y_AXIS' 			=> 'Y-Axis',
+	'RESULTS_Y_AXIS_GROUP' 		=> 'Y-AXIS',
+	'RESULTS_Y_AXIS_CREATE' 	=> 'Create Y-Axis',
+	'RESULTS_Y_AXIS_SHOW_ALL' 	=> 'Show all Y-Axes',
+	'RESULTS_Y_AXIS_SAVE_NAME' 	=> 'Save Name',
+	'RESULTS_Y_AXIS_NAME' 		=> 'Axis Name',
+	'RESULTS_Y_AXIS_POSITION'	=> 'Position',
+	'RESULTS_Y_AXIS_POS_LEFT'	=> 'Links',
+	'RESULTS_Y_AXIS_POS_RIGHT'	=> 'Rechts',
+	'RESULTS_Y_AXIS_GRID_WIDTH' => 'Grid Width',
+	'RESULTS_Y_AXIS_MIN' 		=> 'Min',
+	'RESULTS_Y_AXIS_MAX' 		=> 'Max',
+	'RESULTS_Y_AXIS_DATA' 		=> 'DATA',
+	'RESULTS_Y_AXIS_VALUE' 		=> 'Value',
+	'RESULTS_Y_AXIS_VALUE_NAME'	=> 'Name',
+	'RESULTS_Y_AXIS_SAVE' 		=> 'Axis Save',
+	'RESULTS_COLLAPSE_EXPAND_ALL'=> 'Collapse All / Expand All',
+
+	'PERMISSIONS_VISIBLE_FOR'	=> 'Visible for',
+	'PERMISSIONS_GLOBAL'		=> 'Global',
+	'PERMISSIONS_LOCATION'		=> 'Location',
+	'PERMISSIONS_GROUP'			=> 'Group',
+	'PERMISSIONS_TRAINERS'		=> 'Trainers',
+	'PERMISSIONS_PRIVATE'		=> 'Private',
+
+	'DIAGRAM_FULLSCREEN_ON'		=> 'Fullscreen On',
+	'DIAGRAM_FULLSCREEN_OFF'	=> 'Fullscreen Off',
+
+	'DIAGRAM_HELP_TOOLTIP'		=> "- Hold down the left mouse button and mark an area (horizontally or vertically) to enlarge it.
+- Hold 'Alt' to pan the graphic with the left mouse button pressed.
+- Double-click the graphic with the left mouse button to restore the original view.", //not used
+
 
 	//Email Templates ######################################################
 	//Please do not translate text inside curly brackets {notTranslatedText}
@@ -548,7 +618,6 @@ array(
 'A new {Profile} user account was created. <br><a href="{HTTP}{DOMAIN}/{REGmon_Folder}" target="_blank">{DOMAIN}/{REGmon_Folder}</a>
 <br>
 <br>Username: {Username}
-<br>Password: {Password}
 <br>
 <br>First name: {Firstname}
 <br>Last Name: {Lastname}

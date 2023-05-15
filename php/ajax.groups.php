@@ -6,7 +6,7 @@ switch ($action) {
 	case 'add': // INSERT 
 	case 'edit': // UPDATE 
 		$values = array();			
-		foreach ($_REQUEST as $key => $val) {
+		foreach ($_POST as $key => $val) {
 			$key = trim((string)$key); 
 			$val = trim((string)$val); 
 			switch($key) {
@@ -142,9 +142,10 @@ switch ($action) {
 		//check admin user
 		if (!$ADMIN) {
 			//Location Admin
-			$admin = $db->fetchRow("SELECT u.id, u.lastname FROM users u
-					LEFT JOIN locations l ON u.id = l.admin_id
-					WHERE l.id = ? AND u.level = 50 AND u.id = ?", array($id, $UID)); 
+			$admin = $db->fetchRow("SELECT u.id, u.lastname 
+				FROM users u
+				LEFT JOIN locations l ON u.id = l.admin_id
+				WHERE l.id = ? AND u.level = 50 AND u.id = ?", array($id, $UID)); 
 			if (!$db->numberRows() > 0)  {
 				echo $LANG->NEED_ADMIN_RIGHTS;
 				exit; //no admin user

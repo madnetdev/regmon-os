@@ -18,7 +18,7 @@ const LF2C = LANG.FORMS2CATEGORIES;
 
 const idPrefix = "c_";
 const pager = '#Cpager';
-let $categories = $("#categories");
+const $categories = $("#categories");
 let start_hidden = true;
 let header = 'Categories';
 if (V_is_Index_Options) { //for index options
@@ -133,14 +133,17 @@ $categories.jqGrid({
 	//Forms subGrid #############################
 	subGridRowExpanded: function(subgrid_id, row_id)
 	{
-		var sub_idPrefix = "cf_"; //categories/forms
-		var subgrid_table_id = subgrid_id+"_t"; 
-		var sub_pager = "p_"+subgrid_table_id;
-		$("#"+subgrid_id).html("<table id='"+subgrid_table_id+"' class='scroll'></table><div id='"+sub_pager+"' class='scroll'></div>");
-		var cat_id = $categories.jqGrid('getRowData', row_id)['id'];
-		var forms_url = "php/ajax.php?i=forms2categories&ID=" + cat_id;
+		const sub_idPrefix = "cf_"; //categories/forms
+		const subgrid_table_id = subgrid_id + "_t"; 
+		const sub_pager = "p_" + subgrid_table_id;
+		$("#" + subgrid_id).html(
+			'<table id="' + subgrid_table_id + '" class="scroll"></table>' +
+			'<div id="' + sub_pager + '" class="scroll"></div>'
+		);
+		const cat_id = $categories.jqGrid('getRowData', row_id)['id'];
+		const forms_url = "php/ajax.php?i=forms2categories&ID=" + cat_id;
 		//local data
-		var grid_data = V_CATEGORIES_FORMS[cat_id];
+		const grid_data = V_CATEGORIES_FORMS[cat_id];
 
 		$("#"+subgrid_table_id).jqGrid({
 			url: forms_url,
@@ -309,13 +312,16 @@ else { //admin page
 
 function Responsive_Categories() { 
 	if (V_is_Index_Options) { //for index options
-		var p_width = $('#C_Categories_link').prop('clientWidth');// Get width of parent container
+		let p_width = $('#C_Categories_link').prop('clientWidth');// Get width of parent container
 		if (p_width == null || p_width < 1){
 			p_width = $('#C_Categories_link').prop('offsetWidth'); // For IE, revert to offsetWidth if necessary
 		}
 		p_width = p_width - 3; //prevent horizontal scrollbars
+		
+		//set here anyway to avoid empty grid after (calendar, options) change
+		$categories.jqGrid('setGridWidth', p_width);
 		if (p_width != $categories.width()) {
-			$categories.jqGrid('setGridWidth', p_width);
+			//$categories.jqGrid('setGridWidth', p_width);
 			//if have subs opened
 			if ($("div[id^=categories_c_]").length > 0) { 
 				$("div[id^=categories_c_]").each(function(){

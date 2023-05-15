@@ -2,21 +2,24 @@
 
 // Grid -extend default grid options
 
-var V_TIME_OUT_AFTER_SAVE = 2000,
-	V_GRID_SAVE = false,
-	V_ADMIN_VIEW = false;
+var V_TIME_OUT_AFTER_SAVE = 2000;
+var V_GRID_SAVE = false;
+var V_ADMIN_VIEW = false;
+
 
 var initColor = function (el) {
 	setTimeout(function () {
 		$(el).colorPicker();
 	}, 100);
 };
+
+
 var initDate = function (el) {
 	setTimeout(function () {
-		$(el).after(' <i class="fa fa-calendar" style="font-size:14px;"></i>').next().on('click',function(e) {
-				$(el).datepicker('show');
-				return false;
-			});
+		$(el).after(' <i class="fa fa-calendar" style="font-size:14px;"></i>').next().on('click', function (e) {
+			$(el).datepicker('show');
+			return false;
+		});
 		$(el).datepicker({
 			changeMonth: true,
 			changeYear: true,
@@ -24,62 +27,69 @@ var initDate = function (el) {
 			//showButtonPanel: true,
 			dateFormat: LANG.DATEPICKER.DATE
 		});
-		$('.ui-datepicker').css({'font-size':'75%'});
+		$('.ui-datepicker').css({ 'font-size': '75%' });
 	}, 100);
 };
 
+
 var numberTemplate = {
 	formatter: "number", align: "right", sorttype: "number",
-	editrules: {number: true, required: true},
+	editrules: { number: true, required: true },
 	searchoptions: { sopt: ["eq", "ne", "lt", "le", "gt", "ge", "nu", "nn", "in", "ni"] }
 };
+
 var checkboxTemplate = {
-	formatter: "checkbox", /*formatoptions: { disabled: false},*/ align: "center", 
-	edittype: "checkbox", editoptions: {value: LANG.YES+":"+LANG.NO, defaultValue: LANG.YES},
-	stype: "select", searchoptions: { sopt: ["eq", "ne"], value: ":;1:"+LANG.YES+";0:"+LANG.NO }
+	formatter: "checkbox", /*formatoptions: { disabled: false},*/ align: "center",
+	edittype: "checkbox", editoptions: { value: LANG.YES + ":" + LANG.NO, defaultValue: LANG.YES },
+	stype: "select", searchoptions: { sopt: ["eq", "ne"], value: ":;1:" + LANG.YES + ";0:" + LANG.NO }
 };
+
 var aktivInaktivTemplate = {
-	fixed:true, align:"center",
-	formatter:"select", edittype:"select", stype:'select', 
-	searchoptions: {sopt:['eq','ne'], value:":;1:"+LANG.ST_ACTIVE+";0:"+LANG.ST_INACTIVE},	
-	editoptions:{value:"1:"+LANG.ST_ACTIVE+";0:"+LANG.ST_INACTIVE, defaultValue:'1', size:1},
-	cellattr: function(rowId, val) {
-		if (val==1) return " style='color:green;'"; //active
+	fixed: true, align: "center",
+	formatter: "select", edittype: "select", stype: 'select',
+	searchoptions: { sopt: ['eq', 'ne'], value: ":;1:" + LANG.ST_ACTIVE + ";0:" + LANG.ST_INACTIVE },
+	editoptions: { value: "1:" + LANG.ST_ACTIVE + ";0:" + LANG.ST_INACTIVE, defaultValue: '1', size: 1 },
+	cellattr: function (rowId, val) {
+		if (val == 1) return " style='color:green;'"; //active
 		else return " style='color:red;'"; //inactive
 	}
 };
+
 var aktivInaktivPrivateTemplate = {
-	fixed:true, align:"center",
-	formatter:"select", edittype:"select", stype:'select', 
-	searchoptions: {sopt:['eq','ne'], value:":;1:"+LANG.ST_ACTIVE+";3:"+LANG.ST_PRIVATE+";0:"+LANG.ST_INACTIVE},	
-	editoptions:{value: "1:"+LANG.ST_ACTIVE+";3:"+LANG.ST_PRIVATE+";0:"+LANG.ST_INACTIVE, defaultValue: LANG.ST_ACTIVE, size:1},
-	cellattr: function(rowId, val) {
-			 if(val==1) return " style='color:green;'"; //active
-		else if(val==3) return " style='color:blue;'"; //private
+	fixed: true, align: "center",
+	formatter: "select", edittype: "select", stype: 'select',
+	searchoptions: { sopt: ['eq', 'ne'], value: ":;1:" + LANG.ST_ACTIVE + ";3:" + LANG.ST_PRIVATE + ";0:" + LANG.ST_INACTIVE },
+	editoptions: { value: "1:" + LANG.ST_ACTIVE + ";3:" + LANG.ST_PRIVATE + ";0:" + LANG.ST_INACTIVE, defaultValue: LANG.ST_ACTIVE, size: 1 },
+	cellattr: function (rowId, val) {
+		if (val == 1) return " style='color:green;'"; //active
+		else if (val == 3) return " style='color:blue;'"; //private
 		else return " style='color:red;'"; //inactive
 	}
 };
+
 var stopDateTemplate = {
-	formatter:"date", sorttype:"date", formatoptions:{srcformat:"Y-m-d", newformat:LANG.GRID.DATE},
-	editoptions:{ dataInit:initDate, style:"width:70%" },
-	cellattr: function(rowId, val) {
-			 if (moment(val, 'YYYY-MM-DD').isSame(moment(),'day')) return ' class="orange"';
+	formatter: "date", sorttype: "date", formatoptions: { srcformat: "Y-m-d", newformat: LANG.GRID.DATE },
+	editoptions: { dataInit: initDate, style: "width:70%" },
+	cellattr: function (rowId, val) {
+		if (moment(val, 'YYYY-MM-DD').isSame(moment(), 'day')) return ' class="orange"';
 		else if (moment(val, 'YYYY-MM-DD').isAfter()) return ' class="green"';
 		else if (moment(val, 'YYYY-MM-DD').isBefore()) return ' class="red"';
 	}
 };
+
 var sexTemplate = {
-	formatter:"select", edittype:"select", align:"center",
-	editoptions:{value: "0:"+LANG.USERS.SEX_MALE+";1:"+LANG.USERS.SEX_FEMALE+";2:"+LANG.USERS.SEX_OTHER, defaultValue: LANG.USERS.SEX_MALE, size:1},
-	stype:'select', searchoptions: {sopt:['eq', 'ne'], value:":;0:"+LANG.USERS.SEX_MALE+";1:"+LANG.USERS.SEX_FEMALE+";2:"+LANG.USERS.SEX_OTHER}
+	formatter: "select", edittype: "select", align: "center",
+	editoptions: { value: "0:" + LANG.USERS.SEX_MALE + ";1:" + LANG.USERS.SEX_FEMALE + ";2:" + LANG.USERS.SEX_OTHER, defaultValue: LANG.USERS.SEX_MALE, size: 1 },
+	stype: 'select', searchoptions: { sopt: ['eq', 'ne'], value: ":;0:" + LANG.USERS.SEX_MALE + ";1:" + LANG.USERS.SEX_FEMALE + ";2:" + LANG.USERS.SEX_OTHER }
 };
+
 var hiddenReadonlyTemplate = { hidden:true, editrules:{edithidden:true}, editoptions:{readonly:'readonly'}};
 
 jQuery(function() {
 	if (typeof $.blockUI == 'function') V_ADMIN_VIEW = true;
 	if (!V_ADMIN_VIEW) V_TIME_OUT_AFTER_SAVE = 1000;
 	
-	//JQGRID EXTEND /////////////////////////////////////////////////////
+	//JQGRID EXTEND #####################
 	//options
 	$.extend($.jgrid.defaults, {
 		datatype: "json",
@@ -110,6 +120,7 @@ jQuery(function() {
 		}}
 	});
 	
+
 	//edit + add -- inline + nav
 	$.extend($.jgrid.edit, {
 		width:330, 
@@ -134,24 +145,34 @@ jQuery(function() {
 			return [true, ''];
 		},
 		afterSubmit: function (jqXHR) {
-			var this_id = this.id;
-			var myInfo = '<div class="ui-state-highlight ui-corner-all">' +
-							'<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>' +
-							'<span>'+(jqXHR.responseText=="OK_insert" ? LANG.INSERT_OK : LANG.UPDATE_OK)+'</span></div>',
-				$infoTr,
-				$infoTd;
+			const this_id = this.id;
+			const myInfo = ''+
+				'<div class="ui-state-highlight ui-corner-all">' +
+					'<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>' +
+					'<span>' + (jqXHR.responseText == "OK_insert" ? LANG.INSERT_OK : LANG.UPDATE_OK) + '</span>'+
+				'</div>';
 
-			if (jqXHR.responseText !== "OK_insert" && jqXHR.responseText !== "OK_update") {
+			if (jqXHR.responseText !== "OK_insert" &&
+				jqXHR.responseText !== "OK_update")
+			{
 				V_GRID_SAVE = false;
 				if (V_ADMIN_VIEW) {
 					$.unblockUI();
-				} else loading.hide();
-				return [false, '<span class="ui-icon ui-icon-alert" style="float:left;"></span>'+
-									'<span style="display:block; padding:1px 0px 0px 20px;">'+jqXHR.responseText+'</span>'];
+				}
+				else {
+					loading.hide();
+				}
+
+				const errorMessage = '' +
+					'<span class="ui-icon ui-icon-alert" style="float:left;"></span>' +
+					'<span style="display:block; padding:1px 0px 0px 20px;">' + jqXHR.responseText + '</span>';
+				
+				return [false, errorMessage];
 			}
 
-			$infoTr = $("table#TblGrid_"+ this_id +">tbody>tr.tinfo");
-			$infoTd = $infoTr.children("td.topinfo");
+
+			const $infoTr = $("table#TblGrid_"+ this_id +">tbody>tr.tinfo");
+			const $infoTd = $infoTr.children("td.topinfo");
 			$infoTd.html(myInfo);
 			$infoTr.show();
 
@@ -159,18 +180,29 @@ jQuery(function() {
 			setTimeout(function () {
 				$infoTr.fadeOut("slow", function () {
 					$infoTr.hide();
-					$('#edithd'+ this_id +' > a').trigger("click"); //close after add is ok
+
+					$('#edithd' + this_id + ' > a').trigger("click"); //close after add is ok
+					
 					V_GRID_SAVE = false;
 					if (V_ADMIN_VIEW) {
 						$.unblockUI();
-					} else loading.hide();
+					}
+					else {
+						loading.hide();
+					}
 				});
 			}, V_TIME_OUT_AFTER_SAVE);
-			$(this).jqGrid('setGridParam', {datatype:'json'}); //if loadonce:true need this to reload grid
-			return [true, "", ""]; //response should be interpreted as successful
+
+			//if loadonce:true need this to reload grid
+			$(this).jqGrid('setGridParam', { datatype: 'json' });
+
+
+			//response should be interpreted as successful
+			return [true, "", ""];
 		}
 	});
 	
+
 	//delete
 	$.extend($.jgrid.del, {
 		closeOnEscape:true,
@@ -180,7 +212,10 @@ jQuery(function() {
 			if (V_ADMIN_VIEW) {
 				$.blockUI({ message: '' });
 			}
-			else loading.show();
+			else {
+				loading.show();
+			}
+
 			return [true, ''];
 		},
 		afterSubmit: function (jqXHR) {
@@ -190,14 +225,22 @@ jQuery(function() {
 			else loading.hide();
 			
 			if (jqXHR.responseText !== "OK_delete") {
-				return [false, '<span class="ui-icon ui-icon-alert" style="float:left;"></span>'+
-								'<span style="display:block; padding:1px 0px 0px 20px;">'+jqXHR.responseText+'</span>'];
+				const errorMessage = '' +
+					'<span class="ui-icon ui-icon-alert" style="float:left;"></span>' +
+					'<span style="display:block; padding:1px 0px 0px 20px;">' + jqXHR.responseText + '</span>';
+				
+				return [false, errorMessage];
 			}
-			$(this).jqGrid('setGridParam', {datatype:'json'}); //if loadonce:true need this to reload grid
-			return [true, "", ""]; //response should be interpreted as successful
+
+			//if loadonce:true need this to reload grid
+			$(this).jqGrid('setGridParam', { datatype: 'json' });
+			
+			//response should be interpreted as successful
+			return [true, "", ""];
 		}
 	});
 	
+
 	//view
 	$.extend($.jgrid.view, {
 		width:300,

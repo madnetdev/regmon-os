@@ -6,7 +6,7 @@ switch ($action) {
 	case 'add': // INSERT 
 	case 'edit': // UPDATE 
 		$values = array();			
-		foreach ($_REQUEST as $key => $val) {
+		foreach ($_POST as $key => $val) {
 			$key = trim((string)$key); 
 			$val = trim((string)$val); 
 			switch($key) {
@@ -67,8 +67,11 @@ switch ($action) {
 	case 'get_Categories_Select': // SELECT
 	case 'get_Categories_Select_Root':  // SELECT
 		
-		$options = '<select>'; 
-		if ($action == 'get_Categories_Select_Root') $options .= '<option value="0"></option>'; //root
+		$options = '<select>';
+		if ($action == 'get_Categories_Select_Root') {
+			$options .= '<option value="0"></option>'; //root
+		}
+
 		$rows = $db->fetch("SELECT id, parent_id, name FROM categories WHERE status = 1 ORDER BY parent_id, sort, name", array()); 
 		if ($db->numberRows() > 0)  {
 			//echo "<pre>";print_r($rows);echo "</pre>";
@@ -83,22 +86,34 @@ switch ($action) {
 				$categories_array['parent_categories'][$row['parent_id']][] = $row['id'];
 			}
 			//echo "<pre>";print_r($categories_array);echo "</pre>";
+
 			function buildCategorySelect($parent, $categories_array, $level=1) {
 				global $action;
 				$html = '';
 				$space = '';
-				for ($i=1; $i<$level; $i++) $space .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+
+				for ($i = 1; $i < $level; $i++) {
+					$space .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+				}
+
 				if (isset($categories_array['parent_categories'][$parent])) {
 					foreach ($categories_array['parent_categories'][$parent] as $cat_id) {
-						$dis = (($action=='get_Categories_Select_Root' AND $level==3)? ' disabled' : '');
-						$html .= '<option value="'.$cat_id.'"'.$dis.'>'.$space.htmlspecialchars($categories_array['categories'][$cat_id]['name']??'').'</option>';
+
+						$dis = (($action=='get_Categories_Select_Root' AND $level==3) ? ' disabled' : '');
+						
+						$html .= '<option value="'.$cat_id.'"'.$dis.'>'.
+									$space.
+									html_chars($categories_array['categories'][$cat_id]['name'] ?? '').
+								'</option>';
+
 						if (isset($categories_array['parent_categories'][$cat_id])) { //have childs
-							$html .= buildCategorySelect($cat_id, $categories_array, $level+1); //get childs
+							$html .= buildCategorySelect($cat_id, $categories_array, $level + 1); //get childs
 						}
 					}
 				}
 				return $html;
 			}
+
 			$options .= buildCategorySelect(0, $categories_array);
 		}
 		$options .= '</select>';
@@ -116,6 +131,7 @@ switch ($action) {
 (SELECT GROUP_CONCAT(CAST(form_id AS CHAR)) FROM forms2categories WHERE category_id = c.id GROUP BY category_id) AS forms_ids 
 FROM categories c 
 ORDER BY parent_id, sort, name", array()); 
+//WHERE c.status = 1 --need to see all here
 		$i=0;
 		if ($db->numberRows() > 0)  {
 			$categories = array();
@@ -124,6 +140,7 @@ ORDER BY parent_id, sort, name", array());
 				'categories' => array(),
 				'parent_categories' => array()
 			);
+			
 			foreach ($rows as $row) {
 				//categories array with id as key
 				$categories_array['categories'][$row['id']] = $row;
@@ -131,6 +148,7 @@ ORDER BY parent_id, sort, name", array());
 				$categories_array['parent_categories'][$row['parent_id']][] = $row['id'];
 			}
 			//echo "<pre>";print_r($categories_array);echo "</pre>";
+
 			function buildCategory($parent, $categories_array, $level=1) {
 				global $categories;
 				if (isset($categories_array['parent_categories'][$parent])) {
@@ -146,6 +164,7 @@ ORDER BY parent_id, sort, name", array());
 				}
 				//return $html;
 			}
+			
 			buildCategory(0, $categories_array);
 			//echo "<pre>";print_r($categories);echo "</pre>";
 			//exit;

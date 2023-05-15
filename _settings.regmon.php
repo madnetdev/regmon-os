@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace REGmon;
 
 //Version
-$G_Version = "3.011";
-$G_VER = "?ver=".$G_Version;
+$G_Version = "3.012";
+$G_VER = "?ver=" . $G_Version;
 
 
 if (file_exists(__DIR__.'/__config.regmon.php')) {
@@ -13,24 +13,35 @@ if (file_exists(__DIR__.'/__config.regmon.php')) {
 } 
 else {
 	//__config.regmon.php missing --run install script
-	//TODO: @@@@@@@@@@@ make install script
+	//TODO: make install script
 	die('"__config.regmon.php" is missing!');
 }
 
-//new $CONFIG values ######################
-//remove when the db config done
-if (!isset($CONFIG['Use_VisualCaptcha'])) {
-	$CONFIG['Use_VisualCaptcha'] = true;
-}
-if (!isset($CONFIG['Use_Multi_Language_Selector'])) {
-	$CONFIG['Use_Multi_Language_Selector'] = true;
-}
-if (!isset($CONFIG['Default_Language'])) {
-	$CONFIG['Default_Language'] = 'en';
-}
-//end new $CONFIG values ##################
 
-	
+/**
+ * Simple Extension System
+ * only for this file '_settings.regmon.php', 
+ * because we never really call this file directly,
+ * so we can extend this too, but can be tricky 
+ * ===================================================
+ */
+$settings_page = '_settings.regmon.php';
+//check Simple_Extension_System
+if (isset($CONFIG['Simple_Extension_System'][$settings_page])) {
+	$extension_page = $CONFIG['Simple_Extension_System'][$settings_page][0];
+	$exit_after = $CONFIG['Simple_Extension_System'][$settings_page][1];
+	if (file_exists($extension_page)) 
+	{
+		require($extension_page);
+
+		if ($exit_after) {
+			//exit current page
+			exit;
+		}
+	}
+}
+
+
 // localhost config
 if ($_SERVER['HTTP_HOST'] == 'localhost' OR 
 	$_SERVER['HTTP_HOST'] == "localhost:8080" OR 
@@ -53,6 +64,7 @@ else {
 
 }
 
+
 //logging recomendations from php.ini-production & php.ini-development
 if ($CONFIG['PRODUCTION']) {
 	ini_set('display_errors', '0');
@@ -68,5 +80,32 @@ else { //Development
 }
 
 ini_set('default_charset', 'utf-8');
+
+
+
+/**
+ * Simple Extension System
+ * -----------------------------
+ * check if we have an extension for the current file
+ * and if extension file exists and require the extension file
+ * if the 'exit_after' is true then exit current page
+ * else continue to the current page after the extension page finished
+ * ===================================================
+ */
+$current_page = str_replace('/', '', $_SERVER['PHP_SELF']);
+//check Simple_Extension_System
+if (isset($CONFIG['Simple_Extension_System'][$current_page])) {
+	$extension_page = $CONFIG['Simple_Extension_System'][$current_page][0];
+	$exit_after = $CONFIG['Simple_Extension_System'][$current_page][1];
+	if (file_exists($extension_page)) 
+	{
+		require($extension_page);
+
+		if ($exit_after) {
+			//exit current page
+			exit;
+		}
+	}
+}
 
 ?>

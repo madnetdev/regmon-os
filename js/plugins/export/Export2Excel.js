@@ -185,7 +185,7 @@ function export_json_to_excel({
   }), `${filename}.${bookType}`);
 }
 
-function export_array_to_excel(data, filename,  ints = false, merges = [], autoWidth = true) {
+function export_array_to_excel(data, filename,  intervals = false, merges = [], autoWidth = true) {
 	function build_sheet(sheet_name, data) {
 		//console.log(sheet_name, data);
 		var ws = sheet_from_array_of_arrays(data);
@@ -239,23 +239,25 @@ function export_array_to_excel(data, filename,  ints = false, merges = [], autoW
 	
 	var wb = new Workbook();
 	
-	Object.keys(data).forEach(function(ath_id){
-		let ath = data[ath_id];
-		let ath_name = ath[0];
-		let forms = ath[1];
+	Object.keys(data).forEach(function(athlete_id){
+		let athlete_arr = data[athlete_id];
+		let athlete_name = athlete_arr[0];
+		let forms = athlete_arr[1];
 		Object.keys(forms).forEach(function(form_id){
-			let form = forms[form_id];
-			let form_name = form[0];
-			if (Object.keys(data).length > 1) form_name += ' '+ath_name;
-			let form_data = form[1];
+			let form_arr = forms[form_id];
+			let form_name = form_arr[0];
+			if (Object.keys(data).length > 1) {
+				form_name += ' ' + athlete_name;
+			}
+			let form_data = form_arr[1];
 			build_sheet(form_name, form_data);
 		});
 	});
 	
-	if (ints) {
-		Object.keys(ints).forEach(function(int_id){
-			let int_data = ints[int_id];
-			build_sheet('Intervall '+int_id, int_data);
+	if (intervals) {
+		Object.keys(intervals).forEach(function(interval_id){
+			let interval_data = intervals[int_id];
+			build_sheet(LANG.RESULTS.INTERVAL+' '+interval_id, interval_data);
 		});
 	}
 

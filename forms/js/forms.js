@@ -25,7 +25,7 @@ var fancyBoxDefaults_iframe = {
 		return;
 	},
 	afterShow:function() {
-		var close = 'javascript:jQuery.fancybox.close();';
+		const close = 'javascript:jQuery.fancybox.close();';
 		//2 close buttons
 		$('.fancybox-skin').append('<a title="'+LANG.CLOSE+'" class="fancybox-item fancybox-back" href="'+close+'"></a>');
 		$('.fancybox-skin').append('<a title="'+LANG.CLOSE+'" class="fancybox-item fancybox-close" href="'+close+'"></a>');
@@ -36,41 +36,36 @@ function stop_beforeunload_IE(){
 	$(window).off('beforeunload'); 
 }
 
-//is iOS
-function is_iOS() { //mono ta iphone/ipad 
-	var iDevices = ['iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod'];
-	if (!!navigator.platform) {
-		while (iDevices.length) {
-			if (navigator.platform === iDevices.pop()){ return true; }
-		}
-	}
-	return false;
-}
+
 
 //jQuery(function($) {
 jQuery(function()
 {
+
 
 function Check_Tables_Width() {
 	$('.box2_scroll').each(function() {
 		$(this).removeClass('box2_scroll');
 	});
 	
-	var box1_ww = $('.box1').width();
+	const box1_ww = $('.box1').width();
 	$('.box2').each(function() {
-		var box2_ww = $(this).width();
-		if (box1_ww < box2_ww) $(this).addClass('box2_scroll');
+		const box2_ww = $(this).width();
+		if (box1_ww < box2_ww) {
+			$(this).addClass('box2_scroll');
+		}
 		//else $(this).removeClass('box2_scroll');
 		//console.log(this, box1_ww, box2_ww);
 	});
 }
 Check_Tables_Width();
 
+	
 $(window).on('resize', function() { 
 	Check_Tables_Width();
 }).trigger('resize');
 
-	
+
 // SCROLL TO TOP
 function animateToTop(top) {
 	if (top != 0) {
@@ -83,10 +78,12 @@ function animateToTop(top) {
 	$("html, body").animate({ scrollTop: top }, "slow");
 }
 
+	
 $('#toTop').on('click',function() {
 	animateToTop(0);
 });	
 
+	
 $(window).on('scroll',function() {
 	if($(this).scrollTop() != 0) {
 		$('#toTop').fadeIn();	
@@ -109,6 +106,7 @@ $(window).on('beforeunload', function(){
 //Place holder
 $('input, textarea').placeholder();
 
+	
 //tooltip
 $("body").tooltip({ //for new created elements too
 	selector: '[data-toggle="tooltip"]'
@@ -118,22 +116,22 @@ $("body").tooltip({ //for new created elements too
 // Validation Rules ###################################################
 //$.validator.setDefaults({ ignore: [] }); //not ignore hidden inputs  --def=':hidden'
 $.validator.methods.range = function (value, element, param) {
-	var globalizedValue = value.replace(",", ".");
+	const globalizedValue = value.replace(",", ".");
 	$(element).val(globalizedValue); //change input value too
 	return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
 }
 $.validator.methods.min = function (value, element, param) {
-	var globalizedValue = value.replace(",", ".");
+	const globalizedValue = value.replace(",", ".");
 	$(element).val(globalizedValue); //change input value too
 	return this.optional(element) || globalizedValue >= param;
 }
 $.validator.methods.max = function (value, element, param) {
-	var globalizedValue = value.replace(",", ".");
+	const globalizedValue = value.replace(",", ".");
 	$(element).val(globalizedValue); //change input value too
 	return this.optional(element) || globalizedValue <= param;
 }
 $.validator.methods.number = function (value, element) {
-	var globalizedValue = value.replace(",", ".");
+	const globalizedValue = value.replace(",", ".");
 	$(element).val(globalizedValue); //change input value too
 	return this.optional(element) || /^(?:-?\d+|-?\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(globalizedValue); //org
 	//return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(globalizedValue); //new with comma
@@ -169,12 +167,15 @@ $('form#wrapped').wizard({
 			animateToTop();
 			return true;
 		}
-		var inputs = $(this).wizard('state').step.find(':input');
+
+		const inputs = $(this).wizard('state').step.find(':input');
 		if (!inputs.valid() && $('label.error:visible').length != 0) {
 			$("html, body").animate({ scrollTop: $('label.error:visible').offset().top-50 }, "slow");
-		} else {
+		}
+		else {
 			animateToTop();
 		}
+
 		return !inputs.length || !!inputs.valid();
 	},
 	afterSelect: function( event, state ) {
@@ -198,6 +199,7 @@ if (V_PREVIEW) {
 	//disable submit button
 	$('button[type=submit]').prop('disabled', 'disabled');
 }
+
 if (V_PREVIEW || V_CHANGE) {
 	//hide keep_form_open check
 	$('#keep_form_open_div').hide();
@@ -208,26 +210,33 @@ if (V_PREVIEW || V_CHANGE) {
 //disable submit button after click + disable warn when leaving page after submit
 $('form#wrapped').on('submit', function(e){
 	if (!V_EDIT) {
-		var inputs = $('form#wrapped').wizard('state').step.find(':input');
+		const inputs = $('form#wrapped').wizard('state').step.find(':input');
 		if (!inputs.valid() && $('label.error:visible').length != 0) {
-			$("html, body").animate({ scrollTop: $('label.error:visible').offset().top-50 }, "slow");
+			$("html, body").animate({
+				scrollTop: $('label.error:visible').offset().top - 50
+			}, "slow");
 			return false;
 		}
 		//for hidden items inside accordions
 		else if (!inputs.valid() && $('label.error:hidden').length != 0) {
-			$('label.error:hidden').parents('.panel').find('>.panel-heading>.panel-title>a.trigger.collapsed').trigger("click"); //open panels
-			$("html, body").animate({ scrollTop: $('label.error:visible').offset().top-50 }, "slow");
+			//open panels
+			$('label.error:hidden').parents('.panel').find('>.panel-heading>.panel-title>a.trigger.collapsed').trigger("click");
+
+			$("html, body").animate({
+				scrollTop: $('label.error:visible').offset().top - 50
+			}, "slow");
 			return false;
 		}
 	
 		//post with ajax
-		let data = $('form#wrapped').serialize();
-		data += '&form_id=' + $('#form_id').val();
-		data += '&category_id=' + $('#category_id').val();
-		data += '&group_id=' + $('#group_id').val();
-		data += '&athlete_id=' + $('#athlete_id').val();
+		//TODO: check post get params
+		let get_data = $('form#wrapped').serialize();
+		get_data += '&form_id=' + $('#form_id').val();
+		get_data += '&category_id=' + $('#category_id').val();
+		get_data += '&group_id=' + $('#group_id').val();
+		get_data += '&athlete_id=' + $('#athlete_id').val();
 		
-		$.post('forms/form_data_save.php', data, function(data, result){
+		$.post('forms/form_data_save.php', get_data, function(data, result){
 			if ($('#keep_form_open').val() != '1') {
 				$(window).off('beforeunload'); //disable unload warning
 				if (is_iOS()) {
@@ -246,7 +255,9 @@ $('form#wrapped').on('submit', function(e){
 					showConfirmButton: false,
 					timer: 3000
 				});
+
 				parent.$('.popover').popover('hide'); //hide all popovers
+
 				if (parent.$('#calendar').length) {
 					parent.$('#calendar').fullCalendar('refetchEvents');
 					parent.$('#calendar').removeClass('no_calendar_data');
@@ -267,62 +278,62 @@ $("#form_time_now").on('click',function() {
 });
 
 //Group Select
-$('#GRP_select').multiselect({ //http://davidstutz.github.io/bootstrap-multiselect/
+$('#Select_Group').multiselect({ //http://davidstutz.github.io/bootstrap-multiselect/
 	maxHeight: 300,
-	buttonContainer: '<div class="btn-group" id="GRP_select_box" />',
+	buttonContainer: '<div class="btn-group" id="Select_Group_box" />',
 	buttonWidth: '100%',
 	enableFiltering: true,
 	enableCaseInsensitiveFiltering: true,
-	filterPlaceholder: LANG.FORMS.GROUP_SELECT_SEARCH,
+	filterPlaceholder: LANG.SELECT_SEARCH,
 	enableCollapsibleOptGroups: true,
 	enableClickableOptGroups: true,
-	nonSelectedText: LANG.FORMS.GROUP_SELECT_PLACEHOLDER,
+	nonSelectedText: LANG.GROUPS_SELECT_PLACEHOLDER,
 	numberDisplayed: 1,
-	nSelectedText: ' - ' + LANG.FORMS.GROUPS_SELECTED,
+	nSelectedText: ' - ' + LANG.GROUPS_SELECTED,
 	includeSelectAllOption: true,
-	selectAllText: LANG.FORMS.GROUPS_SELECT_ALL,
-	allSelectedText: LANG.FORMS.GROUPS_ALL_SELECTED,
+	selectAllText: LANG.SELECT_ALL,
+	allSelectedText: LANG.ALL_SELECTED,
 	disableIfEmpty: true,
-	disabledText: LANG.FORMS.GROUPS_SELECT_NO_GROUP
+	disabledText: LANG.GROUPS_SELECT_NO_GROUP
 });
-//$('#GRP_select').multiselect('rebuild');
+//$('#Select_Group').multiselect('rebuild');
 if (V_CHANGE) {
-	$('#GRP_select').multiselect('disable');
+	$('#Select_Group').multiselect('disable');
 }
 
 //Athlete Select
-$('#ATH_select').multiselect({ //http://davidstutz.github.io/bootstrap-multiselect/
+$('#Select_Athletes').multiselect({ //http://davidstutz.github.io/bootstrap-multiselect/
 	maxHeight: 300,
-	buttonContainer: '<div class="btn-group" id="ATH_select_box" />',
+	buttonContainer: '<div class="btn-group" id="Select_Athletes_box" />',
 	buttonWidth: '100%',
 	enableFiltering: true,
 	enableCaseInsensitiveFiltering: true,
-	filterPlaceholder: LANG.FORMS.ATHLETE_SELECT_SEARCH,
+	filterPlaceholder: LANG.SELECT_SEARCH,
 	enableCollapsibleOptGroups: true,
 	enableClickableOptGroups: true,
-	nonSelectedText: LANG.FORMS.ATHLETE_SELECT_PLACEHOLDER,
+	nonSelectedText: LANG.ATHLETES_SELECT_PLACEHOLDER,
 	numberDisplayed: 1,
-	nSelectedText: ' - ' + LANG.FORMS.ATHLETES_SELECTED,
+	nSelectedText: ' - ' + LANG.ATHLETES_SELECTED,
 	includeSelectAllOption: true,
-	selectAllText: LANG.FORMS.ATHLETES_SELECT_ALL,
-	allSelectedText: LANG.FORMS.ATHLETES_ALL_SELECTED,
+	selectAllText: LANG.SELECT_ALL,
+	allSelectedText: LANG.ALL_SELECTED,
 	disableIfEmpty: true,
-	disabledText: LANG.FORMS.ATHLETES_SELECT_NO_ATHLETE
+	disabledText: LANG.ATHLETES_SELECT_NO_ATHLETE
 });
 if (V_CHANGE) {
-	$('#ATH_select').multiselect('disable');
+	$('#Select_Athletes').multiselect('disable');
 }
-$('#ATH_select').on('change', function() {
-	let ath_id = $(this).val();
+$('#Select_Athletes').on('change', function() {
+	const ath_id = $(this).val();
 	$("#athlete_id").val( ath_id );
 	let options = '';
 	V_Athletes_2_Groups[ath_id].forEach(function(group_id) {
 		options += '<option value="'+group_id+'"'+(group_id==V_GROUP?' selected':'')+'>'+V_GroupsNames[group_id]+'</option>';
 	});
-	$('#GRP_select').html(options);
-	$('#GRP_select').multiselect('rebuild');
+	$('#Select_Group').html(options);
+	$('#Select_Group').multiselect('rebuild');
 });
-$("#athlete_id").val( $("#ATH_select").val() );
+$("#athlete_id").val( $("#Select_Athletes").val() );
 
 
 
@@ -332,24 +343,34 @@ $("#progress").progressbar();
 $("#time_limit").progressbar();
 
 $('input, textarea').on('change', function(event){
-	var t_name = $(this).attr('name');
-	if (t_name == 'form_date' || t_name == 'form_time' || t_name == 'form_time_end') return false;
-	if (t_name == '' || t_name == undefined) return false; //GRP_select, ATH_select checkboxes
+	const t_name = $(this).attr('name');
+	if (t_name == 'form_date' || t_name == 'form_time' || t_name == 'form_time_end') {
+		return false;
+	}
+	if (t_name == '' || t_name == undefined) {
+		return false; //Select_Group, Select_Athletes checkboxes
+	}
+	
 	on_Change_Update_ProcessBar(this);
 });
 
+	
 $('select').on('change', function(event){
 	on_Change_Select(this);
 });
-$('select').each(function(i,el){ //init selects
+	
+//init selects
+$('select').each(function(i,el){
 	on_Change_Select(this);
 })
 
+	
 //Check and radio input styles
 $('input.check_radio, input.check_radio2').iCheck({
 	checkboxClass: 'icheckbox_square-aero',
 	radioClass: 'iradio_square-aero'
-});		
+});
+
 //on radio check --progress update + remove error
 $('input.check_radio').on('ifChecked', function(event){
 	if (!V_EDIT) {
@@ -358,14 +379,18 @@ $('input.check_radio').on('ifChecked', function(event){
 		});
 	}
 });
+
+
 //on radio click --progress update
 $('input.check_radio').on('ifClicked', function(event){
 	if (!V_EDIT) {
-		var name = $(this).attr('name');
-		var radio = $('input[name="'+name+'"]');
+		const name = $(this).attr('name');
+		const radio = $('input[name="' + name + '"]');
+		
 		if (radio.filter(':checked').val() == $(this).val()) {
 			setTimeout(function(){ 
 				radio.iCheck('uncheck');
+
 				update_ProgressBar(name, '');
 			}, 1);
 		}
@@ -375,6 +400,7 @@ $('input.check_radio').on('ifClicked', function(event){
 	}
 });
 
+	
 //#################################################
 //ProgressBar functions ###########################
 function update_ProgressBar(id, val) {
@@ -386,13 +412,18 @@ function update_ProgressBar(id, val) {
 	}
 	else {
 		if (V_ANSWERED.indexOf(id) != -1) {
-			var index = V_ANSWERED.indexOf(id);
-			if (index > -1)	V_ANSWERED.splice(index, 1);
-			if (!V_CHANGE) $("#progress").progressbar("value", V_ANSWERED.length * V_ANSWERS_STEP);
+			const index = V_ANSWERED.indexOf(id);
+			if (index > -1) {
+				V_ANSWERED.splice(index, 1);
+			}
+			if (!V_CHANGE) {
+				$("#progress").progressbar("value", V_ANSWERED.length * V_ANSWERS_STEP);
+			}
 		}
 	}
 	//console.log(V_ANSWERED, V_ANSWERED.length, V_ANSWERS_STEP, V_ANSWERED.length * V_ANSWERS_STEP, id, val);
 }
+
 
 //on change--progress update + remove error
 function on_Change_Update_ProcessBar(self) {
@@ -404,43 +435,55 @@ function on_Change_Update_ProcessBar(self) {
 	}
 }
 
+
 //on change--progress update + remove error
 function on_Change_Select(self) {
-	var t_name = $(self).attr('name');
+	const t_name = $(self).attr('name');
 	if (t_name == undefined) return false;
 	else if (t_name == 'timer_period') return false;
-	else if (t_name == 'GRP_select[]') return false;
-	else if (t_name == 'ATH_select') return false;
+	else if (t_name == 'Select_Group[]') return false;
+	else if (t_name == 'Select_Athletes') return false;
+
 	on_Change_Update_ProcessBar(self);
+
 	//let this_bg = $(self).find(":selected").css('background-color'); //not work in mozilla
-	let this_bg = $(self).find(":selected").attr('data-color');
+	const this_bg = $(self).find(":selected").attr('data-color');
+
 	if (this_bg != 'none' && this_bg != undefined) {
-		//$(self).css('background', this_bg + ' url(../img/down_arrow_select.png) no-repeat 98% center!important');
 		$(self).attr('style', 'background:'+ this_bg + ' url(img/down_arrow_select.png) no-repeat 98% center !important');
-	} else {
+	}
+	else {
 		$(self).css('background', 'none');
 	}
 }
 
+	
 //time_limit ############################################
 var count = 0;
-var counter = V_COUNTER ? setInterval(time_limit, 1000) : false;
+var counter = (V_COUNTER ? setInterval(time_limit, 1000) : false);
+
 function time_limit() {
 	count++;
 	if (count > V_COUNT_ALL) {
 		clearInterval(counter);
+
 		$(window).off('beforeunload'); //disable unload warning
+
 		if (confirm(LANG.FORMS.TIME_LIMIT_EXCEEDED)) {
 			window.location.href = window.location.href; //refresh to form.php
-		} else {
-			$(window).off('beforeunload');
+		}
+		else {
 			parent.$.fancybox.close(); //fancybox close
 		}
+
 		return;
-	}			
-	var secs_left = V_COUNT_ALL - count;
-	var t_time = parseInt(secs_left / 60) + ':' + ((secs_left%60<10)?'0':'') + secs_left % 60;
+	}	
+	
+	const secs_left = V_COUNT_ALL - count;
+	const t_time = parseInt(secs_left / 60) + ':' + ((secs_left % 60 < 10) ? '0' : '') + secs_left % 60;
+	
 	$('#t_time').text(t_time);
+
 	$("#time_limit").progressbar("value", V_COUNT_STEP * count);
 }
 
@@ -474,16 +517,16 @@ item_Time_Period_init('.clockpicker.period');
 Main_Time_From_To_init = function (el_From, el_To) {
 	//Time functions
 	$(el_From).on('change', function () { //'#t_time_from'
-		var start = $(this).val();
-		var end = $(el_To).val();
+		const start = $(this).val();
+		let end = $(el_To).val();
 		if (end < start) {
 			end = moment(start, 'HH:mm').add(1, 'hours').format("HH:mm");
 			$(el_To).val(end);
 		}
 	});
 	$(el_To).on('change', function () { //'#t_time_to'
-		var start =  $(el_From).val();
-		var end = $(this).val();
+		let start =  $(el_From).val();
+		const end = $(this).val();
 		if (end < start) {
 			start = moment(end, 'HH:mm').subtract(1, 'hours').format("HH:mm");
 			$(el_From).val(start);
@@ -494,13 +537,14 @@ Main_Time_From_To_init = function (el_From, el_To) {
 Main_Time_From_To_init('#form_time', '#form_time_end');
 
 
-//Time From -> To = Period auto calc
+//Time From -> To = Period auto calculate
 item_Time_From_To_Period_Calc_init = function (el_From, el_To, el_Period) {
 	//Time functions
 	$(el_From).on('change', function () { //'#t_time_from'
-		var start = $(this).val();
-		var end =  $(el_To).val();
-		var diff = $(el_Period).val();
+		const start = $(this).val();
+		let end =  $(el_To).val();
+		let diff = $(el_Period).val();
+
 		if (end == '') {
 			if (diff == '') {
 				diff = '01:00';
@@ -508,35 +552,42 @@ item_Time_From_To_Period_Calc_init = function (el_From, el_To, el_Period) {
 			} else {
 				end = moment(start, 'HH:mm').add(moment.duration(diff).asMinutes(), 'minutes').format("HH:mm");
 			}
-		} else {
+		}
+		else {
 			if (diff == '') {
-				var st = moment(start, 'HH:mm');
-				var ed = moment(end, 'HH:mm');
-				var df = moment.duration(ed.diff(st)).asMinutes();
+				const st = moment(start, 'HH:mm');
+				const ed = moment(end, 'HH:mm');
+				const df = moment.duration(ed.diff(st)).asMinutes();
+
 				diff = moment('00:00', 'HH:mm').add(df, 'minutes').format("HH:mm");
 			} else {
 				end = moment(start, 'HH:mm').add(moment.duration(diff).asMinutes(), 'minutes').format("HH:mm");
 			}
 		}
+
 		$(el_Period).val(diff);
 		$(el_To).val(end!='Invalid date'?end:'');
 	});
+
 	$(el_To).on('change', function () { //'#t_time_to'
-		var start =  $(el_From).val();
-		var end = $(this).val();
-		var diff = $(el_Period).val();
+		const start =  $(el_From).val();
+		const end = $(this).val();
+		let diff = $(el_Period).val();
 		if (start != '') {
-			var st = moment(start, 'HH:mm');
-			var ed = moment(end, 'HH:mm');
-			var df = moment.duration(ed.diff(st)).asMinutes();
+			const st = moment(start, 'HH:mm');
+			const ed = moment(end, 'HH:mm');
+			const df = moment.duration(ed.diff(st)).asMinutes();
+
 			diff = moment('00:00', 'HH:mm').add(df, 'minutes').format("HH:mm");
+
 			$(el_Period).val(diff);
 		}
 	});
+
 	$(el_Period).on('change', function () { //'#t_period'
-		var start =  $(el_From).val();
-		var end = $(el_To).val();
-		var diff = $(this).val();
+		const start =  $(el_From).val();
+		let end = $(el_To).val();
+		const diff = $(this).val();
 		if (start != '') {
 			end = moment(start, 'HH:mm').add(moment.duration(diff).asMinutes(), 'minutes').format("HH:mm");
 			$(el_To).val(end);
@@ -544,9 +595,10 @@ item_Time_From_To_Period_Calc_init = function (el_From, el_To, el_Period) {
 	});
 }
 
-//Time From -> To = Period auto calc 
+//Time From -> To = Period auto calculate
 $('.clockpicker.period').each(function(){
-	let id = $(this).attr('data-id');
+	const id = $(this).attr('data-id');
+
 	item_Time_From_To_Period_Calc_init('#c_'+id+'_PRDfrom', '#c_'+id+'_PRDto', '#c_'+id+'_PRDperiod');
 });
 

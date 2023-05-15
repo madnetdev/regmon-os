@@ -79,18 +79,21 @@ $groups.jqGrid({
 	subGridRowExpanded: function(subgrid_id, row_id)
 	{
 		$("#loading").show();
-		var group_id = $groups.jqGrid('getRowData', row_id)['id'];
+		const group_id = $groups.jqGrid('getRowData', row_id)['id'];
 	
-		var subgrid_width = $("#"+subgrid_id).width();
-		var subgrid_table_id = subgrid_id+"_t"; 
+		const subgrid_width = $("#"+subgrid_id).width();
+		const subgrid_table_id = subgrid_id+"_t"; 
 		$("#"+subgrid_id).html(
 			'<div id="'+subgrid_table_id+'" class="anav" style="width:'+(subgrid_width-200)+'px; display:table-cell;"></div>'+
 			'<div style="width:200px; display:table-cell; vertical-align:middle; text-align:center;">'+
 				'<div style="width:200px; margin-bottom:50px;">'+
 					LANG.FORMS.AVAILABLE+': <input type="checkbox" class="check_box" checked>'+
-					'<br><br>'+LANG.FORMS.STANDARD+': <input type="checkbox" class="standard" checked>'+
+					'<br><br>'+
+					LANG.FORMS.STANDARD+': <input type="checkbox" class="standard" checked>'+
 				'</div>'+
-				'<button type="button" id="forms_selection_save_g_'+group_id+'" class="save">'+LANG.BUTTON_SAVE+' &nbsp; </button>'+
+				'<button type="button" id="forms_selection_save_g_'+group_id+'" class="save">'+
+					LANG.BUTTON_SAVE+' &nbsp; '+
+				'</button>'+
 			'</div>'
 		).css('display', 'table');
 		
@@ -103,10 +106,10 @@ $groups.jqGrid({
 		//button Save FormsSelect Selection
 		$("button#forms_selection_save_g_"+group_id).on('click',function() {
 			$("#loading").show();
-			var data = {
-				admin: true, group_id: group_id, 
-				forms_select: $('input[name^="sel_g_'+group_id+'_"]').serialize(), 
-				forms_standard: $('input[name^="std_g_'+group_id+'_"]').serialize()
+			const data = {
+				admin: true, group_id: group_id,
+				forms_select: $('input[name^="sel_g_' + group_id + '_"]').serialize(),
+				forms_standard: $('input[name^="std_g_' + group_id + '_"]').serialize()
 			};
 			$.post('forms/ajax.forms_selection_save.php', data, function(data, result){ $("#loading").hide();/*console.log(data, result);*/});
 		});

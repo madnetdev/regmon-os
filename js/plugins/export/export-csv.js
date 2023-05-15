@@ -6,6 +6,9 @@
  * Version:  1.4.2
  */
 /*global Highcharts, window, document, Blob */
+
+//MAD@@@@@@@@ have some changes here
+
 (function (factory) {
     if (typeof module === 'object' && module.exports) {
         module.exports = factory;
@@ -50,16 +53,6 @@
                 return series.name + (keyLength > 1 ? ' ('+ key + ')' : '');
             };
 
-        //@@@@@MAD
-		//var st = moment.utc( moment($('#t_date_from').val()+':00', 'DD.MM.YYYY HH:mm:ss') ).valueOf(); //mad
-		//var ed = moment.utc( moment($('#t_date_to').val()+':59', 'DD.MM.YYYY HH:mm:ss') ).valueOf(); //mad
-		
-		var stt = moment($('#t_date_from').val()+':00', 'YYYY-MM-DD HH:mm:ss').format("YYYY MM DD HH mm ss").split(' ');
-		var edt = moment($('#t_date_to').val()+':59', 'YYYY-MM-DD HH:mm:ss').format("YYYY MM DD HH mm ss").split(' ');
-		var st = Date.UTC(stt[0],(stt[1]-1),stt[2], stt[3],stt[4],stt[5]);
-		var ed = Date.UTC(edt[0],(edt[1]-1),edt[2], edt[3],edt[4],edt[5]);
-        //@@@@@MAD
-		
         // Loop the series and index values
         i = 0;
         each(this.series, function (series) {
@@ -124,7 +117,7 @@
 
         // Add header row
         if (!xTitle) {
-            xTitle = xAxis.isDatetimeAxis ? 'Datumzeit'/*'DateTime'*/ : 'Category'; //@@@@@MAD
+            xTitle = xAxis.isDatetimeAxis ? 'DateTime' : 'Category';
         }
         dataRows = [[xTitle].concat(names)];
 
@@ -150,9 +143,15 @@
             dataRows.push(row);
         });
 		
-        //return dataRows; //@@@@@MAD
+        //@@@@@MAD
+        //return dataRows;
 
-        //@@@@@MAD -- filter rows by date 
+		var stt = moment($('#t_date_from').val()+':00', 'YYYY-MM-DD HH:mm:ss').format("YYYY MM DD HH mm ss").split(' ');
+		var edt = moment($('#t_date_to').val()+':59', 'YYYY-MM-DD HH:mm:ss').format("YYYY MM DD HH mm ss").split(' ');
+		var st = Date.UTC(stt[0],(stt[1]-1),stt[2], stt[3],stt[4],stt[5]);
+		var ed = Date.UTC(edt[0],(edt[1]-1),edt[2], edt[3],edt[4],edt[5]);
+
+        //filter rows by date
 		var new_dataRows = [];
 		var ii = 0;
         each(dataRows, function (row) {
@@ -162,9 +161,9 @@
 			}
 			ii++;
         });
-		//@@@@@MAD
         
         return new_dataRows;
+		//@@@@@MAD
     };
 
     /**

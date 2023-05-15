@@ -18,8 +18,9 @@ array(
     'ERROR' 			=> 'Fehler',
     'SUCCESS' 			=> 'Erfolg',
 	'STATUS' 			=> 'Status',
-	'EDIT'				=> 'bearbeiten',
-	'DELETE'			=> 'löschen',
+	'EDIT'				=> 'Bearbeiten',
+	'DELETE'			=> 'Löschen',
+	'LOAD'				=> 'Laden',
 	'BACK' 				=> 'Zurück',
 	'CLOSE' 			=> 'Schließen',
 	'CREATED'			=> 'Erstellt',
@@ -36,6 +37,16 @@ array(
 	'LVL_TRAINER' 		=> 'Trainer',
 	'NOTE'				=> 'Notiz',
 	'NOTE_PERIOD'		=> 'Dauer',
+	'FROM' 				=> 'Von',
+	'TO' 				=> 'Bis',
+	'DATE_FROM' 		=> 'Datum von',
+	'DATE_TO' 			=> 'Datum bis',
+	'DASHBOARD'			=> 'Dashboard',
+	'LEFT'				=> 'Links',
+	'CENTER'			=> 'Zentriert',
+	'RIGHT'				=> 'Rechts',
+	'BUTTON_ADD' 		=> 'Hinzufügen',
+	'CLICK' 			=> 'Klicken',
 
 	//login.php
 	'LOGIN' 			=> 'Anmelden',
@@ -99,6 +110,10 @@ array(
 	'REGISTER_PRIVATE_KEY_ERROR'=> 'Privat Schlüssel Fehler',
 	'REGISTER_BACK' 			=> 'Zurück',
     'REGISTER_BACKWARD'			=> 'rückwärts',
+	'REGISTER_MIN_PASS_LEN'		=> 'weniger als 8 Zeichen',
+	'REGISTER_CONFIRM_PASSWORD' => 'Keine Passwortübereinstimmung',
+	'REGISTER_WEAK_PASSWORD'	=> 'Schwaches Passwort (Erforderlich [a-z] + [A-Z] + [0-9])',
+
 	//User Account - ajax.page.profile_edit.php
 	'PROFILE_USER_ACCOUNT' 		=> 'Benutzerkonto',
 	'PROFILE_LOCATION' 			=> 'Standort (aktiv)',
@@ -120,13 +135,14 @@ array(
 	'WARN_CONFIRM_PASSWORD' => 'Warnung! Passwort und Passwort bestätigen stimmt nicht überein',
 	'WARN_EMPTY_PASSWORD' 	=> 'Warnung! leeres Passwort',
 	'WARN_PASSWORD_CHARS' 	=> 'Warnung! Das Passwort muss mindestens 8 Zeichen lang sein',
+	'WARN_WEAK_PASSWORD' 	=> 'Achtung! Schwaches Passwort <br>(Erforderlich [a-z] + [A-Z] + [0-9])',
 	'WARN_INVALID_EMAIL' 	=> 'Warnung! Ungültige E-Mail-Adresse',
 	'WARN_CHANGE_MAIN_NAME' => 'Warnung! Sie können den Benutzernamen des Hauptkontos nicht ändern',
 	'WARN_DEACT_YOUR_ACC' 	=> 'Warnung! Sie können Ihr Konto nicht deaktivieren',
 	'WARN_DELETE_YOUR_ACC'  => 'Warnung! Sie können Ihr Konto nicht löschen',
 	//
  	'TRAINER_2_ATHLETES_ACCESS'  => 'Freigaben der Sportler',
-	
+
 	//######################################################
 	//index
 	'INDEX_PAGE_TITLE' 		=> 'Athletenmonitoring - REGmon',
@@ -136,7 +152,7 @@ array(
 	'INDEX_VIEW_OPTIONS'	=> 'Optionen',
 	//nav
 	'BUTTON_RESULTS'		=> 'Ergebnisse',
-	'BUTTON_RESULTS_GROUP'	=> 'Ergebnisse (gruppenbasiert)',
+	'BUTTON_FORMS_RESULTS'	=> 'Formulare Ergebnisse',
 	'BUTTON_USER_ACCOUNT' 	=> 'Benutzerkonto',
     'BUTTON_LOGOUT'			=> 'Abmelden',
 	'BUTTON_ADMINISTRATION'	=> 'Verwaltung',
@@ -175,8 +191,6 @@ array(
 	//calendar comments
 	'COMMENT_ALL_DAY'   => 'ganztägig',
 	'COMMENT_DATE'  	=> 'Datum',
-	'COMMENT_DATE_FROM' => 'Von',
-	'COMMENT_DATE_TO'   => 'Bis',
 	'COMMENT_HOUR'  	=> 'Uhrzeit',
 	'COMMENT_HOUR_FROM' => 'From',
 	'COMMENT_HOUR_TO'   => 'To',
@@ -235,7 +249,7 @@ array(
 	'ADMIN_SPORTS' 			=> 'Sportarten',
 	'ADMIN_TAGS' 			=> 'Tags',
 	'ADMIN_TEMPLATES_FORMS' => 'Formulare Vorlagen',
-	'ADMIN_TEMPLATES_GROUPS'=> 'Gruppen Vorlagen',
+	'ADMIN_TEMPLATES_RESULTS'=> 'Ergebnisse Vorlagen',
 	'ADMIN_TEMPLATES_Y_AXIS'=> 'Y-Achsen Vorlagen',
 
 	//trainers
@@ -424,30 +438,6 @@ array(
 	'FORM_MENU_GO_2_FORM_SELECT'=> 'Zur Formularauswahl',
 	'FORM_DEFAULT_TEMPLATE' 	=> 'Standardvorlage',
 
-	//results.php - results
-	'RESULTS'					=> 'Ergebnisse',
-	'RESULTS_PAGE_TITLE' 		=> 'REGmon - Ergebnisse und Auswertung',
-	'RESULTS_SUBMIT_THANKS'		=> 'Danke!',
-	'RESULTS_SUBMIT_SUCCESS'	=> 'Formular wurde erfolgreich abgegeben.',
-	'RESULTS_USER' 				=> 'Benutzer',
-	'RESULTS_CREATED'			=> 'Eintrag',
-	'RESULTS_MODIFIED'			=> 'Bearbeitet',
-	'RESULTS_NO_DATA' 			=> 'Keine Daten',
-	'RESULTS_ALL_FORMS'			=> 'Alle Formulare',
-	'RESULTS_SUBFEATURE'		=> 'Formular Ergebnisse',
-	'DATE_FROM' 				=> 'Datum von',
-	'DATE_TO' 					=> 'Datum bis',
-	'GRAPH_HELP_TOOLTIP'		=> "- Markieren Sie mit gedrückter linker Maustaste einen Bereich (horizontal oder vertikal), um ihn zu vergrößern.
-- Halten Sie 'Alt' gedrückt, um die Grafik mit gedrückter linker Maustaste zu schwenken.
-- Klicken Sie mit der linken Maustaste doppelt auf die Grafik, um die ursprüngliche Ansicht wiederherzustellen.", //not used
-	'RESULTS_GROUP' 			=> 'Gruppe',
-	'RESULTS_SELECT_GROUP'		=> 'Gruppe(n)', //'Gruppe wählen',
-	'RESULTS_SELECT_FORM'		=> 'Formular(e)', //'Formular wählen',
-	'RESULTS_SELECT_FIELDS'		=> 'Rohdaten / Vorlage(n)', //'Daten auswählen',
-
-	//import.php
-	'IMPORT' 				=> 'Import',
-
 	//export.php
 	'EXPORT' 				=> 'Datenabfrage (Export)',
 	'EXPORT_PAGE_TITLE'		=> 'Datenabfrage und Export - REGmon',
@@ -493,8 +483,10 @@ array(
 	'EXPORT_LOADING' 			=> 'Wird Geladen ...', //Loading...
 	'EXPORT_FILTER_NO_DATA' 	=> 'Keine Daten für die gewählten Filter vorhanden. Bitte ändern Sie die Filter.',
 
-	//import.php
+	//import.php ------------check
+	'IMPORT' 				=> 'Import',
     'IMPORT_DATA'			=> 'Daten importieren',
+    'IMPORT_SAVE_SELECTED'	=> 'Speichern<br>Ausgewählten',
     'VIEW_DATA'				=> 'Daten ansehen',
     'SELECT_FILES' 			=> 'Wählen Sie die Dateien...',
     'SELECT_DROP' 			=> 'oder ziehen Sie die Dateien hier',
@@ -507,6 +499,82 @@ array(
     'FILE_NOT_FOUND' 		=> 'Datei nicht gefunden',
     'DELETE_CONFIRM' 		=> 'Löschvorgang bestätigen?',
     'ERROR_DELETING'		=> 'Fehler beim Löschvorgang',
+
+	//forms_results.php, results.php
+	'RESULTS'					=> 'Ergebnisse',
+	'RESULTS_PAGE_TITLE' 		=> 'REGmon - Ergebnisse und Auswertung',
+	'RESULTS_PAGE_Y_AXIS'		=> 'Ergebnisse Y-Achse',
+	'RESULTS_PAGE_HEADER'		=> 'Vorlage laden oder Zeitraum / Daten wählen',
+	'RESULTS_TAB_PERIOD'		=> 'Zeitraum',
+	'RESULTS_TAB_PERIOD_N_DATA'	=> 'Zeitraum und Daten',
+	'RESULTS_TAB_DIAGRAM'		=> 'Diagramm',
+	'RESULTS_TAB_ATHLETE_DATA'	=> 'Sportlerdaten',
+	'RESULTS_TAB_INTERVAL_DATA'	=> 'Intervalldaten',
+	'RESULTS_TAB_Y_AXIS' 		=> 'Y-Achsen anzeigen / ändern',
+	'RESULTS_SELECT_GROUP' 		=> 'Gruppe',
+	'RESULTS_SELECT_GROUPS'		=> 'Gruppe(n)',
+	'RESULTS_SELECT_ATHLETES'	=> 'Sportler*innen',
+	'RESULTS_SELECT_FORMS'		=> 'Formular(e)',
+	'RESULTS_SELECT_FIELDS'		=> 'Rohdaten / Vorlage(n)',
+	'RESULTS_ATHLETE_DATA_ADD'	=> 'Sportlerdaten hinzufügen',
+	'RESULTS_PERIOD_N_DATA_SELECT' => 'Bitte Zeitraum und Daten auswählen',
+	'RESULTS_BUTTON_APPLY_CHANGES'=> 'Änderungen übernehmen',
+	'RESULTS_NO_DATA_CHANGE_SELECTION'=> 'Keine Daten vorhanden. Bitte ändere die Auswahlkriterien oben.',
+	'RESULTS_NO_DATA_SELECTED'	=> 'Nichts ausgewählt oder anzuzeigen.',
+	'RESULTS_INFO_STANDAR_COLORS'=> 'Standardfarben',
+	'RESULTS_INFO_LINES'		=> 'Linien',
+	'RESULTS_INFO_FORMULA'		=> 'Formelinfo',
+	'RESULTS_UPDATE_DIAGRAM'	=> 'Update-Diagramm',
+	'RESULTS_DATA_EXPORT'		=> 'Daten exportieren',
+	'RESULTS_INTERVAL_ADD'		=> 'Interval hinzufügen',
+	//TEMPLATES
+	'TEMPLATE'					=> 'Vorlage',
+	'TEMPLATES'					=> 'Vorlagen',
+	'FORMS_TEMPLATES'			=> 'Formulare Vorlagen',
+	'RESULTS_TEMPLATE'			=> 'Results Template',
+	'RESULTS_TEMPLATES'			=> 'Ergebnisse Vorlagen',
+	'RESULTS_TEMPLATES_DASH_TITLE'=> 'Vorlage mit Dashboard verknüpfen',
+	'RESULTS_TEMPLATES_SAVE_TEXT'=> 'Aktuelle Konfiguration als Vorlage speichern',
+
+	'RESULTS_CREATED'			=> 'Eintrag',
+	'RESULTS_MODIFIED'			=> 'Bearbeitet',
+	'RESULTS_NO_DATA' 			=> 'Keine Daten',
+	'RESULTS_RESET' 			=> 'Zurücksetzen',
+	'RESULTS_COLOR' 			=> 'Farbe',
+	'RESULTS_AUTO' 				=> 'Auto',
+	'RESULTS_CALCULATION' 		=> 'Berechnung',
+	'RESULTS_Y_AXIS' 			=> 'Y-Achse',
+	'RESULTS_Y_AXIS_GROUP' 		=> 'Y-ACHSE',
+	'RESULTS_Y_AXIS_CREATE' 	=> 'Y-Achse Erstellen',
+	'RESULTS_Y_AXIS_SHOW_ALL' 	=> 'Alle Y-Achsen anzeigen',
+	'RESULTS_Y_AXIS_SAVE_NAME' 	=> 'Speichername',
+	'RESULTS_Y_AXIS_NAME' 		=> 'Achse Name',
+	'RESULTS_Y_AXIS_POSITION'	=> 'Position',
+	'RESULTS_Y_AXIS_POS_LEFT'	=> 'Links',
+	'RESULTS_Y_AXIS_POS_RIGHT'	=> 'Rechts',
+	'RESULTS_Y_AXIS_GRID_WIDTH' => 'Raster weite',
+	'RESULTS_Y_AXIS_MIN' 		=> 'Min',
+	'RESULTS_Y_AXIS_MAX' 		=> 'Max',
+	'RESULTS_Y_AXIS_DATA' 		=> 'DATEN',
+	'RESULTS_Y_AXIS_VALUE' 		=> 'Wert',
+	'RESULTS_Y_AXIS_VALUE_NAME' => 'Name',
+	'RESULTS_Y_AXIS_SAVE' 		=> 'Achse speichern',
+	'RESULTS_COLLAPSE_EXPAND_ALL'=> 'Alles schließen / Alles erweitern',
+
+	'PERMISSIONS_VISIBLE_FOR'	=> 'Sichtbar für',
+	'PERMISSIONS_GLOBAL'		=> 'Global',
+	'PERMISSIONS_LOCATION'		=> 'Location',
+	'PERMISSIONS_GROUP'			=> 'Gruppe',
+	'PERMISSIONS_TRAINERS'		=> 'Trainers',
+	'PERMISSIONS_PRIVATE'		=> 'Privat',
+	
+	'DIAGRAM_FULLSCREEN_ON'		=> 'Vollbild auf',
+	'DIAGRAM_FULLSCREEN_OFF'	=> 'Vollbild aus',
+	
+	'DIAGRAM_HELP_TOOLTIP'		=> "- Markieren Sie mit gedrückter linker Maustaste einen Bereich (horizontal oder vertikal), um ihn zu vergrößern.
+- Halten Sie 'Alt' gedrückt, um die Grafik mit gedrückter linker Maustaste zu schwenken.
+- Klicken Sie mit der linken Maustaste doppelt auf die Grafik, um die ursprüngliche Ansicht wiederherzustellen.", //not used
+
 
 	//Email Templates ######################################################
 	//Please do not translate text inside curly brackets {notTranslatedText}

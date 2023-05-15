@@ -46,7 +46,7 @@ $LANG = Language::getInstance($CONFIG['REGmon_Folder'], $CONFIG['Default_Languag
 
 <script type="text/javascript" src="js/common.js<?=$G_VER;?>"></script>
 <script>
-var V_REGmon_Folder = '<?=$CONFIG['REGmon_Folder'];?>';
+const V_REGmon_Folder = '<?=$CONFIG['REGmon_Folder'];?>';
 </script>
 <script src="login/js/login.js<?=$G_VER;?>"></script>
 <style>

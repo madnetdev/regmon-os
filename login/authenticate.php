@@ -3,12 +3,15 @@ require_once('../_settings.regmon.php');
 require_once('login_functions.php');
 require_once('../php/date_functions.php');
 
+
 $login = '../login.php'; //login page
-$success = '../';
+$success = '../'; //index page
+
 
 // Initialize Session
 session_cache_limiter( false );
 session_start();
+
 
 //Init DB #######################
 require_once('../php/class.db.php');	
@@ -16,9 +19,11 @@ $db = db::open('mysqli', $CONFIG['DB_Name'], $CONFIG['DB_User'], $CONFIG['DB_Pas
 if ($CONFIG['DB_Debug']) $db->logToFile($CONFIG['DB_Debug_File']); //enable query logging
 //Init DB #######################
 
+
 //global vars
 $ADMIN = $LOCATION_ADMIN = $GROUP_ADMIN = $GROUP_ADMIN_2 = $TRAINER = $ATHLETE = false;
 $USER = $ACCOUNT = $UID = $USERNAME = false;
+
 
 // LogLimiter #######################
 require_once('class.loglimiter.php');
@@ -30,6 +35,7 @@ if ($LogLimiter->checkBlock()) { // if true this IP is blocked
 	$Blocked_IP = true;
 }
 
+
 if ($CONFIG['Use_VisualCaptcha']) {
 	//validate CAPTCHA #######################
 	$Captcha = false;
@@ -38,7 +44,7 @@ if ($CONFIG['Use_VisualCaptcha']) {
 	$app_captcha = new \visualCaptcha\Captcha($visualCaptcha_session);
 	$app_frontendData = $app_captcha->getFrontendData();
 	if (isset($_POST['form_submit']) && $_POST['form_submit'] == '1') {
-		if ($imageAnswer = ($_REQUEST[$app_frontendData['imageFieldName']] ?? '')) {
+		if ($imageAnswer = ($_POST[$app_frontendData['imageFieldName']] ?? '')) {
 			if ($app_captcha->validateImage($imageAnswer)) {
 				$Captcha = true;
 			}
@@ -49,6 +55,7 @@ else {
 	$Captcha = true;
 }
 
+
 $Inactive_User = false;
 
 //Valid Captcha and not Blocked IP
@@ -57,79 +64,89 @@ if ($Captcha AND !$Blocked_IP) {
 	$username = $_POST['username'] ?? '';
 	$password = $_POST['password'] ?? '';
 	$UIP = $_SERVER['REMOTE_ADDR'] ?? '';
-	//old passwords
-	$password = MD5($password);
-	//new passwords
-	//$password = hash_Password($password, $password);
 
-	$USER = $db->fetchRow("SELECT * FROM users WHERE uname=? AND passwd=?", array($username, $password));
+	$USER = $db->fetchRow("SELECT * FROM users WHERE uname=?", array($username));
 	if ($db->numberRows() > 0) {
-		//successfull login
 
-		//Valid User --logged in and active
-		if ($USER["status"] == '1') {
+		if (verify_Password($password, $USER["passwd"])) 
+		{
+			//successfull login
 
-			//global vars
-			$UID = $USER['id'];
-			$ACCOUNT = $USER['account'];
-			$USERNAME = $USER['uname'];
+			//Valid User --logged in and active
+			if ($USER["status"] == '1') {
 
-			//clean the failed attempts of this IP address.
-			$LogLimiter->login(); 
+				//global vars
+				$UID = $USER['id'];
+				$ACCOUNT = $USER['account'];
+				$USERNAME = $USER['uname'];
 
-			//update logincount, lastlogin and last_ip
-			$values = array(
-				'logincount' => $USER['logincount'] + 1,
-				'lastlogin' => get_date_time_SQL('now'),
-				'last_ip' => $UIP
-			);
-			$db->update($values, "users", 'id=?', array($USER['id']));
+				
+				//clean the failed attempts of this IP address.
+				$LogLimiter->login(); 
 
-			/**
-			 * make the user HASH
-			 * include username, password, (IP) 
-			 * so if any of them changes, logout the user
-			 */
-			$hash_string = $CONFIG['SEC_Hash_Secret'] . $USERNAME . ($CONFIG['SEC_Hash_IP'] ? $UIP : '') . $USER['passwd'];
-			unset($USER['passwd']);
-			$HASH = hash_Password($hash_string, $CONFIG['SEC_Hash_Secret']);
-							
-			setcookie ("UID", $UID, 0, '/'.$CONFIG['REGmon_Folder']);
-			setcookie ("ACCOUNT", $ACCOUNT, 0, '/'.$CONFIG['REGmon_Folder']);
-			setcookie ("USERNAME", $USERNAME, 0, '/'.$CONFIG['REGmon_Folder']);
-			setcookie ("HASH", $HASH, 0, '/'.$CONFIG['REGmon_Folder']);
-			//Dashboard
-			if ($USER["dashboard"] == '1') {
-				setcookie ("DASHBOARD", '1', 0, '/'.$CONFIG['REGmon_Folder']);
-				setcookie ("DASH_ON_LOGIN", '1', 0, '/'.$CONFIG['REGmon_Folder']);
-			} else {
-				setcookie ("DASHBOARD", '0', 0, '/'.$CONFIG['REGmon_Folder']);
-			}
 
-			if ($USER["level"] == 99) {
-				$ADMIN = true;
+				//update logincount, lastlogin and last_ip
+				$values = array(
+					'logincount' => $USER['logincount'] + 1,
+					'lastlogin' => get_date_time_SQL('now'),
+					'last_ip' => $UIP
+				);
+				$db->update($values, "users", 'id=?', array($USER['id']));
+
+
+				/**
+				 * make the user HASH
+				 * include username, password, (IP) 
+				 * so if any of them changes, logout the user
+				 */
+				$hash_string = $CONFIG['SEC_Hash_Secret'] . $USERNAME . ($CONFIG['SEC_Hash_IP'] ? $UIP : '') . $USER['passwd'];
+				unset($USER['passwd']);
+				$HASH = hash_Secret($hash_string, $CONFIG['SEC_Hash_Secret']);
+								
+
+				setcookie ("UID", $UID, 0, '/'.$CONFIG['REGmon_Folder']);
+				setcookie ("ACCOUNT", $ACCOUNT, 0, '/'.$CONFIG['REGmon_Folder']);
+				setcookie ("USERNAME", $USERNAME, 0, '/'.$CONFIG['REGmon_Folder']);
+				setcookie ("HASH", $HASH, 0, '/'.$CONFIG['REGmon_Folder']);
+
+
+				//Dashboard
+				if ($USER["dashboard"] == '1') {
+					setcookie ("DASHBOARD", '1', 0, '/'.$CONFIG['REGmon_Folder']);
+					setcookie ("DASH_ON_LOGIN", '1', 0, '/'.$CONFIG['REGmon_Folder']);
+				} else {
+					setcookie ("DASHBOARD", '0', 0, '/'.$CONFIG['REGmon_Folder']);
+				}
+
+				//level - user type
+				if ($USER["level"] == 99) {
+					$ADMIN = true;
+				}
+				elseif ($USER["level"] == 50) {
+					$LOCATION_ADMIN = true;
+				}
+				elseif ($USER["level"] == 45) {
+					$GROUP_ADMIN = true;
+				}
+				elseif ($USER["level"] == 40) {
+					$GROUP_ADMIN_2 = true;
+				}
+				elseif ($USER["level"] == 30) {
+					$TRAINER = true;
+				}
+				elseif ($USER["level"] == 10) {
+					$ATHLETE = true;
+				}
+				else { //unknown level
+					$success = $login;
+				}
 			}
-			elseif ($USER["level"] == 50) {
-				$LOCATION_ADMIN = true;
-			}
-			elseif ($USER["level"] == 45) {
-				$GROUP_ADMIN = true;
-			}
-			elseif ($USER["level"] == 40) {
-				$GROUP_ADMIN_2 = true;
-			}
-			elseif ($USER["level"] == 30) {
-				$TRAINER = true;
-			}
-			elseif ($USER["level"] == 10) {
-				$ATHLETE = true;
-			}
-			else { //unknown level
-				$success = $login;
+			else {
+				$Inactive_User = true;
 			}
 		}
 		else {
-			$Inactive_User = true;
+			$USER = false;
 		}
 	}
 	else {
@@ -140,13 +157,17 @@ else {
 	$USER = false;
 }
 
+
 //find next page
 $new_page = $login;
 
+
 //not Valid user
 if ($USER === false) {
-	$LogLimiter->failedAttempt(); // logs the failed attempts of this IP address.
+	//log the failed attempt for this IP address.
+	$LogLimiter->failedAttempt();
 
+	//fail reason
 	if ($Blocked_IP) {
 		$new_page = $login.'?blockedIP=1';
 	}
@@ -165,6 +186,7 @@ elseif ($Inactive_User) {
 else {
 	$new_page = $success;
 }
+
 
 //Redirect to new page
 header( 'Location: ' . ($new_page ?: '/') );

@@ -6,7 +6,7 @@ switch ($action) {
 	case 'add': // INSERT 
 	case 'edit': // UPDATE 
 		$values = array();			
-		foreach ($_REQUEST as $key => $val) {
+		foreach ($_POST as $key => $val) {
 			$key = trim((string)$key); 
 			$val = trim((string)$val); 
 			switch($key) {

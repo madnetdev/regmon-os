@@ -6,7 +6,7 @@ switch ($action) {
 	case 'add': // INSERT 
 	case 'edit': // UPDATE 
 		$values = array();			
-		foreach ($_REQUEST as $key => $val) {
+		foreach ($_POST as $key => $val) {
 			$key = trim((string)$key); 
 			$val = trim((string)$val); 
 			switch($key) {
@@ -70,7 +70,7 @@ switch ($action) {
 
 	  break;
 	
-	case 'del': // DELETE 
+	case 'del': // DELETE a form
 		
 		$row = $db->fetchRow("SELECT COUNT(*) AS forms_data_count FROM forms_data WHERE form_id=? AND status = 1", array($id)); 
 		if ($row['forms_data_count'] > 0)  {
@@ -122,12 +122,19 @@ switch ($action) {
 	case 'get_forms_select': // SELECT - Get Forms 
 	case 'get_forms_select_empty': // SELECT - Get Forms with empty option  
 		
-		$options = '<select>'; 
-		if ($action == 'get_forms_select_empty') $options .= '<option></option>';
-		$rows = $db->fetch("SELECT id, name, name2 FROM forms ORDER BY name", array()); 
+		$options = '<select>';
+		if ($action == 'get_forms_select_empty') {
+			$options .= '<option></option>';
+		}
+
+		$rows = $db->fetch("SELECT id, name, name2 FROM forms WHERE status = 1 ORDER BY name", array()); 
 		if ($db->numberRows() > 0)  {
 			foreach ($rows as $row) {
-				$options .= '<option value="'.$row['id'].'">'.htmlspecialchars($row['name']??'').' ('.htmlspecialchars($row['name2']??'').')</option>'; //extern (intern)
+				$options .= '' .
+					'<option value="' . $row['id'] . '">' .
+						//extern (intern)
+						html_chars($row['name'] ?? '') . ' (' . html_chars($row['name2'] ?? '') . ')' .
+					'</option>';
 			}
 		}
 		$options .= '</select>'; 

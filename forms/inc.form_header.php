@@ -69,25 +69,26 @@ require('php/inc.head.php');
 </script>
 
 <script>
-var V_VER = '<?=$G_VER;?>';
-var V_SRV_ID = <?=$form_id;?>;
-var V_EDIT = <?=($EDIT?'true':'false');?>;
-var V_PREVIEW = <?=($PREVIEW?'true':'false');?>;
-var V_VIEW = <?=($VIEW?'true':'false');?>;
-var V_CHANGE = <?=($CHANGE?'true':'false');?>;
-var V_HAVE_DATA = <?=($HAVE_DATA?'true':'false');?>;
-var V_ADMIN = <?=($ADMIN?'true':'false');?>;
-var V_COUNTER = <?=(($timer AND !$EDIT AND !$VIEW)?'true':'false')?>;
-var V_COUNT_ALL = <?=$timer_time_sec;?>;
-var V_COUNT_STEP = <?=$timer_time_step;?>;
-var V_ANSWERS_STEP = <?=$answers_step;?>;
+const V_VER = '<?=$G_VER;?>';
+const V_SRV_ID = <?=$form_id;?>;
+const V_EDIT = <?=($EDIT?'true':'false');?>;
+const V_PREVIEW = <?=($PREVIEW?'true':'false');?>;
+const V_VIEW = <?=($VIEW?'true':'false');?>;
+const V_CHANGE = <?=($CHANGE?'true':'false');?>;
+const V_HAVE_DATA = <?=($HAVE_DATA?'true':'false');?>;
+const V_ADMIN = <?=($ADMIN?'true':'false');?>;
+const V_GROUP = <?=$group_id;?>;
+
+const V_COUNTER = <?=(($timer AND !$EDIT AND !$VIEW)?'true':'false')?>;
+const V_COUNT_ALL = <?=$timer_time_sec;?>;
+const V_COUNT_STEP = <?=$timer_time_step;?>;
+const V_ANSWERS_STEP = <?=$answers_step;?>;
 var V_ANSWERED = [];
-var V_ITEMS_NUM = <?=$items_num;?>;
-var V_GROUP = <?=$group_id;?>;
 </script>
 <script type="text/javascript" src="js/lang_<?=$LANG->LANG_CURRENT;?>.js<?=$G_VER;?>"></script>
 <script type="text/javascript" src="js/common.js<?=$G_VER;?>"></script>
 <script type="text/javascript" src="forms/js/forms.js<?=$G_VER;?>"></script>
+<script type="text/javascript" src="index/js/fancybox_defaults.js<?=$G_VER;?>"></script>
 <?php if ($EDIT) { ?>
 	<script type="text/javascript" src="forms/js/forms.edit.js<?=$G_VER;?>"></script>
 <?php } ?>
@@ -109,7 +110,7 @@ var V_GROUP = <?=$group_id;?>;
 	
 	<?php //require('php/inc.header.php');?>
 
-	<?php if ($iOS) { ?>
+	<?php if ($is_iOS) { ?>
 	<div style="text-align:center;">
 		<a href="." id="home" class="home"> &nbsp; <?=$LANG->HOMEPAGE;?></a>
 	</div>
@@ -123,8 +124,9 @@ var V_GROUP = <?=$group_id;?>;
 	<?php if ($EDIT) { //sticky-side-buttons ?>
 	<div id="ssb-container" class="ssb-btns-right ssb-anim-slide" style="z-index:999;">
 		<ul class="ssb-light-hover"> 
+			<?php /* we need the ssb-btn-1 and ssb-btn-6 to get the border-radius */ ?>
 			<li id="ssb-btn-1"><p><span class="fa fa-file-text-o"></span> <?=$LANG->FORM_PREVIEW;?></p></li>
-			<li id="ssb-btn-3"><p><span class="fa fa-floppy-o"></span> <?=$LANG->FORM_SAVE;?></p></li>
+			<li id="ssb-btn-6"><p><span class="fa fa-floppy-o"></span> <?=$LANG->FORM_SAVE;?></p></li>
 		</ul>
 	</div>
 	<?php } ?>
@@ -174,7 +176,7 @@ var V_GROUP = <?=$group_id;?>;
 
 <?php if ($EDIT) { ?>
 				<br> <?php //give some space for popups ?>
-				<p id="form_name" style="margin-top:15px;"><input type="text" name="form_title" value="<?=htmlspecialchars($form_title??'');?>" style="width:100%; height:42px; text-align:center; font-weight:bold;" disabled></p>
+				<p id="form_name" style="margin-top:15px;"><input type="text" name="form_title" value="<?=html_chars($form_title??'');?>" style="width:100%; height:42px; text-align:center; font-weight:bold;" disabled></p>
 <?php } else { ?>
 				<p id="form_name" style="margin-top:15px;"><b><?=$form_title;?></b></p>
 <?php } ?>
@@ -272,7 +274,8 @@ var V_GROUP = <?=$group_id;?>;
 
 	<div id="top-wizard">
 		<div class="row">
-			<?php 
+			<?php //####################################
+				//TODO: make a function
 				if ($CHANGE AND $FORM_DATA) {
 					$t_date_time = $FORM_DATA['created'];
 				}
@@ -295,6 +298,7 @@ var V_GROUP = <?=$group_id;?>;
 				$t_date_time_end = get_date_time_noSecs($t_date_time_add_2_hours);
 				$date_time = explode(' ', $t_date_time);
 				$date_time_end = explode(' ', $t_date_time_end);
+				//####################################
 			?>
 			<div class="col-sm-6 grouping" style="text-align:right;">
 				<div class="date-group" style="white-space:nowrap; margin:1px; height:35px;">
@@ -321,8 +325,8 @@ var V_GROUP = <?=$group_id;?>;
 					</div>	
 				</div>
 			</div>
-<?php 
-
+<?php //####################################
+//TODO: make a function
 $Athletes_2_Group = array();
 $GroupsNames = array();
 $Trainer_Group_in = '';
@@ -409,22 +413,27 @@ ORDER BY u2g.group_id, u.level DESC, u.firstname, u.lastname, u.id", array($UID,
 		}
 	}
 }
-
-echo '<script>var V_GroupsNames = '.json_encode($GroupsNames).'; var V_Athletes_2_Groups = '.json_encode($Athletes_2_Group).';</script>';
+//####################################
 ?>
+
+<script>
+const V_GroupsNames = <?=json_encode($GroupsNames);?>;
+const V_Athletes_2_Groups = <?=json_encode($Athletes_2_Group);?>;
+</script>
+
 			<div class="col-sm-6 grouping" style="text-align:left; border-left:3px solid #aaa;">
-				<div id="GRP_select_row" style="white-space:nowrap; margin:1px; height:35px; margin-left:8px;">
-					<span id="GRP_title" style="font-size:14px; font-weight:bold; vertical-align:middle;"><?=$LANG->FORM_GROUP_S;?> : </span> 
+				<div id="Select_Group_row" style="white-space:nowrap; margin:1px; height:35px; margin-left:8px;">
+					<span id="Group_Title" style="font-size:14px; font-weight:bold; vertical-align:middle;"><?=$LANG->FORM_GROUP_S;?> : </span> 
 					<span class="input-group-addon" style="width:25px; height:28px; padding:5px; display:inline-table; margin-right:-5px; border-top-left-radius:4px; border-bottom-left-radius:4px; "><span class="fa fa-users"></span></span>
-					<select name="GRP_select[]" id="GRP_select" multiple style="width:100%; max-width:350px; font-size:17px; vertical-align:middle; color:#444; font-weight:bold;">
+					<select name="Select_Group[]" id="Select_Group" multiple style="width:100%; max-width:350px; font-size:17px; vertical-align:middle; color:#444; font-weight:bold;">
 						<?=$Groups_select_options;?>
 					</select>
 					<span class="input-group-addon" style="width:25px; height:28px; padding:5px; display:inline-table; margin-left:-5px; border:2px solid #ccc;"><span class="fa fa-users"></span></span>
 				</div>
-				<div id="ATH_select_row" style="white-space:nowrap; margin:1px; height:35px;">
-					<span id="ATH_title" style="font-size:14px; font-weight:bold; vertical-align:middle;"><?=$LANG->FORM_ATHLETE_S;?> : </span> 
+				<div id="Select_Athletes_row" style="white-space:nowrap; margin:1px; height:35px;">
+					<span id="Athlete_Title" style="font-size:14px; font-weight:bold; vertical-align:middle;"><?=$LANG->FORM_ATHLETE_S;?> : </span> 
 					<span class="input-group-addon" style="width:25px; height:28px; padding:4px 7px; font-size:16px; display:inline-table; margin-right:-6px; border-top-left-radius:4px; border-bottom-left-radius:4px;"><span class="fa fa-user"></span></span>
-					<select id="ATH_select" style="width:100%; max-width:350px; font-size:17px; vertical-align:middle; color:#444; font-weight:bold;">
+					<select id="Select_Athletes" style="width:100%; max-width:350px; font-size:17px; vertical-align:middle; color:#444; font-weight:bold;">
 						<?=$Athletes_Select;?>
 					</select>
 					<span class="input-group-addon" style="width:25px; height:28px; padding:4px 7px; font-size:16px; display:inline-table; margin-left:-6px; border:2px solid #ccc;"><span class="fa fa-user"></span></span>

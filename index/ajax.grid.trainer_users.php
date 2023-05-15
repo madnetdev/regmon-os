@@ -2,7 +2,7 @@
 require_once('../_settings.regmon.php');
 require('../login/validate.php');
 
-$group_id = isset($_REQUEST['group_id']) ? $_REQUEST['group_id'] : false;
+$group_id = (int)($_POST['group_id'] ?? false);
 if (!$group_id) exit;
 ?>
 <script type="text/javascript" src="index/js/grid.trainer_users.js<?=$G_VER;?>"></script>

@@ -38,9 +38,36 @@ $users.jqGrid({
 		{ //inline editing buttons and options
 			name: 'acc', width:22, fixed:true, sortable:false, editable:false, search: false, resizable:false, formatter:'actions', 
 			formatoptions:{
-				keys:true,
+				keys:true, //[Enter]=save,[Esc]=cancel
 				delbutton:false,
-				editformbutton:true
+				afterSave: function () {
+					$group_users.trigger("reloadGrid", [{ current: true }]);
+				},
+				//form dialog edit
+				editformbutton: true, 
+				editOptions : {
+					recreateForm:true,
+					width:350,
+					closeOnEscape:true,
+					afterShowForm: function (form) {
+						//gray out not used fields
+						$('input[readonly], select[readonly], textarea[readonly]').css({'background-color':'#eee','background-image':'none'});
+						$('select[readonly]').attr("disabled", "disabled");
+						$('.navButton').css({'display':'none'});
+
+						//Pass check ####################################
+						$('#passwd').after(''+
+							'<div id="password_match" style="color:red;">'+LANG.USERS.PASSWORD_CONFIRM+'</div>'+
+							'<div id="password_len" style="color:red;">'+LANG.USERS.PASSWORD_MIN_LENGTH+'</div>'+
+							'<div id="password_strength" style="color:red;">'+LANG.USERS.PASSWORD_WEAK+'</div>'+
+						'');
+						$('#password_match, #password_len, #password_strength').hide();
+						$('#passwd, #pass_confirm').on('keyup', function (event) {
+							check_Password();
+						});
+						//Pass check ####################################
+					}
+				}
 			}
 		},
 		{name:'id',key:true,width:35, sorttype:"int", align:"center", editoptions:{readonly:'readonly'} },
@@ -58,7 +85,7 @@ $users.jqGrid({
 				editoptions:{value:V_GROUPS_OPTIONS, disabled:true, size:1, dataUrl:'php/ajax.php?i=groups&oper=groups_select'}
 		},
 		{name:'firstname', 	width:100},
-		{name:'name', 		width:100},
+		{name:'lastname', 	width:100},
 		{name:'birth_date',	width:70, align:"right", 
 			sorttype:"date", formatter:"date", formatoptions:{srcformat:"Y-m-d", newformat:LANG.GRID.DATE},
 			editoptions:{ dataInit:initDate, style:"width:70%" },
@@ -115,8 +142,46 @@ $users.jqGrid({
 }); //pager
 
 
+function check_Password() {
+	function check_Pass(password) { //([a-z]+[A-Z]+[0-9]) //--[$@#&!]
+		let strength = 0;
+		if (password.match(/[a-z]+/)) strength += 1;
+		if (password.match(/[A-Z]+/)) strength += 1;
+		if (password.match(/[0-9]+/)) strength += 1;
+		//if (password.match(/[$@#&!]+/)) strength += 1;
+
+		if (password.length === 0) return false;
+		if (password.length < 8 && password.length !==0) return 'len<8';
+		if (strength < 3) return strength;
+		return 'OK';
+	}
+
+	let password = $('#passwd').val();
+	let password2 = $('#pass_confirm').val();
+	let checkPassword = check_Pass(password);
+	
+	$('#password_match, #password_len, #password_strength').hide();
+
+	if (!checkPassword) {
+		return false;
+	}
+
+	if (password != password2) {
+		$('#password_match').show();
+	}
+	if (checkPassword == 'len<8') {
+		$('#password_len').show();
+	}
+	if (checkPassword < 3) {
+		$('#password_strength').show();
+	}
+	
+	return false;
+}
+
+
 //User Groups
-var users_Grouping = '<select id="users_Grouping" style="font-size:11px; float:left; margin:4px 0 0 21px; color:black; font-weight:normal; display:none;">\
+const users_Grouping = '<select id="users_Grouping" style="font-size:11px; float:left; margin:4px 0 0 21px; color:black; font-weight:normal; display:none;">\
 <option value="">'+LANG.GROUPING_NO+'</option>\
 <option value="location_id">'+LANG.GROUPING_BY+' '+LU.LOCATION+'</option>\
 <option value="group_id">'+LANG.GROUPING_BY+' '+LU.GROUP+'</option>\
@@ -148,7 +213,7 @@ $("#gview_users .ui-jqgrid-titlebar-close").on('click',function() {
 
 //User Grouping
 $("#UserGrouping").on('change', function() {
-	var groupingName = $(this).val();
+	const groupingName = $(this).val();
 	if (groupingName) {
 		$users.jqGrid('groupingGroupBy', groupingName, {
 			groupText : [' {0} <b>( {1} )</b>'],

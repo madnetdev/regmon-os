@@ -3,14 +3,14 @@ require_once('../_settings.regmon.php');
 require('../login/validate.php');
 require('../index/index_functions.php');
 
-$group_id = isset($_REQUEST['group_id']) ? $_REQUEST['group_id'] : false;
-$ath_id = isset($_REQUEST['ath_id']) ? $_REQUEST['ath_id'] : false;
-$dash_id = isset($_REQUEST['dash_id']) ? $_REQUEST['dash_id'] : 'max';
-$name = isset($_REQUEST['name']) ? $_REQUEST['name'] : false;
-$type = isset($_REQUEST['type']) ? $_REQUEST['type'] : false;
-$options = isset($_REQUEST['options']) ? $_REQUEST['options'] : false;
-$sort = isset($_REQUEST['sort']) ? $_REQUEST['sort'] : 0;
-$color = isset($_REQUEST['color']) ? $_REQUEST['color'] : '#cccccc';
+$group_id 	= (int)($_POST['group_id'] ?? false);
+$ath_id 	= (int)($_POST['ath_id'] ?? false);
+$dash_id 	= isset($_POST['dash_id']) ? (int)$_POST['dash_id'] : 'max';
+$name 		= $_POST['name'] ?? false;
+$type 		= $_POST['type'] ?? false;
+$options 	= $_POST['options'] ?? false;
+$sort 		= (int)($_POST['sort'] ?? 0);
+$color 		= $_POST['color'] ?? '#cccccc';
 if (!$group_id OR !$ath_id OR !$name OR !$type OR !$options) exit;
 
 $values = array();

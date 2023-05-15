@@ -44,31 +44,31 @@ button.btn-danger, button.btn-default, button.btn-info, button.btn-primary, butt
 #TRN_select_chosen.chosen-container .chosen-single {border-radius:0;}
 #TRN_select_chosen.chosen-container .chosen-single span {font-size:17px; font-weight:bold;}
 
-#TRN_ATH_select_chosen.chosen-container { font-size:16px; min-width:200px; max-width: 100%; text-align:left; box-shadow:0 0 5px #777;}
-#TRN_ATH_select_chosen.chosen-container .chosen-single {border-radius:0;}
-#TRN_ATH_select_chosen.chosen-container .chosen-single span {font-size:17px; font-weight:bold;}
+#Select_Trainer_Athletes_chosen.chosen-container { font-size:16px; min-width:200px; max-width: 100%; text-align:left; box-shadow:0 0 5px #777;}
+#Select_Trainer_Athletes_chosen.chosen-container .chosen-single {border-radius:0;}
+#Select_Trainer_Athletes_chosen.chosen-container .chosen-single span {font-size:17px; font-weight:bold;}
 
-#ATH_select_chosen.chosen-container { font-size:16px; max-width:350px; text-align:left; box-shadow:0 0 5px #777;} /*max-width:260*/
-#ATH_select_chosen.chosen-container .chosen-single {border-radius:0;}
-#ATH_select_chosen.chosen-container .chosen-single span {font-size:17px; font-weight:bold;}
+#Select_Athletes_chosen.chosen-container { font-size:16px; max-width:350px; text-align:left; box-shadow:0 0 5px #777;} /*max-width:260*/
+#Select_Athletes_chosen.chosen-container .chosen-single {border-radius:0;}
+#Select_Athletes_chosen.chosen-container .chosen-single span {font-size:17px; font-weight:bold;}
 
-/*#GRP_select_row { margin-left:0; }
-#ATH_select_row { margin-left:0; }
+/*#Select_Group_row { margin-left:0; }
+#Select_Athletes_row { margin-left:0; }
 #VIEW_select_row { margin-left:0; }
-#ATH_select_title {font-size:18px; vertical-align:middle; margin-left:-66px; }
+#Select_Athletes_title {font-size:18px; vertical-align:middle; margin-left:-66px; }
 @media (max-width: 555px) {
-	#ATH_select_title { margin-left:0; }
-	#GRP_select_row { margin-left:0; }
-	#ATH_select_row { margin-left:0; }
+	#Select_Athletes_title { margin-left:0; }
+	#Select_Group_row { margin-left:0; }
+	#Select_Athletes_row { margin-left:0; }
 	#VIEW_select_row { margin-left:0; }
 }
 */
 
-#GRP_select_chosen.chosen-container { font-size:16px; max-width:350px; text-align:left; box-shadow:0 0 5px #777;}
-#GRP_select_chosen.chosen-container .chosen-single {border-radius:0;}
-#GRP_select_chosen.chosen-container .chosen-single span {font-size:17px; font-weight:bold;}
+#Select_Group_chosen.chosen-container { font-size:16px; max-width:350px; text-align:left; box-shadow:0 0 5px #777;}
+#Select_Group_chosen.chosen-container .chosen-single {border-radius:0;}
+#Select_Group_chosen.chosen-container .chosen-single span {font-size:17px; font-weight:bold;}
 /*chosen icon status*/
-#GRP_select_chosen a span:before {
+#Select_Group_chosen a span:before {
 	font-family: FontAwesome;
 	float: right;
 	font-size: 20px;
@@ -76,21 +76,21 @@ button.btn-danger, button.btn-default, button.btn-info, button.btn-primary, butt
 	font-weight: normal;
 	/*text-shadow:1px 1px 1px rgba(0,0,0,0.1);*/
 }
-#GRP_select_chosen a span.G_no:before { content:"\f057"; color:#aaaaaa; }
-#GRP_select_chosen a span.G_yes:before { content:"\f058"; color:#00b300; }
-#GRP_select_chosen a span.G_yesStop:before { content:"\f28b"; color:#00b300; }
-#GRP_select_chosen a span.G_leaveR:before { content:"\f057"; color:#698c00; }
-#GRP_select_chosen a span.G_leaveA:before { content:"\f057"; color:#8c6900; }
-#GRP_select_chosen a span.G_waitLR:before { content:"\f059"; color:#0080ff; }
-#GRP_select_chosen a span.G_waitLA:before { content:"\f059"; color:#000066; }
-#GRP_select_chosen a span.G_waitN:before { content:"\f059"; color:#0000b3; }
-#GRP_select_chosen a span.G_wait:before { content:"\f059"; color:#0000ff; }
-#GRP_select_chosen a span i { /*for title the :before icon*/
+#Select_Group_chosen a span.G_no:before { content:"\f057"; color:#aaaaaa; }
+#Select_Group_chosen a span.G_yes:before { content:"\f058"; color:#00b300; }
+#Select_Group_chosen a span.G_yesStop:before { content:"\f28b"; color:#00b300; }
+#Select_Group_chosen a span.G_leaveR:before { content:"\f057"; color:#698c00; }
+#Select_Group_chosen a span.G_leaveA:before { content:"\f057"; color:#8c6900; }
+#Select_Group_chosen a span.G_waitLR:before { content:"\f059"; color:#0080ff; }
+#Select_Group_chosen a span.G_waitLA:before { content:"\f059"; color:#000066; }
+#Select_Group_chosen a span.G_waitN:before { content:"\f059"; color:#0000b3; }
+#Select_Group_chosen a span.G_wait:before { content:"\f059"; color:#0000ff; }
+#Select_Group_chosen a span i { /*for title the :before icon*/
 	width: 20px;
     position: absolute;
     right: 25px;
 }
-#GRP_select_chosen .chosen-results li.active-result span { /*for title the :before icon*/
+#Select_Group_chosen .chosen-results li.active-result span { /*for title the :before icon*/
 	width: 20px;
     position: absolute;
     right: 3px;
@@ -413,27 +413,27 @@ label.error:after {
 	padding:10px 0 10px;
 }
 
-#GRP_select_div {
+#Select_Group_div {
 	width:100%;
 	font-size:17px;
 	/*font-weight:bold;*/
 	vertical-align:middle;
 }
 
-#GRP_select_title,
-#ATH_select_title {
+#Select_Group_title,
+#Select_Athletes_title {
 	font-size:18px; 
 	vertical-align:middle;
 	font-weight:normal;
 }
 
 
-#ATH_select_row {
+#Select_Athletes_row {
 	margin-top:8px;
 }
 
-#GRP_select_row_span,
-#ATH_select_row_span {
+#Select_Group_row_span,
+#Select_Athletes_row_span {
 	display:inline-block;
 	text-align:right;
 	width:100%;
@@ -441,14 +441,14 @@ label.error:after {
 	margin-left: -35px;
 }
 @media (max-width: 555px) {
-	#GRP_select_row_span,
-	#ATH_select_row_span {
+	#Select_Group_row_span,
+	#Select_Athletes_row_span {
 		text-align:left;
 		margin-left: 0;
 	}
 }
 
-#ATH_name_div {
+#Athlete_Name_div {
 	color:#333333;
 	font-size:17px;
 	font-weight:bold;
@@ -457,12 +457,12 @@ label.error:after {
 	margin-left: 35px;
 }
 @media (max-width: 555px) {
-	#ATH_name_div {
+	#Athlete_Name_div {
 		margin-left: 0;
 	}
 }
 
-#ATH_select_div {
+#Select_Athletes_div {
 	width:100%;
 	display:none;
 	font-size:17px;
@@ -470,17 +470,17 @@ label.error:after {
 	vertical-align:middle;
 	/*margin-left: 35px;*/
 }
-#ATH_select_div .just_name {
+#Select_Athletes_div .just_name {
 	text-align:center;
 	margin-left: 35px;
 	color:#333333;
 }
 @media (max-width: 555px) {
-	#GRP_select_div,
-	#ATH_select_div {
+	#Select_Group_div,
+	#Select_Athletes_div {
 		margin-left: 0;
 	}
-	#ATH_select_div .just_name {
+	#Select_Athletes_div .just_name {
 		margin-left: 0;
 	}	
 }

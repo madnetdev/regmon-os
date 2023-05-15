@@ -60,7 +60,7 @@ INSERT INTO `categories` (`id`, `parent_id`, `sort`, `name`, `status`, `color`, 
 CREATE TABLE `comments` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `group_id` smallint(6) NOT NULL DEFAULT '0',
+  `group_id` int(11) NOT NULL DEFAULT '0',
   `isAllDay` tinyint(1) NOT NULL DEFAULT '1',
   `showInGraph` tinyint(1) NOT NULL DEFAULT '0',
   `name` varchar(64) DEFAULT NULL,
@@ -134,7 +134,7 @@ CREATE TABLE `forms` (
   `name2` varchar(64) DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `tags` text,
-  `data_json` text,
+  `data_json` mediumtext,
   `data_names` text,
   `created` datetime DEFAULT NULL,
   `created_by` varchar(50) DEFAULT NULL,
@@ -190,7 +190,7 @@ CREATE TABLE `forms_data` (
   `user_id` int(11) NOT NULL,
   `form_id` int(11) NOT NULL DEFAULT '0',
   `category_id` int(11) NOT NULL DEFAULT '0',
-  `group_id` smallint(6) NOT NULL DEFAULT '0',
+  `group_id` int(11) NOT NULL DEFAULT '0',
   `res_json` text NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `created` datetime DEFAULT NULL,
@@ -406,6 +406,71 @@ CREATE TABLE `tags` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `templates_axis`
+--
+
+CREATE TABLE `templates_axis` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  `location_id` int(11) NOT NULL DEFAULT '0',
+  `group_id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(128) DEFAULT NULL,
+  `data_json` text,
+  `created` datetime DEFAULT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  `modified_by` varchar(50) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `templates_axis`
+--
+
+INSERT INTO `templates_axis` (`id`, `user_id`, `location_id`, `group_id`, `name`, `data_json`, `created`, `created_by`, `modified`, `modified_by`) VALUES
+(1, 1, 1, 1, ' Auto Y-Achse', '{\"axis\":{\"id\":\"axis_\",\"name\":\"\",\"color\":\"\",\"min\":\"\",\"max\":\"\",\"pos\":\"false\",\"grid\":\"0\"}}', '2023-02-25 00:00:00', 'admin', '2023-02-25 00:00:00', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `templates_forms`
+--
+
+CREATE TABLE `templates_forms` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  `location_id` int(11) NOT NULL DEFAULT '0',
+  `group_id` int(11) NOT NULL DEFAULT '0',
+  `form_id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(128) DEFAULT NULL,
+  `data_json` mediumtext,
+  `created` datetime DEFAULT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  `modified_by` varchar(50) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `templates_results`
+--
+
+CREATE TABLE `templates_results` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  `location_id` int(11) NOT NULL DEFAULT '0',
+  `group_id` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(128) DEFAULT NULL,
+  `data_json` mediumtext,
+  `created` datetime DEFAULT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  `modified_by` varchar(50) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -413,9 +478,9 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `account` varchar(50) NOT NULL,
   `uname` varchar(50) NOT NULL,
-  `passwd` varchar(60) DEFAULT NULL,
-  `location_id` tinyint(1) NOT NULL DEFAULT '0',
-  `group_id` smallint(6) NOT NULL DEFAULT '0',
+  `passwd` varchar(255) DEFAULT NULL,
+  `location_id` int(11) NOT NULL DEFAULT '0',
+  `group_id` int(11) NOT NULL DEFAULT '0',
   `lastname` varchar(50) DEFAULT NULL,
   `firstname` varchar(50) DEFAULT NULL,
   `birth_date` date DEFAULT NULL,
@@ -440,10 +505,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `account`, `uname`, `passwd`, `location_id`, `group_id`, `lastname`, `firstname`, `birth_date`, `sport`, `sex`, `body_height`, `email`, `telephone`, `level`, `status`, `permissions`, `dashboard`, `lastlogin`, `logincount`, `last_ip`, `created`, `modified`) VALUES
-(1, 'admin', 'admin', 'c4b95c4dad6f4bec7643d9788f249516', 1, 1, 'Admin', 'Admin', '1980-01-01', 'Volleyball', 0, '187 cm', 'email@domain.com', NULL, 99, 1, NULL, 1, '2023-02-26 19:26:25', 3, '127.0.0.1', '2023-02-25 00:00:00', '2023-02-25 00:00:00'),
-(2, 'user', 'DemoLocation', 'c4b95c4dad6f4bec7643d9788f249516', 1, 1, 'Admin', 'Location', '1980-01-01', 'Volleyball', 0, '190 cm', 'email@domain.com', NULL, 50, 1, NULL, 1, NULL, 0, '', '2023-02-25 00:00:00', '2023-02-25 00:00:00'),
-(3, 'user', 'DemoGroupAdmin', 'c4b95c4dad6f4bec7643d9788f249516', 1, 1, 'Admin', 'Group', '1980-01-01', 'Volleyball', 0, '190 cm', 'email@domain.com', NULL, 45, 1, NULL, 1, NULL, 0, '', '2023-02-25 00:00:00', '2023-02-25 00:00:00'),
-(4, 'user', 'DemoGroupAdmin2', 'c4b95c4dad6f4bec7643d9788f249516', 1, 1, 'Admin (reduced)', 'Group', '1980-01-01', 'Volleyball', 0, '187 cm', 'email@domain.com', NULL, 40, 1, NULL, 1, NULL, 0, '', '2023-02-25 00:00:00', '2023-02-25 00:00:00');
+(1, 'admin', 'admin', '$2y$10$kg8vhoAyKcCrNzUH2NzGDu6zgZ1B1H6W2.E00TlzW8dEq1WROhBbK', 1, 1, 'Admin', 'Admin', '1980-01-01', 'Volleyball', 0, '187 cm', 'email@domain.com', NULL, 99, 1, NULL, 1, '2023-02-26 19:26:25', 3, '127.0.0.1', '2023-02-25 00:00:00', '2023-02-25 00:00:00'),
+(2, 'user', 'DemoLocation', '$2y$10$kg8vhoAyKcCrNzUH2NzGDu6zgZ1B1H6W2.E00TlzW8dEq1WROhBbK', 1, 1, 'Admin', 'Location', '1980-01-01', 'Volleyball', 0, '190 cm', 'email@domain.com', NULL, 50, 1, NULL, 1, NULL, 0, '', '2023-02-25 00:00:00', '2023-02-25 00:00:00'),
+(3, 'user', 'DemoGroupAdmin', '$2y$10$kg8vhoAyKcCrNzUH2NzGDu6zgZ1B1H6W2.E00TlzW8dEq1WROhBbK', 1, 1, 'Admin', 'Group', '1980-01-01', 'Volleyball', 0, '190 cm', 'email@domain.com', NULL, 45, 1, NULL, 1, NULL, 0, '', '2023-02-25 00:00:00', '2023-02-25 00:00:00'),
+(4, 'user', 'DemoGroupAdmin2', '$2y$10$kg8vhoAyKcCrNzUH2NzGDu6zgZ1B1H6W2.E00TlzW8dEq1WROhBbK', 1, 1, 'Admin (reduced)', 'Group', '1980-01-01', 'Volleyball', 0, '187 cm', 'email@domain.com', NULL, 40, 1, NULL, 1, NULL, 0, '', '2023-02-25 00:00:00', '2023-02-25 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -596,6 +661,27 @@ ALTER TABLE `tags`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `templates_axis`
+--
+ALTER TABLE `templates_axis`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`,`group_id`);
+
+--
+-- Indexes for table `templates_forms`
+--
+ALTER TABLE `templates_forms`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`,`group_id`);
+
+--
+-- Indexes for table `templates_results`
+--
+ALTER TABLE `templates_results`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`,`group_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -698,6 +784,24 @@ ALTER TABLE `sports`
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `templates_axis`
+--
+ALTER TABLE `templates_axis`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT for table `templates_forms`
+--
+ALTER TABLE `templates_forms`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `templates_results`
+--
+ALTER TABLE `templates_results`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --

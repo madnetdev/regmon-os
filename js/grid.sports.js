@@ -50,12 +50,12 @@ $sports.jqGrid({
 	
 	//options #############################
 	subGridRowExpanded: function(subgrid_id, row_id) {
-		var subgrid_table_id = subgrid_id+"_t"; 
-		var sub_pager = "p_"+subgrid_table_id;
+		const subgrid_table_id = subgrid_id+"_t"; 
+		const sub_pager = "p_"+subgrid_table_id;
 		$("#"+subgrid_id).html("<table id='"+subgrid_table_id+"' class='scroll'></table><div id='"+sub_pager+"' class='scroll'></div>");
-		var sports_group_id = $sports.jqGrid('getRowData', row_id)['id'];
-		var sports_options_url = "php/ajax.php?i=sports&oper=options&ID="+sports_group_id;
-		var sub_idPrefix = "sop_";
+		const sports_group_id = $sports.jqGrid('getRowData', row_id)['id'];
+		const sports_options_url = "php/ajax.php?i=sports&oper=options&ID="+sports_group_id;
+		const sub_idPrefix = "sop_";
 		
 		$("#"+subgrid_table_id).jqGrid({
 			url: sports_options_url,
@@ -139,13 +139,16 @@ $($sports[0].grid.cDiv).on('click',function() {
 
 function Responsive_Sports() { 
 	if (V_is_Index_Options) {
-		var p_width = $('#C_Sports_Dropdowns_link').prop('clientWidth');// Get width of parent container
+		let p_width = $('#C_Sports_Dropdowns_link').prop('clientWidth');// Get width of parent container
 		if (p_width == null || p_width < 1){
 			p_width = $('#C_Sports_Dropdowns_link').prop('offsetWidth'); // For IE, revert to offsetWidth if necessary
 		}
 		p_width = p_width - 2; //prevent horizontal scrollbars
+		
+		//set here anyway to avoid empty grid after (calendar, options) change
+		$sports.jqGrid('setGridWidth', p_width);
 		if (p_width != $sports.width()) {
-			$sports.jqGrid('setGridWidth', p_width);
+			//$sports.jqGrid('setGridWidth', p_width);
 		
 			//if have subs opened
 			if ($("div[id^=sports_sp_]").length > 0) { 

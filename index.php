@@ -152,8 +152,8 @@ window.addEventListener( "pageshow", function (event) {
   	}
 });
 
-var V_REGmon_Folder = '<?=$CONFIG['REGmon_Folder'];?>';
-var PRODUCTION = <?=($CONFIG['PRODUCTION']?'true':'false');?>;
+const V_REGmon_Folder = '<?=$CONFIG['REGmon_Folder'];?>';
+const PRODUCTION = <?=($CONFIG['PRODUCTION']?'true':'false');?>;
 var V_ONLINE = true;
 
 <?php echo 'var'
@@ -179,8 +179,8 @@ var V_ONLINE = true;
 .',V_SPORTS_GROUPS_OPTIONS="'.$sports_groups_options_grid.'"'
 .',V_SPORTS_OPTIONS="'.$sports_options_grid.'"'
 .',V_BODY_HEIGHT_OPTIONS="'.$body_height_options_grid.'"'
-.',V_SAVED_DATA_OPTIONS=""'
-.',V_SAVED_DATA2_OPTIONS=""'
+.',V_FORMS_TEMPLATES_OPTIONS=""'
+.',V_RESULTS_TEMPLATES_OPTIONS=""'
 .',V_CATEGORIES_FORMS_OPTIONS=""'
 .',V_USER_LVL_OPTIONS="10:'.$LANG->LVL_ATHLETE.';30:'.$LANG->LVL_TRAINER.(($THIS_LOCATION_ADMIN OR $ADMIN)?';40:'.$LANG->LVL_GROUP_ADMIN_2:'').(($THIS_LOCATION_ADMIN OR $ADMIN)?';45:'.$LANG->LVL_GROUP_ADMIN:'').($ADMIN?';50:'.$LANG->LVL_LOCATION:'').'"'
 .',V_is_Index_Options=true'

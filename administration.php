@@ -95,16 +95,16 @@ $body_height_options_grid = get_Body_Height_Options('', true);
 <script type="text/javascript" src="js/common.js<?=$G_VER;?>"></script>
 <script type="text/javascript" src="js/grid._extend.js<?=$G_VER;?>"></script>
 <script type="text/javascript">
-	var V_ADMIN=<?=(int)$ADMIN;?>;
-	var V_GROUP_ADMIN_2=0;
-	var V_is_Index_Options = false;
-	var V_LOCATIONS_OPTIONS='<?=$locations_options_grid;?>';
-	var V_LOCATIONS_ADMINS_OPTIONS='<?=$locations_admins_options_grid;?>';
-	var V_GROUPS_OPTIONS='<?=$groups_options_grid;?>';
-	var V_GROUPS_ADMINS_OPTIONS='<?=$groups_admins_options_grid;?>';
-	var V_SPORTS_GROUPS_OPTIONS = '<?=$sports_groups_options_grid;?>';
-	var V_SPORTS_OPTIONS = '<?=$sports_options_grid;?>';
-	var V_BODY_HEIGHT_OPTIONS = '<?=$body_height_options_grid;?>';
+const V_ADMIN = <?=(int)$ADMIN;?>;
+const V_GROUP_ADMIN_2 = 0;
+const V_is_Index_Options = false;
+const V_LOCATIONS_OPTIONS = '<?=$locations_options_grid;?>';
+const V_LOCATIONS_ADMINS_OPTIONS = '<?=$locations_admins_options_grid;?>';
+const V_GROUPS_OPTIONS = '<?=$groups_options_grid;?>';
+const V_GROUPS_ADMINS_OPTIONS = '<?=$groups_admins_options_grid;?>';
+const V_SPORTS_GROUPS_OPTIONS = '<?=$sports_groups_options_grid;?>';
+const V_SPORTS_OPTIONS = '<?=$sports_options_grid;?>';
+const V_BODY_HEIGHT_OPTIONS = '<?=$body_height_options_grid;?>';
 jQuery(function() {
 	//button Export
 	$("button.export").on('click',function() {
@@ -122,9 +122,9 @@ jQuery(function() {
 <script type="text/javascript" src="js/grid.sports.js<?=$G_VER;?>"></script>
 <script type="text/javascript" src="js/grid.tags.js<?=$G_VER;?>"></script>
 <script type="text/javascript" src="admin/templates_functions.js<?=$G_VER;?>"></script>
-<script type="text/javascript" src="admin/grid.forms_templates.js<?=$G_VER;?>"></script>
-<script type="text/javascript" src="admin/grid.groups_templates.js<?=$G_VER;?>"></script>
-<script type="text/javascript" src="admin/grid.axis_templates.js<?=$G_VER;?>"></script>
+<script type="text/javascript" src="admin/grid.templates_forms.js<?=$G_VER;?>"></script>
+<script type="text/javascript" src="admin/grid.templates_results.js<?=$G_VER;?>"></script>
+<script type="text/javascript" src="admin/grid.templates_axis.js<?=$G_VER;?>"></script>
 </head>
 <body>
 	
@@ -176,16 +176,16 @@ jQuery(function() {
 		<br>
 		<hr>
 		<br>
-		<table id="forms_templates" alt="<?=$LANG->ADMIN_TEMPLATES_FORMS;?>"></table>
-		<div id="FTpager"></div>
+		<table id="templates_forms" alt="<?=$LANG->ADMIN_TEMPLATES_FORMS;?>"></table>
+		<div id="TFpager"></div>
 		<br>
 		<br>
-		<table id="groups_templates" alt="<?=$LANG->ADMIN_TEMPLATES_GROUPS;?>"></table>
-		<div id="GTpager"></div>
+		<table id="templates_results" alt="<?=$LANG->ADMIN_TEMPLATES_RESULTS;?>"></table>
+		<div id="TRpager"></div>
 		<br>
 		<br>
-		<table id="axis_templates" alt="<?=$LANG->ADMIN_TEMPLATES_Y_AXIS;?>"></table>
-		<div id="ATpager"></div>
+		<table id="templates_axis" alt="<?=$LANG->ADMIN_TEMPLATES_Y_AXIS;?>"></table>
+		<div id="TApager"></div>
 		<br>
 		<br>
 		<br>

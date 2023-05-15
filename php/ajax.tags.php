@@ -6,7 +6,7 @@ switch ($action) {
 	case 'add': // INSERT 
 	case 'edit': // UPDATE 
 		$values = array();			
-		foreach ($_REQUEST as $key => $val) {
+		foreach ($_POST as $key => $val) {
 			$key = trim((string)$key); 
 			$val = trim((string)$val); 
 			switch($key) {
@@ -59,7 +59,7 @@ switch ($action) {
 
 	case 'del': // DELETE 
 		
-		//TODO: what if any forms has already selected this tag ??? @@@@@@@@
+		//TODO: what if any forms has already selected this tag ???
 
 		$result = $db->delete("tag", "id=?", array($id));
 			
@@ -71,10 +71,11 @@ switch ($action) {
 	case 'get_tags_select': // SELECT - Get Tags 
 		
 		$options = '<select>'; 
-		$rows = $db->fetch("SELECT name FROM tags ORDER BY name", array()); 
+		$rows = $db->fetch("SELECT name FROM tags WHERE status = 1 ORDER BY name", array()); 
 		if ($db->numberRows() > 0)  {
 			foreach ($rows as $row) {
-				$options .= '<option value="'.htmlspecialchars($row['name']??'').'">'.htmlspecialchars($row['name']??'').'</option>';
+				$name = html_chars($row['name'] ?? '');
+				$options .= '<option value="' . $name . '">' . $name . '</option>';
 			}
 		}
 		$options .= '</select>'; 

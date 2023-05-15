@@ -25,6 +25,12 @@ jQuery(function($) {
 	});	
 
 
+	//strong password validation method
+	$.validator.addMethod("strong_password", function (value, element) {
+		return (/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/.test(value));
+	}, LANG.USERS.PASSWORD_WEAK);
+
+	
 	// WIZARD  ###############################################
 	// Basic wizard with validation
 	$('form#wrapped').attr('action', 'login/registration.php');
@@ -38,7 +44,7 @@ jQuery(function($) {
 				return true;
 			}
 
-			var inputs = $(this).wizard('state').step.find(':input');
+			const inputs = $(this).wizard('state').step.find(':input');
 			
 			if (!inputs.valid() && $('label.error:visible').length != 0) {
 				$("html, body").animate({ scrollTop: $('label.error:visible').offset().top-50 }, "slow");
@@ -48,74 +54,60 @@ jQuery(function($) {
 				//$('form#wrapped').trigger('submit');
 				//$('#submit').prop('disabled', false);
 				$("#loading").show();
-				setTimeout(function(){$('#submit').trigger("click");}, 1000);
-				
-				//check if password and password confirm match --alternative http://jqueryvalidation.org/equalTo-method
-				/*if ($('input#pass_confirm').val() != $('input#passwd').val()) {
-					alert(LANG.WARN_CONFIRM_PASSWORD);
-					return false;
-				}*/
+
+				setTimeout(function () {
+					$('#submit').trigger("click");
+				}, 1000);
 			}
 			return !inputs.length || !!inputs.valid();
 		}
-		/*afterSelect: function( event, state ) {
-			console.log( event, state );
-			$('button.backward').trigger("click");
-			if (state.stepIndex == 1) {
-				$.ajax({ //check if username exist --alternative http://jqueryvalidation.org/remote-method
-					url: "login/ajax.check_user_exist.php?uname="+$('input#uname').val(),
-					success: function(data) {
-						if (data == 'OK') {
-							$('button.forward').trigger("click");
-							setTimeout(function(){$('#submit').trigger("click")}, 0);
-						}
-						else {
-							setTimeout(function(){
-								$('button.backward').trigger("click");
-								alert(data.replace(/<br>/g, '\n'));}
-							, 0);
-						}
-					}
-				});
-			}
-		}*/
 	});
+
 	$('form#wrapped').validate({
 		ignore: [":hidden:not(.chosen-select)"],
-		//we not want check_user_exist to run on keyup
-		onkeyup: false,
+		//we not want check_user_exist to run on keyup but we cannot have onkeyup:false into field rules
+		//onkeyup: false,
+		onkeyup: function(element) { //workaround for onkeyup:false into field rules
+			const element_id = jQuery(element).attr('id');
+			if (this.settings.rules[element_id] && this.settings.rules[element_id].onkeyup !== false) {
+				jQuery.validator.defaults.onkeyup.apply(this, arguments);
+			}
+		},
 		rules: {
 			uname: {
 				required: true,
 				minlength: 4,
+				onkeyup: false,
 				remote: "login/ajax.check_user_exist.php"
 			},
 			passwd: {
 				required: true,
-				minlength: 4
+				minlength: 8,
+				strong_password: true
 			},
 			pass_confirm: {
 				required: true,
-				minlength: 4,
 				equalTo: "#passwd"
 			},
 			private_key: {
+				onkeyup: false,
 				//only if private is selected
 				required: function () {
-                	return $('#GRP_select').val() == 'Private';
+                	return $('#Select_Group').val() == 'Private';
 				},
 				remote: "login/ajax.check_private_key.php"
 			}
 		},
 		messages: {
 			pass_confirm: {
-				equalTo: LANG.WARN_CONFIRM_PASSWORD
+				equalTo: LANG.USERS.PASSWORD_CONFIRM,
+				minlength: LANG.USERS.PASSWORD_MIN_LENGTH,
 			},
 			uname: {
-				remote: jQuery.validator.format(LANG.WARN_USERNAME_EXIST)
+				remote: LANG.WARN_USERNAME_EXIST.replace(/<br>/g, ' ')
 			},
 			private_key: {
-				remote: jQuery.validator.format(LANG.GROUPS.PRIVATE_KEY_ERROR)
+				remote: LANG.GROUPS.PRIVATE_KEY_ERROR
 			}
 		},
 		errorPlacement: function(error, element) {
@@ -123,18 +115,13 @@ jQuery(function($) {
 				error.insertBefore( element.parent().next() );
 			}
 			else if (element.is('select')) {
-				if (element.attr('id') == 'SPORTS_select') {
-					error.insertBefore(element);
-				} else {
-					error.insertBefore(element.parent());
-				}
+				error.insertBefore(element.parent());
 			}
 			else { 
 				if (element.attr('id') == 'private_key') {
 					error.insertBefore(element.parent());
 				} else {
 					error.insertBefore( element );
-					//error.insertAfter( element );
 				}
 			}
 		}
@@ -179,16 +166,16 @@ jQuery(function($) {
 	});
 
 	//Group Select
-	$("#GRP_select").on('change', function () {
+	$("#Select_Group").on('change', function () {
 		if ($(this).val() == 'Private') {
-			$('#GRP_select').parent().hide();
+			$('#Select_Group').parent().hide();
 			$('#private_group').show();
 		}
 	});
 	$("#private_close").on('click',function() {
 		$('#private_group').hide();
-		$('#GRP_select').parent().show();
-		$("#GRP_select").val('');
+		$('#Select_Group').parent().show();
+		$("#Select_Group").val('');
 	});
 	
 });
@@ -199,7 +186,6 @@ jQuery(function($) {
 (function($) {
 	$.fn.inputFilter = function(inputFilter) {
 		return this.on("input keydown keyup mousedown mouseup select contextmenu drop blur", function(e) {
-			this.value = this.value.replace('.', ','); //TODO: check if this is LANG specific
 			if (inputFilter(this.value)) {
 				this.oldValue = this.value;
 				this.oldSelectionStart = this.selectionStart;

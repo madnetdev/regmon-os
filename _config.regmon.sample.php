@@ -29,6 +29,7 @@ $CONFIG['DB_Debug'] = false;
 $CONFIG['DOMAIN'] = "domain.com";
 
 /**
+ * NOT USED at the moment *************
  * REGmon_Files is where the export files and uploaded files go to.
  * It should NOT be under DOCUMENT_ROOT, so it is not accessible from outside
  * ex.: "../regmon_files/"
@@ -39,7 +40,7 @@ $CONFIG['REGmon_Files'] = "../regmon_files/";
  * set REGmon_Folder if you install in a directory other than DOCUMENT_ROOT
  * ex.: "regmon/" or "folder1/folder2/"
  * ----------------------------------------------
- * You can have more than one folder with the app in the same DOCUMENT_ROOT
+ * You can have multiple apps in the same DOCUMENT_ROOT
  * ex.: "regmon1/" + "regmon2/" + "regmon3/"
  * But you CANNOT have one folder of the app inside another folder of the app
  * ex.: "regmon1/" + "regmon1/regmon2/" + "regmon1/regmon3/"  <-- NOT DO THIS
@@ -94,7 +95,7 @@ $CONFIG['Force_Redirect_To_HTTPS'] = true;
 /**
  * Secret strings - used for encryption
  * ====================================
- * TODO: @@@@@@@@@@ this strings need to be generated automatically
+ * TODO: this strings need to be generated automatically
  */
 /**
  * SEC_Page_Secret is used when we want to secure pages 
@@ -167,5 +168,37 @@ $CONFIG['Use_Multi_Language_Selector'] = false;
  * ===================================================
  */
 $CONFIG['Default_Language'] = 'en'; 
+
+
+/**
+ * Simple Extension System
+ * -----------------------------
+ * Here you can set overwrites for main php pages you want to extend.
+ * This way you can keep the default pages and also make your own extensions
+ * without losing the ability to use git pull for updating default code.
+ * we can use '__' in extensions pages so .gitignore not count them as changes
+ * ===================================================
+ */
+$CONFIG['Simple_Extension_System'] = [
+	/**
+	 * if the 'exit_after' is true then exit current page
+	 * else continue to the current page after the extension page load
+	 * ex.
+	 * 'main_page.php' => ['__extension_page.php', exit_after]
+	 */
+	//'administration.php' 		=> ['__administration.php', true],
+	//'export.php' 				=> ['__export.php', true],
+	//'form.php' 				=> ['__form.php', true],
+	//'forms_results.php'		=> ['__forms_results.php', true],
+	//'index.php' 				=> ['__index.php', true],
+	//'login.php' 				=> ['__login.php', true],
+	//'register.php' 			=> ['__register.php', true],
+	//'results.php' 			=> ['__results.php', true],
+
+	//this is not a page but we have a special SES part only for this
+	//we need to set the exit_after to false so that can continue
+	//'_settings.regmon.php' 	=> ['__settings.regmon.php', false],
+];
+
 
 ?>

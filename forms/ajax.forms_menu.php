@@ -2,14 +2,17 @@
 require_once('../_settings.regmon.php');
 require('../login/validate.php');
 
-$group_id = isset($_REQUEST['group_id']) ? $_REQUEST['group_id'] : false;
-$select = isset($_REQUEST['select']) ? $_REQUEST['select'] : false;
-$trainer = isset($_REQUEST['trainer']) ? $_REQUEST['trainer'] : false;
-$trainer_id = isset($_REQUEST['trainer_id']) ? $_REQUEST['trainer_id'] : false;
-$edit = isset($_REQUEST['edit']) ? $_REQUEST['edit'] : false;
-$athlete_id = isset($_REQUEST['athlete_id']) ? $_REQUEST['athlete_id'] : false;
-$box = isset($_REQUEST['box']) ? $_REQUEST['box'] : false;
+$group_id 	= (int)($_POST['group_id'] ?? false);
+$trainer_id = (int)($_POST['trainer_id'] ?? false);
+$athlete_id = (int)($_POST['athlete_id'] ?? false);
+
+$edit 		= ((isset($_POST['edit']) AND $_POST['edit'] == 'true') ? true : false);
+$select 	= ((isset($_POST['select']) AND $_POST['select'] == 'true') ? true : false);
+$trainer 	= ((isset($_POST['trainer']) AND $_POST['trainer'] == 'true') ? true : false);
+$box 		= ((isset($_POST['box']) AND $_POST['box'] == 'true') ? true : false);
 if (!$group_id) exit;
+
+
 
 if ($edit) {
 	if (!$ADMIN) {
@@ -154,7 +157,7 @@ function getCategoryForms($cat_id, $space='', $options=false) {
 		$standard_elem = 'std_g_'.$group_id.'_c_'.$cat_id.'_'.$id;
 		
 		//link_form format
-		$link_form = ' href="form.php?id='.$id.'&catid='.$cat_id.''.(($select OR $trainer)?'&preview_user':'').($edit?'&preview_user&form_name2':'').'" class="calendar_menu_box fancybox fancybox.iframe"';
+		$link_form = ' href="form.php?id='.$id.'&cat_id='.$cat_id.''.(($select OR $trainer)?'&preview_user':'').($edit?'&preview_user&form_name2':'').'" class="calendar_menu_box fancybox fancybox.iframe"';
 		if ($trainer_view) {
 			$link_form = ' href="javascript:void(0)"';
 			if ($box) {
@@ -162,7 +165,7 @@ function getCategoryForms($cat_id, $space='', $options=false) {
 					$link_form = ' href="javascript:void(0)" class="no_access"';
 				} else {
 					$sec = MD5($CONFIG['SEC_Encrypt_Secret'] . $id . $athlete_id . $group_id . $UID);
-					$link_form = ' href="form.php?id='.$id.'&catid='.$cat_id.'&groupid='.$group_id.'&athid='.$athlete_id.'&sec='.$sec.'" class="calendar_menu_box fancybox fancybox.iframe"';
+					$link_form = ' href="form.php?id='.$id.'&cat_id='.$cat_id.'&group_id='.$group_id.'&athlete_id='.$athlete_id.'&sec='.$sec.'" class="calendar_menu_box fancybox fancybox.iframe"';
 				}
 			}
 		}
@@ -295,7 +298,7 @@ $forms = array();
 $forms_rows = $db->fetch("SELECT f2c.form_id, f.name, f.name2, f.tags, f2c.category_id 
 FROM forms2categories f2c 
 LEFT JOIN forms f ON form_id = f.id 
-WHERE f.status != 0 AND f2c.status != 0 AND ( stop_date IS NULL OR stop_date < NOW() ) 
+WHERE f.status != 0 AND f2c.status != 0 AND ( f2c.stop_date IS NULL OR f2c.stop_date > NOW() ) 
 $where_in 
 ORDER BY f2c.category_id, f2c.sort, f.name", array()); 
 if ($db->numberRows() > 0)  {
@@ -355,7 +358,7 @@ if ($trainer OR $trainer_view) {
 
 
 $html = '';
-$categories_rows = $db->fetch("SELECT * FROM categories WHERE status != 0 ORDER BY parent_id, sort, name", array()); 
+$categories_rows = $db->fetch("SELECT * FROM categories WHERE status = 1 ORDER BY parent_id, sort, name", array()); 
 if ($db->numberRows() > 0)  {
 	//make an array to hold categories info and parent/child keys 
 	$categories = array(
@@ -420,9 +423,11 @@ V_TRAINER_R_PERMS = ['All'];
 V_TRAINER_W_PERMS = ['All'];
 <?php } ?>
 
+
 <?php if (!$select AND !$trainer AND !$edit) { 
-//this changes in every Athlete change, but it only has to do with main user  - check @@@@@@@@@@@@ ?>
-V_CATEGORIES_FORMS_OPTIONS='<option value="Note_n" style="background:#aaaaaa;"><?=$LANG->FORM_MENU_COMMENT;?></option><?=buildCategory(0, $collapse_id_prefix, 1, true);?>';
+//TODO: check - this changes in every Athlete change, but it only has to do with main user 
+?>
+V_CATEGORIES_FORMS_OPTIONS = '<option value="Note_n" style="background:#aaaaaa;"><?=$LANG->FORM_MENU_COMMENT;?></option><?=buildCategory(0, $collapse_id_prefix, 1, true);?>';
 <?php } ?>
 
 jQuery(function() {

@@ -59,41 +59,67 @@ jQuery(function()
 
 	
 	//Group Select ###############################################################
-	$("#GRP_select").chosen({width:'100%', placeholder_text_single: LANG.SELECT_OPTION, no_results_text: LANG.NO_RESULTS, search_contains: true, disable_search_threshold: 10});
+	$("#Select_Group").chosen({width:'100%', placeholder_text_single: LANG.SELECT_OPTION, no_results_text: LANG.NO_RESULTS, search_contains: true, disable_search_threshold: 10});
 	
-	$('#GRP_select').on('chosen:showing_dropdown', function() {
-		$('#GRP_select_chosen .chosen-results li').each(function() {
+
+	$('#Select_Group').on('chosen:showing_dropdown', function() {
+		$('#Select_Group_chosen .chosen-results li').each(function() {
 			//get v_value class --it has the group_id
-			var val = $(this).attr("class").match(/v_[\w]*\b/);
+			let val = $(this).attr("class").match(/v_[\w]*\b/);
 			if (val) {
 				val = val[0].split('_')[1];
-				$(this).append('<span title="'+$('#GRP_select option[value="'+val+'"]').attr('data-status')+'">&nbsp;</span>');
+				$(this).append(
+					'<span title="' + $('#Select_Group option[value="' + val + '"]').attr('data-status') + '">&nbsp;</span>'
+				);
 			}
 		});
 	});	
 	
-	V_GROUP = $("#GRP_select").val();
+
+	V_GROUP = $("#Select_Group").val();
 	
+
 	//init icon and submit buttons
 	group_icons_buttons();
 	
+
 	//private
 	$("#private_submit").on('click',function() {
-		var p_val = encodeURIComponent( $('#private_key').val() ); //support for special characters
-		if (p_val == '') return false;
-		var location_id = (V_Group_2_Location[V_GROUP] && V_Group_2_Location[V_GROUP][0]) ? V_Group_2_Location[V_GROUP][0] : V_LOCATION;
-		var p_found = false;
+		const p_val = encodeURIComponent( $('#private_key').val() ); //support for special characters
+		if (p_val == '') {
+			return false;
+		}
+
+		const location_id = (V_Group_2_Location[V_GROUP] &&
+							V_Group_2_Location[V_GROUP][0]) ? V_Group_2_Location[V_GROUP][0] 
+															: V_LOCATION;
+
 		$.ajax({
-			url: "login/ajax.check_private_key.php?private_key="+p_val+'&location_id='+location_id,
-			success: function(data_res) {
+			url: "login/ajax.check_private_key.php?private_key=" + p_val + '&location_id=' + location_id,
+			success: function (data_res)
+			{
 				if (data_res != 'false' && data_res != '') {
-					var action = 'group_user_request_access';
-					if (V_User_2_Groups[data_res]) { //if user where in this group before
-						if (V_User_2_Groups[data_res].status == 0) action = 'group_user_request_access_AN';
-						if (V_User_2_Groups[data_res].status == 5) action = 'group_user_request_access_AL_user';
-						if (V_User_2_Groups[data_res].status == 15) action = 'group_user_request_access_AL_groupadmin';
+					let action = 'group_user_request_access';
+
+					//if user where in this group before
+					if (V_User_2_Groups[data_res]) {
+						if (V_User_2_Groups[data_res].status == 0) {
+							action = 'group_user_request_access_AN';
+						}
+						if (V_User_2_Groups[data_res].status == 5) {
+							action = 'group_user_request_access_AL_user';
+						}
+						if (V_User_2_Groups[data_res].status == 15) {
+							action = 'group_user_request_access_AL_groupadmin';
+						}
 					}
-					var data = {request: 'user2group', action: action, group_id: data_res, location_id: location_id};
+
+					const data = {
+						request: 'user2group',
+						action: action,
+						group_id: data_res,
+						location_id: location_id
+					};
 					$.post('index/ajax.request.php', data, function(data, result){
 						V_GRID_SAVE = true; //for continue loading
 						window.location.reload();
@@ -105,48 +131,62 @@ jQuery(function()
 			}
 		});
 	});
+
 	$("#private_close").on('click',function() {
 		$('#private_group').hide();
-		$('#GRP_select_chosen').show();
+		$('#Select_Group_chosen').show();
 	});
 	
 	
 	//Group Select on Change
-	$("#GRP_select").on('change', function () 
+	$("#Select_Group").on('change', function () 
 	{
-		if ($(this).val() == '') return false;
+		if ($(this).val() == '') {
+			return false;
+		}
+
 		if ($(this).val() == 'Private') {
-			$('#GRP_select_chosen').hide();
+			$('#Select_Group_chosen').hide();
 			$('#private_group').css('display', 'inline-block');
 			
-			$('#GRP_select').val(V_GROUP);
-			$("#GRP_select").trigger("chosen:updated");
+			$('#Select_Group').val(V_GROUP);
+			$("#Select_Group").trigger("chosen:updated");
 		}
 		else {
 			V_GROUP = $(this).val();
+
 			$.cookie('ATHLETE', V_UID, { path: '/'+V_REGmon_Folder });
 			
-			$.post('index/ajax.user_group_update.php', {group_id: V_GROUP, location_id: V_Group_2_Location[V_GROUP][0], u_id: V_UID}, function(data, result){
+			const post_data = {
+				group_id: V_GROUP,
+				location_id: V_Group_2_Location[V_GROUP][0],
+				u_id: V_UID
+			};
+			$.post('index/ajax.user_group_update.php', post_data, function(data, result){
 				V_GRID_SAVE = true; //for continue loading
 				window.location.reload();
 			});
 		}
 	});
 	
+
 	//Calendar / Options Buttons
 	$('input[name="options_calendar"]').on('change', function () {
 		if (this.id == 'view_calendar') {
 			$("#group_data").hide();
 			$("#group_calendar").show();
-			enable_Athletes_Select();
+			Select_Athletes_enable();
 		}
 		else {
 			$("#group_data").show();
 			$("#group_calendar").hide();
-			disable_Athletes_Select();
+			Select_Athletes_disable();
 		}
+
 		$(window).trigger('resize'); //it need this bcz calendar loses the scrollbar
 	});
+
+
 	$("#group_data").hide();
 	$("#view_calendar").trigger("click"); //init calendar view
 
@@ -158,19 +198,31 @@ jQuery(function()
 		btnOkLabel: LANG.YES, btnOkClass: 'btn btn-sm btn-success mr10',
 		btnCancelLabel: LANG.NO, btnCancelClass: 'btn btn-sm btn-danger',
 		onConfirm: function(e, button) {
-			if ($("#GRP_select").val() == '') return false;
-			var submit_group_id = $(button).prop('id');
+			if ($("#Select_Group").val() == '') {
+				return false;
+			}
+			const submit_group_id = $(button).prop('id');
 			if (submit_group_id == 'group_user_cancel_access') {
 				//double check
 				if (!confirm("\n\n"+LANG.REQUEST.USER_LEAVE_GROUP+"\n\n"+LANG.ARE_YOU_SURE+"\n\n")) {
 					return false;
 				}
 			}
-			var data = {request: 'user2group', action: submit_group_id, group_id: V_GROUP, location_id: V_Group_2_Location[V_GROUP][0]};
-			$.post('index/ajax.request.php', data, function(data, result){
+
+			const post_data = {
+				request: 'user2group',
+				action: submit_group_id,
+				group_id: V_GROUP,
+				location_id: V_Group_2_Location[V_GROUP][0]
+			};
+			$.post('index/ajax.request.php', post_data, function (data, result)
+			{
 				$("#group_buttons_message").html(data).show();
+
 				V_GRID_SAVE = true; //for continue loading
-				$.cookie('ATHLETE', V_UID, { path: '/'+V_REGmon_Folder });
+
+				$.cookie('ATHLETE', V_UID, { path: '/' + V_REGmon_Folder });
+				
 				window.location.reload();
 			});
 		}
@@ -219,22 +271,20 @@ jQuery(function()
 				placement: function (context, source) {
 					if (view.name=='month' || event.allDay) {
 						//return 'auto';
-						var popoverHeight = 220; //190;
-						var conteiner = $(window).height();
-						var scrollTop = $(window).scrollTop();
-						var offset = $(source).offset();				
-						//console.log(1, $(window).height() + $(window).scrollTop() - offset.top -220);
+						const popoverHeight = 220; //190;
+						const conteiner = $(window).height();
+						const scrollTop = $(window).scrollTop();
+						const offset = $(source).offset();				
 						if ((conteiner + scrollTop - offset.top - popoverHeight) > 0) {
 							return 'bottom';
 						}
 						return 'top';
 					}
 					else {
-						var popoverHeight = 290; //190;
-						var conteiner = $('.fc-time-grid').height();
-						//var scrollTop = $('.fc-scroller').scrollTop();
-						var offset = $(source).offset();				
-						//console.log(2, conteiner - (offset.top+popoverHeight), conteiner, (offset.top+popoverHeight));
+						const popoverHeight = 290; //190;
+						const conteiner = $('.fc-time-grid').height();
+						//const scrollTop = $('.fc-scroller').scrollTop();
+						const offset = $(source).offset();				
 						if (conteiner - (offset.top+popoverHeight) > 150) {
 							return 'bottom';
 						}
@@ -255,117 +305,150 @@ jQuery(function()
 			//$('.fc-center h2').text($('.fc-center h2').text().replace(' —','. —'));
 		//},
 		eventClick: function(event, jsEvent, view) {
-			//console.log(event.start._i, event.start._d);
 			//close other popups
-			var this_pop = $(this).attr('aria-describedby');
+			const this_pop = $(this).attr('aria-describedby');
 			$('.popover.in').each(function(i, el) {
-				//console.log(this_pop);
-				if (el.id != this_pop) $("a[aria-describedby="+el.id+"]").popover('toggle');
+				if (el.id != this_pop) {
+					$("a[aria-describedby=" + el.id + "]").popover('toggle');
+				}
 			});
+
 			//show this popup
 			$(this).popover('toggle');
 			
 			//allDay popups need reset
-			if (event.allDay) $(this).data('bs.popover').tip().css({'margin-top': '0px', 'margin-left': '0px'});
-			
-			var event_el = this;
-			$("button#Cal_Edit_"+event.id).fancybox(fancyBoxDefaults_iframe);
-			$("button#Cal_Res_"+event.id).fancybox(fancyBoxDefaults_iframe);
-			$("button#Cal_Res_Sub_"+event.id).fancybox(fancyBoxDefaults_iframe);
-			if (event.status == '1') {
-				$("button#forms_data_deactivate_"+event.id).show();
-				$("button#forms_data_activate_"+event.id).hide();				
-				$("button#Cal_Res_Sub_"+event.id).show();
-			} else {
-				$("button#forms_data_deactivate_"+event.id).hide();
-				$("button#forms_data_activate_"+event.id).show();				
-				$("button#Cal_Res_Sub_"+event.id).hide();
+			if (event.allDay) {
+				$(this).data('bs.popover').tip().css({ 'margin-top': '0px', 'margin-left': '0px' });
 			}
-			$("button#forms_data_deactivate_"+event.id).on('click',function() {
-				$.get('php/ajax.php?i=forms_data&oper=status&ID='+event.id+'&status=0', function(data, result){
+			
+			const event_el = this;
+			$("button#Cal_Edit_" + event.id).fancybox(fancyBoxDefaults_iframe);
+			$("button#Cal_Res_" + event.id).fancybox(fancyBoxDefaults_iframe);
+			$("button#Cal_Res_Sub_" + event.id).fancybox(fancyBoxDefaults_iframe);
+			
+			if (event.status == '1') {
+				$("button#forms_data_deactivate_" + event.id).show();
+				$("button#forms_data_activate_" + event.id).hide();
+				$("button#Cal_Res_Sub_" + event.id).show();
+			} else {
+				$("button#forms_data_deactivate_" + event.id).hide();
+				$("button#forms_data_activate_" + event.id).show();
+				$("button#Cal_Res_Sub_" + event.id).hide();
+			}
+
+			$("button#forms_data_deactivate_" + event.id).on('click', function () {
+				$.get('php/ajax.php?i=forms_data&oper=status&ID=' + event.id + '&status=0', function (data, result)
+				{
 					event.status = '0';
 					$('.popover').popover('hide'); //hide all popovers
-					$("button#forms_data_deactivate_"+event.id).hide();
-					$("button#forms_data_activate_"+event.id).show();
-					$("button#Cal_Res_Sub_"+event.id).hide();
+
+					$("button#forms_data_deactivate_" + event.id).hide();
+					$("button#forms_data_activate_" + event.id).show();
+					$("button#Cal_Res_Sub_" + event.id).hide();
+
 					$(event_el).addClass('event_deactivated');
+
 					$('#calendar').fullCalendar('updateEvent', event);
 				});
 			});
-			$("button#forms_data_activate_"+event.id).on('click',function() {
-				$.get('php/ajax.php?i=forms_data&oper=status&ID='+event.id+'&status=1', function(data, result){
+
+			$("button#forms_data_activate_" + event.id).on('click', function () {
+				$.get('php/ajax.php?i=forms_data&oper=status&ID=' + event.id + '&status=1', function (data, result)
+				{
 					event.status = '1';
 					$('.popover').popover('hide'); //hide all popovers
-					$("button#forms_data_deactivate_"+event.id).show();
-					$("button#forms_data_activate_"+event.id).hide();
-					$("button#Cal_Res_Sub_"+event.id).show();
+
+					$("button#forms_data_deactivate_" + event.id).show();
+					$("button#forms_data_activate_" + event.id).hide();
+					$("button#Cal_Res_Sub_" + event.id).show();
+
 					$(event_el).removeClass('event_deactivated');
+
 					$('#calendar').fullCalendar('updateEvent', event);
 				});
 			});
-			$("button#Cal_Res_Del_"+event.id).confirmation({
+
+			$("button#Cal_Res_Del_" + event.id).confirmation({
 				href: 'javascript:void(0)',
 				title: LANG.CONFIRM_DELETE_ENTRY, placement: 'top',
 				btnOkLabel: LANG.YES, btnOkClass: 'btn btn-sm btn-success mr10',
 				btnCancelLabel: LANG.NO, btnCancelClass: 'btn btn-sm btn-danger',
-				onConfirm: function(e, button) {
-					$.get('php/ajax.php?i=forms_data&oper=status&ID='+event.id+'&status=-1', function(data, result){
+				onConfirm: function (e, button) {
+					$.get('php/ajax.php?i=forms_data&oper=status&ID=' + event.id + '&status=-1', function (data, result)
+					{
 						$('.popover').popover('hide'); //hide all popovers
 						$(event_el).hide();
+
 						parent.Swal({
 							type: 'success',
-							title: LANG.ENTRY_DELETED_SUCCESS,
+							title: LANG.ENTRY_DELETE_SUCCESS,
 							showConfirmButton: false,
 							timer: 2000
 						});
 					});
 				}
 			});
+
 			//comments
 			$("button#comment_delete").on('click',function() {
-				var data = {group_id: V_GROUP, athlete_id: V_ATHLETE, ID: event.id};
-				$.post('index/ajax.comment_delete.php', data, function(data, result){
+				const post_data = {
+					group_id: V_GROUP,
+					athlete_id: V_ATHLETE,
+					ID: event.id
+				};
+				$.post('index/ajax.comment_delete.php', post_data, function(data, result){
 					$('.popover').popover('hide'); //hide all popovers
 					$('#calendar').fullCalendar( 'refetchEvents' );
 				});
 			});
-			$("button#comment_edit").on('click',function() {
+
+			$("button#comment_edit").on('click', function () {
 				$('.popover').popover('hide'); //hide all popovers
-				$.fancybox($("#create_comment"), $.extend({},fancyBoxDefaults,{minWidth: 300}));
+				$.fancybox($("#create_comment"), $.extend({}, fancyBoxDefaults, { minWidth: 300 }));
 				//console.log(event);
+
 				init_Comments_Edit(event.id, event.allDay, event.showInGraph, event.start._i, event.end._i, event.title, event.text, event.color2);
 			});
 		},
 		dayClick: function(date, jsEvent, view) {
 			V_SELECTED_DATE = date.format();
 			//console.log(V_SELECTED_DATE, jsEvent, jsEvent.target, $(jsEvent.target).hasClass('fc-day'), view.name);
-			$.cookie('SELECTED_DATE', V_SELECTED_DATE, { path: '/'+V_REGmon_Folder });
+			$.cookie('SELECTED_DATE', V_SELECTED_DATE, { path: '/' + V_REGmon_Folder });
+			
 			if (hasWriteAccess()) {
 				if (jsEvent.target.tagName == "TD") { //bcz it opens with a click to popover
-					if (view.name != 'month' && V_SELECTED_DATE.indexOf('T')==-1){ //all-day comment
-						if (V_TRAINER_W_PERMS.indexOf('All') != -1 || V_TRAINER_W_PERMS.indexOf('Note_n') != -1) {
-							$.fancybox($("#create_comment"), $.extend({},fancyBoxDefaults,{minWidth: 300}));
-							init_Comments_Create('Cal_'+view.name);
+					if (view.name != 'month' && V_SELECTED_DATE.indexOf('T') == -1) { //all-day comment
+						if (V_TRAINER_W_PERMS.indexOf('All') != -1 ||
+							V_TRAINER_W_PERMS.indexOf('Note_n') != -1)
+						{
+							$.fancybox($("#create_comment"), $.extend({}, fancyBoxDefaults, { minWidth: 300 }));
+							
+							init_Comments_Create('Cal_' + view.name);
 						}
 						else {
-							$.fancybox('<div class="empty_message">'+LANG.NOT_HAVE_ACCESS_RIGHTS+'</div>', $.extend({},fancyBoxDefaults,{minWidth: 300, minHeight:60}));
+							$.fancybox('<div class="empty_message">' + LANG.NOT_HAVE_ACCESS_RIGHTS + '</div>', $.extend({}, fancyBoxDefaults, { minWidth: 300, minHeight: 60 }));
 						}
 					}
 					else {
 						jsEvent.preventDefault();
 						jsEvent.stopPropagation(); //not click the behind header
 
-						setTimeout(function(){
-							$.fancybox($("#A_Box_Forms_Menu"),fancyBoxDefaults);
-							setTimeout(function(){
-								$("#A_Box_Forms_Menu").parent('.fancybox-inner').css('height','auto');
+						setTimeout(function () {
+							$.fancybox($("#A_Box_Forms_Menu"), fancyBoxDefaults);
+							setTimeout(function () {
+								$("#A_Box_Forms_Menu").parent('.fancybox-inner').css('height', 'auto');
 							}, 300);
 						}, 300);
 					}
 				}
 			}
 			else {
-				var ptext = '<div style="font-size:17px; padding:25px 10px; text-align:center; font-weight:bold;">'+LANG.WRITE_ACCESS_PROBLEM+'<div class="not_display" style="width:520px;"></div></div>';
+				const ptext = ''+
+					'<div style="font-size:17px; padding:25px 10px; text-align:center; font-weight:bold;">' +
+						LANG.WRITE_ACCESS_PROBLEM +
+						'<div class="not_display" style="width:520px;"></div>'+
+					'</div>';
+				
 				$.fancybox($.extend({},fancyBoxDefaults,{minWidth: 300, content:ptext, beforeShow:function(){} }));
 			}
 		},
@@ -390,25 +473,36 @@ jQuery(function()
 
 	//add Comment Button
 	//on mozila have float:left from .fc .fc-toolbar > * > *
-	$("#calendar .fc-toolbar .fc-center h2").after('<br style="float:none;">' +
+	$("#calendar .fc-toolbar .fc-center h2").after(
+		'<br style="float:none;">' +
 		//Go to date button
-		'<div class="input-group" id="datetimepicker_hiddenDate" style="float:left; margin-left:-3px;"><input type="hidden" id="hiddenDate"/><button id="gotodate" type="button" title="'+LANG.BUTTON_DATUM_TOOLTIP+'" data-toggle="tooltip" data-placement="top" data-container="body" class="input-group-addon fc-button fc-state-default fc-corner-left fc-corner-right" style="height:25px; width:auto; padding:0 5px; border-left:1px solid rgba(0, 0, 0, 0.1);"><i class="fa fa-calendar"></i> '+LANG.BUTTON_DATUM+'</button></div>' +
+		'<div class="input-group" id="datetimepicker_hiddenDate" style="float:left; margin-left:-3px;">'+
+			'<input type="hidden" id="hiddenDate"/>'+
+			'<button id="gotodate" type="button" title="'+LANG.BUTTON_DATUM_TOOLTIP+'" data-toggle="tooltip" data-placement="top" data-container="body" class="input-group-addon fc-button fc-state-default fc-corner-left fc-corner-right" style="height:25px; width:auto; padding:0 5px; border-left:1px solid rgba(0, 0, 0, 0.1);"><i class="fa fa-calendar"></i> '+LANG.BUTTON_DATUM+'</button>'+
+		'</div>' +
 		//border-left: 1px solid rgba(0, 0, 0, 0.1); bcz the .input-group-addon which needed it, zero it
 		//addComment button
-		'<button id="addComment" type="button" title="'+LANG.BUTTON_COMMENT_TOOLTIP+'" data-toggle="tooltip" data-placement="top" data-container="body" class="fc-button fc-state-default fc-corner-left fc-corner-right" style="float:right; height:25px; padding:0 5px;"><i class="fa fa-commenting"></i> '+LANG.BUTTON_COMMENT+'</button>'+
-	'');
+		'<button id="addComment" type="button" title="'+LANG.BUTTON_COMMENT_TOOLTIP+'" data-toggle="tooltip" data-placement="top" data-container="body" class="fc-button fc-state-default fc-corner-left fc-corner-right" style="float:right; height:25px; padding:0 5px;"><i class="fa fa-commenting"></i> '+LANG.BUTTON_COMMENT+'</button>'
+	);
+
 	$('#addComment').hover(function() {
 		$(this).addClass('fc-state-hover');
 	}, function() {
 		$(this).removeClass('fc-state-hover');
 	});
+
 	$('#addComment').on('click',function() {
-		if (V_TRAINER_W_PERMS.indexOf('All') != -1 || V_TRAINER_W_PERMS.indexOf('Note_n') != -1) {
+		if (V_TRAINER_W_PERMS.indexOf('All') != -1 ||
+			V_TRAINER_W_PERMS.indexOf('Note_n') != -1)
+		{
 			$.fancybox($("#create_comment"), $.extend({},fancyBoxDefaults,{minWidth: 300}));
 			init_Comments_Create('Cal_Button');
 		}
 		else {
-			$.fancybox('<div class="empty_message">'+LANG.NOT_HAVE_ACCESS_RIGHTS+'</div>', $.extend({},fancyBoxDefaults,{minWidth: 300, minHeight:60}));
+			$.fancybox(
+				'<div class="empty_message">' + LANG.NOT_HAVE_ACCESS_RIGHTS + '</div>',
+				$.extend({}, fancyBoxDefaults, { minWidth: 300, minHeight: 60 })
+			);
 		}
 	});
 	
@@ -418,6 +512,7 @@ jQuery(function()
 		$(this).removeClass('fc-state-hover');
 	});
 	
+
 	// https://eonasdan.github.io/bootstrap-datetimepicker/
 	$('#datetimepicker_hiddenDate').datetimepicker({
 		locale: LANG.LANG_CURRENT,
@@ -451,24 +546,25 @@ jQuery(function()
 	});
 
 	//if User not have any data --> message to click on Calendar
-	$.get('php/ajax.php?i=forms_data&oper=cal_count&ID='+V_ATHLETE+'&group_id='+V_GROUP, function(data, result){
+	$.get('php/ajax.php?i=forms_data&oper=cal_count&ID=' + V_ATHLETE + '&group_id=' + V_GROUP, function (data, result) {
 		if (data == '0') { //user not have data in calendar
 			$('#calendar').addClass('no_calendar_data');
 		}
 	});
+
 
 	load_New_Info(true);
 	setInterval(function(){ 
 		load_New_Info(false);
 	}, 300000); // 5 mins
 	
+
 	//tooltip
 	$('[data-toggle="tooltip"]').tooltip({ trigger: "hover" }); //if not give hover it not close after click
 
 
 	//load forms menu -> from form.menu.js
 	load_Box_Forms_Menu();
-
 
 }); //jQuery(function()
 
@@ -480,45 +576,63 @@ jQuery(function()
 
 
 function hasAccess() {
-	if ((V_GROUP in V_User_2_Groups) && (V_User_2_Groups[V_GROUP].status == '1' || V_User_2_Groups[V_GROUP].status == '2')) {
+	if ((V_GROUP in V_User_2_Groups) &&
+		(V_User_2_Groups[V_GROUP].status == '1' || V_User_2_Groups[V_GROUP].status == '2'))
+	{
 		return true;
 	}
 	return false;
 }
 
+
 function hasWriteAccess() {
-	if ((V_GROUP in V_User_2_Groups) && (V_User_2_Groups[V_GROUP].status == '1')) {
+	if ((V_GROUP in V_User_2_Groups) &&
+		(V_User_2_Groups[V_GROUP].status == '1'))
+	{
 		return true;
 	}
 	return false;
 }
+
 
 function getCalendarUrl() {
 	return "php/ajax.php?i=forms_data&oper=cal&ID="+V_ATHLETE+"&group_id="+V_GROUP;
 }
 
-function init_Athletes_Select() {
+
+function Select__Athletes__Init() {
 	//Athlete Select ###############################################################
-	$("#ATH_select").chosen({width:'100%', no_results_text: LANG.NO_RESULTS, search_contains: true, disable_search_threshold: 10});
-	enable_Athletes_Select();
+	$("#Select_Athletes").chosen({
+		width: '100%',
+		no_results_text: LANG.NO_RESULTS,
+		search_contains: true,
+		disable_search_threshold: 10
+	});
+
+	Select_Athletes_enable();
 	
+
 	//Athlete Select Change
-	$("#ATH_select").on('change', function () {
+	$("#Select_Athletes").on('change', function () {
 		$('.popover').popover('hide'); //hide all popovers
 		$('#calendar').fullCalendar('removeEventSources');
 		//$('#calendar').fullCalendar('removeEventSource', getCalendarUrl());
+
 		V_ATHLETE = $(this).val();
-		$.cookie('ATHLETE', V_ATHLETE, { path: '/'+V_REGmon_Folder });
+		$.cookie('ATHLETE', V_ATHLETE, { path: '/' + V_REGmon_Folder });
 		
 		//we not want anymore to change the options based on the selected user
 		//options is always from the current logged in user - verion > 1.911
 		
 		load_Box_Forms_Menu();
+
 		$('.popover').popover('hide'); //hide all popovers
+
 		$('#calendar').fullCalendar('addEventSource', getCalendarUrl());
 		
+
 		//User not have any data -- message to click on Calendar
-		$.get('php/ajax.php?i=forms_data&oper=cal_count&ID='+V_ATHLETE+'&group_id='+V_GROUP, function(data, result){
+		$.get('php/ajax.php?i=forms_data&oper=cal_count&ID=' + V_ATHLETE + '&group_id=' + V_GROUP, function (data, result) {
 			if (data == '0') { //user not have data in calendar
 				$('#calendar').addClass('no_calendar_data');
 			} else {
@@ -527,13 +641,16 @@ function init_Athletes_Select() {
 		});
 	});
 }
-function enable_Athletes_Select() {
-	$("#ATH_name_div").hide();
-	$("#ATH_select_div").show();
+
+
+function Select_Athletes_enable() {
+	$("#Athlete_Name_div").hide();
+	$("#Select_Athletes_div").show();
 }
-function disable_Athletes_Select() {
-	$("#ATH_name_div").show();
-	$("#ATH_select_div").hide();
+
+function Select_Athletes_disable() {
+	$("#Athlete_Name_div").show();
+	$("#Select_Athletes_div").hide();
 }
 
 
@@ -550,6 +667,7 @@ function init_Profile_Edit() {
 	}).on('change', function () {
 		$(this).parent('div').find('label.error').remove(); //remove required error if select something
 	});
+
 	$("#telephone").intlTelInput({
 		initialCountry: 'de', 
 		//Specify the countries to appear at the top of the list.
@@ -560,58 +678,91 @@ function init_Profile_Edit() {
 		return /^-?\d*[ ]?\d*$/.test(value);
 	});	
 
-  $("button#profile_save").off('click').on('click',function() {
-		//$.validator.setDefaults({ ignore: ":hidden:not(.chosen-select)" }) //for all select having class .chosen-select
-		$('form#profile_edit').validate({
-			ignore: [":hidden:not(.chosen-select)"],
-			//rules: {passwd: "required",	pass_confirm: {equalTo: "#passwd"} },
-			errorPlacement: function(error, element) {
-				if (element.is(':radio') || element.is(":checkbox")) {
-					error.insertBefore( element.parent().parent() );
-				} else { 
-					error.insertAfter( element );
-				}
+
+	//strong password validation method
+	$.validator.addMethod("strong_password", function (value, element) {
+		if ($('#passwd').val() == '') return true; //only if password not empty
+		return (/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/.test(value));
+	}, LANG.USERS.PASSWORD_WEAK);
+	//$.validator.setDefaults({ ignore: ":hidden:not(.chosen-select)" }) //for all select having class .chosen-select
+
+
+	//validate form
+	$('form#profile_edit').validate({
+		ignore: [":hidden:not(.chosen-select)"],
+		rules: {
+			uname: {
+				required: true,
+				minlength: 4,
+				//onkeyup: false,
+				//remote: "login/ajax.check_user_exist.php"
+			},
+			passwd: {
+				//required: true,
+				minlength: 8,
+				strong_password: true,
+			},
+			pass_confirm: {
+				//required: true,
+				equalTo: "#passwd"
 			}
-		});
-		var inputs = $('form#profile_edit').find(':input');
+		},
+		messages: {
+			pass_confirm: {
+				equalTo: LANG.USERS.PASSWORD_CONFIRM,
+				minlength: LANG.USERS.PASSWORD_MIN_LENGTH,
+			},
+			// uname: {
+			// 	remote: LANG.WARN_USERNAME_EXIST
+			// }
+		},
+		// errorPlacement: function(error, element) {
+		// 	error.insertBefore( element );
+		// }
+	});
+
+	
+	$("button#profile_save").off('click').on('click', function () {
+		  
+		const inputs = $('form#profile_edit').find(':input');
 		if (!inputs.valid() && $('label.error:visible').length != 0) {
-			$(".fancybox-inner").animate({ scrollTop: $('label.error:visible:first').offset().top - $(".fancybox-inner").offset().top + $(".fancybox-inner").scrollTop() }, "slow");
+			$(".fancybox-inner").animate({
+				scrollTop: $('label.error:visible:first').offset().top - $(".fancybox-inner").offset().top + $(".fancybox-inner").scrollTop()
+			}, "slow");
 		}
 		else {
-			var uid 		= $('form#profile_edit input[name=uid]').val();
-			var uname 		= $('form#profile_edit input[name=uname]').val();
-			var passwd 		= $('form#profile_edit input[name=passwd]').val();
-			var pass_confirm= $('form#profile_edit input[name=pass_confirm]').val();
-			if (passwd != '') {
-				//check if password and password confirm match --alternative http://jqueryvalidation.org/equalTo-method
-				if (passwd != pass_confirm) {
-					alert(LANG.WARN_CONFIRM_PASSWORD);
-					$(".fancybox-inner").animate({ scrollTop: $('form#profile_edit input[name=passwd]').offset().top - $(".fancybox-inner").offset().top + $(".fancybox-inner").scrollTop() -25 }, "slow");
-					return false;
-				}
-			}
-			$.ajax({ //check if username exist --alternative http://jqueryvalidation.org/remote-method
-				url: "login/ajax.check_user_exist.php?uname="+uname+'&uid='+uid,
+			const uid 			= $('form#profile_edit input[name=uid]').val();
+			const uname 		= $('form#profile_edit input[name=uname]').val();
+			const passwd 		= $('form#profile_edit input[name=passwd]').val();
+			const pass_confirm	= $('form#profile_edit input[name=pass_confirm]').val();
+
+			//we not want check_user_exist to run on every keyup in validator
+			$.ajax({
+				url: "login/ajax.check_user_exist.php?uname=" + uname + '&uid=' + uid,
 				success: function(data) {
 					if (data == 'OK') {
-						var lastname 	= $('form#profile_edit input[name=lastname]').val();
-						var firstname	= $('form#profile_edit input[name=firstname]').val();
-						var email 		= $('form#profile_edit input[name=email]').val();
-						var telephone	= $("form#profile_edit .iti__selected-dial-code").text()+' '+$("#telephone").val();
-						var sport 		= $('form#profile_edit select[name=sport]').val();
-						var body_height = $('form#profile_edit select[name=body_height]').val();
-						var sex 		= $('form#profile_edit input[name=sex]:checked').val();
-						var birth_year 	= $('form#profile_edit select[name=birth_year]').val();
-						var birth_month = $('form#profile_edit select[name=birth_month]').val();
-						var birth_day	= $('form#profile_edit select[name=birth_day]').val();
-						var dashboard 	= $('form#profile_edit input[name=dashboard]:checked').val();
-						var location_name = $('form#profile_edit input[name=location_name]').val();
-						var group_id	= $('form#profile_edit input[name=group_id]').val();
-						var group_name	= $('form#profile_edit input[name=group_name]').val();
-						var level_id 	= $('form#profile_edit input[name=level_id]').val();
-						var profile 	= $('form#profile_edit input[name=profile]').val();
-						var data = {uname: uname, passwd: passwd, pass_confirm: pass_confirm, lastname: lastname, firstname: firstname, email: email, telephone: telephone, sport: sport, body_height: body_height, sex: sex, birth_year: birth_year, birth_month: birth_month, birth_day: birth_day, dashboard: dashboard, location_name: location_name, group_id: group_id, group_name: group_name, level_id: level_id, profile: profile};
-						$.post('login/ajax.profile_save.php', data, function(data, result){
+						const post_data = {
+							uname		: uname,
+							passwd		: passwd,
+							pass_confirm: pass_confirm,
+							lastname	: $('form#profile_edit input[name=lastname]').val(),
+							firstname	: $('form#profile_edit input[name=firstname]').val(),
+							email		: $('form#profile_edit input[name=email]').val(),
+							telephone	: $("form#profile_edit .iti__selected-dial-code").text()+' '+$("#telephone").val(),
+							sport		: $('form#profile_edit select[name=sport]').val(),
+							body_height	: $('form#profile_edit select[name=body_height]').val(),
+							sex			: $('form#profile_edit input[name=sex]:checked').val(),
+							birth_year	: $('form#profile_edit select[name=birth_year]').val(),
+							birth_month	: $('form#profile_edit select[name=birth_month]').val(),
+							birth_day	: $('form#profile_edit select[name=birth_day]').val(),
+							dashboard	: $('form#profile_edit input[name=dashboard]:checked').val(),
+							location_name: $('form#profile_edit input[name=location_name]').val(),
+							group_id	: $('form#profile_edit input[name=group_id]').val(),
+							group_name	: $('form#profile_edit input[name=group_name]').val(),
+							level_id	: $('form#profile_edit input[name=level_id]').val(),
+							profile		: $('form#profile_edit input[name=profile]').val()
+						};
+						$.post('login/ajax.profile_save.php', post_data, function(data, result){
 							$("#profile_alerts").html(data);
 						});
 					}
@@ -624,6 +775,7 @@ function init_Profile_Edit() {
 	});
 }
 
+
 //############################################################
 //Group Select/Actions #######################################
 function group_icons_buttons() {
@@ -632,11 +784,12 @@ function group_icons_buttons() {
 	$("#group_buttons_message").hide();
 	
 	//add Icon
-	var g_message = '';
-	var g_class = '';
-	var g_submit = 'group_user_request_access';
+	let g_message = '';
+	let g_class = '';
+	let g_submit = 'group_user_request_access';
+
 	if (V_GROUP in V_User_2_Groups) {
-		var group_status = V_User_2_Groups[V_GROUP].status;
+		let group_status = V_User_2_Groups[V_GROUP].status;
 		 g_message = LANG.REQUEST.STATUS_UPDATED.replace('{DATE_TIME}', '<b>'+V_User_2_Groups[V_GROUP].modified+'</b>');
 		if (group_status=='0') {
 			g_class = 'G_no';
@@ -665,33 +818,50 @@ function group_icons_buttons() {
 	}
 	
 	//selected group icon
-	$("#GRP_select_chosen a span").removeClass('G_yes').removeClass('G_yesStop').removeClass('G_no').removeClass('G_leaveR').removeClass('G_leaveA').removeClass('G_waitLR').removeClass('G_waitLR').removeClass('G_waitN').removeClass('G_wait').addClass(g_class);
-	$("#GRP_select_chosen a span").append('<i title="'+$('#GRP_select option:selected').attr('data-status')+'">&nbsp;</i>');
+	$("#Select_Group_chosen a span").removeClass('G_yes')
+									.removeClass('G_yesStop')
+									.removeClass('G_no')
+									.removeClass('G_leaveR')
+									.removeClass('G_leaveA')
+									.removeClass('G_waitLR')
+									.removeClass('G_waitLR')
+									.removeClass('G_waitN')
+									.removeClass('G_wait').addClass(g_class);
+									
+	$("#Select_Group_chosen a span").append(
+		'<i title="' + $('#Select_Group option:selected').attr('data-status') + '">&nbsp;</i>'
+	);
 	
+
 	//group_buttons
 	if (g_submit != 'group_user_cancel_access') { //if not have access
 		$("#views").hide();
 		$("#view_radio").hide();
 		$("#group_buttons").show();
 		//$("#group_data").hide();
-	} else { //if have access
+	}
+	else { //if have access
 		$("#views").show();
 		$("#view_radio").show();
 		$("#group_buttons").hide();
 		//$("#group_data").show();
 	}
+
 	$(".submit_group").hide();
-	$("#"+g_submit).show();
+	$("#" + g_submit).show();
 	
+
 	//show messages
 	if (g_submit == 'group_user_request_access') {
 		//no message
-	} else if (g_submit == 'group_user_cancel_access') {
+	}
+	else if (g_submit == 'group_user_cancel_access') {
 		$("#group_buttons_message_in").html(g_message).show();
-	} else {
+	}
+	else {
 		$("#group_buttons_message").html(g_message).show();
 	}
-} //function group_icons_buttons()
+} //end group_icons_buttons()
 
 
 
@@ -700,7 +870,6 @@ function group_icons_buttons() {
 (function($) {
 	$.fn.inputFilter = function(inputFilter) {
 		return this.on("input keydown keyup mousedown mouseup select contextmenu drop blur", function(e) {
-			this.value = this.value.replace('.', ','); //TODO: check if this is LANG specific
 			if (inputFilter(this.value)) {
 				this.oldValue = this.value;
 				this.oldSelectionStart = this.selectionStart;
@@ -715,14 +884,3 @@ function group_icons_buttons() {
 }(jQuery));
 // Filter Numbers #####################################################
 
-
-//is iOS
-function is_iOS() { //mono ta iphone/ipad 
-	var iDevices = ['iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod'];
-	if (!!navigator.platform) {
-		while (iDevices.length) {
-			if (navigator.platform === iDevices.pop()){ return true; }
-		}
-	}
-	return false;
-}

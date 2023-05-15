@@ -5,29 +5,33 @@ if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 switch ($action) {
 	case 'add': // INSERT 
 	case 'edit': // UPDATE 
-		$template_type = '0';
+		$template_type = '';
 		if (isset($_REQUEST['template_type'])) {
-				if ($_REQUEST['template_type'] == '1') $template_type = '1';
-			elseif ($_REQUEST['template_type'] == '2') $template_type = '2';
+				if ($_REQUEST['template_type'] == 'axis') 	 $template_type = 'templates_axis';
+			elseif ($_REQUEST['template_type'] == 'forms') 	 $template_type = 'templates_forms';
+			elseif ($_REQUEST['template_type'] == 'results') $template_type = 'templates_results';
 		}
+		$table = $template_type;
+
 		$values = array();
-		$id = isset($_REQUEST['id']) ? (int)$_REQUEST['id'] : '0';
-		$values['user_id'] = isset($_REQUEST['user_id']) ? $_REQUEST['user_id'] : '0';
-		$values['location_id'] = isset($_REQUEST['location_id']) ? $_REQUEST['location_id'] : '0';
-		$values['group_id'] = isset($_REQUEST['group_id']) ? $_REQUEST['group_id'] : '0';
-		$values['form_id'] = isset($_REQUEST['form_id']) ? $_REQUEST['form_id'] : '0';
-		$values['name'] = isset($_REQUEST['templatename']) ? $_REQUEST['templatename'] : '';
-		$values['GlobalView'] = isset($_REQUEST['GlobalView']) ? ($_REQUEST['GlobalView']=='Ja'?'1':'0') : '1';
-		$values['GlobalEdit'] = isset($_REQUEST['GlobalEdit']) ? ($_REQUEST['GlobalEdit']=='Ja'?'1':'0') : '0';
-		$values['LocationView'] = isset($_REQUEST['LocationView']) ? ($_REQUEST['LocationView']=='Ja'?'1':'0') : '1';
-		$values['LocationEdit'] = isset($_REQUEST['LocationEdit']) ? ($_REQUEST['LocationEdit']=='Ja'?'1':'0') : '0';
-		$values['GroupView'] = isset($_REQUEST['GroupView']) ? ($_REQUEST['GroupView']=='Ja'?'1':'0') : '1';
-		$values['GroupEdit'] = isset($_REQUEST['GroupEdit']) ? ($_REQUEST['GroupEdit']=='Ja'?'1':'0') : '0';
-		$values['TrainerView'] = isset($_REQUEST['TrainerView']) ? ($_REQUEST['TrainerView']=='Ja'?'1':'0') : '1';
-		$values['TrainerEdit'] = isset($_REQUEST['TrainerEdit']) ? ($_REQUEST['TrainerEdit']=='Ja'?'1':'0') : '0';
-		$values['Private'] = isset($_REQUEST['Private']) ? ($_REQUEST['Private']=='Ja'?'1':'0') : '0';
-		$values['template_type'] = $template_type;
-		$update = $db->update($values, "templates", "id=?", array($id));
+		$id 					= (int)($_POST['id'] ?? 0);
+		$values['user_id'] 		= (int)($_POST['user_id'] ?? 0);
+		$values['location_id'] 	= (int)($_POST['location_id'] ?? 0);
+		$values['group_id'] 	= (int)($_POST['group_id'] ?? 0);
+		$values['name'] 		= $_POST['templatename'] ?? '';
+		// $values['GlobalView'] 	= isset($_POST['GlobalView']) ? ($_POST['GlobalView']=='Ja'?'1':'0') : '1';
+		// $values['LocationView'] = isset($_POST['LocationView']) ? ($_POST['LocationView']=='Ja'?'1':'0') : '1';
+		// $values['GroupView'] 	= isset($_POST['GroupView']) ? ($_POST['GroupView']=='Ja'?'1':'0') : '1';
+		// $values['TrainerView'] 	= isset($_POST['TrainerView']) ? ($_POST['TrainerView']=='Ja'?'1':'0') : '1';
+		// $values['Private'] 		= isset($_POST['Private']) ? ($_POST['Private']=='Ja'?'1':'0') : '0';
+		$row['modified'] 		= get_date_time_SQL('now');
+		$row['modified_by'] 	= $USERNAME;
+
+		if ($template_type == 'templates_forms') {
+			$values['form_id'] = (int)($_POST['form_id'] ?? 0);
+		}
+
+		$update = $db->update($values, $table, "id=?", array($id));
 		
 		echo check_update_result($update);
 		
@@ -35,13 +39,21 @@ switch ($action) {
 	
 
 	case 'del': // DELETE 
+		//delete at ajax.template_delete.php
 
 	  break;
 
 	  
 	case 'template_duplicate': // INSERT - Duplicate Template 
+		$template_type = '';
+		if (isset($_REQUEST['template_type'])) {
+				if ($_REQUEST['template_type'] == 'axis') 	 $template_type = 'templates_axis';
+			elseif ($_REQUEST['template_type'] == 'forms') 	 $template_type = 'templates_forms';
+			elseif ($_REQUEST['template_type'] == 'results') $template_type = 'templates_results';
+		}
+		$table = $template_type;
 		
-		$row = $db->fetchRow("SELECT * FROM templates WHERE id = ?", array($ID));
+		$row = $db->fetchRow("SELECT * FROM $table WHERE id = ?", array($ID));
 		if ($db->numberRows() > 0)  {
 			unset($row['id']);
 			$row['name'] .= '_copy';
@@ -50,21 +62,23 @@ switch ($action) {
 			$row['created'] = get_date_time_SQL('now');
 			$row['created_by'] = $USERNAME;
 			
-			$insert_id = $db->insert($row, "templates");
+			$insert_id = $db->insert($row, $table);
 			
 			echo check_insert_result($insert_id);
 		}
 		
 	  break;
-	  
 
-	case 'forms_templates': // SELECT 
-		if ($where != '') $where = ' WHERE 1 ' .$where;
+
+	case 'templates_forms': // SELECT 
+
 		$responce = new stdClass();
-		$forms = $db->fetchAllwithKey("SELECT id, name, name2, status FROM forms f $where ORDER BY id", array() ,'id');
+
+		$forms = $db->fetchAllwithKey("SELECT id, name, name2, status FROM forms WHERE status = 1 $where ORDER BY id", array() ,'id');
 		//echo "<pre>";print_r($forms);exit;
 
-		$saves = $db->fetchAllwithKey("SELECT id, user_id, location_id, group_id, form_id, name, GlobalView, GlobalEdit, LocationView, LocationEdit, GroupView, GroupEdit, TrainerView, TrainerEdit, Private, created, created_by, modified, modified_by FROM templates WHERE template_type=0 ORDER BY form_id, name", array(), 'id'); //fetchAllwithKey2,'form_id', 'id'
+		$saves = $db->fetchAllwithKey("SELECT id, user_id, location_id, group_id, form_id, name, created, created_by, modified, modified_by FROM templates_forms ORDER BY form_id, name", array(), 'id'); //fetchAllwithKey2,'form_id', 'id'
+		//GlobalView, LocationView, GroupView, TrainerView, Private, 
 		$i=0;
 		if ($db->numberRows() > 0)  {
 			foreach ($saves as $save) {
@@ -78,15 +92,11 @@ switch ($action) {
 					$save['user_id'],
 					$save['location_id'],
 					$save['group_id'],
-					$save['GlobalView'],
-					$save['GlobalEdit'],
-					$save['LocationView'],
-					$save['LocationEdit'],
-					$save['GroupView'],
-					$save['GroupEdit'],
-					$save['TrainerView'],
-					$save['TrainerEdit'],
-					$save['Private'],
+					// $save['GlobalView'],
+					// $save['LocationView'],
+					// $save['GroupView'],
+					// $save['TrainerView'],
+					// $save['Private'],
 					$save['created'],
 					$save['created_by'],
 					$save['modified'],
@@ -106,10 +116,11 @@ switch ($action) {
 	  break;
 	  
 	  
-	case 'groups_templates': // SELECT 
+	case 'templates_results': // SELECT 
 		
 		$responce = new stdClass();
-		$saves2 = $db->fetchAllwithKey("SELECT id, user_id, location_id, group_id, form_id, name, GlobalView, GlobalEdit, LocationView, LocationEdit, GroupView, GroupEdit, TrainerView, TrainerEdit, Private, created, created_by, modified, modified_by FROM templates WHERE template_type=2 ORDER BY form_id, name", array(), 'id'); 
+		$saves2 = $db->fetchAllwithKey("SELECT id, user_id, location_id, group_id, name, created, created_by, modified, modified_by FROM templates_results ORDER BY name", array(), 'id'); 
+		//GlobalView, LocationView, GroupView, TrainerView, Private, 
 		$i=0;
 		if ($db->numberRows() > 0)  {
 			foreach ($saves2 as $save) {
@@ -120,15 +131,11 @@ switch ($action) {
 					$save['user_id'],
 					$save['location_id'],
 					$save['group_id'],
-					$save['GlobalView'],
-					$save['GlobalEdit'],
-					$save['LocationView'],
-					$save['LocationEdit'],
-					$save['GroupView'],
-					$save['GroupEdit'],
-					$save['TrainerView'],
-					$save['TrainerEdit'],
-					$save['Private'],
+					// $save['GlobalView'],
+					// $save['LocationView'],
+					// $save['GroupView'],
+					// $save['TrainerView'],
+					// $save['Private'],
 					$save['created'],
 					$save['created_by'],
 					$save['modified'],
@@ -147,10 +154,12 @@ switch ($action) {
 			
 	  break;
 
-	case 'axis': // SELECT 
-		
+	
+	case 'templates_axis': // SELECT 
 		$responce = new stdClass();
-		$axis = $db->fetchAllwithKey("SELECT id, user_id, location_id, group_id, form_id, name, GlobalView, GlobalEdit, LocationView, LocationEdit, GroupView, GroupEdit, TrainerView, TrainerEdit, Private, created, created_by, modified, modified_by FROM templates WHERE template_type=1 ORDER BY name", array(), 'id'); 
+
+		$axis = $db->fetchAllwithKey("SELECT id, user_id, location_id, group_id, name, created, created_by, modified, modified_by FROM templates_axis ORDER BY name", array(), 'id');
+		//GlobalView, LocationView, GroupView, TrainerView, Private, 
 		$i=0;
 		if ($db->numberRows() > 0)  {
 			foreach ($axis as $save) {
@@ -161,15 +170,11 @@ switch ($action) {
 					$save['user_id'],
 					$save['location_id'],
 					$save['group_id'],
-					$save['GlobalView'],
-					$save['GlobalEdit'],
-					$save['LocationView'],
-					$save['LocationEdit'],
-					$save['GroupView'],
-					$save['GroupEdit'],
-					$save['TrainerView'],
-					$save['TrainerEdit'],
-					$save['Private'],
+					// $save['GlobalView'],
+					// $save['LocationView'],
+					// $save['GroupView'],
+					// $save['TrainerView'],
+					// $save['Private'],
 					$save['created'],
 					$save['created_by'],
 					$save['modified'],

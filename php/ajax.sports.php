@@ -6,7 +6,7 @@ switch ($action) {
 	case 'add': // INSERT 
 	case 'edit': // UPDATE 
 		$values = array();			
-		foreach ($_REQUEST as $key => $val) {
+		foreach ($_POST as $key => $val) {
 			$key = trim((string)$key); 
 			$val = trim((string)$val); 
 			switch($key) {
@@ -81,8 +81,8 @@ switch ($action) {
 	  
 	case 'del': // DELETE 
 		
-		//TODO: what if any users already selected this sport ??? @@@@@@@@
-		//TODO: what if delete a parent_id ??? @@@@@@@@
+		//TODO: what if any users already selected this sport ???
+		//TODO: what if delete a parent_id ???
 
 		$result = $db->delete("sports", "id=?", array($id));
 			
@@ -106,7 +106,7 @@ switch ($action) {
 		$responce = new stdClass();
 		$sidx = $sidx ?? '';
 		$sord = $sord ?? '';
-		$rows = $db->fetch("SELECT * FROM sports WHERE parent_id=? ORDER BY $sidx $sord", array($ID)); 
+		$rows = $db->fetch("SELECT * FROM sports WHERE status = 1 AND parent_id=? ORDER BY $sidx $sord", array($ID)); 
 		$i=0;
 		if ($db->numberRows() > 0)  {
 			foreach ($rows as $row) {

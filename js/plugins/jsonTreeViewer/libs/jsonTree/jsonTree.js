@@ -599,7 +599,7 @@ var jsonTree = (function() {
 			var this_el = this.el;
 			
 			loading.show(); //@@@@@MAD
-			setTimeout(function(){ //den pezei to loading alios
+			setTimeout(function(){ //for loading
 				this_el.classList.toggle('jsontree_node_expanded');
 				
 				if (isRecursive) {

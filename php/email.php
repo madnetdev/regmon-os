@@ -9,14 +9,17 @@ function SendEmail($EmailTo, $Subject, $Message) {
 	global $CONFIG;
 	$CE = $CONFIG['EMAIL'];
 
-	if ($CE['Username'] == '' OR $CE['Username'] == 'email@domain.com' OR
-		$EmailTo == '' OR $EmailTo == 'email@domain.com') {
+	if ($CE['Username'] == '' OR 
+		$CE['Username'] == 'email@domain.com' OR
+		$EmailTo == '' OR 
+		$EmailTo == 'email@domain.com') 
+	{
 		echo ('Please change Demo Email accounts "email@domain.com"<br>');
 		error_log('Please change Demo Email accounts "email@domain.com"');
 		return 'ERROR';
 	}
 
-	//TODO: @@@@@ this need to go to configuration
+	//TODO: this need to go to configuration
 	date_default_timezone_set('Europe/Berlin');
 
 	///////////////////////////////////////////////////////////////////////////

@@ -7,18 +7,18 @@ jQuery(function()
 
 const LT = LANG.TEMPLATES;
 const LP = LANG.PERMISSIONS;
-const grid_width_Max = 1200;
+const grid_width_Max = 900; //1200
 const idPrefix = "a_";
-const pager = '#ATpager';
+const pager = '#TApager';
 let header = 'Y-Achsen';
-let $axis_templates = $("#axis_templates");
-if ($axis_templates)
+let $templates_axis = $("#templates_axis");
+if ($templates_axis)
 {
 
-//axis_templates ###############################
-$axis_templates.jqGrid({
-	url: 'php/ajax.php?i=templates&oper=axis_templates',
-	editurl: "php/ajax.php?i=templates&oper=edit&template_type=1",
+//templates_axis ###############################
+$templates_axis.jqGrid({
+	url: 'php/ajax.php?i=templates&oper=templates_axis',
+	editurl: "php/ajax.php?i=templates&oper=edit&template_type=axis",
 	datatype: "json",
 	idPrefix: idPrefix,
 	hiddengrid: true, //to start closed without loading data
@@ -32,7 +32,7 @@ $axis_templates.jqGrid({
 	viewrecords: true, //view 1 - 1 of 10
 	headertitles:true,
 	cmTemplate: { editoptions:{size:22}, editable:true },
-	colNames:['', LT.Y_AXIS_ID, LT.Y_AXIS_NAME, LT.USER_ID, LT.LOCATION_ID, LT.GROUP_ID, LP.GLOBAL_VIEW, LP.GLOBAL_EDIT, LP.LOCATION_VIEW, LP.LOCATION_EDIT, LP.GROUP_VIEW, LP.GROUP_EDIT, LP.TRAINER_VIEW, LP.TRAINER_EDIT, LP.PRIVATE, LANG.CREATED, LANG.CREATED_BY, LANG.MODIFIED, LANG.MODIFIED_BY],
+	colNames:['', LT.Y_AXIS_ID, LT.Y_AXIS_NAME, LT.USER_ID, LT.LOCATION_ID, LT.GROUP_ID, /*LP.GLOBAL_VIEW, LP.LOCATION_VIEW, LP.GROUP_VIEW, LP.TRAINER_VIEW, LP.PRIVATE,*/ LANG.CREATED, LANG.CREATED_BY, LANG.MODIFIED, LANG.MODIFIED_BY],
 	colModel:[
 		{ //inline editing buttons and options
 			name:'acc', hidden:(V_GROUP_ADMIN_2?true:false), width:22, fixed:true, sortable:false, editable:false, search: false, resizable:false, formatter:'actions', 
@@ -57,21 +57,17 @@ $axis_templates.jqGrid({
 		{name:'user_id', 	 width:50, align:"center"},
 		{name:'location_id', width:50, align:"center"},
 		{name:'group_id', 	 width:50, align:"center"},
-		{name:"GlobalView",  width:30, template: checkboxTemplate},
-		{name:"GlobalEdit",  width:30, template: checkboxTemplate},
-		{name:"LocationView",width:30, template: checkboxTemplate},
-		{name:"LocationEdit",width:30, template: checkboxTemplate},
-		{name:"GroupView",   width:30, template: checkboxTemplate},
-		{name:"GroupEdit",   width:30, template: checkboxTemplate},
-		{name:"TrainerView", width:30, template: checkboxTemplate},
-		{name:"TrainerEdit", width:30, template: checkboxTemplate},
-		{name:"Private", 	 width:30, template: checkboxTemplate},
+		// {name:"GlobalView",  width:30, template: checkboxTemplate},
+		// {name:"LocationView",width:30, template: checkboxTemplate},
+		// {name:"GroupView",   width:30, template: checkboxTemplate},
+		// {name:"TrainerView", width:30, template: checkboxTemplate},
+		// {name:"Private", 	 width:30, template: checkboxTemplate},
 		{name:'created',	 width:65, template: hiddenReadonlyTemplate},
 		{name:'created_by',  width:80, template: hiddenReadonlyTemplate, align:"center", hidden:false},
 		{name:'modified', 	 width:65, template: hiddenReadonlyTemplate},
 		{name:'modified_by', width:80, template: hiddenReadonlyTemplate, align:"center", hidden:false}
 	]
-}) //$axis_templates.jqGrid({
+}) //$templates_axis.jqGrid({
 //Column Search
 .jqGrid('filterToolbar',{
 	stringResult:true, //send as Json //filters
@@ -100,7 +96,7 @@ $axis_templates.jqGrid({
 		const selRowId = self.jqGrid('getGridParam', 'selrow');
 		if (selRowId != null) {
 			const template_id = self.jqGrid('getCell', selRowId, 'id');
-			$.ajax({url:'php/ajax.php?i=templates&oper=template_duplicate&ID='+template_id, success:function(data, result) {
+			$.ajax({url:'php/ajax.php?i=templates&oper=template_duplicate&ID='+template_id+'&template_type=axis', success:function(data, result) {
 				self.trigger("reloadGrid", { fromServer: true });
 			}});
 		}
@@ -111,43 +107,42 @@ $axis_templates.jqGrid({
 });
 
 
-
 $(pager).children().children().css('table-layout', 'auto'); //fix pager width
 
-//axis_templates Groups
-var axis_templates_groups = '<select id="axis_templates_Grouping" style="font-size:11px; float:left; margin:4px 0 0 21px; color:black; font-weight:normal; display:none;">\
+//templates_axis Groups
+const templates_axis_groups = '<select id="templates_axis_Grouping" style="font-size:11px; float:left; margin:4px 0 0 21px; color:black; font-weight:normal; display:none;">\
 <option value="">'+LANG.GROUPING_NO+'</option>\
-<option value="user_id">'+LANG.GROUPING_BY+' Benutzer ID</option>\
-<option value="location_id">'+LANG.GROUPING_BY+' Location ID</option>\
-<option value="group_id">'+LANG.GROUPING_BY+' Gruppe ID</option>\
-<option value="created_by">'+LANG.GROUPING_BY+' erstellt von</option>\
-<option value="modified_by">'+LANG.GROUPING_BY+' geändert von</option></select>';
+<option value="user_id">'+LANG.GROUPING_BY+' '+LT.USER_ID+'</option>\
+<option value="location_id">'+LANG.GROUPING_BY+' '+LT.LOCATION_ID+'</option>\
+<option value="group_id">'+LANG.GROUPING_BY+' '+LT.GROUP_ID+'</option>\
+<option value="created_by">'+LANG.GROUPING_BY+' '+LANG.CREATED_BY+'</option>\
+<option value="modified_by">'+LANG.GROUPING_BY+' '+LANG.MODIFIED_BY+'</option></select>';
 
 
 //set Caption from table title/alt
-$axis_templates.jqGrid('setCaption', $axis_templates.attr('alt') +' '+ axis_templates_groups)
+$templates_axis.jqGrid('setCaption', $templates_axis.attr('alt') +' '+ templates_axis_groups)
 .closest("div.ui-jqgrid-view") //center Caption and change font-size
 	.children("div.ui-jqgrid-titlebar").css({"text-align":"center", "cursor":"pointer"})
 	.children("span.ui-jqgrid-title").css({"float":"none", "font-size": "17px"});
 
 //Expand/Colapse grid from Caption click
-$($axis_templates[0].grid.cDiv).on('click',function(e) {
-	if (e.target.id == 'axis_templates_Grouping') return false; //stop trigger caption click when click on UserGrouping select
+$($templates_axis[0].grid.cDiv).on('click',function(e) {
+	if (e.target.id == 'templates_axis_Grouping') return false; //stop trigger caption click when click on UserGrouping select
 	if ($(pager).is(':hidden')) 
 		$(this).removeClass('ui-corner-all');
 	else $(this).addClass('ui-corner-all');
-	$("#gview_axis_templates .ui-jqgrid-titlebar-close").trigger("click");	
+	$("#gview_templates_axis .ui-jqgrid-titlebar-close").trigger("click");	
 }).addClass('ui-corner-all');
 
-$("#gview_axis_templates .ui-jqgrid-titlebar-close").on('click',function() {
-	$('#axis_templates_Grouping').toggle();
+$("#gview_templates_axis .ui-jqgrid-titlebar-close").on('click',function() {
+	$('#templates_axis_Grouping').toggle();
 });
 
-//axis_templates Grouping
-$("#axis_templates_Grouping").on('change', function() {
-	var groupingName = $(this).val();
+//templates_axis Grouping
+$("#templates_axis_Grouping").on('change', function() {
+	const groupingName = $(this).val();
 	if (groupingName) {
-		$axis_templates.jqGrid('groupingGroupBy', groupingName, {
+		$templates_axis.jqGrid('groupingGroupBy', groupingName, {
 			//groupField : [groupingName],
 			//groupDataSorted : true,
 			groupText : [' {0} <b>( {1} )</b>'],
@@ -156,7 +151,7 @@ $("#axis_templates_Grouping").on('change', function() {
 			groupCollapse: true
 		});
 	} else {
-		$axis_templates.jqGrid('groupingRemove');
+		$templates_axis.jqGrid('groupingRemove');
 	}
 	return false;
 });
@@ -166,14 +161,14 @@ $("#axis_templates_Grouping").on('change', function() {
 $(window).on('resize', function() {
 	//main grid
 	if (grid_width_Max > $(window).width()) {
-		$axis_templates.jqGrid('setGridWidth', $(window).width()-30);
+		$templates_axis.jqGrid('setGridWidth', $(window).width()-30);
 	} else {
-		$axis_templates.jqGrid('setGridWidth', grid_width_Max);
+		$templates_axis.jqGrid('setGridWidth', grid_width_Max);
 	}
 }).trigger('resize');
 
 
    
-} //end if (axis_templates)
+} //end if (templates_axis)
 
 }); //end jQuery(document).ready

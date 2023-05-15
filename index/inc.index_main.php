@@ -13,11 +13,11 @@ $DIS2 = ' display:none;';
 			<div id="main_container_top" class="row top_container">
 				<div class="col-sm-12">
 					<div id="group_n_athlete">
-						<div id="GRP_select_row">
-							<span id="GRP_select_row_span">
-								<div id="GRP_select_div">
-									<span id="GRP_select_title"><?=$LANG->INDEX_GROUP;?> : &nbsp; </span> 
-									<select name="GRP_select" id="GRP_select">
+						<div id="Select_Group_row">
+							<span id="Select_Group_row_span">
+								<div id="Select_Group_div">
+									<span id="Select_Group_title"><?=$LANG->INDEX_GROUP;?> : &nbsp; </span> 
+									<select name="Select_Group" id="Select_Group">
 										<?=(substr_count($Groups_select_options, '<option') AND count($private_groups)) ? '<option></option>' : '';?>
 										<?=$Groups_select_options;?>
 									</select>
@@ -31,10 +31,10 @@ $DIS2 = ' display:none;';
 								</div>
 							</span>
 						</div>
-						<div id="ATH_select_row">
-							<span id="ATH_select_row_span">
-								<div id="ATH_name_div"><?=$Athlete_Name;?></div>
-								<div id="ATH_select_div"><?=$Athletes_Select;?></div>
+						<div id="Select_Athletes_row">
+							<span id="Select_Athletes_row_span">
+								<div id="Athlete_Name_div"><?=$Athlete_Name;?></div>
+								<div id="Select_Athletes_div"><?=$Athletes_Select;?></div>
 							</span>
 						</div>
 						<div id="VIEW_select_row">

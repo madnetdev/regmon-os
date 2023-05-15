@@ -20,8 +20,15 @@ $private_option = '';
 $groups2location = array(array('0','','','',''));
 $private_groups = array();
 $where_groups = '';
-if (!$ADMIN) $where_groups = 'AND location_id = "'.$LOCATION.'"';
-$rows = $db->fetch("SELECT id, location_id, name, status, private_key, admins_id, stop_date FROM `groups` WHERE status > 0 $where_groups ORDER BY location_id, name", array()); 
+
+if (!$ADMIN) {
+	$where_groups = 'AND location_id = "' . $LOCATION . '"';
+}
+
+$rows = $db->fetch("SELECT id, location_id, name, status, private_key, admins_id, stop_date 
+FROM `groups` 
+WHERE status > 0 $where_groups 
+ORDER BY location_id, name", array()); 
 if ($db->numberRows() > 0)  {
 	$GP_open_group = false;
 	$GP_group = '';
@@ -35,17 +42,20 @@ if ($db->numberRows() > 0)  {
 			$location_name = $locations_arr[$location_id][0];
 			$location_admin = $locations_arr[$location_id][1];
 		}
+
 		$GP_group = $location_name;
 		$group_admins = $row['admins_id'];
 		$group_name = $row['name'];
 		$group_id = $row['id'];
 		$group_expire = false;
+
 		if ($row['stop_date'] AND strtotime($row['stop_date']) < strtotime("now")) {
 			$group_expire = true;
 			if (isset($user_2_groups[$group_id]['status']) AND $user_2_groups[$group_id]['status'] == 1) {
 				$user_2_groups[$group_id]['status'] = 2;
 			}
 		}
+
 		$group_private = false;
 		if ($row['status'] == '3' AND !$group_expire) { //if private and not expired
 			if (!isset($user_2_groups[$group_id]['status']) //if user not know it
@@ -59,6 +69,7 @@ if ($db->numberRows() > 0)  {
 				$private_groups[] = array($group_id, $group_name, $row['private_key']);
 			}
 		}
+
 		$group_status = (isset($user_2_groups[$group_id]['status']) ? $user_2_groups[$group_id]['status'] : -1);
 		$trainers = '';
 		if (isset($trainers2groups[$group_id])) {
@@ -147,51 +158,80 @@ $Athlete_Name = $a_vorname.' &nbsp; '.$a_name;
 $Athletes_Select = '';
 if ($ADMIN OR $THIS_LOCATION_ADMIN OR $THIS_GROUP_ADMIN OR $THIS_GROUP_ADMIN_2) {
 	$where = '';
-	if ($THIS_GROUP_ADMIN OR $THIS_GROUP_ADMIN_2) $where = "AND u.level < 40";
-	if ($THIS_LOCATION_ADMIN) $where = "AND u.level < 50";
-	$u_rows = $db->fetch("SELECT u.id, u.uname, u.lastname, u.firstname, u.level FROM users u 
+	if ($THIS_GROUP_ADMIN or $THIS_GROUP_ADMIN_2) {
+		$where = "AND u.level < 40";
+	}
+	if ($THIS_LOCATION_ADMIN) {
+		$where = "AND u.level < 50";
+	}
+
+	$Athletes_Select = '<span id="Select_Athletes_title">' . $LANG->INDEX_ATHLETE . ' : &nbsp; </span>' .
+						'<select name="Select_Athletes" id="Select_Athletes">' .
+							'<option value="' . $UID . '" selected>' . 
+								$a_vorname . ' ' . $a_name . 
+							'</option>';
+
+	$u_rows = $db->fetch("SELECT u.id, u.uname, u.lastname, u.firstname, u.level 
+		FROM users u 
 		LEFT JOIN users2groups u2g ON u.id = u2g.user_id 
 		WHERE u2g.group_id = ? AND u2g.status = 1 AND u.status = 1 $where AND u.id != ? 
 		ORDER BY u.level DESC, u.firstname, u.lastname, u.id", array($GROUP, $UID)); //Group USERS
-	$Athletes_Select = '<span id="ATH_select_title">'.$LANG->INDEX_ATHLETE.' : &nbsp; </span>'.
-						'<select name="ATH_select" id="ATH_select">'.
-						'<option value="'.$UID.'" selected>'.$a_vorname.' '.$a_name.'</option>';
 	if ($db->numberRows() > 0)  {
 		foreach ($u_rows as $u_row) {
-			$selected = '';
 			$u_name = $u_row['lastname'] != '' ? $u_row['lastname'] : $u_row['uname'];
 			$u_vorname = $u_row['firstname'] != '' ? $u_row['firstname'] : $u_row['uname'];
-			if (isset($_COOKIE['ATHLETE']) AND $_COOKIE['ATHLETE'] == $u_row['id']) $selected = ' selected';
-			$Athletes_Select .= '<option value="'.$u_row['id'].'"'.$selected.'>'.$u_vorname.' '.$u_name.'</option>';
+
+			$selected = '';
+			if (isset($_COOKIE['ATHLETE']) and $_COOKIE['ATHLETE'] == $u_row['id']) {
+				$selected = ' selected';
+			}
+
+			$Athletes_Select .= '<option value="' . $u_row['id'] . '"' . $selected . '>' . 
+									$u_vorname . ' ' . $u_name . 
+								'</option>';
 		}
 	}
 	$Athletes_Select .= '</select>';
-	$Athletes_Select .= '<script>jQuery(function(){init_Athletes_Select();});</script>';
+	$Athletes_Select .= '<script>jQuery(function(){Select__Athletes__Init();});</script>';
 }
 elseif ($TRAINER) {
 	//give the name in case dont have athlete yet
 	$Athletes_Select = '<div class="just_name">'.$a_vorname.' &nbsp; '.$a_name.'</div>';
+
 	//Select Athletes in Group with Trainer this User-$UID
-	$rows = $db->fetch("SELECT u.id, u.uname, u.lastname, u.firstname FROM users2groups u2g 
+	$rows = $db->fetch("SELECT u.id, u.uname, u.lastname, u.firstname 
+		FROM users2groups u2g 
 		JOIN users u ON (u.id = u2g.user_id AND u.level = 10 AND u.status = 1) 
 		JOIN users2trainers u2t ON (u.id = u2t.user_id AND u2g.group_id = u2t.group_id AND u2t.status = 1 AND u2t.trainer_id = ?) 
-		WHERE u2g.group_id = ? AND u2g.status = 1 ORDER BY u.firstname, u.lastname, u.id", array($UID, $GROUP)); 
+		WHERE u2g.group_id = ? AND u2g.status = 1 
+		ORDER BY u.firstname, u.lastname, u.id", array($UID, $GROUP)); 
 	if ($db->numberRows() > 0) {
-		$Athletes_Select = '<span id="ATH_select_title">'.$LANG->INDEX_ATHLETE.' : &nbsp; </span>'.
-							'<select name="ATH_select" id="ATH_select">'.
-							'<option value=""></option>'.
-							'<option value="'.$UID.'" selected>'.$a_vorname.' '.$a_name.'</option>';
+		$Athletes_Select = '<span id="Select_Athletes_title">' . $LANG->INDEX_ATHLETE . ' : &nbsp; </span>' .
+							'<select name="Select_Athletes" id="Select_Athletes">' .
+								'<option value=""></option>' .
+								'<option value="' . $UID . '" selected>' .
+									$a_vorname . ' ' . $a_name . 
+								'</option>';
 		foreach ($rows as $row) {
-			$selected = '';
 			$u_name = $row['lastname'] != '' ? $row['lastname'] : $row['uname'];
 			$u_vorname = $row['firstname'] != '' ? $row['firstname'] : $row['uname'];
+
+			$selected = '';
 			//if ($UID == $row['id']) $selected = ' selected'; //select self
-			if (isset($_COOKIE['ATHLETE']) AND $_COOKIE['ATHLETE'] == $row['id']) $selected = ' selected';
-			if ($UID == $row['id']) $row['id'] = -1; //select self but athlete-trainer mode
-			$Athletes_Select .= '<option value="'.$row['id'].'"'.$selected.'>'.$u_vorname.' '.$u_name.'</option>';
+			if (isset($_COOKIE['ATHLETE']) and $_COOKIE['ATHLETE'] == $row['id']) {
+				$selected = ' selected';
+			}
+
+			if ($UID == $row['id']) {
+				$row['id'] = -1; //select self but athlete-trainer mode
+			}
+
+			$Athletes_Select .= '<option value="' . $row['id'] . '"' . $selected . '>' . 
+									$u_vorname . ' ' . $u_name . 
+								'</option>';
 		}
 		$Athletes_Select .= '</select>';
-		$Athletes_Select .= '<script>jQuery(function(){init_Athletes_Select();});</script>';
+		$Athletes_Select .= '<script>jQuery(function(){Select__Athletes__Init();});</script>';
 	}
 }
 else {

@@ -2,8 +2,8 @@
 require_once('../_settings.regmon.php');
 require('../login/validate.php');
 
-$group_id = isset($_REQUEST['group_id']) ? $_REQUEST['group_id'] : false;
-$trainer_id = isset($_REQUEST['trainer_id']) ? $_REQUEST['trainer_id'] : false;
+$group_id = (int)($_POST['group_id'] ?? false);
+$trainer_id = (int)($_POST['trainer_id'] ?? false);
 if (!$group_id OR !$trainer_id) exit;
 
 

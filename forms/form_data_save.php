@@ -6,7 +6,7 @@ $athlete_id = isset($_POST['athlete_id']) ? $_POST['athlete_id'] : $UID;
 $form_id = isset($_POST['form_id']) ? $_POST['form_id'] : 0;
 $category_id = isset($_POST['category_id']) ? $_POST['category_id'] : 0;
 $group_id = isset($_POST['group_id']) ? $_POST['group_id'] : $GROUP;
-$GRP_select = isset($_POST['GRP_select']) ? $_POST['GRP_select'] : array();
+$Select_Group = isset($_POST['Select_Group']) ? $_POST['Select_Group'] : array();
 
 $CHANGE = (isset($_POST['change']) AND ($_POST['change']=='true')) ? true : false;
 $change_id = isset($_POST['change_id']) ? $_POST['change_id'] : 0;
@@ -37,7 +37,7 @@ unset($_POST['form_time']);
 unset($_POST['form_time_end']);
 unset($_POST['change']);
 unset($_POST['change_id']);
-unset($_POST['GRP_select']);
+unset($_POST['Select_Group']);
 
 // Save 
 $values = array();
@@ -63,8 +63,8 @@ else {
 	$values['created_by'] = $USERNAME;
 
     //multiply Groups Selection
-	if (count($GRP_select)) {
-		foreach ($GRP_select as $group_id) {
+	if (count($Select_Group)) {
+		foreach ($Select_Group as $group_id) {
 			$values['group_id'] = $group_id;
             //save form_data in each Selected Group
 			$insert_id = $db->insert($values, "forms_data");

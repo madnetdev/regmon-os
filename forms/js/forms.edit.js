@@ -60,10 +60,11 @@ function replaceAll_Object_Array(str, obj) {
 	});
 	return str;
 }
+
 function get_max_val(selector) {
-	var max = null;
+	let max = null;
 	$(selector).each(function() {
-		var value = parseFloat($(this).val());
+		const value = parseFloat($(this).val());
 		max = (value > max) ? value : max;
 	});
 	return max;
@@ -76,7 +77,7 @@ jQuery(function()
 
 //sticky buttons
 $('#ssb-btn-1').on('click',function() { $("button.preview").trigger("click"); });
-$('#ssb-btn-3').on('click',function() { $("button.save").trigger("click"); });
+$('#ssb-btn-6').on('click',function() { $("button.save").trigger("click"); });
 
 //Helpers #####################################
 //firefox bug fix for disableSelection() that disable inputs 
@@ -115,7 +116,7 @@ $('.days_has_ck').on('click',function(e){
 //#####################################
 //TEMPLATES ###########################
 
-let _Template_Page = ''+ //{PAGE_NUM}
+const _Template_Page = ''+ //{PAGE_NUM}
 	'<li class="page_sort">'+
 		'<span id="pageDrag_{PAGE_NUM}" class="page-drag trans5 hid"><i class="fa fa-arrows"></i></span>'+
 		'<fieldset id="fieldset_{PAGE_NUM}" class="coolfieldset" data-page-id="{PAGE_NUM}">'+
@@ -149,7 +150,7 @@ let _Template_Page = ''+ //{PAGE_NUM}
 		'</fieldset><br><br>'+
 	'</li>';
 
-let _Template_Row = ''+ //{ROW_NUM}
+const _Template_Row = ''+ //{ROW_NUM}
 	'<li id="Row_{ROW_NUM}" class="row_sort" data-row="{ROW_NUM}">'+
 		'<div class="row_drag">'+
 			'<input type="hidden" name="row_no" value="{ROW_NUM}">'+
@@ -167,7 +168,7 @@ let _Template_Row = ''+ //{ROW_NUM}
 		'</div>'+
 	'</li>';
 
-let _Template_Item__Main = ''+ //{ROW_ITEM},{ROW_ITEM_NUM},{ROW_ITEM_TYPE},{ROW_ITEM_TYPE_NAME}
+const _Template_Item__Main = ''+ //{ROW_ITEM},{ROW_ITEM_NUM},{ROW_ITEM_TYPE},{ROW_ITEM_TYPE_NAME}
 		'<input type="hidden" name="rowItem_no" value="{ROW_ITEM_NUM}" class="c_no">'+
 		'<input type="hidden" name="rowItem_type" value="{ROW_ITEM_TYPE}" class="c_type">'+
 		'<div class="c_handler trans50">'+
@@ -176,7 +177,7 @@ let _Template_Item__Main = ''+ //{ROW_ITEM},{ROW_ITEM_NUM},{ROW_ITEM_TYPE},{ROW_
 			'{ROW_ITEM_TYPE_NAME}</a>'+
 		'</div>';
 
-let _Template_Item__Empty = ''+ //{ROW_ITEM}
+const _Template_Item__Empty = ''+ //{ROW_ITEM}
 	'<td id="rowItem_{ROW_ITEM}" class="rowItem s_input cm_it empty" style="text-align: left; width: 100%;" data-row_item="{ROW_ITEM}">'+
 		'<div class="rowItem_edit">'+
 			_Template_Item__Main+
@@ -267,7 +268,8 @@ function Page_Events_Init(page_num) {
 			connectWith: "ul.row_sortable",
 			//containment:"ul.page_sortable", //"ul.item_sortable", //moves in --I disabled that so rows can go everywhere
 			handle: "> .row_drag > .Row-drag",
-			revert:300,	opacity: '.5',
+			revert: 300,
+			opacity: '.5',
 			tolerance: "intersect",
 			placeholder:"ui-state-highlight placeholder-item",
 			start: function (e, ui) { ui.placeholder.height(ui.helper.outerHeight()); ui.placeholder.height(ui.helper.outerHeight()); }
@@ -280,8 +282,8 @@ function Page_Events_Init(page_num) {
 
 //button newPage --only one button --run once
 $("button.newPage").on('click',function() {
-	var page_num = get_max_val('input[name="page[]"]') + 1;
-	var Page_Template = replaceAll(_Template_Page, '{PAGE_NUM}', page_num);
+	const page_num = get_max_val('input[name="page[]"]') + 1;
+	const Page_Template = replaceAll(_Template_Page, '{PAGE_NUM}', page_num);
 	$(this).closest('#middle-wizard').find('ul.page_sortable').append(Page_Template);
 	//init Page Events
 	Page_Events_Init(page_num);
@@ -294,7 +296,8 @@ if (!V_HAVE_DATA) {
 		//connectWith: "ul.item_sortable",
 		//containment:"ul.page_sortable", //"ul.item_sortable", //moves in 
 		handle: ".page-drag",
-		revert:300,	opacity: '.5',
+		revert: 300,
+		opacity: '.5',
 		tolerance: "pointer",
 		placeholder:"ui-state-highlight placeholder-page",
 		//containment:"parent",
@@ -314,9 +317,9 @@ if (!V_HAVE_DATA) {
 //button newRow --called once in a page
 button_New_Row_Click = function (element) {
 	$(element).on('click',function() {
-		var row_num = get_max_val('input[name="row_no"]') + 1;
+		const row_num = get_max_val('input[name="row_no"]') + 1;
 		
-		var Row_Template = replaceAll_Object(_Template_Row, {'{ROW_NUM}':row_num});
+		const Row_Template = replaceAll_Object(_Template_Row, {'{ROW_NUM}':row_num});
 		
 		$(this).parent().prev('ul.row_sortable').append(Row_Template);
 		
@@ -367,16 +370,19 @@ New_Row_Events = function (row) {
 			//containment:"ul.page_sortable", //"ul.item_sortable", //moves in 
 			handle: '.rowItem_edit > .c_handler > .rowItem_Drag', //thelei ena epipedo meta to selector
 			//helper: "clone",
-			revert:300,	opacity: '.5',
+			revert: 300,
+			opacity: '.5',
 			//"intersect": The item overlaps the other item by at least 50%. -- "pointer": The mouse pointer overlaps the other item.
 			tolerance: "intersect", //have problem with pointer and nested acc items
 			placeholder:"ui-state-highlight placeholder-item-td",
 			stop: function( e, ui ) {
-				let row = $(this).attr('data-row');
+				const row = $(this).attr('data-row');
+
 				Set_Items_Width(row); //set width
 			},
 			update: function( e, ui ) {
-				let row = $(this).attr('data-row');
+				const row = $(this).attr('data-row');
+
 				Set_Items_Width(row); //set width
 			}
 		}).disableSelection();
@@ -390,164 +396,184 @@ button_Copy_Row_Click = function (element) {
 	$(element).on('click',function() {
 		//console.log('button_Copy_Row_Click');
 		Copy_Num++;
-		var old_row_num = $(this).attr('data-row');
-		var new_row_num = get_New_Row_num();
+		const old_row_num = $(this).attr('data-row');
+		const new_row_num = get_New_Row_num();
 
-		var new_row = $(this).parent().parent('li.row_sort').clone().html();
+		const new_row = $(this).parent().parent('li.row_sort').clone().html();
+
 		if (new_row.indexOf('data-type="_Accordion"') == -1) { //one line
 			//first Row only
-			let a1 = ' name="row_no" value="'+old_row_num+'"'; //name="row_no" value="2"
-			let a2 = ' name="row_no" value="'+new_row_num+'"';
-			let b1 = ' id="rowItem_'+old_row_num+'_'; //rowItem_2_1
-			let b2 = ' id="rowItem_'+new_row_num+'_';
-			let c1 = ' data-row_item="'+old_row_num+'_'; //data-row_item="2_1"
-			let c2 = ' data-row_item="'+new_row_num+'_';
-			let d1 = ' data-id="'+old_row_num+'_'; //data-id="2_1"
-			let d2 = ' data-id="'+new_row_num+'_';
-			let e1 = ' data-row="'+old_row_num+'"'; //data-row="2"
-			let e2 = ' data-row="'+new_row_num+'"';
-			let f1 = ' name="c_'+old_row_num+'_'; //name="c_2_1_
-			let f2 = ' name="c_'+new_row_num+'_';
-			let g1 = 'true?1:0;" class="c_'+old_row_num+'_';
-			let g2 = 'true?1:0;" class="c_'+new_row_num+'_';
-			let h1 = 'c_has_title c_'+old_row_num+'_'; 
-			let h2 = 'c_has_title c_'+new_row_num+'_';
-			let i1 = ' class="c_title c_'+old_row_num+'_';
-			let i2 = ' class="c_title c_'+new_row_num+'_';
-			let j1 = 'function(){$(".c_'+old_row_num+'_';
-			let j2 = 'function(){$(".c_'+new_row_num+'_';
-			let k1 = 'btn_rd_align_'+old_row_num+'_';
-			let k2 = 'btn_rd_align_'+new_row_num+'_';
-			let l1 = ' class="c_has_color c_'+old_row_num+'_';
-			let l2 = ' class="c_has_color c_'+new_row_num+'_';
-			let m1 = '_color_a, .c_'+old_row_num+'_';
-			let m2 = '_color_a, .c_'+new_row_num+'_';
-			let n1 = ' class="c_color_a c_'+old_row_num+'_';
-			let n2 = ' class="c_color_a c_'+new_row_num+'_';
-			let o1 = ' class="c_color_b c_'+old_row_num+'_';
-			let o2 = ' class="c_color_b c_'+new_row_num+'_';
-			let p1 = ' id="datetimepicker_'+old_row_num+'_';
-			let p2 = ' id="datetimepicker_'+new_row_num+'_';
-			let q1 = 'time" id="clockpicker_'+old_row_num+'_';
-			let q2 = 'time" id="clockpicker_'+new_row_num+'_';
-			let r1 = ' id="clockpicker_from_'+old_row_num+'_';
-			let r2 = ' id="clockpicker_from_'+new_row_num+'_';
-			let s1 = ' id="clockpicker_to_'+old_row_num+'_';
-			let s2 = ' id="clockpicker_to_'+new_row_num+'_';
-			let t1 = ' id="clockpicker_period_'+old_row_num+'_';
-			let t2 = ' id="clockpicker_period_'+new_row_num+'_';
-			let u1 = ' id="c_'+old_row_num+'_';
-			let u2 = ' id="c_'+new_row_num+'_';
+			const a1 = ' name="row_no" value="'+old_row_num+'"'; //name="row_no" value="2"
+			const a2 = ' name="row_no" value="'+new_row_num+'"';
+			const b1 = ' id="rowItem_'+old_row_num+'_'; //rowItem_2_1
+			const b2 = ' id="rowItem_'+new_row_num+'_';
+			const c1 = ' data-row_item="'+old_row_num+'_'; //data-row_item="2_1"
+			const c2 = ' data-row_item="'+new_row_num+'_';
+			const d1 = ' data-id="'+old_row_num+'_'; //data-id="2_1"
+			const d2 = ' data-id="'+new_row_num+'_';
+			const e1 = ' data-row="'+old_row_num+'"'; //data-row="2"
+			const e2 = ' data-row="'+new_row_num+'"';
+			const f1 = ' name="c_'+old_row_num+'_'; //name="c_2_1_
+			const f2 = ' name="c_'+new_row_num+'_';
+			const g1 = 'true?1:0;" class="c_'+old_row_num+'_';
+			const g2 = 'true?1:0;" class="c_'+new_row_num+'_';
+			const h1 = 'c_has_title c_'+old_row_num+'_'; 
+			const h2 = 'c_has_title c_'+new_row_num+'_';
+			const i1 = ' class="c_title c_'+old_row_num+'_';
+			const i2 = ' class="c_title c_'+new_row_num+'_';
+			const j1 = 'function(){$(".c_'+old_row_num+'_';
+			const j2 = 'function(){$(".c_'+new_row_num+'_';
+			const k1 = 'btn_rd_align_'+old_row_num+'_';
+			const k2 = 'btn_rd_align_'+new_row_num+'_';
+			const l1 = ' class="c_has_color c_'+old_row_num+'_';
+			const l2 = ' class="c_has_color c_'+new_row_num+'_';
+			const m1 = '_color_a, .c_'+old_row_num+'_';
+			const m2 = '_color_a, .c_'+new_row_num+'_';
+			const n1 = ' class="c_color_a c_'+old_row_num+'_';
+			const n2 = ' class="c_color_a c_'+new_row_num+'_';
+			const o1 = ' class="c_color_b c_'+old_row_num+'_';
+			const o2 = ' class="c_color_b c_'+new_row_num+'_';
+			const p1 = ' id="datetimepicker_'+old_row_num+'_';
+			const p2 = ' id="datetimepicker_'+new_row_num+'_';
+			const q1 = 'time" id="clockpicker_'+old_row_num+'_';
+			const q2 = 'time" id="clockpicker_'+new_row_num+'_';
+			const r1 = ' id="clockpicker_from_'+old_row_num+'_';
+			const r2 = ' id="clockpicker_from_'+new_row_num+'_';
+			const s1 = ' id="clockpicker_to_'+old_row_num+'_';
+			const s2 = ' id="clockpicker_to_'+new_row_num+'_';
+			const t1 = ' id="clockpicker_period_'+old_row_num+'_';
+			const t2 = ' id="clockpicker_period_'+new_row_num+'_';
+			const u1 = ' id="c_'+old_row_num+'_';
+			const u2 = ' id="c_'+new_row_num+'_';
 			
 			//replaces
 			new_row = replaceAll_Object_Array(new_row, {a:[a1,a2], b:[b1,b2], c:[c1,c2], d:[d1,d2], e:[e1,e2], f:[f1,f2], g:[g1,g2], h:[h1,h2], i:[i1,i2], j:[j1,j2], k:[k1,k2], l:[l1,l2], m:[m1,m2], n:[n1,n2], o:[o1,o2], p:[p1,p2], q:[q1,q2], r:[r1,r2], s:[s1,s2], t:[t1,t2], u:[u1,u2]});
 		}
 		else { //accordion and many lines
 			//nested Rows
-			let a1 = ' href="#accordionPanel_';
-			let a2 = ' href="#accordionPanel_C'+Copy_Num+'_';
-			let b1 = ' data-parent="#accordion_';
-			let b2 = ' data-parent="#accordion_C'+Copy_Num+'_';
-			let c1 = ' id="Row_';
-			let c2 = ' id="Row_C'+Copy_Num+'_';
-			let d1 = ' id="rowItem_';
-			let d2 = ' id="rowItem_C'+Copy_Num+'_';
-			let e1 = ' aria-controls="accordionPanel_';
-			let e2 = ' aria-controls="accordionPanel_C'+Copy_Num+'_';
-			let f1 = ' name="row_no" value="';
-			let f2 = ' name="row_no" value="C'+Copy_Num+'_';
-			let g1 = ' data-row="';
-			let g2 = ' data-row="C'+Copy_Num+'_';
-			let h1 = ' data-row_item="';
-			let h2 = ' data-row_item="C'+Copy_Num+'_';
-			let i1 = ' data-id="';
-			let i2 = ' data-id="C'+Copy_Num+'_';
-			let j1 = ' name="c_';
-			let j2 = ' name="c_C'+Copy_Num+'_';
-			let k1 = ' id="accPanel_';
-			let k2 = ' id="accPanel_C'+Copy_Num+'_';
-			let l1 = ' id="AccPanel_';
-			let l2 = ' id="AccPanel_C'+Copy_Num+'_';
-			let m1 = ' id="accordionPanel_';
-			let m2 = ' id="accordionPanel_C'+Copy_Num+'_';
-			let n1 = ' id="accordion_';
-			let n2 = ' id="accordion_C'+Copy_Num+'_';
+			const a1 = ' href="#accordionPanel_';
+			const a2 = ' href="#accordionPanel_C'+Copy_Num+'_';
+			const b1 = ' data-parent="#accordion_';
+			const b2 = ' data-parent="#accordion_C'+Copy_Num+'_';
+			const c1 = ' id="Row_';
+			const c2 = ' id="Row_C'+Copy_Num+'_';
+			const d1 = ' id="rowItem_';
+			const d2 = ' id="rowItem_C'+Copy_Num+'_';
+			const e1 = ' aria-controls="accordionPanel_';
+			const e2 = ' aria-controls="accordionPanel_C'+Copy_Num+'_';
+			const f1 = ' name="row_no" value="';
+			const f2 = ' name="row_no" value="C'+Copy_Num+'_';
+			const g1 = ' data-row="';
+			const g2 = ' data-row="C'+Copy_Num+'_';
+			const h1 = ' data-row_item="';
+			const h2 = ' data-row_item="C'+Copy_Num+'_';
+			const i1 = ' data-id="';
+			const i2 = ' data-id="C'+Copy_Num+'_';
+			const j1 = ' name="c_';
+			const j2 = ' name="c_C'+Copy_Num+'_';
+			const k1 = ' id="accPanel_';
+			const k2 = ' id="accPanel_C'+Copy_Num+'_';
+			const l1 = ' id="AccPanel_';
+			const l2 = ' id="AccPanel_C'+Copy_Num+'_';
+			const m1 = ' id="accordionPanel_';
+			const m2 = ' id="accordionPanel_C'+Copy_Num+'_';
+			const n1 = ' id="accordion_';
+			const n2 = ' id="accordion_C'+Copy_Num+'_';
 			
-			let ag1 = 'true?1:0;" class="c_';
-			let ag2 = 'true?1:0;" class="c_C'+Copy_Num+'_';
-			let ah1 = 'c_has_title c_'; 
-			let ah2 = 'c_has_title c_C'+Copy_Num+'_';
-			let ai1 = ' class="c_title c_';
-			let ai2 = ' class="c_title c_C'+Copy_Num+'_';
-			let aj1 = 'function(){$(".c_';
-			let aj2 = 'function(){$(".c_C'+Copy_Num+'_';
-			let ak1 = 'btn_rd_align_';
-			let ak2 = 'btn_rd_align_C'+Copy_Num+'_';
-			let al1 = ' class="c_has_color c_';
-			let al2 = ' class="c_has_color c_C'+Copy_Num+'_';
-			let am1 = '_color_a, .c_';
-			let am2 = '_color_a, .c_C'+Copy_Num+'_';
-			let an1 = ' class="c_color_a c_';
-			let an2 = ' class="c_color_a c_C'+Copy_Num+'_';
-			let ao1 = ' class="c_color_b c_';
-			let ao2 = ' class="c_color_b c_C'+Copy_Num+'_';
-			let ap1 = ' id="datetimepicker_';
-			let ap2 = ' id="datetimepicker_C'+Copy_Num+'_';
-			let aq1 = ' id="clockpicker_from_';
-			let aq2 = ' id="clockpicker_from_C'+Copy_Num+'_';
-			let ar1 = ' id="clockpicker_to_';
-			let ar2 = ' id="clockpicker_to_C'+Copy_Num+'_';
-			let as1 = ' id="clockpicker_period_';
-			let as2 = ' id="clockpicker_period_C'+Copy_Num+'_';
-			let at1 = 'time" id="clockpicker_';
-			let at2 = 'time" id="clockpicker_C'+Copy_Num+'_';
-			let au1 = ' id="c_';
-			let au2 = ' id="c_C'+Copy_Num+'_';
+			const ag1 = 'true?1:0;" class="c_';
+			const ag2 = 'true?1:0;" class="c_C'+Copy_Num+'_';
+			const ah1 = 'c_has_title c_'; 
+			const ah2 = 'c_has_title c_C'+Copy_Num+'_';
+			const ai1 = ' class="c_title c_';
+			const ai2 = ' class="c_title c_C'+Copy_Num+'_';
+			const aj1 = 'function(){$(".c_';
+			const aj2 = 'function(){$(".c_C'+Copy_Num+'_';
+			const ak1 = 'btn_rd_align_';
+			const ak2 = 'btn_rd_align_C'+Copy_Num+'_';
+			const al1 = ' class="c_has_color c_';
+			const al2 = ' class="c_has_color c_C'+Copy_Num+'_';
+			const am1 = '_color_a, .c_';
+			const am2 = '_color_a, .c_C'+Copy_Num+'_';
+			const an1 = ' class="c_color_a c_';
+			const an2 = ' class="c_color_a c_C'+Copy_Num+'_';
+			const ao1 = ' class="c_color_b c_';
+			const ao2 = ' class="c_color_b c_C'+Copy_Num+'_';
+			const ap1 = ' id="datetimepicker_';
+			const ap2 = ' id="datetimepicker_C'+Copy_Num+'_';
+			const aq1 = ' id="clockpicker_from_';
+			const aq2 = ' id="clockpicker_from_C'+Copy_Num+'_';
+			const ar1 = ' id="clockpicker_to_';
+			const ar2 = ' id="clockpicker_to_C'+Copy_Num+'_';
+			const as1 = ' id="clockpicker_period_';
+			const as2 = ' id="clockpicker_period_C'+Copy_Num+'_';
+			const at1 = 'time" id="clockpicker_';
+			const at2 = 'time" id="clockpicker_C'+Copy_Num+'_';
+			const au1 = ' id="c_';
+			const au2 = ' id="c_C'+Copy_Num+'_';
 			//replaces
-			new_row = replaceAll_Object_Array(new_row, {a:[a1,a2], b:[b1,b2], c:[c1,c2], d:[d1,d2], e:[e1,e2], f:[f1,f2], g:[g1,g2], h:[h1,h2], i:[i1,i2], j:[j1,j2], k:[k1,k2], l:[l1,l2], m:[m1,m2], n:[n1,n2],     ag:[ag1,ag2], ah:[ah1,ah2], ai:[ai1,ai2], aj:[aj1,aj2], ak:[ak1,ak2], al:[al1,al2], am:[am1,am2], an:[an1,an2], ao:[ao1,ao2], ap:[ap1,ap2], aq:[aq1,aq2], ar:[ar1,ar2], as:[as1,as2], at:[at1,at2], au:[au1,au2]});
+			new_row = replaceAll_Object_Array(new_row, {a:[a1,a2], b:[b1,b2], c:[c1,c2], d:[d1,d2], e:[e1,e2], f:[f1,f2], g:[g1,g2], h:[h1,h2], i:[i1,i2], j:[j1,j2], k:[k1,k2], l:[l1,l2], m:[m1,m2], n:[n1,n2], 		ag:[ag1,ag2], ah:[ah1,ah2], ai:[ai1,ai2], aj:[aj1,aj2], ak:[ak1,ak2], al:[al1,al2], am:[am1,am2], an:[an1,an2], ao:[ao1,ao2], ap:[ap1,ap2], aq:[aq1,aq2], ar:[ar1,ar2], as:[as1,as2], at:[at1,at2], au:[au1,au2]});
 		}
 		//console.log(new_row);
 		
+
 		//replaces
 		//put after original
 		$(this).parent().parent('li.row_sort').after('<li id="Row_'+new_row_num+'" class="row_sort" data-row="'+new_row_num+'">'+ new_row +'</li>');
 		
+
 		//item unique name change
 		//$('#Row_'+new_row_num+' .c_name').each(function(){
 		$('#Row_'+new_row_num+' .row_div > table > tbody > tr > td > div.rowItem_edit > div.c_content .c_name').each(function(){
-			let this_name = $(this).val();
+			const this_name = $(this).val();
 			for (let ii=2; ii<50; ii++){
-				if (!$("input[value='"+this_name+'-'+ii+"'].c_name").length) { //if name not exist
-					$(this).val(this_name+'-'+ii); //set this name
-					$(this).attr('value', this_name+'-'+ii); //set this name as attr('value') bcz has some problems with clone
+				//if name not exist
+				if (!$("input[value='" + this_name + '-' + ii + "'].c_name").length) {
+					//set this name
+					$(this).val(this_name + '-' + ii);
+					//set this name as attr('value') bcz has some problems with clone
+					$(this).attr('value', this_name + '-' + ii);
 					break;
 				}
 			}
 		});
+
+
 		//selects update
 		//$('#Row_'+new_row_num+' .c_content select').each(function(){  --select:not(.rowItem_Select)
 		$('#Row_'+new_row_num+' .row_div > table > tbody > tr > td > div.rowItem_edit > div.c_content select:not(.rowItem_Select)').each(function(){
-			let new_name = this.name;
-			let old_name = new_name.replace(new_row_num, old_row_num);
-			$(this).val( $('select[name='+old_name+']').val() );
+			const new_name = this.name;
+			const old_name = new_name.replace(new_row_num, old_row_num);
+			$(this).val(
+				$('select[name=' + old_name + ']').val()
+			);
 		});
 		
+
 		//html area remove
 		//$('#Row_'+new_row_num+' .trumbowyg-box textarea').each(function(){
 		$('#Row_'+new_row_num+' .row_div > table > tbody > tr > td > div.rowItem_div > div.trumbowyg-box textarea').each(function(){
-			let new_name = this.name;
-			let old_name = new_name.replace(new_row_num, old_row_num);
-			$(this).parent().after( $(this).val( $('textarea[name='+old_name+']').val() ) ).remove();
+			const new_name = this.name;
+			const old_name = new_name.replace(new_row_num, old_row_num);
+			//TODO: check $(this).val() inside after()
+			//$(this).parent().after( $(this).val( $('textarea[name='+old_name+']').val() ) ).remove();
+			$(this).parent().after(
+				$(this).val(
+					$('textarea[name=' + old_name + ']').val()
+				)
+			).remove();
 		});
+
 
 		//row_item buttons events init
 		New_Row_Events(new_row_num);
 		
+
 		//items init
 		//$('#Row_'+new_row_num+' td.cm_it').each(function(){
 		$('#Row_'+new_row_num+' .row_div > table > tbody > tr > td.rowItem').each(function(){ //td.cm_it
-			let row_item = $(this).attr('data-row_item');
-			let type = $(this).find('> .rowItem_edit > input.c_type').val();
+			const row_item = $(this).attr('data-row_item');
+			const type = $(this).find('> .rowItem_edit > input.c_type').val();
+
 			Loaded_Item_init(type, row_item, false); //init item
 		});
 	});
@@ -565,38 +591,52 @@ button_Copy_Row_Click = function (element) {
 
 function Set_Items_Width(row_num) {
 	//console.log('Set_Items_Width');
-	var width = 100;
-	let elems = $('#Row_'+row_num+' > div.row_div > table > tbody > tr > td.rowItem'); //td.cm_it
-	var rowItems_num = elems.length;
+	const elems = $('#Row_'+row_num+' > div.row_div > table > tbody > tr > td.rowItem'); //td.cm_it
+	const rowItems_num = elems.length;
+	let width = 100;
+
 	if (rowItems_num > 0) {
 		width = parseInt(100/rowItems_num); //divide width/items
 		$('#Row_'+row_num+' > div.row_div > table > tbody > tr > td.rowItem-init').addClass('hidden');
-	} else {
+	}
+	else {
 		//make td.rowItem-init visible if no item exist
 		$('#Row_'+row_num+' > div.row_div > table > tbody > tr > td.rowItem-init').removeClass('hidden');
 	}
+
 	elems.css('width',width+'%');
 	elems.find('.c_content .c_width').val(width);
-	var extra_width = 100 - (width*rowItems_num);
+
+	const extra_width = 100 - (width*rowItems_num);
 	if (extra_width) {
-		$(elems[rowItems_num-1]).css('width',width+extra_width+'%');
-		$(elems.find('.c_content .c_width')[rowItems_num-1]).val(width);
+		$(elems[rowItems_num - 1]).css('width', width + extra_width + '%');
+		$(elems.find('.c_content .c_width')[rowItems_num - 1]).val(width);
 	}
 }
 
+	
 button_New_Item_Click = function (element) {
 	function get_New_Row_Item_num(row_num) {
 		return get_max_val('#Row_'+row_num+' > .row_div > table>tbody>tr>td > .rowItem_edit > input[name="rowItem_no"]') + 1;
 	}
+
 	$(element).on('click',function() {
 		//console.log('button_New_Item_Click', element);
-		var row_num = $(this).attr('data-row');
-		var item_num = get_New_Row_Item_num(row_num);
-		var row_item = row_num+'_'+item_num;
+		const row_num = $(this).attr('data-row');
+		const item_num = get_New_Row_Item_num(row_num);
+		const row_item = row_num+'_'+item_num;
 		
-		var Item__Empty__Template = replaceAll_Object(_Template_Item__Empty, {'{ROW_NUM}':row_num,'{ROW_ITEM}':row_item,'{ROW_ITEM_NUM}':item_num,'{ROW_ITEM_TYPE}':'_Empty','{ROW_ITEM_TYPE_NAME}':item_type_arr['_Empty']});
+		const Item__Empty__Template = replaceAll_Object(_Template_Item__Empty, {
+			'{ROW_NUM}': row_num,
+			'{ROW_ITEM}': row_item,
+			'{ROW_ITEM_NUM}': item_num,
+			'{ROW_ITEM_TYPE}': '_Empty',
+			'{ROW_ITEM_TYPE_NAME}': item_type_arr['_Empty']
+		});
 		
-		$('#Row_'+row_num+' > div.row_div > table>tbody>tr > td.rowItem-init').before(Item__Empty__Template);
+		$('#Row_' + row_num + ' > div.row_div > table>tbody>tr > td.rowItem-init').before(
+			Item__Empty__Template
+		);
 		
 		Loaded_Item_init('_Empty', row_item, true); //init item
 		
@@ -604,10 +644,11 @@ button_New_Item_Click = function (element) {
 	});
 }
 
+	
 //called once for each Row Item
 New_Row_Item_init = function (row_num, item_num, item_type, is_new) { //for each item
 	//console.log('New_Row_Item_init', row_num, item_num, item_type, is_new);
-	var row_item = row_num+'_'+item_num;
+	const row_item = row_num+'_'+item_num;
 	
 	if (item_type == '_Html') {
 		$('#rowItem_'+row_item+' > .rowItem_div > .textarea').trumbowyg({
@@ -619,17 +660,27 @@ New_Row_Item_init = function (row_num, item_num, item_type, is_new) { //for each
 		}).prev().css({'min-height':'100px','height':'100px'}).parent().css('min-height', '100px');
 	}
 	else if (item_type == '_Date') {
-		item_Date_init('#rowItem_'+row_item+' > .rowItem_div #datetimepicker_'+row_item); //datetimepicker
+		//datetimepicker
+		item_Date_init('#rowItem_' + row_item + ' > .rowItem_div #datetimepicker_' + row_item);
 	}
 	else if (item_type == '_Time') {
-		item_Time_init('#rowItem_'+row_item+' > .rowItem_div #clockpicker_'+row_item); //clockpicker
+		//clockpicker
+		item_Time_init('#rowItem_' + row_item + ' > .rowItem_div #clockpicker_' + row_item);
 	}
 	else if (item_type == '_Period') {
-		item_Time_Period_init('#rowItem_'+row_item+' > .rowItem_div #clockpicker_from_'+row_item); //clockpicker
-		item_Time_Period_init('#rowItem_'+row_item+' > .rowItem_div #clockpicker_to_'+row_item); //clockpicker
-		item_Time_Period_init('#rowItem_'+row_item+' > .rowItem_div #clockpicker_period_'+row_item); //clockpicker
-		//Time From -> To = Period auto calc 
-		item_Time_From_To_Period_Calc_init('#c_'+row_item+'_PRDfrom', '#c_'+row_item+'_PRDto', '#c_'+row_item+'_PRDperiod');
+		//clockpicker
+		item_Time_Period_init('#rowItem_' + row_item + ' > .rowItem_div #clockpicker_from_' + row_item);
+		//clockpicker
+		item_Time_Period_init('#rowItem_' + row_item + ' > .rowItem_div #clockpicker_to_' + row_item);
+		//clockpicker
+		item_Time_Period_init('#rowItem_' + row_item + ' > .rowItem_div #clockpicker_period_' + row_item);
+
+		//Time From -> To = Period auto calculate 
+		item_Time_From_To_Period_Calc_init(
+			'#c_' + row_item + '_PRDfrom',
+			'#c_' + row_item + '_PRDto',
+			'#c_' + row_item + '_PRDperiod'
+		);
 	}
 	else if (item_type == '_RadioButtons' || item_type == '_Radio_Buttons_Select_Only') {
 		//Check and radio input styles
@@ -655,36 +706,64 @@ New_Row_Item_init = function (row_num, item_num, item_type, is_new) { //for each
 
 
 function Load_Item(type, item) {
-	$.post("forms/ajax.form_row_item.php", {row_item_type:type, row_item:item}, function(data, result) {
+	const post_data = {
+		row_item_type: type,
+		row_item: item
+	};
+	$.post("forms/ajax.form_row_item.php", post_data, function(data, result) {
 		if (data!='') {
-			$('#rowItem_' + item).replaceWith(data); //replace with new item --outerHTML
+			//replace with new item --outerHTML
+			$('#rowItem_' + item).replaceWith(data);
+
 			Loaded_Item_init(type, item, true);
 		}
 	});
 }
 
+	
 function Load_Item__Dropdown(type, item, dd, opt, has_color, color) {
-	let post_data = { row_item: item, row_item_type: type, dd: dd, opt: opt, has_color: has_color, color: color };
+	const post_data = {
+		row_item: item,
+		row_item_type: type,
+		dd: dd,
+		opt: opt,
+		has_color: has_color,
+		color: color
+	};
 	$.post("forms/ajax.form_row_item.php", post_data, function(data, result) {
 		if (data!='') {
 			//_Dropdown_Select_Only
-			$('#rowItem_'+item+' > .rowItem_div > div.styled-select > select').replaceWith(data); //replace with new item --outerHTML
+			//replace with new item --outerHTML
+			$('#rowItem_' + item + ' > .rowItem_div > div.styled-select > select').replaceWith(data);
 		}
 	});
 }
 
+	
 function Load_Item__Radio(type, item, rdd, has_title, title, talign, has_color, color) {
-	let post_data = { row_item: item, row_item_type: type, rdd: rdd, has_title: has_title, title: title, talign: talign, has_color: has_color, color: color };
+	const post_data = {
+		row_item: item,
+		row_item_type: type,
+		rdd: rdd,
+		has_title: has_title,
+		title: title,
+		talign: talign,
+		has_color: has_color,
+		color: color
+	};
 	$.post("forms/ajax.form_row_item.php", post_data, function(data, result) {
 		if (data!='') {
 			//_Radio_Buttons_Select_Only
-			$('#rowItem_'+item+' > .rowItem_div > div.radio_div').replaceWith(data); //replace with new item --outerHTML
-			var row_item = item.split('_');
+			//replace with new item --outerHTML
+			$('#rowItem_' + item + ' > .rowItem_div > div.radio_div').replaceWith(data);
+
+			const row_item = item.split('_');
 			New_Row_Item_init(row_item[0], row_item[1], type, true); //init item
 		}
 	});
 }
 
+	
 function Loaded_Item_init(type, item, is_new) {
 	//console.log('Loaded_Item_init', type, item, is_new);
 	$('#rowItem_'+item).hover(function() { //on hover efe
@@ -696,24 +775,27 @@ function Loaded_Item_init(type, item, is_new) {
 		$(this).find('> .rowItem_edit > .c_handler > .rowItem_EditLink').addClass('trans30');
 		$(this).find('> .rowItem_div > .accordion_group > div > .accPanel-add').addClass('trans10'); //if accordion
 	});
+
+
 	//init item
-	var row_item = item.split('_');
+	const row_item = item.split('_');
 	New_Row_Item_init(row_item[0], row_item[1], type, is_new);
+
 	//init controls
 	rowItem_EditLink_init($('#rowItem_'+item+' > .rowItem_edit > .c_handler > .rowItem_EditLink'), type, item);
 }
 
-/* --pigan sto page init kato kato
+/* --gone to the page init at the end
 //row_item button init
 $('.rowItem-add').each(function(){
-	let row = $(this).attr('data-row');
+	const row = $(this).attr('data-row');
 	New_Row_Events(row);
 	button_New_Item_Click(this);
 });
 //items init
 $('td.rowItem').each(function(){ //td.cm_it
-	let page_row_item = $(this).attr('data-row_item');
-	let tp = $(this).find('.c_type').val();
+	const page_row_item = $(this).attr('data-row_item');
+	const tp = $(this).find('.c_type').val();
 	Loaded_Item_init(tp, page_row_item, false); //init item
 });*/
 //ITEMS ###############################
@@ -730,9 +812,9 @@ button_New_AccordionPanel_Row_Click = function (element) {
 	$(element).on('click',function() {
 		//console.log('button_New_AccordionPanel_Row_Click', $(this).attr('id'));
 
-		var row_num = get_max_val('input[name="row_no"]') + 1;
+		const row_num = get_max_val('input[name="row_no"]') + 1;
 		
-		var Row_Template = replaceAll_Object(_Template_Row, {'{ROW_NUM}':row_num});
+		const Row_Template = replaceAll_Object(_Template_Row, {'{ROW_NUM}':row_num});
 		
 		$(this).parent().prev('ul.row_sortable').append(Row_Template);
 		
@@ -742,10 +824,17 @@ button_New_AccordionPanel_Row_Click = function (element) {
 
 function Load_Item__Accordion_Panel(type, item, acc_item) {
 	//console.log('Load_Item__Accordion_Panel', type, item, acc_item);
-	$.post("forms/ajax.form_row_item.php", {row_item:item, row_item_type:type, acc_item:acc_item}, function(data, result) {
+	const post_data = {
+		row_item: item,
+		row_item_type: type,
+		acc_item: acc_item
+	};
+	$.post("forms/ajax.form_row_item.php", post_data, function(data, result) {
 		if (data!='') {
 			//_Accordion_Panel
-			$('#accordion_'+item+' > div > .accPanel-add').parent().before(data); //place before button
+			//place before button
+			$('#accordion_' + item + ' > div > .accPanel-add').parent().before(data);
+
 			Accordion_Panel_init(type, item, acc_item, true);
 		}
 	});
@@ -765,15 +854,17 @@ function Accordion_init(type, item) {
 		$(this).find('> .rowItem_div > .panel > .accordionPanel > .panel-body > div > .newRow').addClass('trans10'); //newRow button
 	});
 	
+
 	$('#accordion_'+item+' > div > .accPanel-add').on('click',function() {
 		//console.log('button_New_Accordion_Panel_Click');
 		function get_New_Row_Item_num(row_item) {
 			return get_max_val('#accordion_'+row_item+' input.c_acc_no') + 1; 
 		}
-		var row_num = $(this).attr('data-row');
-		var item_num = $(this).attr('data-item');
-		var row_item = row_num+'_'+item_num;
-		var acc_num = get_New_Row_Item_num(row_item);
+
+		const row_num = $(this).attr('data-row');
+		const item_num = $(this).attr('data-item');
+		const row_item = row_num+'_'+item_num;
+		const acc_num = get_New_Row_Item_num(row_item);
 
 		//Loaded_Item_init('_Accordion_Panel', row_item, true); //init item
 		Load_Item__Accordion_Panel('_Accordion_Panel', row_item, acc_num);
@@ -787,17 +878,22 @@ function Accordion_init(type, item) {
 			//connectWith: "tr",
 			//containment:"ul.page_sortable", //moves in 
 			handle: "> .rowItem_edit > .c_handler_acc > .rowItem_AccPanel_Drag",
-			revert:300,	opacity: '.5',
+			revert: 300,
+			opacity: '.5',
 			tolerance: "intersect",
 			placeholder:"ui-state-highlight placeholder-item-td",
 		}).disableSelection();
 	}
 
+
 	//init AccPanel controls
 	$('#accordion_'+item+' > .AccPanel').each(function(i,el) {
-		let acc_item = $(this).find('> .rowItem_edit > input.c_acc_no').val();
-		button_New_AccordionPanel_Row_Click('#accPanel_'+$(this).attr('data-id')+'_newRow');
+		const acc_item = $(this).find('> .rowItem_edit > input.c_acc_no').val();
+
+		button_New_AccordionPanel_Row_Click('#accPanel_' + $(this).attr('data-id') + '_newRow');
+		
 		rowItem_AccordionPanel_EditLink_init($(this).find('> .rowItem_edit > .c_handler_acc > a.rowItem_AccPanel_EditLink'), type, item, acc_item);
+
 		
 		//init AccPanel Row draging --need to called once in a AccPanel
 		if (!V_HAVE_DATA) {
@@ -806,7 +902,8 @@ function Accordion_init(type, item) {
 				connectWith: "ul.row_sortable",
 				containment:"ul.page_sortable", //moves in 
 				handle: ".Row-drag",
-				revert:300,	opacity: '.5',
+				revert: 300,
+				opacity: '.5',
 				tolerance: "intersect",
 				placeholder:"ui-state-highlight placeholder-item",
 				start: function (e, ui) { ui.placeholder.height(ui.helper.outerHeight()); ui.placeholder.height(ui.helper.outerHeight()); }
@@ -814,6 +911,8 @@ function Accordion_init(type, item) {
 		}
 	});
 }
+
+
 function Accordion_Panel_init(type, item, acc_item, is_new) {
 	//console.log('Accordion_Panel_init', type, item, acc_item, is_new);
 	$('#AccPanel_'+item+'_'+acc_item).hover(function() { //on hover efe
@@ -829,12 +928,14 @@ function Accordion_Panel_init(type, item, acc_item, is_new) {
 	});
 
 	//init item
-	//var row_item = item.split('_');
+	//const row_item = item.split('_');
 	//New_Row_Item_init(row_item[0], row_item[1], type, is_new);
 
 	//init controls
-	button_New_AccordionPanel_Row_Click('#accPanel_'+item+'_'+acc_item+'_newRow');
-	rowItem_AccordionPanel_EditLink_init($('#AccPanel_'+item+'_'+acc_item+' > .rowItem_edit > .c_handler_acc > a.rowItem_AccPanel_EditLink'), type, item, acc_item);
+	button_New_AccordionPanel_Row_Click('#accPanel_' + item + '_' + acc_item + '_newRow');
+	
+	rowItem_AccordionPanel_EditLink_init($('#AccPanel_' + item + '_' + acc_item + ' > .rowItem_edit > .c_handler_acc > a.rowItem_AccPanel_EditLink'), type, item, acc_item);
+	
 	
 	//init AccPanel Row draging --need to called once in a AccPanel
 	if (!V_HAVE_DATA) {
@@ -843,7 +944,8 @@ function Accordion_Panel_init(type, item, acc_item, is_new) {
 			connectWith: "ul.row_sortable",
 			containment:"ul.page_sortable", //moves in 
 			handle: ".Row-drag",
-			revert:300,	opacity: '.5',
+			revert: 300,
+			opacity: '.5',
 			tolerance: "intersect",
 			placeholder:"ui-state-highlight placeholder-item",
 			start: function (e, ui) { ui.placeholder.height(ui.helper.outerHeight()); ui.placeholder.height(ui.helper.outerHeight()); }
@@ -890,9 +992,9 @@ function rowItem_AccordionPanel_EditLink_init($element, $type, $item, $acc_item)
 						'</div>'+
 					'</div>'
 			}).on('shown.bs.popover', function () {
-				var popover = $element.data('bs.popover');
+				const popover = $element.data('bs.popover');
 				if (typeof popover !== "undefined") {
-					var $tip = popover.tip();
+					const $tip = popover.tip();
 					
 					//update form vals
 					Get_Edit_Popup_Form($type, $item, $tip);
@@ -900,16 +1002,24 @@ function rowItem_AccordionPanel_EditLink_init($element, $type, $item, $acc_item)
 					$tip.find('.popover-cancel').on('click',function() {
 						$element.popover('destroy'); //stop blinking this way
 					});
+
 					//width
-					$tip.find('.c_width').spinner({	min:5, max:100 });
+					$tip.find('.c_width').spinner({
+						min: 5,
+						max: 100
+					});
+					
 					//save
 					$tip.find('.popover-save').on('click',function() {
 						//popover.hide();
-						if ($('form#form_popup_'+$item).valid()) {
+						if ($('form#form_popup_' + $item).valid())
+						{
 							Save_Popup_Form($type, $item, $tip);
+
 							$element.popover('destroy'); //stop blinking this way
 						}
 					});
+
 					//rowItemRemove_ click
 					//$('#AccPanel_'+$item+' .accPanel-remove').confirmation({ //not work is on popup
 					$("#accPanelRemove_"+$item).confirmation({
@@ -919,6 +1029,7 @@ function rowItem_AccordionPanel_EditLink_init($element, $type, $item, $acc_item)
 						btnCancelLabel: LANG.NO, btnCancelClass: 'btn btn-sm btn-danger',
 						onConfirm: function(e, button) {
 							$element.popover('destroy'); //stop blinking this way
+
 							$('#AccPanel_'+$item).remove(); //remove <td>
 						}
 					});
@@ -949,7 +1060,9 @@ function rowItem_EditLink_init($element, $type, $item) {
 				html: true,
 				placement: 'auto',
 				container: $('body'),
-				title: function () { return item_type_arr[$type]; },
+				title: function () {
+					return item_type_arr[$type];
+				},
 				content: function () {
 					return  '<form class="form_popup" id="form_popup_' + $item + '">' +
 								$('#rowItem_' + $item + ' .c_content').html() + 
@@ -979,30 +1092,36 @@ function rowItem_EditLink_init($element, $type, $item) {
 						'</div>'+
 					'</div>'
 			}).on('shown.bs.popover', function () {
-				var popover = $element.data('bs.popover');
+				const popover = $element.data('bs.popover');
 				if (typeof popover !== "undefined") {
-					var $tip = popover.tip();
+					const $tip = popover.tip();
 					
 					//update form vals
 					Get_Edit_Popup_Form($type, $item, $tip);
 					
 					//width
 					$tip.find('.c_width').spinner({
-						min:5, max:100 
+						min: 5,
+						max: 100 
 					});
+
 					//save
 					$tip.find('.popover-save').on('click',function() {
 						//popover.hide();
 						//console.log($tip.find('.popover-content').html());
-						if ($('form#form_popup_'+$item).valid()) {
+						if ($('form#form_popup_' + $item).valid())
+						{
 							Save_Popup_Form($type, $item, $tip);
+
 							$element.popover('destroy');
 						}
 					});
+
 					//cancel
 					$tip.find('.popover-cancel').on('click',function() {
 						$element.popover('destroy');
 					});
+
 					//rowItemClear_ click
 					$("#rowItemClear_"+$item).confirmation({
 						href: 'javascript:void(0)',
@@ -1012,9 +1131,11 @@ function rowItem_EditLink_init($element, $type, $item) {
 						btnCancelLabel: LANG.NO, btnCancelClass: 'btn btn-sm btn-danger',
 						onConfirm: function(e, button) {
 							$element.popover('destroy');
+
 							Load_Item('_Empty', $item);
 						}
 					});
+
 					//rowItemRemove_ click
 					$("#rowItemRemove_"+$item).confirmation({
 						href: 'javascript:void(0)',
@@ -1024,8 +1145,9 @@ function rowItem_EditLink_init($element, $type, $item) {
 						btnCancelLabel: LANG.NO, btnCancelClass: 'btn btn-sm btn-danger',
 						onConfirm: function(e, button) {
 							$element.popover('destroy');
-							$('#rowItem_'+$item).remove(); //remove <td>
-							var row_item = $item.split('_');
+							$('#rowItem_' + $item).remove(); //remove <td>
+							
+							const row_item = $item.split('_');
 							Set_Items_Width(row_item[0], row_item[1]);
 						}
 					});
@@ -1038,7 +1160,7 @@ function rowItem_EditLink_init($element, $type, $item) {
 //Copy to popup the item form values
 function Get_Edit_Popup_Form(type, item, popup) {
 	//console.log('Get_Edit_Popup_Form', type, item, popup);
-	var html = popup.find('.popover-content input, .popover-content select');
+	const html = popup.find('.popover-content input, .popover-content select');
 	if (type == '_Empty') {
 		//select init --not needed
 		/*popup.find('.rowItem_Select').chosen({
@@ -1050,75 +1172,124 @@ function Get_Edit_Popup_Form(type, item, popup) {
 	}
 	else {
 		html.each(function () {
-			var t_name = $(this).attr('name');
-			var t_elems = $('input[name='+t_name+'], select[name='+t_name+']');
+			const t_name = $(this).attr('name');
+			const t_elems = $('input[name=' + t_name + '], select[name=' + t_name + ']');
+
 			if (t_elems.length == 2 && t_elems[0] && t_elems[1]) {
 				$(t_elems[1]).val($(t_elems[0]).val()); //src-val to edit-val
 				$(t_elems[1]).attr('value', $(t_elems[0]).val()); //set attr(value) for sure
 				
-				if (t_name == 'c_'+item+'_required' && $(t_elems[0]).val()==1) {
-					if ($(t_elems[0]).val()==1) $(t_elems[1]).prev().attr('checked', true);
-					else 						$(t_elems[1]).prev().attr('checked', false);
+				if (t_name == 'c_' + item + '_required' && $(t_elems[0]).val() == 1) {
+					if ($(t_elems[0]).val() == 1) {
+						$(t_elems[1]).prev().attr('checked', true);
+					} else {
+						$(t_elems[1]).prev().attr('checked', false);
+					}
 				}
-				else if (t_name == 'c_'+item+'_color' && $(t_elems[0]).val()==1) {
-					if ($(t_elems[0]).val()==1) $(t_elems[1]).prev().attr('checked', true);
-					else 						$(t_elems[1]).prev().attr('checked', false);
+				else if (t_name == 'c_' + item + '_color' && $(t_elems[0]).val() == 1) {
+					if ($(t_elems[0]).val() == 1) {
+						$(t_elems[1]).prev().attr('checked', true);
+					} else {
+						$(t_elems[1]).prev().attr('checked', false);
+					}
 				}
-				else if (t_name == 'c_'+item+'_has_title' && $(t_elems[0]).val()==1) {
-					if ($(t_elems[0]).val()==1) $(t_elems[1]).prev().attr('checked', true);
-					else 						$(t_elems[1]).prev().attr('checked', false);
+				else if (t_name == 'c_' + item + '_has_title' && $(t_elems[0]).val() == 1) {
+					if ($(t_elems[0]).val() == 1) {
+						$(t_elems[1]).prev().attr('checked', true);
+					} else {
+						$(t_elems[1]).prev().attr('checked', false);
+					}
 				}
 			}
 			else {
 				//t_elems.length = 4 //_numintdec
-				if (t_name == 'c_'+item+'_numintdec') {
-					if ($(t_elems[0]).is(':checked'))
+				if (t_name == 'c_' + item + '_numintdec') {
+					if ($(t_elems[0]).is(':checked')) {
 						$(t_elems[2]).parent().trigger("click"); //int
-					else $(t_elems[3]).parent().trigger("click"); //dec
+					} else {
+						$(t_elems[3]).parent().trigger("click"); //dec
+					}
 				}
 				//t_elems.length = 6 //_talign
-				else if (t_name == 'c_'+item+'_talign') {
-						 if ($(t_elems[1]).is(':checked')) $(t_elems[4]).parent().trigger("click"); //center
-					else if ($(t_elems[2]).is(':checked')) $(t_elems[5]).parent().trigger("click"); //right
-					else 								   $(t_elems[3]).parent().trigger("click"); //left
+				else if (t_name == 'c_' + item + '_talign') {
+					if ($(t_elems[1]).is(':checked')) {
+						$(t_elems[4]).parent().trigger("click"); //center
+					}
+					else if ($(t_elems[2]).is(':checked')) {
+						$(t_elems[5]).parent().trigger("click"); //right
+					}
+					else {
+						$(t_elems[3]).parent().trigger("click"); //left
+					}
 				}
 				//t_elems.length = 6 //_align
-				else if (t_name == 'c_'+item+'_align') {
-						 if ($(t_elems[1]).is(':checked')) $(t_elems[4]).parent().trigger("click"); //center
-					else if ($(t_elems[2]).is(':checked')) $(t_elems[5]).parent().trigger("click"); //right
-					else 								   $(t_elems[3]).parent().trigger("click"); //left
+				else if (t_name == 'c_' + item + '_align') {
+					if ($(t_elems[1]).is(':checked')) {
+						$(t_elems[4]).parent().trigger("click"); //center
+					}
+					else if ($(t_elems[2]).is(':checked')) {
+						$(t_elems[5]).parent().trigger("click"); //right
+					}
+					else {
+						$(t_elems[3]).parent().trigger("click"); //left
+					}
 				}
 				//t_elems.length = 6 //_bold
-				else if (t_name == 'c_'+item+'_bold') {
-						 if ($(t_elems[1]).is(':checked')) $(t_elems[4]).parent().trigger("click"); //semibold
-					else if ($(t_elems[2]).is(':checked')) $(t_elems[5]).parent().trigger("click"); //bold
-					else 								   $(t_elems[3]).parent().trigger("click"); //normal
+				else if (t_name == 'c_' + item + '_bold') {
+					if ($(t_elems[1]).is(':checked')) {
+						$(t_elems[4]).parent().trigger("click"); //semibold
+					}
+					else if ($(t_elems[2]).is(':checked')) {
+						$(t_elems[5]).parent().trigger("click"); //bold
+					}
+					else {
+						$(t_elems[3]).parent().trigger("click"); //normal
+					}
 				}
 				//t_elems.length = 4 //_accType
-				else if (t_name == 'c_'+item+'_accType') {
-					if ($(t_elems[0]).is(':checked')) $(t_elems[2]).parent().trigger("click"); //basic
-					else 							  $(t_elems[3]).parent().trigger("click"); //multiple
+				else if (t_name == 'c_' + item + '_accType') {
+					if ($(t_elems[0]).is(':checked')) {
+						$(t_elems[2]).parent().trigger("click"); //basic
+					} else {
+						$(t_elems[3]).parent().trigger("click"); //multiple
+					}
 				}
 				//t_elems.length = 4 //_accOpen
-				else if (t_name == 'c_'+item+'_accOpen') {
-					if ($(t_elems[0]).is(':checked')) $(t_elems[2]).parent().trigger("click"); //opened
-					else 							  $(t_elems[3]).parent().trigger("click"); //closed
+				else if (t_name == 'c_' + item + '_accOpen') {
+					if ($(t_elems[0]).is(':checked')) {
+						$(t_elems[2]).parent().trigger("click"); //opened
+					} else {
+						$(t_elems[3]).parent().trigger("click"); //closed
+					}
 				}
 				//t_elems.length = 6 //_accAlign
-				else if (t_name == 'c_'+item+'_accAlign') {
-						 if ($(t_elems[1]).is(':checked')) $(t_elems[4]).parent().trigger("click"); //center
-					else if ($(t_elems[2]).is(':checked')) $(t_elems[5]).parent().trigger("click"); //right
-					else 								   $(t_elems[3]).parent().trigger("click"); //left
+				else if (t_name == 'c_' + item + '_accAlign') {
+					if ($(t_elems[1]).is(':checked')) {
+						$(t_elems[4]).parent().trigger("click"); //center
+					}
+					else if ($(t_elems[2]).is(':checked')) {
+						$(t_elems[5]).parent().trigger("click"); //right
+					}
+					else {
+						$(t_elems[3]).parent().trigger("click"); //left
+					}
 				}
 				//t_elems.length = 6 //_accBold
-				else if (t_name == 'c_'+item+'_accBold') {
-						 if ($(t_elems[1]).is(':checked')) $(t_elems[4]).parent().trigger("click"); //semibold
-					else if ($(t_elems[2]).is(':checked')) $(t_elems[5]).parent().trigger("click"); //bold
-					else 								   $(t_elems[3]).parent().trigger("click"); //normal
+				else if (t_name == 'c_' + item + '_accBold') {
+					if ($(t_elems[1]).is(':checked')) {
+						$(t_elems[4]).parent().trigger("click"); //semibold
+					}
+					else if ($(t_elems[2]).is(':checked')) {
+						$(t_elems[5]).parent().trigger("click"); //bold
+					}
+					else {
+						$(t_elems[3]).parent().trigger("click"); //normal
+					}
 				}
 			}
 		});
 		
+
 		//focus on input
 		if ($('.form_popup .c_name')[0] != undefined) {
 			$('.form_popup .c_name')[0].focus();
@@ -1129,27 +1300,31 @@ function Get_Edit_Popup_Form(type, item, popup) {
 	}
 }
 
+	
 //Copy the changed popup values Back to the item form values
 function Save_Popup_Form(type, item, popup) {
 	//console.log('Save_Popup_Form', type, item, popup);
-	var html = popup.find('.popover-content input, .popover-content select');
+	const html = popup.find('.popover-content input, .popover-content select');
 	if (type == '_Empty') {
-		let new_item_type = popup.find('.rowItem_Select').val();
+		const new_item_type = popup.find('.rowItem_Select').val();
 		Load_Item(new_item_type, item);
 	}
 	else {
 		html.each(function () {
 			//console.log(item, type, $(this).attr('name'), $(this).val());
 			//put the input vals from the popup form [1] to item content form [0]
-			var t_name = $(this).attr('name');
-			var t_elems = $('input[name='+t_name+'], select[name='+t_name+']');
-			var old_val = $(t_elems[0]).val();
-			var new_val = $(t_elems[1]).val();
+			const t_name = $(this).attr('name');
+			const t_elems = $('input[name=' + t_name + '], select[name=' + t_name + ']');
+			
+			const old_val = $(t_elems[0]).val();
+			const new_val = $(t_elems[1]).val();
+
 			if (t_elems.length==2 && t_elems[0] && t_elems[1]) {
 				//copy val to element c_content store
-				if (t_name == 'c_'+item+'_talign') { //Radio talign --> never comes here --only catch input,select
+				if (t_name == 'c_' + item + '_talign') {
+					//Radio talign --> never comes here --only catch input,select
 				}
-				else if (t_name == 'c_'+item+'_rdd' || t_name == 'c_'+item+'_dd') { //Select		
+				else if (t_name == 'c_' + item + '_rdd' || t_name == 'c_' + item + '_dd') { //Select		
 					$(t_elems[0]).val(new_val); //edit-val to src-val
 				}
 				else {
@@ -1158,185 +1333,219 @@ function Save_Popup_Form(type, item, popup) {
 				}
 				
 				//update element with the changes
-				if (t_name == 'c_'+item+'_width') {
-					$('#rowItem_'+item).css('width', new_val+'%');
+				if (t_name == 'c_' + item + '_width') {
+					$('#rowItem_' + item).css('width', new_val + '%');
 				}
-				else if (t_name == 'c_'+item+'_label') {
-					$('#rowItem_'+item+' > .rowItem_div > .label_txt').html(new_val);
+				else if (t_name == 'c_' + item + '_label') {
+					$('#rowItem_' + item + ' > .rowItem_div > .label_txt').html(new_val);
 				}
-				else if (t_name == 'c_'+item+'_accLabel') {
-					$('#AccPanel_'+item+' > .rowItem_div > .panel > .panel-heading > .panel-title > a.accLabel').html(' '+new_val);
+				else if (t_name == 'c_' + item + '_accLabel') {
+					$('#AccPanel_' + item + ' > .rowItem_div > .panel > .panel-heading > .panel-title > a.accLabel').html(' ' + new_val);
 				}
-				else if (t_name == 'c_'+item+'_placeholder') {
-					if ($('#rowItem_'+item+' > .rowItem_div > input').length) { //normal
-						$('#rowItem_'+item+' > .rowItem_div > input').attr('placeholder', new_val);
+				else if (t_name == 'c_' + item + '_placeholder') {
+					if ($('#rowItem_' + item + ' > .rowItem_div > input').length) { //normal
+						$('#rowItem_' + item + ' > .rowItem_div > input').attr('placeholder', new_val);
 					}
 					else { //with div -> Period -only period
-						if ($('#rowItem_'+item+' > .rowItem_div > div.period > input.period').length) { //period
-							$('#rowItem_'+item+' > .rowItem_div > div.period').next('div.period').next('div.period').find('input.period').attr('placeholder', new_val); //3rd div
+						if ($('#rowItem_' + item + ' > .rowItem_div > div.period > input.period').length) { //period
+							$('#rowItem_' + item + ' > .rowItem_div > div.period').next('div.period').next('div.period').find('input.period').attr('placeholder', new_val); //3rd div
 						}
-						else { //with div -> Datum, Uhrzeit
-							$('#rowItem_'+item+' > .rowItem_div > div > input').attr('placeholder', new_val);
+						else { //with div -> Date, Time
+							$('#rowItem_' + item + ' > .rowItem_div > div > input').attr('placeholder', new_val);
 						}
 					}
 				}
-				else if (t_name == 'c_'+item+'_placeholder_from') { //period
-					$('#rowItem_'+item+' > .rowItem_div > div.period > input.period').attr('placeholder', new_val); //1st div
+				else if (t_name == 'c_' + item + '_placeholder_from') { //period
+					$('#rowItem_' + item + ' > .rowItem_div > div.period > input.period').attr('placeholder', new_val); //1st div
 				}
-				else if (t_name == 'c_'+item+'_placeholder_to') { //period
-					$('#rowItem_'+item+' > .rowItem_div > div.period').next('div.period').find('input.period').attr('placeholder', new_val); //2nd div
+				else if (t_name == 'c_' + item + '_placeholder_to') { //period
+					$('#rowItem_' + item + ' > .rowItem_div > div.period').next('div.period').find('input.period').attr('placeholder', new_val); //2nd div
 				}
-				else if (t_name == 'c_'+item+'_required') { //required
-					$(t_elems[0]).prev().attr('checked', new_val==1 ? true : false);
-					if (new_val==1) $(t_elems[0]).closest('td').addClass('required');
-					else 			$(t_elems[0]).closest('td').removeClass('required');
+				else if (t_name == 'c_' + item + '_required') { //required
+					$(t_elems[0]).prev().attr('checked', new_val == 1 ? true : false);
+					if (new_val == 1) {
+						$(t_elems[0]).closest('td').addClass('required');
+					}
+					else {
+						$(t_elems[0]).closest('td').removeClass('required');
+					}
 				}
-				else if (t_name == 'c_'+item+'_has_color') { //radio has color
+				else if (t_name == 'c_' + item + '_has_color') { //radio has color
 					last_last_has_color = old_val;
 					last_has_color = new_val;
-					$(t_elems[0]).prev().attr('checked', new_val==1 ? true : false);
+					$(t_elems[0]).prev().attr('checked', new_val == 1 ? true : false);
 				}
-				else if (t_name == 'c_'+item+'_color_a') { //color start
+				else if (t_name == 'c_' + item + '_color_a') { //color start
 					last_last_color_a = old_val;
 					last_color_a = new_val;
-					$(t_elems[0]).prev().attr('checked', new_val==1 ? true : false);
+					$(t_elems[0]).prev().attr('checked', new_val == 1 ? true : false);
 				}
-				else if (t_name == 'c_'+item+'_color_b') { //color end
+				else if (t_name == 'c_' + item + '_color_b') { //color end
 					last_last_color_b = old_val;
 					last_color_b = new_val;
-					$(t_elems[0]).prev().attr('checked', new_val==1 ? true : false);
+					$(t_elems[0]).prev().attr('checked', new_val == 1 ? true : false);
 				}
-				else if (t_name == 'c_'+item+'_has_title') {//radio has title
+				else if (t_name == 'c_' + item + '_has_title') {//radio has title
 					last_radio_has_title = new_val;
-					$(t_elems[0]).prev().attr('checked', new_val==1 ? true : false);
-					if (new_val==1) $('#rowItem_'+item+' > .rowItem_div > .radio_div .tr_radio_title').removeClass('hidden');
-					else 			$('#rowItem_'+item+' > .rowItem_div > .radio_div .tr_radio_title').addClass('hidden');
+					$(t_elems[0]).prev().attr('checked', new_val == 1 ? true : false);
+
+					if (new_val == 1) {
+						$('#rowItem_' + item + ' > .rowItem_div > .radio_div .tr_radio_title').removeClass('hidden');
+					}
+					else {
+						$('#rowItem_' + item + ' > .rowItem_div > .radio_div .tr_radio_title').addClass('hidden');
+					}
 				}
-				else if (t_name == 'c_'+item+'_title') { //radio title
+				else if (t_name == 'c_' + item + '_title') { //radio title
 					last_radio_title = new_val;
-					$('#rowItem_'+item+' > .rowItem_div > .radio_div .tr_radio_title > .s_radio_title').html(new_val);
+					$('#rowItem_' + item + ' > .rowItem_div > .radio_div .tr_radio_title > .s_radio_title').html(new_val);
 				}
-				else if (t_name == 'c_'+item+'_opt') { //dropdown
+				else if (t_name == 'c_' + item + '_opt') { //dropdown
 					last_dd_opt = new_val;
-					$('#rowItem_'+item+' > .rowItem_div > .styled-select > select option:first').text(last_dd_opt);
+					$('#rowItem_' + item + ' > .rowItem_div > .styled-select > select option:first').text(last_dd_opt);
 				}
-				else if (t_name == 'c_'+item+'_dd') { //dropdown
-					$('#rowItem_'+item+' > .rowItem_div > .styled-select > select option:first').text(last_dd_opt);
-					if (
-						old_val != new_val || 
-						last_last_has_color != last_has_color || 
+				else if (t_name == 'c_' + item + '_dd') { //dropdown
+					$('#rowItem_' + item + ' > .rowItem_div > .styled-select > select option:first').text(last_dd_opt);
+					if (old_val != new_val ||
+						last_last_has_color != last_has_color ||
 						last_last_color_a != last_color_a ||
-						last_last_color_b != last_color_b
-					) {
-						Load_Item__Dropdown('_Dropdown_Select_Only', item, new_val, last_dd_opt, last_has_color, last_color_a+'|'+last_color_b);
+						last_last_color_b != last_color_b)
+					{
+						Load_Item__Dropdown('_Dropdown_Select_Only', item, new_val, last_dd_opt, last_has_color, last_color_a + '|' + last_color_b);
 					}
 				}
 				else if (t_name == 'c_'+item+'_rdd') { //radio
-					if (
-						old_val != new_val ||
+					if (old_val != new_val ||
 						last_last_has_color != last_has_color || 
 						last_last_color_a != last_color_a ||
-						last_last_color_b != last_color_b
-					) {
+						last_last_color_b != last_color_b)
+					{
 						//console.log('_Radio_Buttons_Select_Only', item, new_val, last_radio_has_title, last_radio_title, last_radio_talign);
 						Load_Item__Radio('_Radio_Buttons_Select_Only', item, new_val, last_radio_has_title, last_radio_title, last_radio_talign, last_has_color, last_color_a+'|'+last_color_b);
 					}
 				}
 				else if (t_name == 'c_'+item+'_acc') { //accordion
-					if (
-						old_val != new_val ||
+					if (old_val != new_val ||
 						last_last_has_color != last_has_color || 
 						last_last_color_a != last_color_a ||
-						last_last_color_b != last_color_b
-					) {
+						last_last_color_b != last_color_b)
+					{
 						//console.log('_Accordion_Panel', item, new_val, last_radio_has_title, last_radio_title, last_radio_talign);
 						Load_Item__Accordion_Panel('_Accordion_Panel', item, new_val, last_radio_has_title, last_radio_title, last_radio_talign, last_has_color, last_color_a+'|'+last_color_b);
 					}
 				}
 			}
 			else {
-				if (t_name == 'c_'+item+'_numintdec') { //t_elems.length=4 //_numintdec
+				if (t_name == 'c_' + item + '_numintdec') { //t_elems.length=4 //_numintdec
 					//select radio by click on label
-					if ($(t_elems[2]).is(':checked')) $(t_elems[0]).parent().trigger("click"); //int
-					else 							  $(t_elems[1]).parent().trigger("click"); //dec
+					if ($(t_elems[2]).is(':checked')) {
+						$(t_elems[0]).parent().trigger("click"); //int
+					} else {
+						$(t_elems[1]).parent().trigger("click"); //dec
+					}
 				}
-				else if (t_name == 'c_'+item+'_talign') { //t_elems.length=6 //_talign
+				else if (t_name == 'c_' + item + '_talign') { //t_elems.length=6 //_talign
 					//select radio by click on label
 					let align = 'left';
 					if ($(t_elems[4]).is(':checked')) {
-						$(t_elems[1]).parent().trigger("click"); align = 'center';
+						$(t_elems[1]).parent().trigger("click"); //center
+						align = 'center';
 					}
 					else if ($(t_elems[5]).is(':checked')) {
-						$(t_elems[2]).parent().trigger("click"); align = 'right';
+						$(t_elems[2]).parent().trigger("click"); //right
+						align = 'right';
 					}
 					else {
 						$(t_elems[0]).parent().trigger("click"); //left
 					}
+					
 					last_radio_talign = align;
 					//set saved talign
-					$('#rowItem_'+item+' > .rowItem_div > .radio_div .tr_radio_title > .s_radio_title').css('text-align', align);
+					$('#rowItem_' + item + ' > .rowItem_div > .radio_div .tr_radio_title > .s_radio_title').css('text-align', align);
 				}
-				else if (t_name == 'c_'+item+'_align') { //t_elems.length=6 //_align
+				else if (t_name == 'c_' + item + '_align') { //t_elems.length=6 //_align
 					//select radio by click on label
 					let align = 'left';
 					if ($(t_elems[4]).is(':checked')) {
-						$(t_elems[1]).parent().trigger("click"); align = 'center';
+						$(t_elems[1]).parent().trigger("click"); //center
+						align = 'center';
 					}
 					else if ($(t_elems[5]).is(':checked')) {
-						$(t_elems[2]).parent().trigger("click"); align = 'right';
+						$(t_elems[2]).parent().trigger("click"); //right
+						align = 'right';
 					}
 					else $(t_elems[0]).parent().trigger("click"); //left
+
 					//set saved align
-					$('#rowItem_'+item).css('text-align', align);
+					$('#rowItem_' + item).css('text-align', align);
 				}
-				else if (t_name == 'c_'+item+'_bold') {
+				else if (t_name == 'c_' + item + '_bold') {
 					//select radio by click on label
 					let bold = '2';
 					if ($(t_elems[4]).is(':checked')) {
-						$(t_elems[1]).parent().trigger("click"); bold = '1';
+						$(t_elems[1]).parent().trigger("click");
+						bold = '1';
 					}
 					else if ($(t_elems[5]).is(':checked')) {
-						$(t_elems[2]).parent().trigger("click"); bold = '0';
+						$(t_elems[2]).parent().trigger("click");
+						bold = '0';
 					}
-					else $(t_elems[0]).parent().trigger("click"); //2
+					else {
+						$(t_elems[0]).parent().trigger("click"); //2
+					}
+
 					//set saved bold
-					$('#rowItem_'+item).css('font-weight', (bold=='0'?'700':(bold=='1'?'600':'500')));
+					$('#rowItem_' + item).css('font-weight', (bold == '0' ? '700' : (bold == '1' ? '600' : '500')));
 				}
-				else if (t_name == 'c_'+item+'_accType') { //t_elems.length=4 //_accType
+				else if (t_name == 'c_' + item + '_accType') { //t_elems.length=4 //_accType
 					//select radio by click on label
-					if ($(t_elems[2]).is(':checked')) $(t_elems[0]).parent().trigger("click"); //basic
-					else 							  $(t_elems[1]).parent().trigger("click"); //multiple
+					if ($(t_elems[2]).is(':checked')) {
+						$(t_elems[0]).parent().trigger("click"); //basic
+					} else {
+						$(t_elems[1]).parent().trigger("click"); //multiple
+					}
 				}
-				else if (t_name == 'c_'+item+'_accOpen') { //t_elems.length=4 //_accOpen
+				else if (t_name == 'c_' + item + '_accOpen') { //t_elems.length=4 //_accOpen
 					//select radio by click on label
-					if ($(t_elems[2]).is(':checked')) $(t_elems[0]).parent().trigger("click"); //opened
-					else 							  $(t_elems[1]).parent().trigger("click"); //closed
+					if ($(t_elems[2]).is(':checked')) {
+						$(t_elems[0]).parent().trigger("click"); //opened
+					} else {
+						$(t_elems[1]).parent().trigger("click"); //closed
+					}
 				}
-				else if (t_name == 'c_'+item+'_accAlign') { //t_elems.length=6 //_accAlign
+				else if (t_name == 'c_' + item + '_accAlign') { //t_elems.length=6 //_accAlign
 					//select radio by click on label
 					let align = 'left';
 					if ($(t_elems[4]).is(':checked')) {
-						$(t_elems[1]).parent().trigger("click"); align = 'center';
+						$(t_elems[1]).parent().trigger("click"); //center
+						align = 'center';
 					}
 					else if ($(t_elems[5]).is(':checked')) {
-						$(t_elems[2]).parent().trigger("click"); align = 'right';
+						$(t_elems[2]).parent().trigger("click"); //right
+						align = 'right';
 					}
 					else $(t_elems[0]).parent().trigger("click"); //left
+
 					//set saved align
-					$('#AccPanel_'+item+' > .rowItem_div > .panel > .panel-heading > .panel-title > a.accLabel').css('text-align', align);
+					$('#AccPanel_' + item + ' > .rowItem_div > .panel > .panel-heading > .panel-title > a.accLabel').css('text-align', align);
 				}
 				else if (t_name == 'c_'+item+'_accBold') {
 					//select radio by click on label
 					let bold = '2';
 					if ($(t_elems[4]).is(':checked')) {
-						$(t_elems[1]).parent().trigger("click"); bold = '1';
+						$(t_elems[1]).parent().trigger("click");
+						bold = '1';
 					}
 					else if ($(t_elems[5]).is(':checked')) {
-						$(t_elems[2]).parent().trigger("click"); bold = '0';
+						$(t_elems[2]).parent().trigger("click");
+						bold = '0';
 					}
-					else $(t_elems[0]).parent().trigger("click"); //2
+					else {
+						$(t_elems[0]).parent().trigger("click"); //2
+					}
+
 					//set saved bold
-					$('#AccPanel_'+item+' > .rowItem_div > .panel > .panel-heading > .panel-title > a.accLabel').css('font-weight', (bold=='0'?'700':(bold=='1'?'600':'500')));
+					$('#AccPanel_' + item + ' > .rowItem_div > .panel > .panel-heading > .panel-title > a.accLabel').css('font-weight', (bold == '0' ? '700' : (bold == '1' ? '600' : '500')));
 				}
 			}
 		});
@@ -1352,28 +1561,28 @@ function Save_Popup_Form(type, item, popup) {
 get_Form_JSON = function() 
 {
 	function parse_Empty(c_content, it) {
-		let elems = $(c_content);
-		let obj = {type:'_Empty'};
+		const elems = $(c_content);
+		const obj = {type:'_Empty'};
 		obj.no = it+1;
 		return obj;
 	}
 	function parse_Space(c_content, it) {
-		let elems = $(c_content);
-		let obj = {type:'_Space'};
+		const elems = $(c_content);
+		const obj = {type:'_Space'};
 		obj.no = it+1;
 		obj.width = elems.find('.c_width').val();
 		return obj;
 	}
 	function parse_Line(c_content, it) {
-		let elems = $(c_content);
-		let obj = {type:'_Line'};
+		const elems = $(c_content);
+		const obj = {type:'_Line'};
 		obj.no = it+1;
 		obj.width = elems.find('.c_width').val();
 		return obj;
 	}
 	function parse_Label(c_content, it) {
-		let elems = $(c_content);
-		let obj = {type:'_Label'};
+		const elems = $(c_content);
+		const obj = {type:'_Label'};
 		obj.no = it+1;
 		obj.label = elems.find('.c_label').val();
 		obj.align = elems.find('input[name$=_align]:checked').val(); //$=ends with
@@ -1382,16 +1591,16 @@ get_Form_JSON = function()
 		return obj;
 	}
 	function parse_Html(c_content, it) {
-		let elems = $(c_content);
-		let obj = {type:'_Html'};
+		const elems = $(c_content);
+		const obj = {type:'_Html'};
 		obj.no = it+1;
 		obj.text = elems.parent().next().find('.c_text').val();
 		obj.width = elems.find('.c_width').val();
 		return obj;
 	}
 	function parse_Text(c_content, it) {
-		let elems = $(c_content);
-		let obj = {type:'_Text'};
+		const elems = $(c_content);
+		const obj = {type:'_Text'};
 		obj.no = it+1;
 		obj.unid = get_unique_id();
 		obj.name = elems.find('.c_name').val();
@@ -1402,8 +1611,8 @@ get_Form_JSON = function()
 		return obj;
 	}
 	function parse_Textarea(c_content, it) {
-		let elems = $(c_content);
-		let obj = {type:'_Textarea'};
+		const elems = $(c_content);
+		const obj = {type:'_Textarea'};
 		obj.no = it+1;
 		obj.unid = get_unique_id();
 		obj.name = elems.find('.c_name').val();
@@ -1414,8 +1623,8 @@ get_Form_JSON = function()
 		return obj;
 	}
 	function parse_Number(c_content, it) {
-		let elems = $(c_content);
-		let obj = {type:'_Number'};
+		const elems = $(c_content);
+		const obj = {type:'_Number'};
 		obj.no = it+1;
 		obj.unid = get_unique_id();
 		//obj.unid = elems.find('.c_unid').val();
@@ -1430,8 +1639,8 @@ get_Form_JSON = function()
 		return obj;
 	}
 	function parse_Date(c_content, it) {
-		let elems = $(c_content);
-		let obj = {type:'_Date'};
+		const elems = $(c_content);
+		const obj = {type:'_Date'};
 		obj.no = it+1;
 		obj.unid = get_unique_id();
 		obj.name = elems.find('.c_name').val();
@@ -1442,8 +1651,8 @@ get_Form_JSON = function()
 		return obj;
 	}
 	function parse_Time(c_content, it) {
-		let elems = $(c_content);
-		let obj = {type:'_Time'};
+		const elems = $(c_content);
+		const obj = {type:'_Time'};
 		obj.no = it+1;
 		obj.unid = get_unique_id();
 		obj.name = elems.find('.c_name').val();
@@ -1454,8 +1663,8 @@ get_Form_JSON = function()
 		return obj;
 	}
 	function parse_Period_Feld(c_content, it) {
-		let elems = $(c_content);
-		let obj = {type:'_Period'};
+		const elems = $(c_content);
+		const obj = {type:'_Period'};
 		obj.no = it+1;
 		obj.unid = get_unique_id();
 		obj.name = elems.find('.c_name').val();
@@ -1468,8 +1677,8 @@ get_Form_JSON = function()
 		return obj;
 	}
 	function parse_Dropdown(c_content, it) {
-		let elems = $(c_content);
-		let obj = {type:'_Dropdown'};
+		const elems = $(c_content);
+		const obj = {type:'_Dropdown'};
 		obj.no = it+1;
 		obj.unid = get_unique_id();
 		obj.name = elems.find('.c_name').val();
@@ -1483,8 +1692,8 @@ get_Form_JSON = function()
 		return obj;
 	}
 	function parse_RadioButtons(c_content, it) {
-		let elems = $(c_content);
-		let obj = {type:'_RadioButtons'};
+		const elems = $(c_content);
+		const obj = {type:'_RadioButtons'};
 		obj.no = it+1;
 		obj.unid = get_unique_id();
 		obj.name = elems.find('.c_name').val();
@@ -1500,8 +1709,8 @@ get_Form_JSON = function()
 		return obj;
 	}
 	function parse_Accordion(c_content, it, Panels_obj) {
-		let elems = $(c_content);
-		let obj = {type:'_Accordion'};
+		const elems = $(c_content);
+		const obj = {type:'_Accordion'};
 		obj.no = it+1;
 		obj.accType = $(elems.find('input[name$=_accType]')[1]).is(':checked'); //$=ends with
 		obj.width = elems.find('.c_width').val();
@@ -1510,8 +1719,8 @@ get_Form_JSON = function()
 	}
 	//items in accordion Obj
 	function parse_Accordion_Panel(c_content, it, acc_it, Rows_obj) {
-		let elems = $(c_content);
-		let obj = {type:'_Accordion_Panel'};
+		const elems = $(c_content);
+		const obj = {type:'_Accordion_Panel'};
 		obj.no = it+1;
 		obj.acc_no = acc_it+1;
 		obj.label = elems.find('.c_accLabel').val();
@@ -1526,9 +1735,9 @@ get_Form_JSON = function()
 	function parse_Row(_this, selector) {
 		//console.log(_this, selector);
 		let row_num = 0;
-		let rowsArr = [];
+		const rowsArr = [];
 		$(_this).find(selector).each(function(){ //Rows
-			//let row = $(this).attr('data-row');
+			//const row = $(this).attr('data-row');
 			//console.log(row);
 			
 			//init row
@@ -1536,12 +1745,13 @@ get_Form_JSON = function()
 			rowsArr[row_num].no = row_num+1;
 			rowsArr[row_num].items = [];
 		
-			var it = 0;
+			let it = 0;
 			$(this).find('> .row_div > table>tbody>tr > td.rowItem').each(function(){ //rowItems
-				var c_type = $(this).find('> .rowItem_edit > input.c_type').val();
+				const c_type = $(this).find('> .rowItem_edit > input.c_type').val();
 				//console.log(row, it, c_type);
-				var elems = $( $(this).find('> .rowItem_edit > .c_content') );
-				var item_obj;
+				const elems = $( $(this).find('> .rowItem_edit > .c_content') );
+				
+				let item_obj;
 					 //if (c_type == '_Empty') 		item_obj = parse_Empty(elems, it);
 					 if (c_type == '_Space') 		item_obj = parse_Space(elems, it);
 				else if (c_type == '_Line') 		item_obj = parse_Line(elems, it);
@@ -1557,32 +1767,39 @@ get_Form_JSON = function()
 				else if (c_type == '_RadioButtons') item_obj = parse_RadioButtons(elems, it);
 				else if (c_type == '_Accordion') {
 					//_Accordion_Panel
-					var acc_it = 0;
-					var Panels_obj = [];
+					let acc_it = 0;
+					const Panels_obj = [];
+					
 					//Accordion Panels
 					$(this).find('> .rowItem_div > .accordion_group > .AccPanel').each(function(){
-						var acc_elems = $( $(this).find('> .rowItem_edit > .c_content') );
-						var Rows_obj = parse_Row(this, '> .rowItem_div > .panel > .accordionPanel > .panel-body > ul.row_sortable > li.row_sort', false) || [];
+						const acc_elems = $( $(this).find('> .rowItem_edit > .c_content') );
+						const Rows_obj = parse_Row(this, '> .rowItem_div > .panel > .accordionPanel > .panel-body > ul.row_sortable > li.row_sort', false) || [];
+
 						Panels_obj.push( parse_Accordion_Panel(acc_elems, it, acc_it, Rows_obj) );
 						acc_it++;
 					});
+					
 					item_obj = parse_Accordion(elems, it, Panels_obj);
 				}
 				
+
 				if (c_type != '_Empty') { //we not want to save empty 
 					rowsArr[row_num].items.push(item_obj);
 					it++;
 				}
 			});
+
 			row_num++;
 		});
+
 		return rowsArr;
 	}
+
 	function get_unique_id() {
 		return unid++;
 	}
 
-	let json = {
+	const json = {
 		"title":"",
 		"timer": {
 			"has": 0,
@@ -1595,6 +1812,7 @@ get_Form_JSON = function()
 		},
 		"pages": []
 	};
+
 	let json_names = {};
 	let unid = 1;
 	
@@ -1603,29 +1821,37 @@ get_Form_JSON = function()
 	json.timer.min = $('#timer_min').val();
 	json.timer.period = $('#timer_period').val();
 	json.days.has = $('#days_has').val();
+
 	let days_arr = [];
 	$('input[name=days_arr]').each(function(i,el){
 		if ($(el).val()=='1') days_arr.push(i+1);
 	});
+
 	json.days.arr = days_arr;
 	json.pages = [];
 	
-	var pg = 0; //0 for the object and 0+1 for the .no
-	$('li.page_sort > fieldset').each(function(){ //Page
-		var page = $(this).attr('data-page-id');
+
+	let pg = 0; //0 for the object and 0+1 for the .no
+	$('li.page_sort > fieldset').each(function () { //Page
+		const page = $(this).attr('data-page-id');
 
 		json.pages[pg] = {};
-		json.pages[pg].no = pg+1;
-		json.pages[pg].display_times = $(this).find('#page_display_times_'+page).val() || '0';
-		json.pages[pg].title = $(this).find('#page_title_'+page).val() || '';
-		json.pages[pg].title_center = $(this).find('#page_title_center_'+page).is(':checked');
+		json.pages[pg].no = pg + 1;
+		json.pages[pg].display_times = $(this).find('#page_display_times_' + page).val() || '0';
+		json.pages[pg].title = $(this).find('#page_title_' + page).val() || '';
+		json.pages[pg].title_center = $(this).find('#page_title_center_' + page).is(':checked');
 		
 		json.pages[pg].rows = parse_Row(this, '> .edit_step > .main_font > ul.row_sortable > li.row_sort', true) //Row on page
 		pg++;
 	});
+
 	//console.log(json, json_names);
-	$('input[name=form_json]').val(JSON.stringify(json));
-	$('input[name=form_json_names]').val(JSON.stringify(json_names));
+	$('input[name=form_json]').val(
+		JSON.stringify(json)
+	);
+	$('input[name=form_json_names]').val(
+		JSON.stringify(json_names)
+	);
 }
 //GET FORM JSON #######################
 //#####################################
@@ -1634,16 +1860,20 @@ get_Form_JSON = function()
 //#####################################
 //Preview, Save, Delete Entries #######
 	
+	
 //button Preview
 $("button.preview").on('click',function() {
 	if ($('form#wrapped').valid()) {
+
 		get_Form_JSON();
+
 		//in order to send the data with POST we open an iframe and then we POST the data there
 		$.fancybox($.extend(fancyBoxDefaults_iframe, {
 			type:'iframe', 
 			href: 'forms/form_data_preview.php', 
 			afterLoad:function() {
-				$('form#form_data').prop('action', 'form.php?id='+V_SRV_ID+'&preview&form_name2').prop('target', $('.fancybox-iframe').attr('name'));
+				$('form#form_data').prop('action', 'form.php?id=' + V_SRV_ID + '&preview&form_name2').prop('target', $('.fancybox-iframe').attr('name'));
+				
 				$('form#form_data').trigger('submit');
 				loading.hide();
 			}
@@ -1654,11 +1884,15 @@ $("button.preview").on('click',function() {
 		$('.c_content :input.c_name.required').each(function(){
 			if ($(this).val() == '') {
 				$(this).parents('td').find('.c_handler a').trigger("click");
+
 				setTimeout(function () {
 					$('.popover .popover-save').trigger("click");
+
 					setTimeout(function () {
 						if ($('label.error:visible').length) {
-							$("html, body").animate({ scrollTop: $('label.error:visible').offset().top-50 }, "slow");
+							$("html, body").animate({
+								scrollTop: $('label.error:visible').offset().top - 50
+							}, "slow");
 						}
 					}, 100);
 				}, 300);
@@ -1668,20 +1902,24 @@ $("button.preview").on('click',function() {
 	return false;
 });
 
+	
 //button Save Form Creator
 $("button.save").on('click',function() {
 	loading.show();
 	let c_name_missing = false;
 	let page_display_times_conflic = false;
 	let page_display_times_conflic2 = false;
+
 	$(".popover").popover('destroy'); //first remove all popups
+
 	setTimeout(function () { //bcz of problems with popovers we need setTimeout
 		//check if we have any required field in a show times-limited page 
 		$('.c_content :input.c_required').each(function(){
 			if ($(this).val() == '1') {
-				let page_times = $(this).parents('.page_sort').find('.page_display_times').val();
+				const page_times = $(this).parents('.page_sort').find('.page_display_times').val();
 				if (page_times != '0') {
 					page_display_times_conflic = true;
+
 					parent.Swal({
 						type: 'error',
 						title: LANG.FORMS.DISPLAY_TIMES_FIELD_ERROR,
@@ -1692,11 +1930,15 @@ $("button.save").on('click',function() {
 				}
 			}
 		});
+
 		//check if we have a show times-limited page with no normal page
 		let normal_pages = 0;
 		$('.page_display_times').each(function(){
-			if ($(this).val() == '0') normal_pages++;
+			if ($(this).val() == '0') {
+				normal_pages++;
+			}
 		});
+
 		if (normal_pages == '0') {
 			page_display_times_conflic2 = true;
 			parent.Swal({
@@ -1713,34 +1955,49 @@ $("button.save").on('click',function() {
 			if ($(this).val() == '') {
 				c_name_missing = true;
 				$(this).parents('td').find('.c_handler a').trigger("click");
+
 				setTimeout(function () {
 					$('.popover .popover-save').trigger("click");
+
 					setTimeout(function () {
 						if ($('label.error:visible').length) {
-							$("html, body").animate({ scrollTop: $('label.error:visible').offset().top-50 }, "slow");
+							$("html, body").animate({
+								scrollTop: $('label.error:visible').offset().top - 50
+							}, "slow");
 						}
 					}, 100);
 				}, 300);
 			}
 		});
 		
+
 		loading.hide();
 
-		if (!c_name_missing && !page_display_times_conflic && !page_display_times_conflic2) {
+
+		if (!c_name_missing &&
+			!page_display_times_conflic &&
+			!page_display_times_conflic2)
+		{
 			get_Form_JSON();
-			if (!$(':input').not('.c_content :input').not('.popover :input').valid() && $('label.error:visible').length != 0) {
-				$("html, body").animate({ scrollTop: $('label.error:visible').offset().top-50 }, "slow");
-			} else {
+
+			if (!$(':input').not('.c_content :input').not('.popover :input').valid() &&
+				$('label.error:visible').length != 0)
+			{
+				$("html, body").animate({
+					scrollTop: $('label.error:visible').offset().top - 50
+				}, "slow");
+			}
+			else {
 				//post with ajax
 				let data = {
-					group_id: $('input[name="group_id"]').val(),
-					athlete_id: $('input[name="athlete_id"]').val(),
-					form_id: $('input[name="form_id"]').val(),
-					category_id: $('input[name="category_id"]').val(),
-					form_json: $('input[name="form_json"]').val(),
+					group_id	: $('input[name="group_id"]').val(),
+					athlete_id	: $('input[name="athlete_id"]').val(),
+					form_id		: $('input[name="form_id"]').val(),
+					category_id	: $('input[name="category_id"]').val(),
+					form_json	: $('input[name="form_json"]').val(),
 					form_json_names: $('input[name="form_json_names"]').val()
 				};
-				$.post('form.php?id='+V_SRV_ID+'&save', data, function(data, result){
+				$.post('form.php?id=' + V_SRV_ID + '&save', data, function (data, result) {
 					if (data == 'SAVE_OK') {
 						Swal({
 							type: 'success',
@@ -1748,7 +2005,8 @@ $("button.save").on('click',function() {
 							showConfirmButton: false,
 							timer: 3000
 						});
-					} else {
+					}
+					else {
 						Swal({
 							type: 'error',
 							title: LANG.FORMS.FORM_DB_ERROR,
@@ -1770,39 +2028,43 @@ $('button.delete_forms_data_2_edit').confirmation({
 	btnOkLabel: LANG.YES, btnOkClass: 'btn btn-sm btn-success mr10',
 	btnCancelLabel: LANG.NO, btnCancelClass: 'btn btn-sm btn-danger',
 	onConfirm: function(e, button) {
-		var form_id = $(button).attr('data-form-id');
+		const form_id = $(button).attr('data-form-id');
 		V_CONTINUE_LOADING = true;
-		$.ajax({url:"php/ajax.php?i=forms_data&oper=del&ID="+form_id, success:function(data, result){
-			if (data=="OK_delete") {
-				$(window).off('beforeunload'); //disable unload warning
-				window.location.reload();
-			} else {
-				loading.hide();
-				$(".delete_forms_data_2_edit")/*.hide()*/.after("<br><b><u>"+data+"</u></b>");
+		$.ajax({
+			url: "php/ajax.php?i=forms_data&oper=del&ID=" + form_id, success: function (data, result) {
+				if (data == "OK_delete") {
+					$(window).off('beforeunload'); //disable unload warning
+					window.location.reload();
+				}
+				else {
+					loading.hide();
+					$(".delete_forms_data_2_edit")/*.hide()*/.after("<br><b><u>" + data + "</u></b>");
+				}
 			}
-		}});
+		});
 	}
 });
 //Preview, Save, Delete Entries #######
 //#####################################
 
+	
 //INIT
 //#####################################
 //Pages Events Init
 $('li.page_sort > fieldset').each(function(){ //Page
-	let page_num = $(this).attr('data-page-id');
+	const page_num = $(this).attr('data-page-id');
 	Page_Events_Init(page_num);
 	
 	//row_item button init
-	$('#fieldset_'+page_num+' .rowItem-add').each(function(){
-		let row = $(this).attr('data-row');
+	$('#fieldset_' + page_num + ' .rowItem-add').each(function () {
+		const row = $(this).attr('data-row');
 		New_Row_Events(row);
 	});
 
 	//items init
-	$('#fieldset_'+page_num+' td.rowItem').each(function(){
-		let row_item = $(this).attr('data-row_item');
-		let type = $(this).find('> .rowItem_edit > input.c_type').val();
+	$('#fieldset_' + page_num + ' td.rowItem').each(function () {
+		const row_item = $(this).attr('data-row_item');
+		const type = $(this).find('> .rowItem_edit > input.c_type').val();
 		Loaded_Item_init(type, row_item, false); //init item
 	});
 });

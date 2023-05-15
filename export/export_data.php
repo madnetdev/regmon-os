@@ -94,15 +94,15 @@ else {
 
 	$Athletes_available_ids = '';
 	if ($ADMIN OR $LOCATION_ADMIN OR $GROUP_ADMIN OR $GROUP_ADMIN_2) {
-		$Athletes_select_options_n_ids = get_Athletes_select_options_n_ids__for_Admins($UID, $Groups_available_ids);
-		//$Athletes_select_options = $Athletes_select_options_n_ids[0]; //not needed here
-		$Athletes_available_ids = $Athletes_select_options_n_ids[1];
+		$Select__Athletes__Options_n_ids = get_Select__Athletes__Options_n_ids__for_Admins($UID, $Groups_available_ids);
+		//$Select__Athletes__Options = $Select__Athletes__Options_n_ids[0]; //not needed here
+		$Athletes_available_ids = $Select__Athletes__Options_n_ids[1];
 		$where_Athletes .= " AND id IN (". $Athletes_available_ids .")";
 	}
 	elseif ($TRAINER) {
-		$Athletes_available_ids = get_Athletes_select_options_n_ids__for_Trainer($UID, $Groups_available_ids);
-		//$Athletes_select_options = $Athletes_select_options_n_ids[0]; //not needed here
-		$Athletes_available_ids = $Athletes_select_options_n_ids[1];
+		$Athletes_available_ids = get_Select__Athletes__Options_n_ids__for_Trainer($UID, $Groups_available_ids);
+		//$Select__Athletes__Options = $Select__Athletes__Options_n_ids[0]; //not needed here
+		$Athletes_available_ids = $Select__Athletes__Options_n_ids[1];
 		$where_Athletes .= " AND id IN (". $Athletes_available_ids .")";
 	}
 }
@@ -176,8 +176,10 @@ if (count($POST_forms)) {
 	$where_Forms_Data__Forms = " AND form_id IN (".$Forms_available_ids.")";
 
 	$forms_arr = array();
-	$where_forms = " WHERE id IN (".$Forms_available_ids.")";
-	$forms_rows = $db->fetch("SELECT id, name FROM forms $where_forms", array()); //status = 1 --we need all forms for export
+	$where_forms = " AND id IN (".$Forms_available_ids.")";
+
+	//TODO: maybe we need all forms for export even disabled if they have data
+	$forms_rows = $db->fetch("SELECT id, name FROM forms WHERE status = 1 $where_forms", array());
 	if ($db->numberRows() > 0)  {
 		foreach ($forms_rows as $row) {
 			$forms_arr[$row['id']] = $row['name'];
@@ -259,7 +261,7 @@ $where_Forms_Data = "WHERE 1 ". $where_Forms_Data__Groups . $where_Forms_Data__D
 $forms_data_rows_tmp = $db->fetch("SELECT category_id, form_id, user_id, res_json 
 FROM forms_data 
 $where_Forms_Data 
-AND form_id > 0 AND res_json != '[]' AND status = 1 
+AND status = 1 AND form_id > 0 AND res_json != '[]' 
 GROUP BY category_id, form_id, user_id, res_json 
 ORDER BY form_id", array()); 
 foreach ($forms_data_rows_tmp as $data_row) {
@@ -304,12 +306,12 @@ foreach ($Forms_Data_ordered_arr as $Forms_Data_row) {
 
 	for($i=1; $i<=$form_res_names_Num; $i++) {
 		if ($form_res_names[$i][1] == '_Period') { 
-			//extra fields for Period (von, bis) //Period is array ["20:04","21:04","01:00"]
-			$header_forms_data_names[$form_id] .= '<th>'.$form_res_names[$i][0].'_Von</th>';
+			//extra fields for Period (from, to) //Period is array ["20:04","21:04","01:00"]
+			$header_forms_data_names[$form_id] .= '<th>'.$form_res_names[$i][0].'_From</th>';
 			$forms_data_empty[$form_id] .= '<td></td>';
 			$header_form_extra_fields++;
 
-			$header_forms_data_names[$form_id] .= '<th>'.$form_res_names[$i][0].'_Bis</th>';
+			$header_forms_data_names[$form_id] .= '<th>'.$form_res_names[$i][0].'_To</th>';
 			$forms_data_empty[$form_id] .= '<td></td>';
 			$header_form_extra_fields++;
 		}
@@ -386,7 +388,7 @@ if ($db->numberRows() > 0)  {
 //get FORMS_DATA --the data rows
 $forms_data_rows = $db->fetch("SELECT * 
 FROM forms_data 
-$where_Forms_Data AND form_id > 0 AND res_json != '[]' AND status = 1 
+$where_Forms_Data AND status = 1 AND form_id > 0 AND res_json != '[]' 
 ORDER BY user_id, group_id, created", array());
 if ($db->numberRows() > 0)  {
 	$date_num = 0;
@@ -447,10 +449,10 @@ if ($db->numberRows() > 0)  {
 				foreach ($form_fields as $key => $name_type) {
 					$val = isset($res_json[$key]) ? $res_json[$key] : '';
 
-					//extra fields for Period (von, bis) //Period is array ["20:04","21:04","01:00"]
+					//extra fields for Period (from, to) //Period is array ["20:04","21:04","01:00"]
 					if ($name_type[1] == '_Period' AND is_array($val)) { 
-						$form_data_columns .= '<td>'.$val[0].'</td>'; //export period_von
-						$form_data_columns .= '<td>'.$val[1].'</td>'; //export period_bis
+						$form_data_columns .= '<td>'.$val[0].'</td>'; //export period_from
+						$form_data_columns .= '<td>'.$val[1].'</td>'; //export period_to
 						if ($val[2] != '') {
 							$time = explode(':', $val[2]??''); //get Period only -> "01:00"
 							$val = ($time[0]*60 + $time[1]); //convert to minutes

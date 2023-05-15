@@ -1,17 +1,44 @@
 var loading;
 
+
+//##########################################
+var Log = window.console.log.bind(window.console);
+
+//Debug1 this way logs the caller file and line number
+Object.defineProperty(this, "Debug1", {get: function (a,b) {
+  return V_DEBUG >= 1 ? console.log.bind(window.console, 'D1', '-') 
+               		  : function(){};}
+});
+
+//Debug2 this way logs the caller file and line number
+Object.defineProperty(this, "Debug2", {get: function () {
+  return V_DEBUG >= 2 ? console.log.bind(window.console, 'D2', '-') 
+               		  : function(){};}
+});
+
+
+function get_Function_Name() {
+	return get_Function_Name.caller.name;
+}
+//##########################################
+
+
+
+//##########################################
 function replaceAll(str, find, replace) {
 	function escapeRegExp(str) {
 		return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
 	}
 	return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
 }
+
 function replaceAll_Object(str, obj) {
 	Object.keys(obj).forEach(function(key,index) {
 		str = replaceAll(str, key, obj[key]);
 	});
 	return str;
 }
+
 function replaceAll_Object_Exact(str, obj) {
 	Object.keys(obj).forEach(function(key,index) {
 		//console.log(str, key, obj[key]);
@@ -21,6 +48,8 @@ function replaceAll_Object_Exact(str, obj) {
 	});
 	return str;
 }
+//##########################################
+
 
 //##########################################
 //Date Functions
@@ -44,6 +73,7 @@ function get_date(date) { //language specific
 	}
 	return date;
 }
+
 function get_date_obj(date) { //general
 	if (date == '') {
 		return '';
@@ -56,6 +86,20 @@ function get_date_obj(date) { //general
 	}
 	return date;
 }
+
+function get_date_time_obj(date) { //general
+	if (date == '') {
+		return '';
+	}
+	if (date.indexOf('-') != -1) {
+		date = moment(date, "YYYY-MM-DD HH:mm:ss");
+	}
+	else if (date.indexOf('.') != -1) {
+		date = moment(date, "DD.MM.YYYY HH:mm:ss");
+	}
+	return date;
+}
+
 function get_date_time(date) { //language specific
 	if (date == '') {
 		return '';
@@ -76,6 +120,7 @@ function get_date_time(date) { //language specific
 	}
 	return date;
 }
+
 function get_date_time_noSecs(date) { //language specific
 	if (date == '') {
 		return '';
@@ -96,6 +141,7 @@ function get_date_time_noSecs(date) { //language specific
 	}
 	return date;
 }
+
 function get_date_SQL(date) { //general
 	if (date == '') {
 		return '';
@@ -111,6 +157,7 @@ function get_date_SQL(date) { //general
 	}
 	return date;
 }
+
 function get_date_time_SQL(date) { //general
 	if (date == '') {
 		return '';

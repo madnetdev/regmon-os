@@ -20,7 +20,7 @@ switch ($action) {
 
 	case 'status': // UPDATE 
 		
-		$status = isset($_REQUEST['status']) ? (int)$_REQUEST['status'] : 0;
+		$status = (int)($_REQUEST['status'] ?? 0);
 		
 		$values['status'] = $status;
 		
@@ -35,7 +35,7 @@ switch ($action) {
 		
 		$responce = array();
 		
-		$group_id = isset($_REQUEST['group_id']) ? (int)$_REQUEST['group_id'] : 0;
+		$group_id = (int)($_REQUEST['group_id'] ?? 0);
 		$start = isset($_REQUEST['start']) ? date("Y-m-d 00:00:00", strtotime($_REQUEST['start'])) : date("Y-m-d", strtotime("-1 week"));
 		$end = isset($_REQUEST['end']) ?  date("Y-m-d 23:59:59", strtotime($_REQUEST['end'])) : date("Y-m-d");
 		
@@ -75,9 +75,8 @@ switch ($action) {
 		}
 		
 		if ($action != 'cal_count') {
-			$categories_colors = $db->fetchAllwithKey("SELECT id, color FROM categories ORDER BY id", array(), 'id'); //WHERE status != 0
-			$forms_names = $db->fetchAllwithKey("SELECT id, name FROM forms ORDER BY id", array(), 'id'); 
-			//TODO: @@@@@@@ WHERE status != 0 //we need this for all forms queries
+			$categories_colors = $db->fetchAllwithKey("SELECT id, color FROM categories WHERE status = 1 ORDER BY id", array(), 'id');
+			$forms_names = $db->fetchAllwithKey("SELECT id, name FROM forms WHERE status = 1 ORDER BY id", array(), 'id'); 
 
 			
 			//$where = " WHERE user_id = '$ID' AND group_id = '$group_id' AND created BETWEEN '$start' AND '$end'";
@@ -85,7 +84,7 @@ switch ($action) {
 			$where = " WHERE user_id = '$athlete_id' AND group_id = '$group_id' AND form_id > 0 AND created BETWEEN '$start' AND '$end'";
 
 			//forms_data
-			$rows = $db->fetch("SELECT * FROM forms_data $where $where_trainer AND status != -1 ORDER BY created", array()); 
+			$rows = $db->fetch("SELECT * FROM forms_data $where $where_trainer AND status = 1 ORDER BY created", array()); 
 			$i=0;
 			if ($db->numberRows() > 0)  {
 				foreach ($rows as $row) {
@@ -115,15 +114,14 @@ switch ($action) {
 							//edit form ////////////////////////an mporei
 							(($athlete_id == $UID OR ($trainer_view AND in_array($row['category_id'].'_'.$row['form_id'],$trainer_write_arr)))?
 								'<br>'.
-								'<button id="Cal_Edit_'.$row['id'].'" type="button" class="bttn fancybox fancybox.iframe" href="form.php?change=true&id='.$row['form_id'].'&catid='.$row['category_id'].'&from_data_id='.$row['id'].'&groupid='.$row['group_id'].'&athid='.$athlete_id.'" style="margin-top:10px; padding:3px 10px; width:190px;">'.$LANG->INDEX_EDIT_RECORD.'&nbsp; &nbsp;<i class="fa fa-edit" style="font-size:16px;"></i></button>'
+								'<button id="Cal_Edit_'.$row['id'].'" type="button" class="bttn fancybox fancybox.iframe" href="form.php?change=true&id='.$row['form_id'].'&cat_id='.$row['category_id'].'&from_data_id='.$row['id'].'&group_id='.$row['group_id'].'&athlete_id='.$athlete_id.'" style="margin-top:10px; padding:3px 10px; width:190px;">'.$LANG->INDEX_EDIT_RECORD.'&nbsp; &nbsp;<i class="fa fa-edit" style="font-size:16px;"></i></button>'
 							:'').
 							//view form
 							'<br>'.
-							'<button id="Cal_Res_'.$row['id'].'" type="button" class="bttn fancybox fancybox.iframe" href="form.php?view=true&id='.$row['form_id'].'&catid='.$row['category_id'].'&from_data_id='.$row['id'].'&groupid='.$row['group_id'].'&athid='.$athlete_id.'" style="margin-top:10px; padding:3px 10px; width:190px;">'.$LANG->INDEX_VIEW_RECORD.' &nbsp; &nbsp;<i class="fa fa-bar-chart fa-rotate-90" style="font-size:14px;"></i></button>'.
+							'<button id="Cal_Res_'.$row['id'].'" type="button" class="bttn fancybox fancybox.iframe" href="form.php?view=true&id='.$row['form_id'].'&cat_id='.$row['category_id'].'&from_data_id='.$row['id'].'&group_id='.$row['group_id'].'&athlete_id='.$athlete_id.'" style="margin-top:10px; padding:3px 10px; width:190px;">'.$LANG->INDEX_VIEW_RECORD.' &nbsp; &nbsp;<i class="fa fa-bar-chart fa-rotate-90" style="font-size:14px;"></i></button>'.
 							//view results
 							'<br>'.
-/* disable for now Cal_Res_Sub_ @@@@@@@@@@@@@*/
-							'<button disabled id="Cal_Res_Sub_'.$row['id'].'" type="button" class="bttn fancybox fancybox.iframe" href="results.php?athid='.$athlete_id.'&id='.$row['form_id'].'&cat_id='.$row['category_id'].'&timestamp='.(strtotime($row['created']) + 30*60).'&iframe'.$sec.'" style="margin-top:10px; padding:3px 10px; width:190px;">'.$LANG->INDEX_VIEW_RESULTS.' &nbsp; &nbsp;<i class="fa fa-bar-chart" style="font-size:16px;"></i></button>'.
+							'<button id="Cal_Res_Sub_'.$row['id'].'" type="button" class="bttn fancybox fancybox.iframe" href="forms_results.php?athlete_id='.$athlete_id.'&id='.$row['form_id'].'&cat_id='.$row['category_id'].'&timestamp='.(strtotime($row['created']) + 30*60).'&iframe'.$sec.'" style="margin-top:10px; padding:3px 10px; width:190px;">'.$LANG->INDEX_VIEW_RESULTS.' &nbsp; &nbsp;<i class="fa fa-bar-chart" style="font-size:16px;"></i></button>'.
 							//delete form.save ////////////////////////an mporei
 							(($athlete_id == $UID OR ($trainer_view AND in_array($row['category_id'].'_'.$row['form_id'],$trainer_write_arr)))?
 								'<br>'.
@@ -205,7 +203,7 @@ switch ($action) {
 		$responce = new stdClass();
 		$sidx = $sidx ?? '';
 		$sord = $sord ?? '';
-		$group_id = isset($_REQUEST['group_id']) ? (int)$_REQUEST['group_id'] : 0;
+		$group_id = (int)($_REQUEST['group_id'] ?? 0);
 		
 		$wher = "WHERE user_id = '".$ID."' AND group_id = '".$group_id."' AND form_id > 0 ";
 

@@ -4,14 +4,20 @@
 
 
 var confirm_Close_Form_iframe = function(){
-	if (!confirm("\n\n"+LANG.LEAVE_PAGE_WARNING+"\n\n")){} //return false;
+	if (!confirm("\n\n" + LANG.LEAVE_PAGE_WARNING + "\n\n")) {
+		//return false;	
+	}
 	else {
 		window.frames[0].frameElement.contentWindow.stop_beforeunload_IE();
+
 		setTimeout($.fancybox.close, 200);
 	}
 }
 
+
 //http://fancyapps.com/fancybox/#docs
+//if some difference use -> $.extend(fancyBoxDefaults,{maxWidth: 800})
+
 var fancyBoxDefaults = {
 	padding:0, //def:15
 	margin:10, //def:20
@@ -28,17 +34,24 @@ var fancyBoxDefaults = {
 		$('.not_display').show(); //show spacer
 	},
 	afterShow:function() {
-		$('.fancybox-skin').append('<a title="'+LANG.CLOSE+'" class="fancybox-item fancybox-close" href="javascript:jQuery.fancybox.close();"></a>'); //close button
+		$('.fancybox-skin').append(
+			//close button
+			'<a title="' + LANG.CLOSE + '" class="fancybox-item fancybox-close" href="javascript:jQuery.fancybox.close();"></a>'
+		);
+
 		setTimeout(function(){
-			$('.not_display').hide(); //hide spacer //give space to link so that fit when is bold on hover
+			//hide spacer //give space to link so that fit when is bold on hover
+			$('.not_display').hide();
 		}, 0);
 		
-		//if new page has fancy_placeholder - hide it
 		setTimeout(function () {
+			//if new page has fancy_placeholder - hide it
 			$("#fancy_placeholder").hide();
 		}, 0);
 	}
-}; //if some difference use -> $.extend(fancyBoxDefaults,{maxWidth: 800})
+};
+
+
 var fancyBoxDefaults_iframe = {
 	padding:0, //def:15
 	margin:10, //def:20
@@ -53,7 +66,7 @@ var fancyBoxDefaults_iframe = {
 		loading.show();
 		//open in new page if is iphone/ipad-safari
 		if (is_iOS()) {
-			window.location.href = this.href+'&iOS';
+			window.location.href = this.href+'&is_iOS';
 			return false;
 		}
 	},
@@ -63,7 +76,7 @@ var fancyBoxDefaults_iframe = {
 		return;
 	},
 	afterShow:function() {
-		var close = '';
+		let close = '';
 		//console.log(this.href);
 		if (this.href.indexOf('form.php')!=-1) {
 			close = 'javascript:confirm_Close_Form_iframe();';
@@ -76,13 +89,23 @@ var fancyBoxDefaults_iframe = {
 		$('.fancybox-skin').append('<a title="'+LANG.CLOSE+'" class="fancybox-item fancybox-close" href="'+close+'"></a>'); //close button
 		
 		//if new page has fancy_placeholder - hide it
-		var _self = this;
+		const _self = this;
 		setTimeout(function () {
-			var iframe = document.getElementById( $($(_self)[0].content).attr('id') );
-			var elmnt = iframe.contentWindow.document.getElementById("fancy_placeholder");
-			//elmnt.style.display = "none";
+			const iframe = document.getElementById( $($(_self)[0].content).attr('id') );
+			const elmnt = iframe.contentWindow.document.getElementById("fancy_placeholder");
 			$(elmnt).hide();
 		}, 0);
 	}
-}; //if some difference use -> $.extend(fancyBoxDefaults,{maxWidth: 800})
+};
 
+
+//is iOS
+function is_iOS() { //mono ta iphone/ipad 
+	const iDevices = ['iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod'];
+	if (!!navigator.platform) {
+		while (iDevices.length) {
+			if (navigator.platform === iDevices.pop()){ return true; }
+		}
+	}
+	return false;
+}

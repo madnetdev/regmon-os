@@ -2,9 +2,9 @@
 require_once('../_settings.regmon.php');
 require('../login/validate.php');
 
-$ID = isset($_REQUEST['ID']) ? abs($_REQUEST['ID']) : false; //abs fix negative ID
-$group_id = isset($_REQUEST['group_id']) ? $_REQUEST['group_id'] : false;
-$athlete_id = isset($_REQUEST['athlete_id']) ? $_REQUEST['athlete_id'] : false;
+$ID = isset($_POST['ID']) ? abs($_POST['ID']) : false; //abs fix negative ID
+$group_id = (int)($_POST['group_id'] ?? false);
+$athlete_id = (int)($_POST['athlete_id'] ?? false);
 
 if ($ID AND $group_id AND $athlete_id) 
 {

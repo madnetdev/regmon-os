@@ -168,13 +168,16 @@ else { //admin page
 
 function Responsive_Forms() { 
 	if (V_is_Index_Options) { //for index options
-		var p_width = $('#C_Forms_link').prop('clientWidth');// Get width of parent container
+		let p_width = $('#C_Forms_link').prop('clientWidth');// Get width of parent container
 		if (p_width == null || p_width < 1){
 			p_width = $('#C_Forms_link').prop('offsetWidth'); // For IE, revert to offsetWidth if necessary
 		}
 		p_width = p_width - 3; //prevent horizontal scrollbars
+		
+		//set here anyway to avoid empty grid after (calendar, options) change
+		$forms.jqGrid('setGridWidth', p_width);
 		if (p_width != $forms.width()) {
-			$forms.jqGrid('setGridWidth', p_width);
+			//$forms.jqGrid('setGridWidth', p_width);
 		}
 	}
 	else { //admin page

@@ -1,17 +1,23 @@
+// sticky-side-buttons.js
+
 // SSB UI jQuery
 var ssb_panel;
 jQuery(function ($) {
 
     // Animation Slide
     ssb_panel = $('#ssb-container');
-    var ssb_panel_w = ssb_panel.width(),
-        sbb_display_margin = 35,
-        window_width = jQuery(window).width();
+    const ssb_panel_w = ssb_panel.width();
+    const sbb_display_margin = 35;
+    const window_width = jQuery(window).width();
 
-    if (ssb_panel.hasClass('ssb-btns-left') && (ssb_panel.hasClass('ssb-anim-slide') || ssb_panel.hasClass('ssb-anim-icons'))) {
+    if (ssb_panel.hasClass('ssb-btns-left') &&
+        (ssb_panel.hasClass('ssb-anim-slide') || ssb_panel.hasClass('ssb-anim-icons')))
+    {
         ssb_panel.css('left', '-' + (ssb_panel_w - sbb_display_margin) + 'px');
     }
-    else if (ssb_panel.hasClass('ssb-btns-right') && (ssb_panel.hasClass('ssb-anim-slide') || ssb_panel.hasClass('ssb-anim-icons'))) {
+    else if (ssb_panel.hasClass('ssb-btns-right') &&
+        (ssb_panel.hasClass('ssb-anim-slide') || ssb_panel.hasClass('ssb-anim-icons')))
+    {
         ssb_panel.css('right', '-' + (ssb_panel_w - sbb_display_margin) + 'px');
     }
 

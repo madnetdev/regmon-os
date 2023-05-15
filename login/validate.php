@@ -12,13 +12,18 @@ $this_page = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],'/')
 // Check if the cookies are set
 if (isset($_COOKIE['USERNAME']) AND isset($_COOKIE['UID'])) {
 
-	//Init DB ///////////////////////////////////////////////////////////
+	//Init DB ###############################################
 	require_once(__DIR__.'/../php/class.db.php');	
 	$db = db::open('mysqli', $CONFIG['DB_Name'], $CONFIG['DB_User'], $CONFIG['DB_Pass'], $CONFIG['DB_Host']);
 	//set db log from the URL with page.php?dblog --not work for ajax calls
-	if (!$CONFIG['DB_Debug'] AND isset($_GET['dblog'])) $CONFIG['DB_Debug'] = true;
-	if ($CONFIG['DB_Debug']) $db->logToFile($CONFIG['DB_Debug_File']); //enable query logging
-	//Init DB ///////////////////////////////////////////////////////////
+	if (!$CONFIG['DB_Debug'] and isset($_GET['dblog'])) {
+		$CONFIG['DB_Debug'] = true;
+	}
+	if ($CONFIG['DB_Debug']) {
+		//enable query logging
+		$db->logToFile($CONFIG['DB_Debug_File']);
+	}
+	//Init DB ###############################################
 	
 	//Get values from cookies
 	$UID = (int)($_COOKIE['UID'] ?? 0);
@@ -42,7 +47,9 @@ if (isset($_COOKIE['USERNAME']) AND isset($_COOKIE['UID'])) {
 		 */
 		$hash_string = $CONFIG['SEC_Hash_Secret'] . $USERNAME . ($CONFIG['SEC_Hash_IP'] ? $UIP : '') . $USER['passwd'];
 		unset($USER['passwd']);
-		if (!verify_Password($HASH, $hash_string, $CONFIG['SEC_Hash_Secret'])) {
+		
+		//validate HASH
+		if (!verify_Secret($HASH, $hash_string, $CONFIG['SEC_Hash_Secret'])) {
 			//################################
 			header( 'Location: ' . $logout );
 			//################################
@@ -81,8 +88,10 @@ if (isset($_COOKIE['USERNAME']) AND isset($_COOKIE['UID'])) {
 			}
 			
 			//check if it is the Current Group Admin
-			//at results.php it takes another group_id
-			if ($this_page == 'results.php' AND isset($_REQUEST['groupid'])) $THIS_GROUP = $_REQUEST['groupid'];
+			//at forms_results.php it takes another group_id
+			if ($this_page == 'forms_results.php' AND isset($_REQUEST['group_id'])) {
+				$THIS_GROUP = $_REQUEST['group_id'];
+			}
 			$GR_admin = $db->fetchRow('SELECT id, name, admins_id FROM `groups` WHERE id = ? AND location_id = ? AND status > 0 ORDER BY id', array($THIS_GROUP, $LOCATION)); 
 			if ($db->numberRows() > 0)  {
 				if (in_array($UID, explode(',', $GR_admin['admins_id']??''))) {
@@ -115,6 +124,7 @@ else {
 	$USER = false;
 }
 
+
 if ($USER === false) {
 	if ($this_page == 'ajax.php') {
 		echo 'session expired';
@@ -136,12 +146,18 @@ if ($USER === false) {
 	exit;
 }
 
-//continue to the page that call this
 
 //Load languages
 require_once(__DIR__.'/../php/class.language.php');
 $LANG = Language::getInstance($CONFIG['REGmon_Folder'], $CONFIG['Default_Language'], $CONFIG['Use_Multi_Language_Selector']);
 
+
 //Load Date functions -> they based on language
 require_once(__DIR__.'/../php/date_functions.php');
+
+//Load Global functions
+require_once(__DIR__.'/../php/global_functions.php');
+
+
+//continue to the page that call this
 ?>

@@ -35,7 +35,23 @@ if (trim($_POST['passwd']) != '') {
 		echo $LANG->WARN_CONFIRM_PASSWORD;
 		exit;
 	}
-	$values['passwd'] = MD5($_POST['passwd']);
+
+	//check pass < 8 chars
+	if (strlen($values['passwd']) < 8) {
+		echo $LANG->WARN_PASSWORD_CHARS;
+		exit;
+	}
+
+	//check password strength
+	if (!(preg_match("#[0-9]+#", $values['passwd']) AND //one nubmer
+		  preg_match("#[a-z]+#", $values['passwd']) AND //one a-z
+		  preg_match("#[A-Z]+#", $values['passwd']))) //one A-Z
+	{
+		echo $LANG->WARN_WEAK_PASSWORD;
+		exit;
+	}
+		
+	$values['passwd'] = hash_Password($_POST['passwd']);
 }
 
 if ($_POST['birth_year'] != '' AND $_POST['birth_month'] != '' AND $_POST['birth_day'] != '') {

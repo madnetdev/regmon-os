@@ -63,12 +63,15 @@ $locations.jqGrid({
 	//Groups #############################
 	subGridRowExpanded: function(subgrid_id, row_id)
 	{
-		var subgrid_table_id = subgrid_id+"_t"; 
-		var sub_pager = "p_"+subgrid_table_id;
-		var sub_idPrefix = "lg_";
-		$("#"+subgrid_id).html("<table id='"+subgrid_table_id+"' class='scroll'></table><div id='"+sub_pager+"' class='scroll'></div>");
-		var location_id = $locations.jqGrid('getRowData', row_id)['id'];
-		var location_groups_url = "php/ajax.php?i=groups&ID="+location_id;
+		const subgrid_table_id = subgrid_id+"_t"; 
+		const sub_pager = "p_"+subgrid_table_id;
+		const sub_idPrefix = "lg_";
+		$("#" + subgrid_id).html(
+			'<table id="' + subgrid_table_id + '" class="scroll"></table>'+
+			'<div id="' + sub_pager + '" class="scroll"></div>'
+		);
+		const location_id = $locations.jqGrid('getRowData', row_id)['id'];
+		const location_groups_url = "php/ajax.php?i=groups&ID="+location_id;
 		
 		$("#"+subgrid_table_id).jqGrid({
 			url: location_groups_url,
@@ -125,10 +128,10 @@ $locations.jqGrid({
 			subGridRowExpanded: function(subgrid_id, row_id)
 			{
 				$("#loading").show();
-				var group_grid = $("#"+subgrid_id.substring(0, subgrid_id.indexOf("_t")+2));
-				var group_id = group_grid.jqGrid('getRowData', row_id)['id'];
-				var subgrid_width = $("#"+subgrid_id).width();
-				var subgrid_table_id = subgrid_id+"_t"; 
+				const group_grid = $("#"+subgrid_id.substring(0, subgrid_id.indexOf("_t")+2));
+				const group_id = group_grid.jqGrid('getRowData', row_id)['id'];
+				const subgrid_width = $("#"+subgrid_id).width();
+				const subgrid_table_id = subgrid_id+"_t"; 
 				$("#"+subgrid_id).html(
 					'<div id="'+subgrid_table_id+'" class="anav" style="width:'+(subgrid_width-200)+'px; display:table-cell;"></div>'+
 					'<div style="width:200px; display:table-cell; vertical-align:middle; text-align:center;">'+
@@ -137,23 +140,26 @@ $locations.jqGrid({
 							'<br><br>'+
 							LANG.FORMS.STANDARD+': <input type="checkbox" class="standard" checked>'+
 						'</div>'+
-						'<button type="button" id="forms_selection_save_g_'+group_id+'" class="save">'+LANG.BUTTON_SAVE+' &nbsp; </button>'+
+						'<button type="button" id="forms_selection_save_g_'+group_id+'" class="save">'+
+							LANG.BUTTON_SAVE+' &nbsp; '+
+						'</button>'+
 					'</div>'
 				).css('display', 'table');
 				
-				$("#"+subgrid_table_id).load("forms/ajax.forms_menu.php", {group_id: group_id, edit: true}, function() {
-					$('input.check_box').iCheck({checkboxClass: 'icheckbox_flat-yellow2s'});
-					$('input.standard').iCheck({checkboxClass: 'icheckbox_polaris2'});
+
+				$("#" + subgrid_table_id).load("forms/ajax.forms_menu.php", { group_id: group_id, edit: true }, function () {
+					$('input.check_box').iCheck({ checkboxClass: 'icheckbox_flat-yellow2s' });
+					$('input.standard').iCheck({ checkboxClass: 'icheckbox_polaris2' });
 					$("#loading").hide();
 				});
 				
 				//button Save FormsSelect Selection
-				$("button#forms_selection_save_g_"+group_id).on('click',function() {
+				$("button#forms_selection_save_g_" + group_id).on('click', function () {
 					$("#loading").show();
-					var data = {
-						admin: true, group_id: group_id, 
-						forms_select: $('input[name^="sel_g_'+group_id+'_"]').serialize(), 
-						forms_standard: $('input[name^="std_g_'+group_id+'_"]').serialize()
+					const data = {
+						admin: true, group_id: group_id,
+						forms_select: $('input[name^="sel_g_' + group_id + '_"]').serialize(),
+						forms_standard: $('input[name^="std_g_' + group_id + '_"]').serialize()
 					};
 					$.post('forms/ajax.forms_selection_save.php', data, function (data, result) {
 						$("#loading").hide();

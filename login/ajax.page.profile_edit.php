@@ -1,6 +1,8 @@
-<?php
+<?php // ajax page profile edit --inline page (its not iframe, it uses the index page DOM)
+
 require_once('../_settings.regmon.php');
 require('validate.php');
+
 require_once('../php/functions.php');
 
 //echo '<pre>';print_r($_SERVER);
@@ -40,6 +42,7 @@ if ($db->numberRows() > 0)  {
 	$uname = $row['uname'];
 	$lastname = $row['lastname'];
 	$firstname = $row['firstname'];
+
 	$birth_date = get_date_SQL($row['birth_date'].'');
 	if ($birth_date != '') {
 		$birth_arr = explode('-', $birth_date);
@@ -47,11 +50,13 @@ if ($db->numberRows() > 0)  {
 		$birth_month = $birth_arr[1];
 		$birth_day = $birth_arr[2];
 	}
+
 	$sport = $row['sport'];
 	$sex = $row['sex'];
 	$body_height = $row['body_height'];
 	$email = $row['email'];
 	$telephone = $row['telephone'];
+
 	$level = $row['level'];
 		if ($level == 99) $level = $LANG->LVL_ADMIN;
 	elseif ($level == 50) $level = $LANG->LVL_LOCATION;
@@ -59,6 +64,7 @@ if ($db->numberRows() > 0)  {
 	elseif ($level == 40) $level = $LANG->LVL_GROUP_ADMIN_2;
 	elseif ($level == 30) $level = $LANG->LVL_TRAINER;
 	elseif ($level == 10) $level = $LANG->LVL_ATHLETE;
+
 	$dashboard = $row['dashboard'];
 	$lastlogin = get_date_time($row['lastlogin'].'');
 	$logincount = $row['logincount'];
@@ -85,6 +91,17 @@ $SP_select_options = get_Sports_Select_Options_By_Group($sport);
 $body_height_options = get_Body_Height_Options($body_height);
 
 ?>
+<style>
+/*required*/
+input.required.form-control { 
+    background: linear-gradient(90deg, white,#ff7777,red,#d5d5d5);
+    background-color: white;
+    background-repeat: no-repeat;
+    background-position: 100%;
+    background-size: 5px 100%;
+}
+</style>
+
 	<form id="profile_edit" style="width:100%;" role="form" autocomplete="off">
 		<h3 style="text-align:center;width:100%;"><?=$LANG->PROFILE_USER_ACCOUNT;?></h3>
 		<input type="hidden" name="uid" value="<?=$uid;?>">
@@ -92,16 +109,16 @@ $body_height_options = get_Body_Height_Options($body_height);
 		<input type="password" style="display:none"><?php /*hack to disable autocomplete*/?>
 		<div class="form-group">
 			<label for="uname"><?=$LANG->REGISTER_USERNAME;?></label><br>
-			<input type="text" name="uname" class="required form-control" placeholder="<?=$LANG->REGISTER_USERNAME;?>" value="<?=$uname;?>">
+			<input type="text" id="uname" name="uname" class="required form-control" placeholder="<?=$LANG->REGISTER_USERNAME;?>" value="<?=$uname;?>">
 		</div>
 		<div class="form-group">
 			<label for="passwd"><?=$LANG->REGISTER_PASSWORD;?></label><br>
-			<input type="password" name="passwd" class="form-control" placeholder="<?=$LANG->REGISTER_PASSWORD;?>" value="" autocomplete="off"<?php /*readonly onfocus="this.removeAttribute('readonly');" - hack to disable autocomplete*/?>>
+			<input type="password" id="passwd" name="passwd" class="form-control" placeholder="<?=$LANG->REGISTER_PASSWORD;?>" value="" autocomplete="off"<?php /*readonly onfocus="this.removeAttribute('readonly');" - hack to disable autocomplete*/?>>
 			<small class="text-muted"><?=$LANG->PROFILE_NO_CHANGE_PASSWORD;?></small>
 		</div>
 		<div class="form-group">
 			<label for="pass_confirm"><?=$LANG->REGISTER_PASS_CONFIRM;?></label><br>
-			<input type="password" name="pass_confirm" class="form-control" placeholder="<?=$LANG->REGISTER_PASS_CONFIRM;?>" value="" autocomplete="off">
+			<input type="password" id="pass_confirm" name="pass_confirm" class="form-control" placeholder="<?=$LANG->REGISTER_PASS_CONFIRM;?>" value="" autocomplete="off">
 		</div>
 		<div class="form-group">
 			<label for="email"><?=$LANG->REGISTER_EMAIL;?></label><br>

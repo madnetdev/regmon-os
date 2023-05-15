@@ -6,51 +6,41 @@ require('login/validate.php');
 
 $SEC_check = $CONFIG['SEC_Page_Secret']; //secure ajax sub pages from direct call
 
-$EDIT = isset($_REQUEST['edit']) ? true : false; 
-$PREVIEW = isset($_REQUEST['preview']) ? true : false; 
-$PREVIEW_USER = isset($_REQUEST['preview_user']) ? true : false; 
-$FORM_NAME2 = isset($_REQUEST['form_name2']) ? true : false; 
-$SAVE = isset($_REQUEST['save']) ? true : false; 
-$CHANGE = isset($_REQUEST['change']) ? true : false;  //user edit form -> from calendar
-$VIEW = isset($_REQUEST['view']) ? true : false; //show results -> from calendar
-$from_data_id = $_REQUEST['from_data_id'] ?? 0; 
-$form_id = $_REQUEST['id'] ?? 0; 
-$category_id = $_REQUEST['catid'] ?? 0; 
-$athlete_id = $_REQUEST['athid'] ?? $UID; 
-$group_id = $_REQUEST['groupid'] ?? $GROUP; 
-$form_json = $_REQUEST['form_json'] ?? false; 
-$form_json_names = $_REQUEST['form_json_names'] ?? false; 
-$iOS = isset($_REQUEST['iOS']) ? true : false; 
+$EDIT 			= isset($_REQUEST['edit']) ? true : false; 
+$PREVIEW 		= isset($_REQUEST['preview']) ? true : false; 
+$PREVIEW_USER 	= isset($_REQUEST['preview_user']) ? true : false; 
+$FORM_NAME2 	= isset($_REQUEST['form_name2']) ? true : false; 
+$SAVE 			= isset($_REQUEST['save']) ? true : false; 
+$CHANGE 		= isset($_REQUEST['change']) ? true : false;  //user edit form -> from calendar
+$VIEW 			= isset($_REQUEST['view']) ? true : false; //show results -> from calendar
+$is_iOS 		= isset($_REQUEST['is_iOS']) ? true : false; 
+
+$group_id 		= $_REQUEST['group_id'] ?? $GROUP; 
+$athlete_id 	= $_REQUEST['athlete_id'] ?? $UID; 
+$category_id 	= $_REQUEST['cat_id'] ?? 0; 
+
+$form_id 		= $_REQUEST['id'] ?? 0; 
+$from_data_id 	= $_REQUEST['from_data_id'] ?? 0; 
+$form_json 		= $_REQUEST['form_json'] ?? false; 
+$form_json_names = $_REQUEST['form_json_names'] ?? false;
+
+
 $selected_date = get_date_time_SQL('now');
 if (isset($_COOKIE['SELECTED_DATE'])) {
 	$selected_date = get_date_time_SQL($_COOKIE['SELECTED_DATE']);
 }
 if (!$form_id) {
-	echo '<div style="text-align:center; font-size:20px;">'.$LANG->FORM_PAGE_ERROR.'</div>';
+	echo Exit_Message($LANG->FORM_PAGE_ERROR);
 	exit;
 }
 
 $sec = isset($_REQUEST['sec']) ? $_REQUEST['sec'] : ''; 
 $sec_OK = MD5($CONFIG['SEC_Encrypt_Secret'] . $form_id . $athlete_id . $group_id . $UID);
 if ((isset($_REQUEST['sec']) AND $sec !== $sec_OK) OR ($ATHLETE AND $athlete_id != $UID)) {
-	echo '<div style="text-align:center; font-size:20px;">'.$LANG->NO_ACCESS_RIGHTS.'</div>';
+	echo Exit_Message($LANG->NO_ACCESS_RIGHTS);
 	exit;
 }
 
-function fix_chars($str) {
-	//return htmlspecialchars(utf8_encode($str));
-	//http://stackoverflow.com/questions/307623/utf-8-and-htmlentities-in-rss-feeds
-	//return utf8_encode(htmlentities($str,ENT_COMPAT,'utf-8'));
-	//return htmlspecialchars(utf8_encode($str), ENT_QUOTES); // if your input encoding is ISO 8859-1
-	return htmlspecialchars($str, ENT_QUOTES, 'UTF-8', false); // if your input encoding is UTF-8
-}
-function fix_chars_br($str) {
-	return str_replace(array("\r\n","\n"),'<br>', fix_chars($str));
-}
-function float_or_null($str) {
-	if ($str == '') return '';
-	return (float)$str;
-}
 
 $debug = true;
 $debug = false;
@@ -66,7 +56,9 @@ if ($SAVE) {
 	$values['data_names'] = $form_json_names;
 	$values['modified'] = get_date_time_SQL('now');
 	$values['modified_by'] = $USERNAME;
+
 	$save = $db->update($values, "forms", "id=?", array($form_id));
+	
 	if ($save >= 1) {
 		echo 'SAVE_OK';
 		//echo '<script type="text/javascript">parent.loading.hide(); parent.Swal({type:"success", title:LANG.FORMS.FORM_SAVED, showConfirmButton:false, timer:5000});</script>';
@@ -88,6 +80,7 @@ if ($SAVE) {
 //get Form data
 $form = array();
 $row = $db->fetchRow("SELECT id, name, name2, data_json, data_names FROM forms WHERE id=?", array($form_id)); 
+//AND status = 1 --need to edit all forms -even disabled
 if ($db->numberRows() > 0)  {
 	$color = ''; //$row['color'];
 	$forms_name = $row['name']; //external
@@ -103,7 +96,7 @@ if ($db->numberRows() > 0)  {
 	if ($PREVIEW_USER) $PREVIEW = true;
 }
 else {
-	echo $LANG->FORM_PAGE_ERROR;
+	echo Exit_Message($LANG->FORM_PAGE_ERROR);
 	exit;
 }
 
@@ -127,18 +120,22 @@ if (!count($form)) {
 	$form = json_decode($form_json_str, true);
 }
 
-if ($debug) { echo "<br><br><pre>";print_r($form);echo "</pre>"; }
-if ($debug) { echo "<br><br><pre>";print_r($form_names);echo "</pre>"; }
+if ($debug) { echo "<br><br><pre>"; print_r($form); echo "</pre>"; }
+if ($debug) { echo "<br><br><pre>"; print_r($form_names); echo "</pre>"; }
 
 
 //Form Title
 //$form_title = $form['title']; //not want this any more
 $form_title = $forms_name.' ('.$forms_name2.')'; //extern (intern)
-if ($EDIT) $form_title = $forms_name.' ('.$forms_name2.')'; //extern (intern)
-if ($FORM_NAME2) $form_title = $forms_name; //extern only
+if ($EDIT) {
+	$form_title = $forms_name . ' (' . $forms_name2 . ')'; //extern (intern)
+}
+if ($FORM_NAME2) {
+	$form_title = $forms_name; //extern only
+}
 
 //page title - Browsers title
-$title = $form_title.' - '.$LANG->APP_NAME; //page title
+$title = $form_title . ' - ' . $LANG->APP_NAME; //page title
 
 
 //days available
@@ -159,9 +156,11 @@ $timer_time_step = 0;
 $answers_step = 0;
 if ($timer AND $timer_time_min) {
 	$timer_time_sec = $timer_time_min; //sec
+	
 	if ($timer_time_period == 'min') {
 		$timer_time_sec = 60 * $timer_time_min;
-	} elseif($timer_time_period == 'hour') {
+	}
+	elseif($timer_time_period == 'hour') {
 		$timer_time_sec = 60 * 60 * $timer_time_min;
 	}
 	$timer_time_step = 100 / $timer_time_sec;
@@ -264,7 +263,7 @@ if (isset($form['pages'])) {
 									//title input
 									'<input type="text" id="page_title_'.$pg.'" class="c_page_title"'.
 										' placeholder="'.$LANG->FORM_PAGE_TITLE.'"'.
-										' value="'.fix_chars($page['title']).'"'.
+										' value="'.html_chars($page['title']).'"'.
 										($page['title_center']=='1'?' style="text-align:center;"':'').'>'.
 									//title align center checkbox
 									'<span class="c_page_title_center trans20">'.
@@ -281,7 +280,9 @@ if (isset($form['pages'])) {
 
 				//show page title
 				if (isset($page['title'])) {
-					$html .= 		'<h3 style="'.($page['title_center']?'text-align:center;':'').'">'.htmlspecialchars_decode($page['title']).'</h3>';
+					$html .= 		'<h3 style="'.($page['title_center']?'text-align:center;':'').'">'.
+										htmlspecialchars_decode($page['title']).
+									'</h3>';
 				}
 			}
 			//title end #############################################

@@ -5,46 +5,43 @@
 
 
 //get forms_data counts & sql filters for forms that have data
-$where_forms = '';
+$where_forms = '0';
 // get Forms with forms_data
 $Forms_with_Forms_Data_arr = get_Forms_with_Forms_Data_count_array($UID);
 if (count($Forms_with_Forms_Data_arr)) {
 	$where_forms = implode(',', array_keys($Forms_with_Forms_Data_arr));
-} else {
-	$where_forms = '0';
 }
-$where_forms = "AND t.form_id IN (".$where_forms.")";
+$where_forms = "WHERE t.form_id IN (".$where_forms.")";
 
 
-//get Results Templates options --template_type=0
+//get Forms Templates options --template_type=forms
 $dash_saves_options = '';
 //can see all at the moment
 $saves = $db->fetchAllwithKey2("SELECT t.id, t.form_id, t.name, f.name AS form_name 
-FROM templates t 
+FROM templates_forms t 
 LEFT JOIN forms f ON f.id = t.form_id 
-WHERE t.template_type=0 $where_forms 
+$where_forms 
 ORDER BY t.form_id, t.name", array(), 'form_id', 'id'); 
 if ($db->numberRows() > 0) {
 	foreach ($saves as $fid => $save_id) {
 		$saves_tmp = '';
 		foreach ($save_id as $save_id => $save) {
-			$saves_tmp .= '<option value="'.$save['form_id'].'__'.$save_id.'">'.htmlspecialchars($save['name']).'</option>';
+			$saves_tmp .= '<option value="' . $save['form_id'] . '__' . $save_id . '">' . html_chars($save['name']) . '</option>';
 		}
-		$dash_saves_options .= '<optgroup label="'.htmlspecialchars($save['form_name']).'">'.$saves_tmp.'</optgroup>';
+		$dash_saves_options .= '<optgroup label="' . html_chars($save['form_name']) . '">' . $saves_tmp . '</optgroup>';
 	}
 }
 
 
-//get Results Group Templates options --template_type=2
+//get Results Templates options --template_type=results
 $dash_saves2_options = '';
 //can see all at the moment
 $saves2 = $db->fetchAllwithKey("SELECT id, name 
-FROM templates 
-WHERE template_type=2 
-ORDER BY form_id, name", array(), 'id'); 
+FROM templates_results 
+ORDER BY name", array(), 'id'); 
 if ($db->numberRows() > 0) {
 	foreach ($saves2 as $save_id => $save) {
-		$dash_saves2_options .= '<option value="'.$save_id.'">'.htmlspecialchars($save['name']).'</option>';
+		$dash_saves2_options .= '<option value="' . $save_id . '">' . html_chars($save['name']) . '</option>';
 	}
 }
 
@@ -72,9 +69,9 @@ $Dashboard_Links_Arr = get_Dashboard_Links_Array($UID, $GROUP);
 	</div>
 </div>
 <div id="ssb-container" class="ssb-btns-left ssb-anim-slide" style="z-index:999; left:-9px; top:-4px;">
-	<ul><li id="dashboard_link" title="Dashboard"><span class="fa fa-th"></span>&nbsp;</li></ul>
+	<ul><li id="dashboard_link" title="<?=$LANG->DASHBOARD;?>"><span class="fa fa-th"></span>&nbsp;</li></ul>
 </div>
 <script>
-V_SAVED_DATA_OPTIONS=<?="'".$dash_saves_options."'";?>;
-V_SAVED_DATA2_OPTIONS=<?="'".$dash_saves2_options."'";?>;
+V_FORMS_TEMPLATES_OPTIONS=<?="'".$dash_saves_options."'";?>;
+V_RESULTS_TEMPLATES_OPTIONS=<?="'".$dash_saves2_options."'";?>;
 </script>

@@ -14,16 +14,21 @@ function get_Available_Forms($user_id) {
 		} else {
 			$where_forms = '0';
 		}
-		$where_forms = "WHERE id IN (".$where_forms.")";
+		$where_forms = "AND id IN (".$where_forms.")";
 	}
 
 	$Forms_select_options = '';
 	$forms_arr = array();
-	$forms = $db->fetch("SELECT id, name FROM forms $where_forms ORDER BY name", array());
+	//TODO: maybe we need all forms for export even disabled if they have data
+	$forms = $db->fetch("SELECT id, name FROM forms WHERE status = 1 $where_forms ORDER BY name", array());
 	if ($db->numberRows() > 0)  {
 		foreach ($forms as $form) {
 			if (!isset($forms_arr[$form['id']])) { //include each form once
-				$Forms_select_options .= '<option value="'.$form['id'].'">'.$form['id'].'. '.htmlspecialchars($form['name']??'').($ATHLETE?' ('.$Forms_with_Forms_Data_arr[$form['id']].')':'').'</option>';
+				$Forms_select_options .= '' .
+					'<option value="' . $form['id'] . '">' .
+						$form['id'] . '. ' . html_chars($form['name'] ?? '') .
+						($ATHLETE ? ' (' . $Forms_with_Forms_Data_arr[$form['id']] . ')' : '') .
+					'</option>';
 				$forms_arr[$form['id']] = 1;
 			}
 		}
@@ -82,10 +87,11 @@ function get_Groups_select_options_n_ids($user_id) {
 		//I comment this so users can select groups they has access from any location //MAD
 		//$where_location = 'WHERE location_id = "'.$LOCATION.'"';
 	}
+	//TODO: maybe we need all groups and locations for export even disabled 
 	$Groups_rows = $db->fetch("SELECT gr.id, gr.location_id, gr.name, gr.admins_id, gr.status, l.name AS location_name 
 FROM `groups` gr 
 LEFT JOIN locations l ON l.id = gr.location_id 
-$where_location 
+WHERE l.status != 0 AND gr.status > 0 $where_location 
 ORDER BY gr.location_id, gr.name", array()); 
 	if ($db->numberRows() > 0)  {
 		$location_open = false;
@@ -106,7 +112,7 @@ ORDER BY gr.location_id, gr.name", array());
 			
 			$location_name = $row['location_name'];
 			$group_id = $row['id'];
-			$group_name = htmlspecialchars($row['name']??'');
+			$group_name = html_chars($row['name']??'');
 			$group_status = ($row['status']==3 ? $LANG->ST_PRIVATE : $LANG->ST_PUBLIC).', '.
 							(($row['status']==1 OR $row['status']==3) ? $LANG->ST_ACTIVE : $LANG->ST_INACTIVE);
 			
@@ -142,7 +148,7 @@ ORDER BY gr.location_id, gr.name", array());
 //export + export_data ####################################
 
 
-function get_Athletes_select_options_n_ids__for_Admins($user_id, $Groups_available_ids) {
+function get_Select__Athletes__Options_n_ids__for_Admins($user_id, $Groups_available_ids) {
 	global $db, $ADMIN, $LOCATION_ADMIN, $GROUP_ADMIN, $GROUP_ADMIN_2;
 
 	$where_level = '';
@@ -158,7 +164,7 @@ function get_Athletes_select_options_n_ids__for_Admins($user_id, $Groups_availab
 		$where_groups = "AND u2g.group_id IN (".$Groups_available_ids.")";
 	}
 
-	$Athletes_select_options = '';
+	$Select__Athletes__Options = '';
 	$Athletes_available_ids = $user_id;
 
 	$Athletes_available_rows = $db->fetch("SELECT u.id, u.uname, u.firstname, u.lastname, u.level, u.sport 
@@ -171,19 +177,23 @@ ORDER BY u.firstname, u.lastname, u.id", array($user_id));
 		foreach ($Athletes_available_rows as $row) {
 			$u_name = ($row['lastname'] != '' ? $row['lastname'] : $row['uname']);
 			$u_vorname = ($row['firstname'] != '' ? $row['firstname'] : $row['uname']);
-			$Athletes_select_options .= '<option value="'.$row['id'].'|'.htmlspecialchars($u_vorname.' '.$u_name).'">'.htmlspecialchars($u_vorname.' '.$u_name.' - '.$row['sport']).'</option>';
+			$Select__Athletes__Options .= '' .
+				'<option value="' . $row['id'] . '|' . html_chars($u_vorname . ' ' . $u_name) . '">' .
+					html_chars($u_vorname . ' ' . $u_name . ' - ' . $row['sport']) .
+				'</option>';
 
 			$Athletes_available_ids .= ','.$row['id'];
 		}
 	}
-	return array($Athletes_select_options, $Athletes_available_ids);
+	return array($Select__Athletes__Options, $Athletes_available_ids);
 }
 
-function get_Athletes_select_options_n_ids__for_Trainer($user_id, $Groups_available_ids) {
+
+function get_Select__Athletes__Options_n_ids__for_Trainer($user_id, $Groups_available_ids) {
 	global $db;
 
-	$where_groups = "AND u2g.group_id IN (".$Groups_available_ids.")";
-	$Athletes_select_options = '';
+	$where_groups = "AND u2g.group_id IN (" . $Groups_available_ids . ")";
+	$Select__Athletes__Options = '';
 	$Athletes_available_ids = $user_id;
 
 	$Athletes_available_rows = $db->fetch("SELECT u.id, u.uname, u.lastname, u.firstname, u.sport 
@@ -197,12 +207,15 @@ ORDER BY u.firstname, u.lastname, u.id", array($user_id));
 		foreach ($Athletes_available_rows as $row) {
 			$u_name = ($row['lastname'] != '' ? $row['lastname'] : $row['uname']);
 			$u_vorname = ($row['firstname'] != '' ? $row['firstname'] : $row['uname']);
-			$Athletes_select_options .= '<option value="'.$row['id'].'|'.htmlspecialchars($u_vorname.' '.$u_name).'">'.htmlspecialchars($u_vorname.' '.$u_name.' - '.$row['sport']).'</option>';
+			$Select__Athletes__Options .= '' .
+				'<option value="' . $row['id'] . '|' . html_chars($u_vorname . ' ' . $u_name) . '">' .
+					html_chars($u_vorname . ' ' . $u_name . ' - ' . $row['sport']) .
+				'</option>';
 			
 			$Athletes_available_ids .= ','.$row['id'];
 		}
 	}
-	return array($Athletes_select_options, $Athletes_available_ids);
+	return array($Select__Athletes__Options, $Athletes_available_ids);
 }
 
 

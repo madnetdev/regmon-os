@@ -51,34 +51,28 @@ This project ...
 
 3. Create Database and Import :
 
-    use **"extra/_regmondb_init_v3.010_en.sql"** or **"extra/_regmondb_init_v3.010_de.sql"** file for a new installation
+    use **"extra/_regmondb_init_v3.012_en.sql"** or **"extra/_regmondb_init_v3.012_de.sql"** file for a new installation
     
     First you may want to replace the **"email@domain.com"** with your email address
 
 
-4. Create a folder for exports/imports and users uploads.
-
-    It should NOT be under DOCUMENT_ROOT, so it is not accessible from outside
-    ex.: **"../regmon_files/"**   
+4. Copy or rename the file **"_config.regmon.sample.php"** to a new file **"__config.regmon.php"**
 
 
-5. Copy or rename the file **"_config.regmon.sample.php"** to a new file **"__config.regmon.php"**
+5. Edit the configuration file and set your database and your email configuration
 
 
-6. Edit the configuration file and set your database and your email configuration
+6. Go to http://localhost/ 
 
 
-7. Go to http://localhost/ 
-
-
-8. Use the following accounts to login :
+7. Use the following accounts to login :
 
     admin, DemoLocation, DemoGroupAdmin, DemoGroupAdmin2
 
     password for all: DemoPass
 
 
-9. You can resister some Athletes and Trainers accounts once you setup your Email configuration
+8. You can resister some Athletes and Trainers accounts once you setup your Email configuration
 
 
 

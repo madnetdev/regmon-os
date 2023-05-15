@@ -12,22 +12,22 @@ $Groups_select_options = $Groups_select_options_n_ids[0];
 $Groups_available_ids = $Groups_select_options_n_ids[1];
 
 
-//get Athletes_select_options + Athletes_available_ids
+//get Select__Athletes__Options + Athletes_available_ids
 //######################################
 //put current user at the top of the options list
 $a_name = ($USER['lastname'] != '' ? $USER['lastname'] : $USER['uname']);
 $a_vorname = ($USER['firstname'] != '' ? $USER['firstname'] : $USER['uname']);
-$Athletes_select_options = '<option value="'.$UID.'|'.$a_vorname.' '.$a_name.'">'.$a_vorname.' '.$a_name.' - '.$USER['sport'].'</option>';
+$Select__Athletes__Options = '<option value="'.$UID.'|'.$a_vorname.' '.$a_name.'">'.$a_vorname.' '.$a_name.' - '.$USER['sport'].'</option>';
 $Athletes_available_ids = '';
 if ($ADMIN OR $LOCATION_ADMIN OR $GROUP_ADMIN OR $GROUP_ADMIN_2) {
-	$Athletes_select_options_n_ids = get_Athletes_select_options_n_ids__for_Admins($UID, $Groups_available_ids);
-	$Athletes_select_options .= $Athletes_select_options_n_ids[0];
-	$Athletes_available_ids = $Athletes_select_options_n_ids[1];
+	$Select__Athletes__Options_n_ids = get_Select__Athletes__Options_n_ids__for_Admins($UID, $Groups_available_ids);
+	$Select__Athletes__Options .= $Select__Athletes__Options_n_ids[0];
+	$Athletes_available_ids = $Select__Athletes__Options_n_ids[1];
 }
 elseif ($TRAINER) {
-	$Athletes_select_options_n_ids = get_Athletes_select_options_n_ids__for_Trainer($UID, $Groups_available_ids);
-	$Athletes_select_options .= $Athletes_select_options_n_ids[0];
-	$Athletes_available_ids = $Athletes_select_options_n_ids[1];
+	$Select__Athletes__Options_n_ids = get_Select__Athletes__Options_n_ids__for_Trainer($UID, $Groups_available_ids);
+	$Select__Athletes__Options .= $Select__Athletes__Options_n_ids[0];
+	$Athletes_available_ids = $Select__Athletes__Options_n_ids[1];
 }
 elseif ($ATHLETE) {
 	//only current user
@@ -45,7 +45,7 @@ $Sports_select_options = '';
 $sports = $db->fetch("SELECT DISTINCT(sport) AS sport FROM users $where_athletes ORDER BY sport", array()); 
 if ($db->numberRows() > 0)  {
 	foreach ($sports as $sport) {
-		$Sports_select_options .= '<option value="'.htmlspecialchars($sport['sport']).'">'.htmlspecialchars($sport['sport']).'</option>';
+		$Sports_select_options .= '<option value="'.html_chars($sport['sport']).'">'.html_chars($sport['sport']).'</option>';
 	}
 }
 
@@ -165,7 +165,7 @@ require('php/inc.head.php');
 							<div class="col-md-12">
 								<em><b><?=$LANG->EXPORT_ATHLETES;?></b></em><br>
 								<select name="athletes[]" data-placeholder="<?=$LANG->EXPORT_ALL;?>" style="width:100%;" multiple class="chosen-select">
-									<?=$Athletes_select_options;?>
+									<?=$Select__Athletes__Options;?>
 								</select>
 								<br>
 								<br>

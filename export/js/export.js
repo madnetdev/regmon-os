@@ -61,8 +61,8 @@ jQuery(function ()
 //Download #################################
 function Download_Data(xls_xlsx_csv) {
 	function getFile(href, extension, content, name) {
-        var downloadAttrSupported = document.createElement('a').download !== undefined;
-		var a, blobObject;
+        const downloadAttrSupported = document.createElement('a').download !== undefined;
+		let a, blobObject;
 
 		// MS specific. Check this first because of bug with Edge (#76)
 		if (window.Blob && window.navigator.msSaveOrOpenBlob) {
@@ -84,12 +84,12 @@ function Download_Data(xls_xlsx_csv) {
 	}
 
 	function download_XLS_file() {
-		let now = new Date();
-		let day = ("0" + now.getDate()).slice(-2);
-		let month = ("0" + (now.getMonth() + 1)).slice(-2);
-		let today = (day) + "." + (month) + "." + now.getFullYear();
-		let export_data = $('#export_data').html();
-		let data = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>'+ today +'</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>'+ export_data +'</table></body></html>';
+		const now = new Date();
+		const day = ("0" + now.getDate()).slice(-2);
+		const month = ("0" + (now.getMonth() + 1)).slice(-2);
+		const today = (day) + "." + (month) + "." + now.getFullYear();
+		const export_data = $('#export_data').html();
+		const data = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>'+ today +'</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>'+ export_data +'</table></body></html>';
         getFile(
             'data:text/html,\uFEFF' + data.replace(/\n/g, '%0A'), //data:application/vnd.ms-excel;base64,
             'xls',
@@ -103,7 +103,7 @@ function Download_Data(xls_xlsx_csv) {
 	}
 
 	function download_CSV_file() {
-        let data = $("#export_data").table2CSV({delivery:'value'});
+        const data = $("#export_data").table2CSV({delivery:'value'});
         getFile(
             'data:text/csv,\uFEFF' + data.replace(/\n/g, '%0A'),
             'csv',

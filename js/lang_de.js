@@ -58,6 +58,7 @@ LANG = {
 	NOTHING_SELECTED: 'nichts ausgewählt',
 	GROUPING_NO		: 'keine Gruppierung',
 	GROUPING_BY		: 'Gruppierung nach',
+	ERROR			: 'Error',
 
 	//Page Warnings
 	PROBLEM_LOADING_PAGE	: 'Die aufgerufene Seite kann nicht geladen werden.<br>Bitte versuchen Sie es später noch einmal.',
@@ -67,7 +68,7 @@ LANG = {
 	WARN_USERNAME_EXIST 	: 'Warnung! Dieser Name ist bereits vergeben. Bitte anderen Namen verwenden.',
 	
 	CONFIRM_DELETE_ENTRY 	: 'Soll der ausgewählte Eintrag wirklich gelöscht werden?',
-	ENTRY_DELETED_SUCCESS 	: 'Eintrag gelöscht.',
+	ENTRY_DELETE_SUCCESS 	: 'Eintrag gelöscht.',
 	NOT_HAVE_ACCESS_RIGHTS 	: 'Sie haben keine Zugriffsrechte',
 	
 	//Buttons
@@ -79,6 +80,7 @@ LANG = {
 	BUTTON_SEARCH 			: 'Suchen',
 	BUTTON_RELOAD 			: 'Neu Laden',
 	BUTTON_SAVE 			: 'Speichern',
+	BUTTON_LOAD 			: 'Laden',
 	BUTTON_DUPLICATE		: 'Formular duplizieren',
 	//index buttons
 	BUTTON_DATUM 			: 'Datum',
@@ -90,6 +92,35 @@ LANG = {
 	UPDATE_OK	: 'Erfolgreich aktualisiert!',
 	INSERT_OK	: 'Erfolgreich eingefügt!',
 	DELETE_OK	: 'Erfolgreich gelöscht!',
+
+	//selects ###########################################
+	SELECT_SEARCH 		: 'Suche...',
+	SELECT_ALL 			: 'Alle auswählen',
+	ALL_SELECTED 		: 'Alle ausgewählt',
+	SELECT_PLACEHOLDER	: ' auswählen...',
+	SELECTED 			: ' ausgewählt',
+	
+	//groups select
+	GROUP						: 'Gruppe',
+	GROUPS_SELECT_PLACEHOLDER	: 'Gruppe auswählen...',
+	GROUPS_SELECTED 			: 'Gruppen ausgewählt',
+	GROUPS_SELECT_NO_GROUP 		: 'Keine Gruppe',
+	
+	//athletes select
+	ATHLETE 					: 'Sportler',
+	ATHLETES_SELECT_PLACEHOLDER	: 'Sportler*in auswählen...',
+	ATHLETES_SELECTED 			: 'Sportler*innen ausgewählt',
+	ATHLETES_SELECT_NO_ATHLETE 	: 'Keine Sportler*in',
+
+	//forms select
+	FORM					: 'Formulare',
+	FORMS_SELECT_NO_DATA 	: 'Keine Formular',
+
+	//data select
+	DATA					: 'Daten',
+	DATA_SELECT_PLACEHOLDER	: 'Daten auswählen...',
+	DATA_SELECTED 			: 'Datensätze ausgewählt',
+	DATA_SELECT_NO_DATA 	: 'Keine Daten',
 
 	LOGIN : {
 		ACCESSIBILITY_ALT 			: 'Sound-Symbol',
@@ -148,7 +179,12 @@ LANG = {
 		LVL_GROUP_ADMIN		: 'Gruppenadmin',
 		LVL_GROUP_ADMIN_2	: 'Gruppenadmin (reduziert)',
 		LVL_ATHLETE			: 'Sportler',
-		LVL_TRAINER 		: 'Trainer'
+		LVL_TRAINER 		: 'Trainer',
+		
+		PASSWORD_MIN_LENGTH : 'weniger als 8 Zeichen',
+		PASSWORD_CONFIRM 	: 'Keine Passwortübereinstimmung',
+		PASSWORD_WEAK 		: 'Schwaches Passwort (Erforderlich [a-z] + [A-Z] + [0-9])',
+		WARN_USERNAME_EXIST : 'Warnung! Dieser Name ist bereits vergeben. Bitte anderen Namen verwenden.',
 	},
 
 	CATEGORIES : {
@@ -227,28 +263,17 @@ LANG = {
 		TIME_BETWEEN_ERROR: 'Bitte gib eine Uhrzeit zwischen 00:00 und 23:59 Uhr ein.',
 		TIME_LIMIT_EXCEEDED : 'Du hast die Pausenzeit überschritten. Möchtest du den Fragebogen erneut ausfüllen?',
 		
-		GROUP_SELECT_SEARCH 	: 'Suche...',
-		GROUP_SELECT_PLACEHOLDER: 'Gruppe auswählen...',
-		GROUPS_SELECTED 		: 'Gruppen ausgewählt',
-		GROUPS_SELECT_ALL 		: 'Alle auswählen',
-		GROUPS_ALL_SELECTED 	: 'Alle ausgewählt',
-		GROUPS_SELECT_NO_GROUP 	: 'Keine Gruppe',
-		
-		ATHLETE_SELECT_SEARCH 		: 'Suche...',
-		ATHLETE_SELECT_PLACEHOLDER	: 'Sportler*in auswählen...',
-		ATHLETES_SELECTED 			: 'Sportler*innen ausgewählt',
-		ATHLETES_SELECT_ALL 		: 'Alle auswählen',
-		ATHLETES_ALL_SELECTED 		: 'Alle ausgewählt',
-		ATHLETES_SELECT_NO_ATHLETE 	: 'Keine Sportler*in',
-		
-		DEFAULT_TEMPLATE_SELECT : 'Bitte Standardvorlage auswählen',
 		PARENTHESES_ERROR 		: 'Klammern Fehler',
 		ALLOWED_CHARS_ERROR 	: 'nur erlaubt "({+-*/._})" und Zahlen',
+				
+		DEFAULT_TEMPLATE_SELECT_TITLE 	 	: 'Bitte Standardvorlage auswählen',
+		DEFAULT_TEMPLATE_SELECT_PLACEHOLDER	: 'Hier Vorlage auswählen',
 	},
 	
 	FORMS2CATEGORIES : {
 		CATEGORY 	: 'Kategorie',
 		FORM_SELECT : 'Formular<br> auswählen',
+		FORM_ID		: 'Form<br> ID',
 		FORM_NAME	: 'Formular',
 		ORDER 		: 'interne<br> Reihenfolge', //'Ordnung',
 		STOP_DATE 	: 'Verfügbar bis',
@@ -301,6 +326,182 @@ LANG = {
 	},
 
 	RESULTS : {
+		DATA 					: 'Daten',
+		NO_DATA_CHANGE_SELECTION: 'Keine Daten vorhanden. Bitte ändere die Auswahlkriterien oben.',
+		DATA_EXPORT 			: 'Daten exportieren',
+		DATA_EXPORT_CSV 		: 'CSV-Dokument',
+		DATA_EXPORT_XLSX 		: 'XLSX-Dokument',
+		DASH_FORMS_TEMPLATE_NAME: 'Formulare Vorlagen:',
+		DASH_RESULTS_TEMPLATE_NAME : 'Ergebnisse Vorlagen:',
+		FORMS_TEMPLATE			: 'Formulare Vorlagen',
+		RESULTS_TEMPLATE 		: 'Ergebnisse Vorlagen',
+		TEMPLATE				: 'Vorlage',
+		TEMPLATES				: 'Vorlagen',
+		TEMPLATE_NAME_EXISTS	: 'Vorlage Name existiert',
+		TEMPLATE_OVERWRITE_CONFIRM : 'Soll die vorhandene Vorlage wirklich überschrieben werden?',
+		TEMPLATE_FORMS_CHANGED 	: 'Die Vorlage der Rohdaten hat sich geändert. Bitte kontrolliere die geladenen Daten.',
+		TEMPLATE_DASH_TITLE 	: 'Vorlage mit Dashboard verknüpfen',
+		TEMPLATE_ADDED_TO_DASH 	: 'Vorlage: {TEMPLATE_NAME} zum Dashboard hinzugefügt.',
+		TEMPLATE_CONFIRM_DELETE	: 'Vorlage: {TEMPLATE_NAME} wirklich löschen?',
+		TEMPLATE_DELETE_SUCCESS	: 'Vorlage: {TEMPLATE_NAME} gelöscht.',
+		TEMPLATE_SAVE_SUCCESS	: 'Vorlage: {TEMPLATE_NAME} gespeichert.',
+		NO_AXIS_NAME			: 'Kein Achsenname',
+		COLLAPSE_EXPAND_ALL 	: 'Alles schließen / Alles erweitern',
+		SHOW_ATHLETE_NAME 		: 'Sportlernamen anzeigen',
+		SHOW_FORM_NAME 			: 'Formularnamen anzeigen',
+		SHOW_IN_GRAPHIC 		: 'In Grafik anzeigen?',
+		AUTO 					: 'Auto',
+		FORMULA 				: 'Formel',
+		FORMULA_CALCULATE		: 'Formel berechnen',
+		FORMULA_INDIVIDUAL		: 'individuell',
+		FORMULA_BEAUTIFY		: 'verschönern',
+		CALCULATION 			: 'Berechnung',
+		DIAGRAM_FIELD_NAME 		: 'Name',
+		DIAGRAM_COLOR			: 'Farbe',
+		//Diagram type
+		DIAGRAM_TYPE : {
+			LABEL 		: 'Diagrammtyp',
+			LINE 		: 'Linie',
+			SPLINE 		: 'geglättete Linie',
+			AREA 		: 'Linie mit Füllung',
+			AREASPLINE 	: 'geglättete Linie mit Füllung',
+			COLUMN 		: 'Säulen',
+			SCATTER 	: 'Punkte',
+		},
+		//Line type
+		LINE_TYPE : {
+			LABEL 				: 'Linientyp',
+			SOLID 				: 'Normal',
+			DOT 				: 'Punkte',
+			SHORT_DOT 			: 'Punkte kurz',
+			DASH 				: 'Striche',
+			SHORT_DASH 			: 'Striche kurz',
+			LONG_DASH 			: 'Striche lang',
+			DASH_DOT 			: 'Strichpunkt',
+			SHORT_DASH_DOT 		: 'Strichpunkt kurz',
+			LONG_DASH_DOT 		: 'Strichpunkt lang',
+			SHORT_DASH_DOT_DOT 	: 'Strichpunkt-Punkt kurz',
+			LONG_DASH_DOT_DOT 	: 'Strichpunkt-Punkt lang',
+		},
+		//Column width
+		COLUMN_WIDTH : {
+			LABEL 		: 'Säulenbreite',
+			AUTO 		: 'Auto',
+			MINUTES 	: 'Minuten',
+			HOUR 		: 'Stunde',
+			HOURS 		: 'Stunden',
+			DAY 		: 'Tag',
+			DAYS 		: 'Tage',
+			WEEK 		: 'Woche',
+			WEEKS 		: 'Wochen',
+		},
+		//Point Markers
+		POINT_MARKERS : {
+			LABEL 		: 'Punktmarken',
+			AUTO 		: 'Auto',
+			YES 		: 'Ja',
+			NO 			: 'Nein',
+		},
+		//Data Labels
+		DATA_LABELS : {
+			LABEL 		: 'Labels',
+			YES 		: 'Ja',
+			NO 			: 'Nein',
+		},
+		//Y-Axis
+		Y_AXIS: {
+			LABEL 			: 'Y-Achse',
+			GROUP_LABEL		: 'Y-ACHSE',
+			NAME			: 'Axis Name',
+			POSITION		: 'Position',
+			POSITION_LEFT	: 'Links',
+			POSITION_RIGHT	: 'Rechts',
+			GRID_WIDTH 		: 'Raster weite',
+			MIN 			: 'Min',
+			MAX 			: 'Max',
+		},
+		//Table
+		TABLE : {
+			COLLAPSE 		: 'schließen',
+			EXPAND 			: 'erweitern',
+			FULL_SCREEN_ON	: 'Vollbild auf',
+			FULL_SCREEN_OFF : 'Vollbild aus',
+			DATE_TIME		: 'Datum Zeit',
+			DATE			: 'Datum',
+			DATE_YEAR		: 'Jahr',
+			DATE_MONTH		: 'Monat',
+			DATE_DAY		: 'Tag',
+			TIME			: 'Zeit',
+			TIME_HOUR		: 'Stunde',
+			TIME_MINUTE		: 'Minute',
+			TIME_SECOND		: 'Sekunde',
+			INTERVAL_START	: 'Start',
+			INTERVAL_END 	: 'Ende',
+			INTERVAL_MIDDLE : 'Mitte',
+		},
+		//Intervals
+		BUTTON_CALC_RAW_DATA 		: 'Berechnung aus Rohdaten',
+		BUTTON_CALC_INTERVAL 		: 'Berechnung im Intervall',
+		BUTTON_CALC_INTERVAL_SINGLE : 'Berechnung im Intervall (Einzelsäule)',
+		INTERVAL			: 'Intervall',
+		INTERVALS			: 'Intervalle',
+		INTERVAL_1_LINE_PER	: '1 Zelle pro',
+		INTERVAL_PERIOD_LABEL: 'Dauer',
+		INTERVAL_PERIOD_START: 'Start',
+		INTERVAL_PERIOD_END	: 'Ende',
+		INTERVAL_PERIOD : {
+			DATA_LINES 	: 'Datenzeile(n)',
+			MINUTE 		: 'Minute',
+			MINUTES 	: 'Minuten',
+			MINUTE_S 	: 'Minute(n)',
+			HOUR 		: 'Stunde',
+			HOURS 		: 'Stunden',
+			HOUR_S 		: 'Stunde(n)',
+			DAY 		: 'Tag',
+			DAYS 		: 'Tage',
+			DAY_S 		: 'Tag(e)',
+			WEEK 		: 'Woche',
+			WEEKS 		: 'Wochen',
+			WEEK_S 		: 'Woche(n)',
+			MONTH 		: 'Monat',
+			MONTHS 		: 'Monate',
+			MONTH_S 	: 'Monat(e)',
+			YEAR 		: 'Jahr',
+			YEARS 		: 'Jahre',
+			YEAR_S 		: 'Jahr(e)',
+		},
+		INTERVAL_EXTRA_X_AXIS 	: 'Extra X-Achse?',
+		INTERVAL_START_AFTER 	: 'Start nach',
+		INTERVAL_FULL_PERIOD	: 'Zeitraum vervollständigen',
+		INTERVAL_FORM			: 'Formular',
+		INTERVAL_FORM_NOT_FOUND	: 'nicht gefunden',
+		INTERVAL_FIELD 			: 'Feld',
+		INTERVAL_USE_IN_FORMULA	: 'Verwendung in Formel',
+		INTERVAL_USE_SUB_PERIOD: 'Weitere zeitliche Einschränkung',
+		//
+		EXPORT_FORMS_FILE_NAME 	: '{TODAY}_REGmon_Ergebnisse_{ATHLETES_NAMES}',
+		EXPORT_RESULTS_FILE_NAME: '{TODAY}_REGmon_Ergebnisse(gruppenbasiert)_{ATHLETES_NAMES}',
+	},
+
+	DIAGRAM : {
+		LOADING 				: 'Lädt...',
+		NO_DATA_SELECTED 		: 'Nichts ausgewählt oder anzuzeigen.',
+		EXPORT_FORMS_FILE_NAME 	: '{TODAY}_REGmon_Ergebnisse_Diagram_{ATHLETES_NAMES}',
+		EXPORT_RESULTS_FILE_NAME: '{TODAY}_REGmon_Ergebnisse(gruppenbasiert)_Diagram_{ATHLETES_NAMES}',
+		EXPORT_MENU_TITLE		: 'Diagramm Export-Menü',
+		DOWNLOAD_PNG_IMAGE 		: 'Herunterladen PNG-Bild',
+		DOWNLOAD_JPEG_IMAGE		: 'Herunterladen JPEG-Bild',
+		DOWNLOAD_PDF_DOC 		: 'Herunterladen PDF-Dokument',
+		DOWNLOAD_SVG_IMAGE 		: 'Herunterladen SVG Vektor-Bild',
+		DOWNLOAD_CSV_DOC 		: 'Herunterladen CSV-Dokument',
+		DOWNLOAD_XLSX_DOC 		: 'Herunterladen XLSX-Dokument',
+		PRINT_DIAGRAM 			: 'Diagramm drucken',
+		RESET_ZOOM 				: 'Zoom zurücksetzen',
+		RESET_ZOOM_LEVEL_1_1 	: 'Zurücksetzen Zoomstufe 1:1',
+		MONTHS_ARRAY			: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+		MONTHS_SHORT_ARRAY		: ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
+		WEEKDAYS_ARRAY			: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
+		WEEKDAYS_SHORT_ARRAY	: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
 	},
 
 	//Dashboard
@@ -358,6 +559,7 @@ LANG = {
 		PERIOD_LAST_WEEKS	: 'Wochen',
 		PERIOD_LAST_MONTHS	: 'Monate',
 		PERIOD_LAST_YEARS	: 'Jahre',
+		DETAILS 			: 'bearbeiten',
 	},
 
 	REQUEST : {

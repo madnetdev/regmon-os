@@ -2,11 +2,11 @@
 
 // Sticky NavBar
 
-var myNavBar;
+var stickyNavBar;
 
 jQuery(function() 
 {
-myNavBar = {
+stickyNavBar = {
     flagAdd: true,
 	first_time: true,
 	header_offset: 99,
@@ -24,7 +24,7 @@ myNavBar = {
 			//only when dashboard is closed and V_ANIMATE_RUN not true
 			if ($('#dashboard_div').width() == '0' && !V_ANIMATE_RUN) {
 				$('#nav-header').addClass('navbar-fixed-top');
-				for (var i=0; i < this.elements.length; i++) {
+				for (let i=0; i < this.elements.length; i++) {
 					$('#'+this.elements[i]).addClass('fixed-theme');
 				}
 				this.flagAdd = false;
@@ -34,25 +34,28 @@ myNavBar = {
     },
     remove: function() {
 		$('#nav-header').removeClass('navbar-fixed-top');
-        for (var i=0; i < this.elements.length; i++) {
+        for (let i=0; i < this.elements.length; i++) {
 			$('#'+this.elements[i]).removeClass('fixed-theme');
         }
         this.flagAdd = true;
 		this.first_time = false;
     },
 	get_direction: function() {
-		if (this.pos >= window.pageYOffset) this.direction = 'up';
-		else this.direction = 'down';
+		if (this.pos >= window.pageYOffset) {
+			this.direction = 'up';
+		} else {
+			this.direction = 'down';
+		}
 		return this.direction;
 	},
 	get_offset_diff: function() {
 		return this.pos > this.header_offset;
 	},
 	manager: function() {
-		var offset_diff = this.pos - window.pageYOffset;
+		const offset_diff = this.pos - window.pageYOffset;
 		this.get_direction();
 		this.pos = window.pageYOffset;
-		//console.log(this.pos, this.direction, offset_diff, this.flagAdd, this.first_time);
+		
 		if (this.get_offset_diff() && this.first_time) {
 			this.add();
 		}
@@ -69,7 +72,7 @@ myNavBar = {
 };
 
 //Init the object. Pass the object the array of elements that we want to change when the scroll goes down
-myNavBar.init(  [
+stickyNavBar.init(  [
     "nav-header",
     "nav-header-container",
     "nav-header-logo",
@@ -78,19 +81,20 @@ myNavBar.init(  [
 ]);
 
 //bind to the document scroll detection
-//window.onscroll = function(e) { myNavBar.manager(); }
+//window.onscroll = function(e) { stickyNavBar.manager(); }
 $(window).on('scroll',function() {
-	if (myNavBar.get_direction() == 'down') {
-		myNavBar.manager();
+	if (stickyNavBar.get_direction() == 'down') {
+		stickyNavBar.manager();
 	}
 	else {
 		clearTimeout($.data(this, 'scrollTimer'));
+
 		$.data(this, 'scrollTimer', setTimeout(function() {
-			myNavBar.manager();
+			stickyNavBar.manager();
 		}, 100));
 	}
 });
 
 //We have to do a first detectation of offset because the page could be load with scroll down set.
-myNavBar.manager();
+stickyNavBar.manager();
 });

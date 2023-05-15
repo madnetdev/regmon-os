@@ -6,9 +6,11 @@ var $location_groups = false;
 
 jQuery(function() 
 {
-var LG = LANG.GROUPS;
-var idPrefix = "g_";
-var pager = '#SGpager';
+
+const LG = LANG.GROUPS;
+const idPrefix = "g_";
+const pager = '#SGpager';
+
 $location_groups = $("#location_groups");
 if ($location_groups)
 {
@@ -69,13 +71,16 @@ $('#gbox_location_groups').removeClass('ui-corner-all').addClass('ui-corner-bott
 
 
 function Responsive_Location_Groups() { 
-    var p_width = $('#C_Location_Groups_link').prop('clientWidth');// Get width of parent container
+    let p_width = $('#C_Location_Groups_link').prop('clientWidth');// Get width of parent container
     if (p_width == null || p_width < 1){
         p_width = $('#C_Location_Groups_link').prop('offsetWidth'); // For IE, revert to offsetWidth if necessary
     }
 	p_width = p_width -2; //prevent horizontal scrollbars
+		
+	//set here anyway to avoid empty grid after (calendar, options) change
+	$location_groups.jqGrid('setGridWidth', p_width);
 	if (p_width != $location_groups.width()) {
-		$location_groups.jqGrid('setGridWidth', p_width);
+		//$location_groups.jqGrid('setGridWidth', p_width);
 	}
 }
 Responsive_Location_Groups();
