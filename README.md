@@ -103,6 +103,7 @@ This project ...
 
 
 3. Edit the file and set the Password for the ROOT user of the MYSQL Server
+
     The Password for the ROOT user will be set to this in the "db" Docker container
     ``
     MYSQL_ROOT_PASSWORD=root
@@ -118,6 +119,7 @@ This project ...
 5. Use docker-compose to Build, Start and Stop Docker containers:
 
     For building the images for the containers.
+    
     Also if you make any changes to Dockerfile you will need to build again the images.
     ```
     docker-compose build

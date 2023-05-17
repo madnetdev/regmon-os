@@ -16,8 +16,6 @@ services:
       - db
     volumes:
       - .:/var/www/public
-      - ./mycert.crt:/etc/ssl/certs/mycert.crt
-      - ./mycert.key:/etc/ssl/private/mycert.key
       - /var/www/public/vendor/
       - /var/www/public/node_modules/
     depends_on:

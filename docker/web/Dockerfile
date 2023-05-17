@@ -1,5 +1,5 @@
 #
-# Start/Stop/Build using docker-compose:
+# Build/Start/Stop using docker-compose:
 #
 # For changes to this file or docker-compose.yml
 #   docker-compose build
