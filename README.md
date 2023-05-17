@@ -141,17 +141,20 @@ This project ...
     ```
 
 
-6. Go to http://localhost/ 
+6. Go to http://localhost:8000/ for the application
 
 
-7. Use the following accounts to login :
+7. Go to http://localhost:8888/ for phpMyAdmin
+
+
+8. Use the following accounts to login :
 
     admin, DemoLocation, DemoGroupAdmin, DemoGroupAdmin2
 
     password for all: DemoPass
 
 
-8. You can resister some Athletes and Trainers accounts once you setup your Email configuration
+9. You can resister some Athletes and Trainers accounts once you setup your Email configuration
 
 
 
