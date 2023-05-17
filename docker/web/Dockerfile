@@ -1,6 +1,4 @@
 #
-# Use this dockerfile to run the application.
-#
 # Start/Stop/Build using docker-compose:
 #
 # For changes to this file or docker-compose.yml
