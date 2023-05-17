@@ -89,10 +89,9 @@ require('php/inc.head.php');
 <link rel="stylesheet" type="text/css" href="node_modules/sweetalert2/dist/sweetalert2.min.css">
 <script type="text/javascript" src="node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="css/overrides/excelFormulaUtilitiesJS/excelFormulaUtilitiesJS.css">
-<script type="text/javascript" src="node_modules/excelFormulaUtilitiesJS/dist/excel-formula.min.js"></script>
-<script type="text/javascript" src="node_modules/jquery-calx/js/numeral.min.js"></script>
-<?php /*<script type="text/javascript" src="node_modules/jquery-calx/jquery-calx-2.2.7.min.js"></script>*/?>
+<link rel="stylesheet" type="text/css" href="css/overrides/excel-formula-mad/excelFormulaUtilitiesJS.css">
+<script type="text/javascript" src="node_modules/excel-formula-mad/dist/excel-formula.min.js"></script>
+<script type="text/javascript" src="js/plugins/jquery-calx/numeral.min.js"></script>
 <script type="text/javascript" src="js/plugins/jquery-calx/jquery-calx-2.2.7_changed_reduced.js<?=$G_VER;?>"></script>
 
 <?php /* With this css file it not take account the axis options

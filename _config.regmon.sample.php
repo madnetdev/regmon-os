@@ -5,14 +5,14 @@ $CONFIG = array();
  * Database Settings
  * =================
  */
-//Database Hostname ex. localhost
+//Database Hostname ex. localhost --for docker use "db"
 $CONFIG['DB_Host'] = "localhost";
 //Database Name ex. regmondb
 $CONFIG['DB_Name'] = "regmondb";
 //Database User ex. root
-$CONFIG['DB_User'] = "root";
+$CONFIG['DB_User'] = "dbuser";
 //Database Password ex. root
-$CONFIG['DB_Pass'] = "";
+$CONFIG['DB_Pass'] = "root";
 //Database Debug Queries Filename ex. __log_query.log
 $CONFIG['DB_Debug_File'] = '__log_query.log';
 /**

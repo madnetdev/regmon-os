@@ -38,7 +38,7 @@ This project ...
 
     for php :
     ```
-    composer install --no-dev
+    composer install
     ```
     for js :
     ```

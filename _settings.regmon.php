@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace REGmon;
 
 //Version
-$G_Version = "3.012";
+$G_Version = "3.745";
 $G_VER = "?ver=" . $G_Version;
 
 
@@ -43,9 +43,8 @@ if (isset($CONFIG['Simple_Extension_System'][$settings_page])) {
 
 
 // localhost config
-if ($_SERVER['HTTP_HOST'] == 'localhost' OR 
-	$_SERVER['HTTP_HOST'] == "localhost:8080" OR 
-	$_SERVER['HTTP_HOST'] == "regmon_os.test") 
+if (substr_count($_SERVER['HTTP_HOST'], 'localhost') OR  
+	substr_count($_SERVER['HTTP_HOST'], 'test')) 
 {
 	$CONFIG['PRODUCTION'] = false;
 	$CONFIG['HTTP'] = 'http://';

@@ -98,7 +98,7 @@ require('php/inc.head.php');
 <link rel="stylesheet" type="text/css" href="index/css/sticky_navbar.css<?=$G_VER;?>" />
 <script type="text/javascript" src="node_modules/jquery.cookie/jquery.cookie.js"></script>
 
-<script type="text/javascript" src="node_modules/jquery-wizard/src/jquery.wizard.js"></script>
+<script type="text/javascript" src="node_modules/@kflorence/jquery-wizard/src/jquery.wizard.js"></script>
 
 <link type="text/css" rel="stylesheet" href="css/overrides/icheck/skins/square/aero_new.css">
 <script type="text/javascript" src="node_modules/icheck/icheck.min.js"></script>

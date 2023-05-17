@@ -39,7 +39,9 @@ if ($LogLimiter->checkBlock()) { // if true this IP is blocked
 if ($CONFIG['Use_VisualCaptcha']) {
 	//validate CAPTCHA #######################
 	$Captcha = false;
-	require ('../vendor/autoload.php');
+	//require ('../vendor/autoload.php');
+	require ('visualCaptcha/Session.php');
+	require ('visualCaptcha/Captcha.php');
 	$visualCaptcha_session = new \visualCaptcha\Session();
 	$app_captcha = new \visualCaptcha\Captcha($visualCaptcha_session);
 	$app_frontendData = $app_captcha->getFrontendData();

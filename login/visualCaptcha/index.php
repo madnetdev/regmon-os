@@ -1,5 +1,7 @@
 <?php
-require __DIR__ . '/../../vendor/autoload.php';
+//require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/Session.php';
+require __DIR__ . '/Captcha.php';
 
 // Initialize Session
 session_cache_limiter( false );

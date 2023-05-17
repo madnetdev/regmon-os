@@ -79,3 +79,4 @@ Thumbs.db
 !_vendor.zip
 !_node_modules.zip
 !_regmondb_*.sql
+!.env.sample

@@ -9,7 +9,7 @@ require('php/inc.head.php');
 <link rel="stylesheet" type="text/css" href="node_modules/jquery-ui/dist/themes/smoothness/jquery-ui.min.css">
 <script type="text/javascript" src="node_modules/jquery-ui/ui/i18n/datepicker-de.js"></script>
 
-<script type="text/javascript" src="node_modules/jquery-wizard/src/jquery.wizard.js"></script>
+<script type="text/javascript" src="node_modules/@kflorence/jquery-wizard/src/jquery.wizard.js"></script>
 
 <link type="text/css" rel="stylesheet" href="css/overrides/icheck/skins/square/aero_new.css">
 <script type="text/javascript" src="node_modules/icheck/icheck.min.js"></script>
