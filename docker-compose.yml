@@ -12,11 +12,12 @@ services:
       - MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD}
     ports:
       - "8000:80"
-      - "443:443"
     links:
       - db
     volumes:
       - .:/var/www/public
+      - ./mycert.crt:/etc/ssl/certs/mycert.crt
+      - ./mycert.key:/etc/ssl/private/mycert.key
       - /var/www/public/vendor/
       - /var/www/public/node_modules/
     depends_on:
