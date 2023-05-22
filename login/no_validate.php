@@ -25,6 +25,9 @@ $LANG = Language::getInstance($CONFIG['REGmon_Folder'], $CONFIG['Default_Languag
 //Load Date functions -> they based on language
 require_once(__DIR__.'/../php/date_functions.php');
 
+//Load Global functions
+require_once(__DIR__.'/../php/global_functions.php');
+
 
 //continue to the page that call this
 ?>
