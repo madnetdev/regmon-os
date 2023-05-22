@@ -64,7 +64,7 @@
     - Basic Data (Location 1, Group 1)
     - Basic Admin Users (LocationAdmin, GroupAdmin, GroupAdmin2)
     - Sample Dropdown Data
-    - Sorts Select Dropdown Data (en, de)
+    - Sports Select Dropdown Data (en, de)
 
 
 6. Setup Application Email configuration
@@ -129,7 +129,7 @@
     - Basic Data (Location 1, Group 1)
     - Basic Admin Users (LocationAdmin, GroupAdmin, GroupAdmin2)
     - Sample Dropdown Data
-    - Sorts Select Dropdown Data (en, de)
+    - Sports Select Dropdown Data (en, de)
 
 
 6. Setup Application Email configuration
@@ -141,7 +141,7 @@
 
 ## After Install
 
-# Now you are ready to :
+### Now you are ready to :
     - create some Locations
     - create some Groups
     - create some Forms
@@ -149,7 +149,7 @@
     - assign some Forms to Categories
     - assign some Forms to Groups
     - create some Dropdown Menus
-    - create new Sports and new Sorts Categories 
+    - create new Sports and new Sports Categories 
     - register some Athletes and Trainers accounts 
     - aprove new Users to the Group
     - manage Group Users
