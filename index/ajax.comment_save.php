@@ -1,6 +1,7 @@
 <?php // ajax Comment Save
-require_once('../_settings.regmon.php');
-require('../login/validate.php');
+$PATH_2_ROOT = '../';
+require_once($PATH_2_ROOT.'_settings.regmon.php');
+require($PATH_2_ROOT.'login/validate.php');
 
 $ID 			= isset($_POST['ID']) ? abs($_POST['ID']) : false; //abs fix negative ID
 $group_id 		= isset($_POST['group_id']) ? (int)$_POST['group_id'] : false;

@@ -1,5 +1,7 @@
 <?php
+$PATH_2_ROOT = '../';
+
 //Redirect to root
-header('Location: ../');
+header('Location: '.$PATH_2_ROOT);
 exit; 
 ?>

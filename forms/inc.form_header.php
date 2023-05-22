@@ -1,9 +1,10 @@
 <?php // inc Form Header 
+
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
 //#####################################################################################
 $no_forms_css = true;
-require('php/inc.head.php');
+require('php/inc.html_head.php');
 //#####################################################################################
 ?>
 <link rel="stylesheet" type="text/css" href="node_modules/jquery-ui/dist/themes/smoothness/jquery-ui.min.css">
@@ -18,7 +19,6 @@ require('php/inc.head.php');
 <?php if ($LANG->LANG_CURRENT != 'en') { ?>
 <script type="text/javascript" src="js/overrides/query-validation/messages_<?=$LANG->LANG_CURRENT;?>.min.js"></script>
 <?php } ?>
-<script type="text/javascript" src="node_modules/jquery-placeholder/jquery.placeholder.js"></script>
 
 <link type="text/css" rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
 <script type="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>

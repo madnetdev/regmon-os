@@ -1,5 +1,7 @@
 <?php // Categories Functions
 
+if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
+
 function getCategoryForms($category_id) {
 	global $forms, $order, $category_forms_ordered;
 	foreach ($forms[$category_id] as $row) {

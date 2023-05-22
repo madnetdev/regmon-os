@@ -1,4 +1,4 @@
-if (!PRODUCTION) "use strict"; //remove on production so "const" works on iOS Safari 
+if (!Production_Mode) "use strict"; //remove on production so "const" works on iOS Safari 
 
 var V_SELECTED_DATE;
 var V_ANIMATE_RUN = false;
@@ -50,9 +50,6 @@ jQuery(function()
 	//button Profile
 	$("a.nav_profile").fancybox(fancyBoxDefaults);
 	
-	//Place holder
-	$('input, textarea').placeholder();
-
 	//tooltip --gone at the end
 	//$('[data-toggle="tooltip"]').tooltip({ trigger: "hover" }); //if not give hover it not close after click
 

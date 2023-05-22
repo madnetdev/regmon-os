@@ -1,4 +1,7 @@
-<?php // inc Nav Lang ?>
+<?php // inc Nav Lang 
+
+if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
+?>
 
 	<nav id="nav-header" class="navbar navbar-custom">
 		<div id="nav-header-container" class="container-fluid navbar-container">

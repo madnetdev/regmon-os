@@ -1,5 +1,7 @@
 <?php // General Functions
 
+if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
+
 function get_locations_select($options_grid=false) {
 	global $db;
 	$locations_select = '<select>'; 

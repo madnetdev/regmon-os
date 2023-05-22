@@ -576,7 +576,7 @@ ul#footer-nav li {
 .main_font_demo {font-size:15px;}
  
  
-/*from php/inc.head.php inline <style>*/
+/*from php/inc.html_head.php inline <style>*/
 header {padding:0;}
 .container-logo {position:relative; text-align:center; min-width:320px; /*max-width:1380px;*/ width:100%; margin:0 auto;}
 .container-logo img {max-width:100%; height:auto;}

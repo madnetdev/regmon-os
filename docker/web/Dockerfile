@@ -1,22 +1,20 @@
 #
 # Build/Start/Stop using docker-compose:
 #
-# For changes to this file or docker-compose.yml
+# Build Image
+# For making the first image
+# or for changes to this file 
+# or for changes to vendor or node_modules
 #   docker-compose build
 #
 # For running containers and see live logs of services
 #   docker-compose up
 #
-# For running containers as deamon and take console back
+# For running containers as deamon and take the console back
 #   docker-compose up -d
 #
 # For stoping containers
 #   docker-compose down
-#
-#
-# You can install dependencies via the container:
-#
-#   docker-compose run {{volume_name}} composer install
 #
 FROM php:8.2-apache
 
@@ -25,13 +23,16 @@ RUN apt-get update \
  nodejs \
  npm 
 
-RUN docker-php-ext-install zip mysqli pdo_mysql \
- && pecl install xdebug \
- && docker-php-ext-enable xdebug \
- && echo 'xdebug.client_enable=on' >> /usr/local/etc/php/conf.d/xdebug.ini \
- && echo 'xdebug.client_host=host.docker.internal' >> /usr/local/etc/php/conf.d/xdebug.ini \
- && echo 'xdebug.client_port=9003' >>  /usr/local/etc/php/conf.d/xdebug.ini \
- && a2enmod rewrite \
+RUN docker-php-ext-install zip mysqli pdo_mysql
+
+# enable xdebug
+# RUN pecl install xdebug \
+#  && docker-php-ext-enable xdebug \
+#  && echo 'xdebug.client_enable=on' >> /usr/local/etc/php/conf.d/xdebug.ini \
+#  && echo 'xdebug.client_host=host.docker.internal' >> /usr/local/etc/php/conf.d/xdebug.ini \
+#  && echo 'xdebug.client_port=9003' >>  /usr/local/etc/php/conf.d/xdebug.ini \
+
+RUN a2enmod rewrite \
  && sed -i 's!/var/www/html!/var/www/public!g' /etc/apache2/sites-available/000-default.conf \
  && mv /var/www/html /var/www/public \
  && echo 'ServerName localhost' >> /etc/apache2/apache2.conf 

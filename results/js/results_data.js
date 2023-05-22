@@ -1,4 +1,4 @@
-if (!PRODUCTION) "use strict"; //remove on production so "const" works on iOS Safari 
+if (!Production_Mode) "use strict"; //remove on production so "const" works on iOS Safari 
 
 var V_Selected__Groups = [];
 var V_Selected__Athletes = [];

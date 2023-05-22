@@ -4,7 +4,6 @@ declare(strict_types=1);
 require_once('_settings.regmon.php');
 require('login/validate.php');
 
-$SEC_check = $CONFIG['SEC_Page_Secret']; //secure ajax sub pages from direct call
 
 $EDIT 			= isset($_REQUEST['edit']) ? true : false; 
 $PREVIEW 		= isset($_REQUEST['preview']) ? true : false; 
@@ -100,7 +99,7 @@ else {
 	exit;
 }
 
-require("forms/form_functions.php");
+require("forms/inc.form_functions.php");
 
 if (!count($form)) {
 	//empty page if new

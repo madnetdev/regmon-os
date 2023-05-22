@@ -1,4 +1,8 @@
-<?php // inc Footer ?>
+<?php // inc Footer 
+
+if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
+?>
+
 
 	<footer class="footer_line" style="text-align:center;">
 		<div class="img_line">

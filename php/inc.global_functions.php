@@ -1,5 +1,7 @@
 <?php
 
+if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
+
 function Exit_Message($message) {
 	return ''.
 		'<div style="text-align:center; font-size:20px;">'.

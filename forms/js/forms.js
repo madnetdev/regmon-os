@@ -103,9 +103,6 @@ $(window).on('beforeunload', function(){
 });
 
 	
-//Place holder
-$('input, textarea').placeholder();
-
 	
 //tooltip
 $("body").tooltip({ //for new created elements too
@@ -157,7 +154,7 @@ $.validator.addMethod("results_numbers", function(value, element) {
 
 // WIZARD ###################################################
 // Basic wizard with validation
-$('form#wrapped').prop('action', 'forms/form_data_save.php');
+$('form#wrapped').prop('action', 'forms/ajax.form_data_save.php');
 $('form#wrapped').wizard({
 	stepsWrapper: "#wrapped",
 	submit: ".saveSubmit", //.backward .forward //def buttons
@@ -236,7 +233,7 @@ $('form#wrapped').on('submit', function(e){
 		get_data += '&group_id=' + $('#group_id').val();
 		get_data += '&athlete_id=' + $('#athlete_id').val();
 		
-		$.post('forms/form_data_save.php', get_data, function(data, result){
+		$.post('forms/ajax.form_data_save.php', get_data, function(data, result){
 			if ($('#keep_form_open').val() != '1') {
 				$(window).off('beforeunload'); //disable unload warning
 				if (is_iOS()) {

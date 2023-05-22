@@ -16,19 +16,30 @@ else {
 	$code = $_GET['code'] ?? false;
 	$sport_group = $_GET['sport_group'] ?? false;
 }
-if (!$uname OR !$sport OR !$code) exit;
-if (!$sport_group OR $sport_group == '') $sport_group = 1; //put in the first group that should be 'without group'
+
+if (!$uname OR !$sport OR !$code) {
+	exit;
+}
+
+if (!$sport_group OR $sport_group == '') {
+	//put it in the first group that should be 'without group'
+	$sport_group = 1;
+}
+
 
 $message = '';
-$new_data = false;
-$rows = $db->fetchRow("SELECT options FROM sports WHERE status = 1 AND parent_id != 0 AND name = ?", array($sport)); 
-if ($db->numberRows() > 0)  {
-	$message = $LANG->REGISTER_SPORT_EXIST; //'Already Exist Sport';
-}
-else {
-	$activate_sport_code = MD5($CONFIG['SEC_Encrypt_Secret'] . $uname.$sport);
-	if ($activate_sport_code == $code) 
-	{
+$sports_groups_options_grid = ''; 
+
+
+$activate_sport_code = MD5($CONFIG['SEC_Encrypt_Secret'] . $uname . $sport);
+if ($activate_sport_code == $code) 
+{
+
+	$rows = $db->fetchRow("SELECT options FROM sports WHERE status = 1 AND parent_id != 0 AND name = ?", array($sport)); 
+	if ($db->numberRows() > 0)  {
+		$message = $LANG->REGISTER_SPORT_EXIST; //'Already Exist Sport';
+	}
+	else {
 		if ($_POST) 
 		{
 			//Insert Sport
@@ -55,24 +66,23 @@ else {
 			}
 		}
 	}
-	else {
-		$message = $LANG->REGISTER_ACTIVATE_CODE_ERROR;
+
+	//Sports Groups Select Options
+	$rows = $db->fetch("SELECT id, name FROM sports WHERE status = 1 AND parent_id = 0 ORDER BY name", array()); 
+	if ($db->numberRows() > 0)  {
+		foreach ($rows as $row) {
+			$sports_groups_options_grid .= '<option value="'.$row['id'].'">'.$row['name'].'</option>';
+		}
 	}
 }
-
-
-//Sports Groups Select Options
-$sports_groups_options_grid = ''; 
-$rows = $db->fetch("SELECT id, name FROM sports WHERE status = 1 AND parent_id = 0 ORDER BY name", array()); 
-if ($db->numberRows() > 0)  {
-	foreach ($rows as $row) {
-		$sports_groups_options_grid .= '<option value="'.$row['id'].'">'.$row['name'].'</option>';
-	}
+else {
+	$message = $LANG->REGISTER_ACTIVATE_CODE_ERROR;
 }
+
 
 //#####################################################################################
 $title = $LANG->REGISTER_APPROVE_PROPOSAL;
-require($PATH_2_ROOT.'php/inc.head.php');
+require($PATH_2_ROOT.'php/inc.html_head.php');
 //#####################################################################################
 ?>
 </head>

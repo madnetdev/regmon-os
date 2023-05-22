@@ -1,4 +1,5 @@
 <?php // inc Form Footer 
+
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 ?>
 

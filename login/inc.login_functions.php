@@ -59,4 +59,5 @@ function verify_Secret(string $secret_hashed, string $secret, string $pepper) {
 	}
 	return false;
 }
+
 ?>

@@ -9,17 +9,17 @@ require_once('no_validate.php');
 // ###################################
 $PATH_2_ROOT = '../';
 
-$mes = '';
-$new_data = false;
+
+$message = '';
 $user = $db->fetchRow("SELECT * FROM users WHERE uname = ?", array($uname)); 
 if ($db->numberRows() > 0)  {
 	if ($user['status'] == '1') {
-		$mes = $LANG->REGISTER_ACTIVATE_READY;
+		$message = $LANG->REGISTER_ACTIVATE_READY;
 	}
 	else {
 		$activate_code = MD5($user['account'].$user['uname'].$user['passwd']);
 		if ($activate_code == $code) {
-			$mes = $LANG->REGISTER_ACTIVATE_OK; 
+			$message = $LANG->REGISTER_ACTIVATE_OK; 
 			$values = array();
 			$values['status'] = '1';
 			$result = $db->update($values, "users", "uname=?", array($uname));
@@ -35,30 +35,33 @@ if ($db->numberRows() > 0)  {
 			$values['modified_by'] = $adm;
 			$save = $db->update($values, "users2groups", "user_id=? AND group_id=?", array($user['id'], $user['group_id']));
 			
-			// Email ///////////////////////////////////////////////////////////////////////////
-			require('../php/email.php');
-			$Subject = str_replace('{Username}', $user['uname'], $LANG->EMAIL_ACCOUNT_ACTIVATE_SUBJECT);
-			$Message = str_replace('{Username}', $user['uname'], $LANG->EMAIL_ACCOUNT_ACTIVATE_MESSSAGE);
-			$Message = str_replace('{HTTP}', $CONFIG['HTTP'], $Message);
-			$Message = str_replace('{DOMAIN}', $CONFIG['DOMAIN'], $Message);
-			$Message = str_replace('{REGmon_Folder}', $CONFIG['REGmon_Folder'], $Message);
+			
+			// Email ##############################################
+			require($PATH_2_ROOT.'php/inc.email.php');
+
+			$Email_Subject = str_replace('{Username}', $user['uname'], $LANG->EMAIL_ACCOUNT_ACTIVATE_SUBJECT);
+
+			$Email_Message = str_replace('{Username}', $user['uname'], $LANG->EMAIL_ACCOUNT_ACTIVATE_MESSSAGE);
+			$Email_Message = str_replace('{HTTP}', $CONFIG['HTTP'], $Email_Message);
+			$Email_Message = str_replace('{DOMAIN}', $CONFIG['DOMAIN'], $Email_Message);
+			$Email_Message = str_replace('{REGmon_Folder}', $CONFIG['REGmon_Folder'], $Email_Message);
 						
-			if (SendEmail($user['email'], $Subject, $Message) == 'OK') {}
-			else error_log($user['email'].', '. $Subject.', Activate User Email Not Send');
+			if (SendEmail($user['email'], $Email_Subject, $Email_Message) == 'OK') {}
+			else error_log($user['email'].', '. $Email_Subject.', Activate User Email Not Send');
 		}
 		else {
-			$mes = $LANG->REGISTER_ACTIVATE_CODE_ERROR;
+			$message = $LANG->REGISTER_ACTIVATE_CODE_ERROR;
 		}
 	}
 }
 else {
 	//Account not exists
-	$mes = $LANG->REGISTER_ACTIVATE_NO_USER;
+	$message = $LANG->REGISTER_ACTIVATE_NO_USER;
 }		
 
 //#####################################################################################
 $title = $LANG->REGISTER_PAGE_TITLE;
-require($PATH_2_ROOT.'php/inc.head.php');
+require($PATH_2_ROOT.'php/inc.html_head.php');
 //#####################################################################################
 ?>
 </head>
@@ -67,14 +70,14 @@ require($PATH_2_ROOT.'php/inc.head.php');
 <?php require($PATH_2_ROOT.'php/inc.header.php');?>
 
 <div style="text-align:center;">
-	<a href="../" id="home" class="home"> &nbsp; <?=$LANG->HOMEPAGE;?></a>
+	<a href="<?=$PATH_2_ROOT;?>" id="home" class="home"> &nbsp; <?=$LANG->HOMEPAGE;?></a>
 </div>
 
 <div class="container">
 	<div class="row">
         <div class="col-md-12" style="text-align:center; padding-top:80px;">
          	<h1 style="color:#333"><?=$LANG->REGISTER;?>!</h1>
-			<h3 style="color: #6C3"><?=$mes;?></h3>
+			<h3 style="color: #6C3"><?=$message;?></h3>
         </div>
 	</div>
 </div>

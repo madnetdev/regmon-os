@@ -1,8 +1,9 @@
 <?php // inc index main 
 
+if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
+
 $DIS = ' style="display:none;"';
 $DIS2 = ' display:none;';
-
 ?>
 	<div id="main_container" class="container">	
 		<?php /*<header><h1><b><?=$LANG->APP_NAME;?></b><span><?=$LANG->APP_INFO;?></span></h1></header>*/?>

@@ -1,6 +1,7 @@
 <?php // Trainer Users Grid
-require_once('../_settings.regmon.php');
-require('../login/validate.php');
+$PATH_2_ROOT = '../';
+require_once($PATH_2_ROOT.'_settings.regmon.php');
+require($PATH_2_ROOT.'login/validate.php');
 
 $group_id = (int)($_POST['group_id'] ?? false);
 if (!$group_id) exit;

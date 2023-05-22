@@ -1870,7 +1870,7 @@ $("button.preview").on('click',function() {
 		//in order to send the data with POST we open an iframe and then we POST the data there
 		$.fancybox($.extend(fancyBoxDefaults_iframe, {
 			type:'iframe', 
-			href: 'forms/form_data_preview.php', 
+			href: 'forms/ajax.form_data_preview.php', 
 			afterLoad:function() {
 				$('form#form_data').prop('action', 'form.php?id=' + V_SRV_ID + '&preview&form_name2').prop('target', $('.fancybox-iframe').attr('name'));
 				

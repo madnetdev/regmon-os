@@ -48,7 +48,7 @@ $info_lines_color_formula = get_info_lines_color_formula();
 //######################################################
 $title = $LANG->RESULTS_PAGE_TITLE;
 $no_forms_css = true;
-require('php/inc.head.php');
+require('php/inc.html_head.php');
 //######################################################
 ?>
 
@@ -109,7 +109,7 @@ require('php/inc.head.php');
 
 <script type="text/javascript" src="js/lang_<?=$LANG->LANG_CURRENT;?>.js<?=$G_VER;?>"></script>
 <script>
-const PRODUCTION = <?=($CONFIG['PRODUCTION']?'true':'false');?>;
+const Production_Mode = <?=($CONFIG['Production_Mode']?'true':'false');?>;
 const V_RESULTS_PAGE = '<?=$results_page;?>';
 var V_DEBUG = <?=$DEBUG;?>;
 var V_DATE_FROM;

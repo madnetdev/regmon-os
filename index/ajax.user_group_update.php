@@ -1,6 +1,7 @@
 <?php // ajax User Group Update - update active Location, Group of the user
-require_once('../_settings.regmon.php');
-require('../login/validate.php');
+$PATH_2_ROOT = '../';
+require_once($PATH_2_ROOT.'_settings.regmon.php');
+require($PATH_2_ROOT.'login/validate.php');
 
 //print_r($_POST); exit;
 $location_id = isset($_POST['location_id']) ? $_POST['location_id'] : false;

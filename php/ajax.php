@@ -5,11 +5,12 @@ declare(strict_types=1);
 $PATH_2_ROOT = '../';
 require_once($PATH_2_ROOT.'_settings.regmon.php');
 require($PATH_2_ROOT.'login/validate.php');
-require_once($PATH_2_ROOT.'php/functions.php');
+require_once($PATH_2_ROOT.'php/inc.common_functions.php');
 
-if (!isset($_REQUEST['i'])) exit;
+if (!isset($_REQUEST['i'])) {
+	exit;
+}
 
-$SEC_check = $CONFIG['SEC_Page_Secret']; //secure ajax sub pages from direct call
 
 $ajax = $_REQUEST['i'];
 $action = isset($_REQUEST['oper']) ? $_REQUEST['oper'] : '';
@@ -37,6 +38,7 @@ switch($ajax) {
 	case 'templates':
 	//case 'users_files':
 	//case 'importTrackers':
+	//case 'config': //not here -it is a special page
 		if (file_exists('ajax.'.$ajax.'.php')) {
 			include('ajax.'.$ajax.'.php');
 		}

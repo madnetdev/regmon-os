@@ -9,13 +9,17 @@ services:
       - MYSQL_HOST=db
       - MYSQL_DATABASE=regmondb
       - MYSQL_USER=root
-      - MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_PASSWORD=root
     ports:
       - "8000:80"
     links:
       - db
     volumes:
+      # connect our local app folder with docker app folder
       - .:/var/www/public
+      # vendor and node_modules folders already exists in docker image 
+      # the previous command will overwrite docker app folder with local app folder
+      # with this commands we tell docker to not override this folders
       - /var/www/public/vendor/
       - /var/www/public/node_modules/
     depends_on:
@@ -28,11 +32,13 @@ services:
     environment:
       - MYSQL_DATABASE=regmondb
       - MYSQL_USER=dbuser
-      - MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=root
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./extra/_regmondb_init_v3.012_en.sql:/docker-entrypoint-initdb.d/schema.sql
+      # set initial mysql install script
+      # we not need this anymore because we install mysql schema with the config.php
+      #- ./extra/_regmondb_init_v3.012.sql:/docker-entrypoint-initdb.d/schema.sql
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
@@ -42,7 +48,7 @@ services:
       - db
     environment:
       MYSQL_USER: dbuser
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: root
       PMA_HOST: db
 
 volumes:

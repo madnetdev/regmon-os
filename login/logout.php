@@ -1,5 +1,6 @@
 <?php
-require_once('../_settings.regmon.php');
+$PATH_2_ROOT = '../';
+require_once($PATH_2_ROOT.'_settings.regmon.php');
 
 setcookie ("USERNAME", '', time()-3600, '/'.$CONFIG['REGmon_Folder']);
 //setcookie ("LANG", '', time()-3600, '/'.$CONFIG['REGmon_Folder']); // we keep the LANG
@@ -12,7 +13,8 @@ session_start();
 session_unset();
 session_destroy();
 
-header( 'Location: ../login.php' ); //we need only this but have the others for reference
+//we need only this but I leave the others for reference
+header( 'Location: '.$PATH_2_ROOT.'login.php' );
 ?>
 <!DOCTYPE HTML>
 <html lang="en">

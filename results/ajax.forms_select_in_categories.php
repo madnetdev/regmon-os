@@ -4,8 +4,6 @@ $PATH_2_ROOT = '../';
 require_once($PATH_2_ROOT.'_settings.regmon.php');
 require($PATH_2_ROOT.'login/validate.php');
 
-$SEC_check = $CONFIG['SEC_Page_Secret']; //secure ajax/inc sub pages from direct call
-
 require($PATH_2_ROOT.'results/inc.results_functions.php');
 
 

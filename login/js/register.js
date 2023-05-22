@@ -136,9 +136,6 @@ jQuery(function($) {
 		radioClass: 'iradio_square-aero'
 	});
 	
-	//Place holder
-	$('input, textarea').placeholder();
-	
 	//SPORTS select
 	$("#SPORTS_select").chosen({
 		width: '100%',

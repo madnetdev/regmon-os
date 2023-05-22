@@ -1,5 +1,7 @@
 <?php // index Functions
 
+if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
+
 // print_r alias function
 function PR($array) {
 	echo "<pre>";

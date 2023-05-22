@@ -1,6 +1,6 @@
 <?php // Form Row Item Functions
-if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
+if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
 function get_Form_Rows($rows) {
 	global $LANG, $EDIT, $G_ROW, $items_num;

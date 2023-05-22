@@ -1,6 +1,7 @@
-<?php // Form Data Save
-require_once('../_settings.regmon.php');
-require('../login/validate.php');
+<?php // ajax Form Data Save
+$PATH_2_ROOT = '../';
+require_once($PATH_2_ROOT.'_settings.regmon.php');
+require($PATH_2_ROOT.'login/validate.php');
 
 $athlete_id = isset($_POST['athlete_id']) ? $_POST['athlete_id'] : $UID;
 $form_id = isset($_POST['form_id']) ? $_POST['form_id'] : 0;

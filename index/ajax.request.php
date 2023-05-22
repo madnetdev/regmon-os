@@ -1,6 +1,7 @@
 <?php // ajax Request
-require_once('../_settings.regmon.php');
-require_once("../login/validate.php");
+$PATH_2_ROOT = '../';
+require_once($PATH_2_ROOT.'_settings.regmon.php');
+require_once($PATH_2_ROOT."login/validate.php");
 
 
 $request = $_POST['request'] ?? false;
@@ -163,7 +164,7 @@ switch ($request) {
 					$user = $db->fetchRow("SELECT uname, email FROM users WHERE id = ?", array($user_id)); 
 					if ($db->numberRows() > 0)  {
 						// Email
-						require('../php/email.php');
+						require($PATH_2_ROOT.'php/inc.email.php');
 
 						$Subject = str_replace('{Username}', $user['uname'], $LANG->EMAIL_ACCOUNT_ACTIVATE_SUBJECT);
 						$Message = str_replace('{Username}', $user['uname'], $LANG->EMAIL_ACCOUNT_ACTIVATE_MESSSAGE);

@@ -1,11 +1,16 @@
 <?php
-require_once('../_settings.regmon.php');
-require_once('login_functions.php');
-require_once('../php/date_functions.php');
+$PATH_2_ROOT = '../';
+require_once($PATH_2_ROOT.'_settings.regmon.php');
+
+//secure ajax sub pages from direct call
+$SEC_check = $CONFIG['SEC_Page_Secret'];
+
+require_once('inc.login_functions.php');
+require_once($PATH_2_ROOT.'php/inc.date_functions.php');
 
 
-$login = '../login.php'; //login page
-$success = '../'; //index page
+$login = $PATH_2_ROOT.'login.php'; //login page
+$success = $PATH_2_ROOT; //index page
 
 
 // Initialize Session
@@ -14,8 +19,8 @@ session_start();
 
 
 //Init DB #######################
-require_once('../php/class.db.php');	
-$db = db::open('mysqli', $CONFIG['DB_Name'], $CONFIG['DB_User'], $CONFIG['DB_Pass'], $CONFIG['DB_Host']);
+require_once($PATH_2_ROOT.'php/class.db.php');	
+$db = db::open('mysqli', $DB_CONFIG['DB_Name'], $DB_CONFIG['DB_User'], $DB_CONFIG['DB_Pass'], $DB_CONFIG['DB_Host']);
 if ($CONFIG['DB_Debug']) $db->logToFile($CONFIG['DB_Debug_File']); //enable query logging
 //Init DB #######################
 
@@ -39,7 +44,6 @@ if ($LogLimiter->checkBlock()) { // if true this IP is blocked
 if ($CONFIG['Use_VisualCaptcha']) {
 	//validate CAPTCHA #######################
 	$Captcha = false;
-	//require ('../vendor/autoload.php');
 	require ('visualCaptcha/Session.php');
 	require ('visualCaptcha/Captcha.php');
 	$visualCaptcha_session = new \visualCaptcha\Session();

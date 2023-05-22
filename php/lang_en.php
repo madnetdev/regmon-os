@@ -48,6 +48,10 @@ array(
 	'BUTTON_ADD' 		=> 'Add',
 	'CLICK' 			=> 'Click',
 
+	//config 
+	'CONFIG' 			=> 'Configuration',
+	'CONFIG_PAGE_TITLE' => 'Configuration',
+
 	//login.php
 	'LOGIN' 			=> 'Login',
 	'LOGIN_PAGE_TITLE' 	=> 'Login - REGmon',

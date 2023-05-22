@@ -1,13 +1,15 @@
 <?php // ajax page profile edit --inline page (its not iframe, it uses the index page DOM)
-
-require_once('../_settings.regmon.php');
+$PATH_2_ROOT = '../';
+require_once($PATH_2_ROOT.'_settings.regmon.php');
 require('validate.php');
 
-require_once('../php/functions.php');
+require_once($PATH_2_ROOT.'php/inc.common_functions.php');
 
 //echo '<pre>';print_r($_SERVER);
 //for not call this as a single page but only from ajax
-if (!isset($_SERVER['HTTP_X_FANCYBOX']) AND !isset($_SERVER['HTTP_X_REQUESTED_WITH'])) exit;
+if (!isset($_SERVER['HTTP_X_FANCYBOX']) and !isset($_SERVER['HTTP_X_REQUESTED_WITH'])) {
+	exit;
+}
 
 $uid = '';
 $uname = '';

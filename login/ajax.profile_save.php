@@ -1,5 +1,6 @@
 <?php
-require_once('../_settings.regmon.php');
+$PATH_2_ROOT = '../';
+require_once($PATH_2_ROOT.'_settings.regmon.php');
 require('validate.php');
 
 $values = array();			
@@ -102,7 +103,7 @@ $update = $db->update($values, "users", "id=?", array($UID));
 
 if ($sport_new != '') {
 	// Email #######################################################
-	require('../php/email.php');
+	require($PATH_2_ROOT.'php/inc.email.php');
 
 	//Admin email for activation of new sport
 	$admin_rows = $db->fetch("SELECT u.lastname, u.email FROM users u

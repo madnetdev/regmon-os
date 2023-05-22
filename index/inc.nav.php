@@ -1,4 +1,7 @@
-<?php // inc nav ?>
+<?php // inc nav 
+
+if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
+?>
 
 	<nav id="nav-header" class="navbar navbar-custom">
 		<div id="nav-header-container" class="container-fluid navbar-container">
@@ -18,6 +21,8 @@
 					
 				<?php if ($ADMIN) { ?>
 					<li><a href="administration.php" class="nav_link nav_admin"><i class="fa fa-cogs"></i> &nbsp; <?=$LANG->BUTTON_ADMINISTRATION;?></a></li>
+					
+					<li><a href="config.php" class="nav_link"><i class="fa fa-cog" style="font-size:17px;"></i></a></li>
 				<?php } ?>
 
 					<li class="dropdown">
@@ -38,8 +43,10 @@
 					</li>
 				<?php } ?>
 					
-					<li><a href="index/ajax.page.regman_info.php" class="nav_link nav_profile fancybox fancybox.ajax"><i class="fa fa-info-circle"></i></a></li>
+					<li><a href="index/ajax.page.regman_info.php" class="nav_link nav_profile fancybox fancybox.ajax"><i class="fa fa-info-circle" style="font-size:17px;"></i></a></li>
+
 					<li><a href="login/ajax.page.profile_edit.php" class="nav_link nav_profile fancybox fancybox.ajax"><i class="fa fa-user"></i> &nbsp; <?=$LANG->BUTTON_USER_ACCOUNT;?></a></li>
+					
 					<li><a href="login/logout.php" class="nav_link nav_logout"><i class="fa fa-lock"></i> &nbsp; <?=$LANG->BUTTON_LOGOUT;?></a></li>
 				</ul>
 			</div>

@@ -4,18 +4,48 @@ declare(strict_types=1);
 namespace REGmon;
 
 //Version
-$G_Version = "3.016";
+$G_Version = "3.805";
 $G_VER = "?ver=" . $G_Version;
 
 
-if (file_exists(__DIR__.'/__config.regmon.php')) {
-	require_once(__DIR__.'/__config.regmon.php');
-} 
-else {
-	//__config.regmon.php missing --run install script
-	//TODO: make install script
-	die('"__config.regmon.php" is missing!');
-}
+require_once(__DIR__.'/config/_config.php');
+
+
+//TODO: find home for Simple_Extension_System
+//now we not have home for the Simple Extension System 
+//so for the moment it will remain here
+
+/**
+ * Simple Extension System
+ * -----------------------------
+ * Here you can set overwrites for main php pages you want to extend.
+ * This way you can keep the default pages and also make your own extensions
+ * without losing the ability to use git pull for updating default code.
+ * we can use '__' in extensions pages so .gitignore not count them as changes
+ * ===================================================
+ */
+$CONFIG_SES = [
+	/**
+	 * if the 'exit_after' is true then exit current page
+	 * else continue to the current page after the extension page load
+	 * ex.
+	 * 'main_page.php' => ['__extension_page.php', exit_after]
+	 */
+	//'administration.php' 		=> ['__administration.php', true],
+	//'export.php' 				=> ['__export.php', true],
+	//'form.php' 				=> ['__form.php', true],
+	//'forms_results.php'		=> ['__forms_results.php', true],
+	//'index.php' 				=> ['__index.php', true],
+	//'login.php' 				=> ['__login.php', true],
+	//'register.php' 			=> ['__register.php', true],
+	//'results.php' 			=> ['__results.php', true],
+
+	//this is not a page but we have a special SES part only for this
+	//we need to set the exit_after to false so that can continue
+	//'_settings.regmon.php' 	=> ['__settings.regmon.php', false],
+];
+
+
 
 
 /**
@@ -27,9 +57,9 @@ else {
  */
 $settings_page = '_settings.regmon.php';
 //check Simple_Extension_System
-if (isset($CONFIG['Simple_Extension_System'][$settings_page])) {
-	$extension_page = $CONFIG['Simple_Extension_System'][$settings_page][0];
-	$exit_after = $CONFIG['Simple_Extension_System'][$settings_page][1];
+if (isset($CONFIG_SES[$settings_page])) {
+	$extension_page = $CONFIG_SES[$settings_page][0];
+	$exit_after = $CONFIG_SES[$settings_page][1];
 	if (file_exists($extension_page)) 
 	{
 		require($extension_page);
@@ -46,7 +76,7 @@ if (isset($CONFIG['Simple_Extension_System'][$settings_page])) {
 if (substr_count($_SERVER['HTTP_HOST'], 'localhost') OR  
 	substr_count($_SERVER['HTTP_HOST'], 'test')) 
 {
-	$CONFIG['PRODUCTION'] = false;
+	$CONFIG['Production_Mode'] = false;
 	$CONFIG['HTTP'] = 'http://';
 	$CONFIG['DOMAIN'] = $_SERVER['HTTP_HOST'];
 }
@@ -64,7 +94,7 @@ else {
 
 
 //logging recomendations from php.ini-production & php.ini-development
-if ($CONFIG['PRODUCTION']) {
+if ($CONFIG['Production_Mode']) {
 	ini_set('display_errors', '0');
 	ini_set('display_startup_errors', '0');
 	ini_set('log_errors', '1');
@@ -92,9 +122,9 @@ ini_set('default_charset', 'utf-8');
  */
 $current_page = str_replace('/', '', $_SERVER['PHP_SELF']);
 //check Simple_Extension_System
-if (isset($CONFIG['Simple_Extension_System'][$current_page])) {
-	$extension_page = $CONFIG['Simple_Extension_System'][$current_page][0];
-	$exit_after = $CONFIG['Simple_Extension_System'][$current_page][1];
+if (isset($CONFIG_SES[$current_page])) {
+	$extension_page = $CONFIG_SES[$current_page][0];
+	$exit_after = $CONFIG_SES[$current_page][1];
 	if (file_exists($extension_page)) 
 	{
 		require($extension_page);

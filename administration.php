@@ -2,7 +2,7 @@
 declare(strict_types=1);
 require_once('_settings.regmon.php');
 require('login/validate.php');
-require_once('php/functions.php');
+require_once('php/inc.common_functions.php');
 
 if (!$ADMIN) exit;
 
@@ -29,7 +29,7 @@ $body_height_options_grid = get_Body_Height_Options('', true);
 <meta name="author" content="MAD" />
 <title><?=$LANG->ADMIN_PAGE_TITLE;?></title>
 
-<link rel="shortcut icon" href="../favicon.ico" />
+<link rel="shortcut icon" href="favicon.ico" />
 
 <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css">

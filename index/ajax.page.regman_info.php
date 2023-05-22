@@ -1,5 +1,6 @@
 <?php // ajax box REGmon Info
-require_once('../_settings.regmon.php');
+$PATH_2_ROOT = '../';
+require_once($PATH_2_ROOT.'_settings.regmon.php');
 
 //for not call this as a single page but only from ajax --why not, only an info page
 //if (!isset($_SERVER['HTTP_X_FANCYBOX']) AND !isset($_SERVER['HTTP_X_REQUESTED_WITH'])) exit;

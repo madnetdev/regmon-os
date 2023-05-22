@@ -1,4 +1,4 @@
-if (!PRODUCTION) "use strict"; //remove on production so "const" works on iOS Safari
+if (!Production_Mode) "use strict"; //remove on production so "const" works on iOS Safari
 
 
 function Export_Table_Data(csv_xlsx) {

@@ -1,5 +1,7 @@
 <?php // inc Dashboard links
 
+if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
+
 //Forms
 //we get forms from the ajax.forms_menu.php
 

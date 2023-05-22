@@ -1,5 +1,7 @@
 <?php // Date Functions
 
+if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
+
 function get_date(string $date) {
 	global $LANG;
 	if ($date == '') return '';

@@ -7,6 +7,11 @@ require_once('_settings.regmon.php');
 session_cache_limiter();
 session_start();
 
+
+//secure ajax sub pages from direct call
+$SEC_check = $CONFIG['SEC_Page_Secret'];
+
+
 //Load languages
 require_once('php/class.language.php');
 $LANG = Language::getInstance($CONFIG['REGmon_Folder'], $CONFIG['Default_Language'], $CONFIG['Use_Multi_Language_Selector']);
@@ -23,7 +28,7 @@ $LANG = Language::getInstance($CONFIG['REGmon_Folder'], $CONFIG['Default_Languag
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <meta name="Googlebot" content="noindex, nofollow">
-<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon"> 
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> 
 
 <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
 <link type="text/css" rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css" />

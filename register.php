@@ -5,7 +5,8 @@ require_once('_settings.regmon.php');
 // load language & database ##########
 require_once('login/no_validate.php');
 // ###################################
-require_once('php/functions.php');
+
+require_once('php/inc.common_functions.php');
 
 
 //Locations-Groups Select Options
@@ -92,7 +93,7 @@ $body_height_options = get_Body_Height_Options();
 
 //#####################################################################################
 $title = $LANG->REGISTER_PAGE_TITLE;
-require('php/inc.head.php');
+require('php/inc.html_head.php');
 //#####################################################################################
 ?>
 <link rel="stylesheet" type="text/css" href="index/css/sticky_navbar.css<?=$G_VER;?>" />
@@ -110,7 +111,6 @@ require('php/inc.head.php');
 <?php if ($LANG->LANG_CURRENT != 'en') { ?>
 <script type="text/javascript" src="js/overrides/query-validation/messages_<?=$LANG->LANG_CURRENT;?>.min.js"></script>
 <?php } ?>
-<script type="text/javascript" src="node_modules/jquery-placeholder/jquery.placeholder.js"></script>
 
 <link rel="stylesheet" type="text/css" href="node_modules/intl-tel-input/build/css/intlTelInput.min.css">
 <script type="text/javascript" src="node_modules/intl-tel-input/build/js/intlTelInput-jquery.min.js"></script>

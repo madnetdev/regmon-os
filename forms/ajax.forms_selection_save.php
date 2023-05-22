@@ -1,6 +1,7 @@
 <?php // ajax Forms Selection Save
-require_once('../_settings.regmon.php');
-require('../login/validate.php');
+$PATH_2_ROOT = '../';
+require_once($PATH_2_ROOT.'_settings.regmon.php');
+require($PATH_2_ROOT.'login/validate.php');
 
 if (isset($_POST['group_id']) AND isset($_POST['forms_select'])) 
 {

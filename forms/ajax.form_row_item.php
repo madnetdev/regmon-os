@@ -1,10 +1,10 @@
 <?php // ajax Form Row Item
-require_once('../_settings.regmon.php');
-require('../login/validate.php');
+$PATH_2_ROOT = '../';
+require_once($PATH_2_ROOT.'_settings.regmon.php');
+require($PATH_2_ROOT.'login/validate.php');
 
-$SEC_check = $CONFIG['SEC_Page_Secret']; //secure ajax sub pages from direct call
 $EDIT = true; 
-require("form_functions.php");
+require("inc.form_functions.php");
 
 
 $row_item = $_POST['row_item'] ?? '0_0_0'; 

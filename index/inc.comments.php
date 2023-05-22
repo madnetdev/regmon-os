@@ -1,4 +1,7 @@
-<?php // inc Comments ?>
+<?php // inc Comments 
+
+if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
+?>
 
 	<div style="display:none;">
 		<form id="create_comment" role="form">

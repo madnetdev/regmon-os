@@ -312,7 +312,7 @@ button[disabled].home, button[disabled].home_parent, button[disabled].logout, bu
 
 
 
-/*from php/inc.head.php inline <style>*/
+/*from php/inc.html_head.php inline <style>*/
 header {padding:0;}
 .container-logo {position:relative; text-align:center; min-width:220px; /*max-width:1380px;*/ width:100%; margin:0 auto;}
 .container-logo img {max-width:100%; height:auto;}

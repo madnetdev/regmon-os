@@ -161,7 +161,7 @@ WHERE gr.status = 3 AND gr.private_key = ?", array($_POST['private_key']));
 			$users2groups = $db->insert($values2, "users2groups");
 			
 			// Email ##############################
-			require($PATH_2_ROOT.'php/email.php');
+			require($PATH_2_ROOT.'php/inc.email.php');
 			
 			//New user account email
 			$profile_title = $profile;
@@ -226,7 +226,7 @@ WHERE gr.status = 3 AND gr.private_key = ?", array($_POST['private_key']));
 
 //#######################################
 $title = $LANG->REGISTER_PAGE_TITLE;
-require($PATH_2_ROOT.'php/inc.head.php');
+require($PATH_2_ROOT.'php/inc.html_head.php');
 //#######################################
 ?>
 </head>
@@ -235,7 +235,7 @@ require($PATH_2_ROOT.'php/inc.head.php');
 <?php require($PATH_2_ROOT.'php/inc.header.php');?>
 
 <div style="text-align:center;">
-	<a href="../" id="home" class="home"> &nbsp; <?=$LANG->HOMEPAGE;?></a>
+	<a href="<?=$PATH_2_ROOT;?>" id="home" class="home"> &nbsp; <?=$LANG->HOMEPAGE;?></a>
 </div>
 
 <div class="container">

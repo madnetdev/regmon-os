@@ -1,5 +1,7 @@
 <?php // inc index initialization
 
+if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
+
 //User2Group
 $user_2_groups = get_User_2_Groups($UID);
 

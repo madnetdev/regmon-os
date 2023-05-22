@@ -1,4 +1,4 @@
-<?php 
+<?php // ajax Delete Template
 $PATH_2_ROOT = '../';
 require_once($PATH_2_ROOT.'_settings.regmon.php');
 require($PATH_2_ROOT.'login/validate.php');

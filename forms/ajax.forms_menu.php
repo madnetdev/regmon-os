@@ -1,6 +1,7 @@
 <?php // ajax Forms Menu
-require_once('../_settings.regmon.php');
-require('../login/validate.php');
+$PATH_2_ROOT = '../';
+require_once($PATH_2_ROOT.'_settings.regmon.php');
+require($PATH_2_ROOT.'login/validate.php');
 
 $group_id 	= (int)($_POST['group_id'] ?? false);
 $trainer_id = (int)($_POST['trainer_id'] ?? false);
@@ -358,6 +359,7 @@ if ($trainer OR $trainer_view) {
 
 
 $html = '';
+$collapse_id_prefix = '';
 $categories_rows = $db->fetch("SELECT * FROM categories WHERE status = 1 ORDER BY parent_id, sort, name", array()); 
 if ($db->numberRows() > 0)  {
 	//make an array to hold categories info and parent/child keys 
@@ -390,7 +392,6 @@ if ($db->numberRows() > 0)  {
 		}
 	}
 	
-	$collapse_id_prefix = '';
 	if ($box) 		$collapse_id_prefix .= '_box';
 	if ($select) 	$collapse_id_prefix .= '_sel';
 	if ($trainer) 	$collapse_id_prefix .= '_trn';

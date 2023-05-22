@@ -37,7 +37,7 @@ $saves_html .= '<script>var axis_saved_data = {'.$axis_saved_data.'}</script>';
 //##################################################
 $title = $LANG->RESULTS_PAGE_TITLE;
 $no_forms_css = true;
-require($PATH_2_ROOT.'php/inc.head.php');
+require($PATH_2_ROOT.'php/inc.html_head.php');
 //######################################################
 ?>
 <?php /* //debug for mobiles with no console
@@ -75,7 +75,7 @@ require($PATH_2_ROOT.'php/inc.head.php');
 
 <script type="text/javascript" src="<?=$PATH_2_ROOT;?>js/lang_<?=$LANG->LANG_CURRENT;?>.js<?=$G_VER;?>"></script>
 <script>
-const PRODUCTION = <?=($CONFIG['PRODUCTION']?'true':'false');?>;
+const Production_Mode = <?=($CONFIG['Production_Mode']?'true':'false');?>;
 const V_RESULTS_PAGE = '<?=$results_page;?>';
 const V_Athlete_id = '<?=$athlete_id;?>';
 const V_Group_id = '<?= $group_id; ?>';

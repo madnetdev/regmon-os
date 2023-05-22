@@ -3,7 +3,7 @@ $PATH_2_ROOT = '../';
 require_once($PATH_2_ROOT.'_settings.regmon.php');
 require($PATH_2_ROOT.'login/validate.php');
 
-require_once($PATH_2_ROOT.'export/export_functions.php');
+require_once($PATH_2_ROOT.'export/inc.export_functions.php');
 require_once($PATH_2_ROOT.'php/categories_functions.php');
 
 //give time for export
@@ -590,7 +590,7 @@ $filename = str_replace('{USERS_SELECTED}', $Athletes_selected_filename, $filena
 
 //#####################################################################################
 $title = $LANG->EXPORT_TABLE_PAGE_TITLE;
-require($PATH_2_ROOT.'php/inc.head.php');
+require($PATH_2_ROOT.'php/inc.html_head.php');
 //#####################################################################################
 ?>
 <?php /*<!-- Jquery -->*/?>

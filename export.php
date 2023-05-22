@@ -3,8 +3,8 @@ declare(strict_types=1);
 require_once('_settings.regmon.php');
 require('login/validate.php');
 
-require_once('php/functions.php');
-require_once('export/export_functions.php');
+require_once('php/inc.common_functions.php');
+require_once('export/inc.export_functions.php');
 
 
 $Groups_select_options_n_ids = get_Groups_select_options_n_ids($UID);
@@ -66,7 +66,7 @@ $Forms_select_options = $Comments_select_option . $Forms_select_options;
 
 //#####################################################################################
 $title = $LANG->EXPORT_PAGE_TITLE;
-require('php/inc.head.php');
+require('php/inc.html_head.php');
 //#####################################################################################
 ?>
 <?php /*<!-- Jquery -->*/?>

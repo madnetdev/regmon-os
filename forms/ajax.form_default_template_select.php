@@ -1,6 +1,7 @@
 <?php // ajax Form Default Template Select
-require_once('../_settings.regmon.php');
-require('../login/validate.php');
+$PATH_2_ROOT = '../';
+require_once($PATH_2_ROOT.'_settings.regmon.php');
+require($PATH_2_ROOT.'login/validate.php');
 
 $group_id 	= (int)($_POST['group_id'] ?? 0);
 $ath_id 	= (int)($_POST['ath_id'] ?? 0);

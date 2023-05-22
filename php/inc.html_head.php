@@ -1,5 +1,7 @@
 <?php // inc Head 
 
+if ((!isset($SEC_check_config)) AND $SEC_check != $CONFIG['SEC_Page_Secret']) exit;
+
 if (!isset($PATH_2_ROOT)) $PATH_2_ROOT = '';
 ?>
 <!DOCTYPE html>

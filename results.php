@@ -3,8 +3,6 @@ declare(strict_types=1);
 require_once('_settings.regmon.php');
 require('login/validate.php');
 
-$SEC_check = $CONFIG['SEC_Page_Secret']; //secure ajax sub pages from direct call
-
 require('results/inc.results_functions.php');
 
 $results_page = 'RESULTS';

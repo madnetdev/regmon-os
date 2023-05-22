@@ -3,8 +3,8 @@
 declare(strict_types=1);
 require_once('_settings.regmon.php');
 require('login/validate.php');
-require_once('php/functions.php');
-require_once('index/index_functions.php');
+require_once('php/inc.common_functions.php');
+require_once('index/inc.index_functions.php');
 
 $groups_admins_options_grid = get_groups_admins_select(true);
 
@@ -87,7 +87,6 @@ require('index/inc.groups_athletes_select.php');
 <?php if ($LANG->LANG_CURRENT != 'en') { ?>
 <script type="text/javascript" src="js/overrides/query-validation/messages_<?=$LANG->LANG_CURRENT;?>.min.js"></script>
 <?php } ?>
-<script type="text/javascript" src="node_modules/jquery-placeholder/jquery.placeholder.js"></script>
 
 <link rel="stylesheet" type="text/css" href="node_modules/sweetalert2/dist/sweetalert2.min.css">
 <script type="text/javascript" src="node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
@@ -153,7 +152,7 @@ window.addEventListener( "pageshow", function (event) {
 });
 
 const V_REGmon_Folder = '<?=$CONFIG['REGmon_Folder'];?>';
-const PRODUCTION = <?=($CONFIG['PRODUCTION']?'true':'false');?>;
+const Production_Mode = <?=($CONFIG['Production_Mode']?'true':'false');?>;
 var V_ONLINE = true;
 
 <?php echo 'var'
