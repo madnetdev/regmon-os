@@ -4,7 +4,7 @@ require_once($PATH_2_ROOT.'_settings.regmon.php');
 require($PATH_2_ROOT.'login/validate.php');
 
 require_once($PATH_2_ROOT.'export/inc.export_functions.php');
-require_once($PATH_2_ROOT.'php/categories_functions.php');
+require_once($PATH_2_ROOT.'php/inc.categories_functions.php');
 
 //give time for export
 ini_set("memory_limit",-1);

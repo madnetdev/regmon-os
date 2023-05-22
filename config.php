@@ -75,13 +75,15 @@ if (isset($SEC_check_config)) {
 			'DB_User=' . $DB_CONFIG['DB_User'] . "\n".
 			'DB_Pass=' . $DB_CONFIG['DB_Pass'] . "\n";
 		
+			/* no point -we need this before we can come here
+			* so I put it in docker-compose.yml file
 			if (is_Docker()) {
-				$ENV_File_Content_default = '' .
+				$ENV_File_Content_default .= '' .
 					"\n" .
 					'# MYSQL settings -- Used only from Docker to set the ROOT MYSQL password.' . "\n" .
 					'MYSQL_ROOT_PASSWORD=root' . "\n";
 				
-			}
+			}*/
 			
 		$ENV_File_Content = $_POST['ENV_File_Content'] ?? $ENV_File_Content_default;
 	}

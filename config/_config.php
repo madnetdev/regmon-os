@@ -95,12 +95,15 @@ else {
 //get $DB_CONFIG #################################
 
 
+//set report off
+mysqli_report(MYSQLI_REPORT_OFF);
+//from php 8.1.0 the default is MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT
+
 
 //Init DB ###############################################
 require_once(__DIR__.'/'.$PATH_2_ROOT.'php/class.db.php');	
 $db = db::open('mysqli', $DB_CONFIG['DB_Name'], $DB_CONFIG['DB_User'], $DB_CONFIG['DB_Pass'], $DB_CONFIG['DB_Host']);
 //Init DB ###############################################
-
 
 
 //*check DB Connection ###########################
@@ -122,12 +125,10 @@ if ($db->numberRows() > 0)  {
 
 //we have DB error
 elseif ($db->myError) {
-	echo $db->myError.'----';
-	$SEC_check_config = 'DB_Error__On_Get_CONFIG';
+	$SEC_check_config = 'DB_Error__On_Get_CONFIG : ' . $db->myError;
 
 	//check if we have tables
 	$num_of_tables = $db->fetchRow("SELECT COUNT(*) as count FROM information_schema.tables WHERE table_schema = ?", array($DB_CONFIG['DB_Name']));
-	print_r($num_of_tables);
 	if ($db->numberRows() > 0) {
 		//TODO: 21 is the hardcoded count of app tables --this should come from app schema
 		$app_tables_count = 21;

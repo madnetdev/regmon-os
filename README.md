@@ -1,14 +1,11 @@
 # REGmon (Open Source)
-This project ...
 
 
 ## Table of Contents
  1. [Requirements](#requirements)
- 3. [Installation](#installation)
+ 2. [Installation](#installation)
  3. [Use with Docker](#Use-with-Docker)
- 4. [FAQs](#faqs)
-  4.1 [How to set my Database configuration](#How-to-set-my-Database-configuration)
-  4.2 [How to set my Email configuration](#How-to-set-my-Email-configuration)
+ 4. [After Install](#After-Install)
 
 
 ## Requirements
@@ -31,10 +28,6 @@ This project ...
     ```
     git clone https://github.com/madnetdev/regmon-os.git appFolder
     ```
-    in this case you need to set the following in your config file
-    ```
-    $CONFIG['REGmon_Folder'] = 'appFolder/';
-    ```
 
 
  2. You can install dependencies using the following
@@ -49,42 +42,35 @@ This project ...
     ```
     or 
 
-    you can use the files **"extra/_vendor.zip"** and **"extra/_node_modules.zip"** and extract them on your app folder (you can delete those files afterwards)
+    you can use the files **"extra/_vendor.zip"** and **"extra/_node_modules.zip"** and extract them on your app folder
 
 
-3. Copy or rename the file **".env.sample"** to a new file **".env"**
+3. Create Database and User for the Database :
 
-    Here you set the Password for the ROOT user of the MYSQL Server
-    ``
-    MYSQL_ROOT_PASSWORD=root
-    ``
-
-
-4. Copy or rename the file **"_config.regmon.sample.php"** to a new file **"__config.regmon.php"**
-
-
-5. Edit the configuration file and set your database and your email configuration
+    to continue the instalation you will need :
+    ```
+    DB_NAME
+    DB_USER
+    DB_PASS
+    ``` 
 
 
-6. Create Database and Import :
-
-    use **"extra/_regmondb_init_v3.012_en.sql"** or **"extra/_regmondb_init_v3.012_de.sql"** file for a new installation
-    
-    First you may want to replace the **"email@domain.com"** with your email address
+4. Go to http://localhost/ or http://localhost/appFolder/ 
 
 
-7. Go to http://localhost/ 
+5. Follow the installation script to create :
+    - ".env" file
+    - Admin User 
+    - Basic Data (Location 1, Group 1)
+    - Basic Admin Users (LocationAdmin, GroupAdmin, GroupAdmin2)
+    - Sample Dropdown Data
+    - Sorts Select Dropdown Data (en, de)
 
 
-8. Use the following accounts to login :
-
-    admin, DemoLocation, DemoGroupAdmin, DemoGroupAdmin2
-
-    password for all: DemoPass
-
-
-9. You can resister some Athletes and Trainers accounts once you setup your Email configuration
-
+6. Setup Application Email configuration
+    - go to config.php page
+    - test your Email configuration
+    - save configuration
 
 
 
@@ -99,24 +85,8 @@ This project ...
     cd regmon
     ```
 
-2. Copy or rename the file **".env.sample"** to a new file **".env"**
 
-
-3. Edit the file and set the Password for the ROOT user of the MYSQL Server
-
-    The Password for the ROOT user will be set to this in the "db" Docker container
-    ``
-    MYSQL_ROOT_PASSWORD=root
-    ``
-
-
-3. Copy or rename the file **"_config.regmon.sample.php"** to a new file **"__config.regmon.php"**
-
-
-4. Edit the configuration file and set your database and your email configuration
-
-
-5. Use docker-compose to Build, Start and Stop Docker containers:
+2. Use docker-compose to Build, Start and Stop Docker containers:
 
     For building the images for the containers.
     
@@ -140,44 +110,56 @@ This project ...
     docker-compose down
     ```
 
-
-6. Go to http://localhost:8000/ for the application
-
-
-7. Go to http://localhost:8888/ for phpMyAdmin
-
-
-8. Use the following accounts to login :
-
-    admin, DemoLocation, DemoGroupAdmin, DemoGroupAdmin2
-
-    password for all: DemoPass
-
-
-9. You can resister some Athletes and Trainers accounts once you setup your Email configuration
-
-
-
-
-## FAQ's
-
-### How to set my Database configuration
-1. Edit the following lines in **"__config.regmon.php"** file:
+    For a list of running containers
     ```
-    $CONFIG['DB_Host'] = "localhost";    //Database Hostname ex. localhost
-    $CONFIG['DB_Name'] = "regmondb";     //Database Name ex. regmondb
-    $CONFIG['DB_User'] = "root";         //Database User ex. root
-    $CONFIG['DB_Pass'] = "";             //Database Password ex. root
+    docker-compose ps
     ```
 
-### How to set my Email configuration
-1. Edit the following lines in **"__config.regmon.php"** file:
-    ```
-    $CONFIG['EMAIL'] = [
-        'Host'       => 'domain.com',      //SMTP server (localhost)
-        'SMTPSecure' => 'tls',             //ssl, tls - ssl(465) - tls(587)
-        'Port'       => '587',             //SMTP port for the server (25, 465, 587)
-        'Username'   => 'info@domain.com', //SMTP account username
-        'Password'   => 'userpassword',    //SMTP account password
-    ]
-    ```
+
+3. When the containers are up and running :
+
+    - Go to http://localhost:8000/ for the application
+
+    - Go to http://localhost:8888/ for phpMyAdmin
+
+
+5. Follow the application installation script to create :
+    - ".env" file
+    - Admin User 
+    - Basic Data (Location 1, Group 1)
+    - Basic Admin Users (LocationAdmin, GroupAdmin, GroupAdmin2)
+    - Sample Dropdown Data
+    - Sorts Select Dropdown Data (en, de)
+
+
+6. Setup Application Email configuration
+    - go to config.php page
+    - test your Email configuration
+    - save configuration
+
+
+
+## After Install
+
+# Now you are ready to :
+    - create some Locations
+    - create some Groups
+    - create some Forms
+    - create some Categories 
+    - assign some Forms to Categories
+    - assign some Forms to Groups
+    - create some Dropdown Menus
+    - create new Sports and new Sorts Categories 
+    - register some Athletes and Trainers accounts 
+    - aprove new Users to the Group
+    - manage Group Users
+    - assign Athletes to Trainers 
+    - give permissions to Trainers on Athletes Forms Data
+    - fill Forms and collect Data
+    - export Data 
+    - create new Data from Raw data with excel like format
+    - create Interval Data from Raw data with excel like format
+    - draw Results in Diagrams/Charts
+    - create Form Results Templates
+    - create Results Templates
+    - ...
