@@ -1,14 +1,14 @@
 <?php // Config functions
 
 //Encrypt/Decrypt ###########################
-function Encrypt_String($string) {
+function Encrypt_String(string $string):mixed {
 	return openssl_encrypt($string, "AES-128-ECB", "REGmon");
 }
-function Decrypt_String($encrypted_string) {
+function Decrypt_String(string $encrypted_string):mixed {
 	return openssl_decrypt($encrypted_string, "AES-128-ECB", "REGmon");
 }
 
-function Generate_Secret_Key($length = 64, $special_chars = true, $extra_special_chars = false) {
+function Generate_Secret_Key(int $length = 64, bool $special_chars = true, bool $extra_special_chars = false):string {
 	$chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 	if ($special_chars) {
 		$chars .= '!@#$%^&*()';
@@ -26,11 +26,11 @@ function Generate_Secret_Key($length = 64, $special_chars = true, $extra_special
 	return $key;
 }
 
-function is_Docker() {
+function is_Docker():bool {
     return is_file("/.dockerenv");
 }
 
-function is_XAMPP() {
+function is_XAMPP():bool {
 	if (isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'XAMPP') !== false) {
 		return true;
 	} else {
@@ -38,12 +38,12 @@ function is_XAMPP() {
 	}
 }
 
-function reload_Config_Page() {
+function reload_Config_Page():void {
 	header('Location: config.php'); //reload page
 }
 // HTML #####################################
 
-function get_HTML_Radio_Check_Buttons($config_key, $config_value, $option1, $option2, $label, $sub_label) {
+function get_HTML_Radio_Check_Buttons(string $config_key, string $config_value, string $option1, string $option2, string $label, string $sub_label):string {
 	return ''.
 		'<label for="'.$config_key.'">'.$label.'</label>'.
 		'<div id="'.$config_key.'" class="btn-group" data-toggle="buttons" style="width:100%;">'.
@@ -60,7 +60,7 @@ function get_HTML_Radio_Check_Buttons($config_key, $config_value, $option1, $opt
 }
 
 
-function get_HTML_Radio_Check_Buttons__On_Off($config_key, $config_value, $option_on, $option_off, $label, $sub_label, $disabled = false) {
+function get_HTML_Radio_Check_Buttons__On_Off(string $config_key, string $config_value, string $option_on, string $option_off, string $label, string $sub_label, bool $disabled = false):string {
 	return ''.
 		'<label for="'.$config_key.'">'.$label.'</label>'.
 		'<div id="'.$config_key.'" class="btn-group" data-toggle="buttons" style="width:100%;">'.
@@ -77,7 +77,7 @@ function get_HTML_Radio_Check_Buttons__On_Off($config_key, $config_value, $optio
 }
 
 
-function get_HTML_Input($config_key, $config_value, $input_type, $label, $sub_label, $placeholder, $disabled = false) {
+function get_HTML_Input(string $config_key, string $config_value, string $input_type, string $label, string $sub_label, string $placeholder, bool $disabled = false):string {
 	return ''.
 		'<label for="'.$config_key.'">'.$label.'</label>'.
 		'<div class="btn-group" style="width:100%;">'.
@@ -89,7 +89,7 @@ function get_HTML_Input($config_key, $config_value, $input_type, $label, $sub_la
 }
 
 
-function get_HTML_Textarea($config_key, $config_value, $input_type, $label, $sub_label, $placeholder, $disabled = false) {
+function get_HTML_Textarea(string $config_key, string $config_value, string $input_type, string $label, string $sub_label, string $placeholder, bool $disabled = false):string {
 	return ''.
 		'<label for="'.$config_key.'">'.$label.'</label>'.
 		'<textarea id="'.$config_key.'" name="'.$config_key.'" class="form-control required" rows="2" cols="10" wrap="soft" maxlength="64" style="overflow:hidden; resize:none;" placeholder="'.$placeholder.'"'.($disabled ? ' disabled' : '').'>'.$config_value.'</textarea>'.
@@ -99,7 +99,7 @@ function get_HTML_Textarea($config_key, $config_value, $input_type, $label, $sub
 }
 
 
-function get_HTML_Select($config_key, $config_value, $options_arr, $label, $sub_label, $placeholder) {
+function get_HTML_Select(string $config_key, string $config_value, array $options_arr, string $label, string $sub_label, string $placeholder):string {
 	$options = '';
 	foreach($options_arr as $option) {
 		if (is_array($option)) {
@@ -135,10 +135,12 @@ function get_HTML_Select($config_key, $config_value, $options_arr, $label, $sub_
 }
 
 
-function get_Database_Fields($disabled = true) {
+function get_Database_Fields(bool $disabled = true):string {
 	global $DB_CONFIG, $CONFIG;
 
-	echo get_HTML_Input( //key, value, type, label, sub_label, placeholder, disabled
+	$html = '';
+
+	$html .= get_HTML_Input( //key, value, type, label, sub_label, placeholder, disabled
 		'DB_Host', 
 		$DB_CONFIG['DB_Host'],
 		'text', 
@@ -148,7 +150,7 @@ function get_Database_Fields($disabled = true) {
 		$disabled
 	);
 
-	echo get_HTML_Input( //key, value, type, label, sub_label, placeholder, disabled
+	$html .= get_HTML_Input( //key, value, type, label, sub_label, placeholder, disabled
 		'DB_Name', 
 		$DB_CONFIG['DB_Name'], 
 		'text', 
@@ -158,7 +160,7 @@ function get_Database_Fields($disabled = true) {
 		$disabled
 	);
 
-	echo get_HTML_Input( //key, value, type, label, sub_label, placeholder, disabled
+	$html .= get_HTML_Input( //key, value, type, label, sub_label, placeholder, disabled
 		'DB_User', 
 		$DB_CONFIG['DB_User'], 
 		'text', 
@@ -175,7 +177,7 @@ function get_Database_Fields($disabled = true) {
 		$DB_Pass = $DB_CONFIG['DB_Pass'];
 	}
 	
-	echo get_HTML_Input( //key, value, type, label, sub_label, placeholder, disabled
+	$html .= get_HTML_Input( //key, value, type, label, sub_label, placeholder, disabled
 		'DB_Pass', 
 		$DB_Pass, 
 		'password', 
@@ -187,9 +189,9 @@ function get_Database_Fields($disabled = true) {
 
 	if ($disabled) { //not in .env config
 
-		echo '<hr style="margin:0 -5px 20px; border-top:7px double #ccc;">';
+		$html .= '<hr style="margin:0 -5px 20px; border-top:7px double #ccc;">';
 
-		echo get_HTML_Input( //key, value, type, label, sub_label, placeholder, disabled
+		$html .= get_HTML_Input( //key, value, type, label, sub_label, placeholder, disabled
 			'DB_Debug_File', 
 			$CONFIG['DB_Debug_File'], 
 			'text', 
@@ -199,7 +201,7 @@ function get_Database_Fields($disabled = true) {
 			!$disabled
 		);
 
-		echo get_HTML_Radio_Check_Buttons__On_Off( //key, value, option_on, option_off, label, sub_label, disabled
+		$html .= get_HTML_Radio_Check_Buttons__On_Off( //key, value, option_on, option_off, label, sub_label, disabled
 			'DB_Debug', 
 			$CONFIG['DB_Debug'], 
 			'ON', 
@@ -209,10 +211,12 @@ function get_Database_Fields($disabled = true) {
 			!$disabled
 		);
 	}
+
+	return $html;
 }
 
 
-function get_DB_Migrations_Files($DB_Migrations_Directory) {
+function get_DB_Migrations_Files(string $DB_Migrations_Directory):array {
 	$DB_Migrations_Files_arr = [];
 
 	if (is_dir($DB_Migrations_Directory)) {
@@ -241,10 +245,11 @@ function get_DB_Migrations_Files($DB_Migrations_Directory) {
 			if (preg_match("/\." . $allowed_file_types . "$/i", $file)) {
 				$size = round(filesize($DB_Migrations_Directory . $file) / 1024, 2);
 				//$get_file = file_get_contents($dir . $file);
-				$file_date = date("Y-m-d H:i:s", filemtime($DB_Migrations_Directory . $file));
-				//only _init_ files
+				$file_timestamp = (int)filemtime($DB_Migrations_Directory . $file);
+				$file_date = date("Y-m-d H:i:s", $file_timestamp);
 
-				if (substr_count($file, '_init_')) {
+				//only _init files
+				if (substr_count($file, '_init')) {
 					$option_value = $file;
 					$option_name = $file_date . '&nbsp; - &nbsp;' .$file . ' &nbsp; - &nbsp; ' . $size . 'KB';
 		
@@ -258,7 +263,7 @@ function get_DB_Migrations_Files($DB_Migrations_Directory) {
 }
 
 
-function get_CONFIG__REGmon_Folder() {
+function get_CONFIG__REGmon_Folder():string {
 	global $_SERVER;
 
 	$REGmon_Folder = str_replace(
@@ -271,7 +276,7 @@ function get_CONFIG__REGmon_Folder() {
 }
 
 
-function get_CONFIG_Defaults_array($POST = array()) {
+function get_CONFIG_Defaults_array(array $POST = array()):array {
 	global $_SERVER;
 
 	$REGmon_Folder = get_CONFIG__REGmon_Folder();
@@ -311,7 +316,7 @@ function get_CONFIG_Defaults_array($POST = array()) {
 }
 
 
-function Save_Configuration($config_arr, $init = false) {
+function Save_Configuration(array $config_arr, bool $init = false):string {
 	global $db, $CONFIG;
 	
 	if ($init) { //problems --no user
@@ -336,7 +341,7 @@ function Save_Configuration($config_arr, $init = false) {
 
 	//make json string for db
 	$config_json = json_encode($config_arr, JSON_UNESCAPED_UNICODE);
-	$config_json = str_replace('\/', '/', $config_json);
+	$config_json = str_replace('\/', '/', $config_json.'');
 	
 	$values = array();
 	$values['val'] = $config_json;
@@ -356,14 +361,14 @@ function Save_Configuration($config_arr, $init = false) {
 }
 
 
-function get_Admin_User_Init_SQL($password, $email, $datetime) {
+function get_Admin_User_Init_SQL(string $password, string $email, string $datetime):string {
 	return "".
 		//Admin User
 		"INSERT INTO users (id, account, uname, passwd, location_id, group_id, lastname, firstname, email, level, status, created, modified) VALUES ".
 		"('1', 'admin', 'admin', '".hash_Password($password)."', 1, 1, 'Admin', 'Admin', '".$email."', 99, 1, '".$datetime."', '".$datetime."');";
 }
 
-function get_Extra_Admin_Users_Init_SQL($password, $email, $datetime) {
+function get_Extra_Admin_Users_Init_SQL(string $password, string $email, string $datetime):string {
 	return "".
 		//extra Admin Users
 		"INSERT INTO users (id, account, uname, passwd, location_id, group_id, lastname, firstname, email, level, status, created, modified) VALUES ".
@@ -372,7 +377,7 @@ function get_Extra_Admin_Users_Init_SQL($password, $email, $datetime) {
 		"('4', 'user', 'GroupAdmin2', '".hash_Password($password)."', 1, 1, 'Admin (reduced)', 'Group', '".$email."', 40, 1, '".$datetime."', '".$datetime."');";
 }
 
-function get_Extra_Location_Group_Init_SQL($datetime) {
+function get_Extra_Location_Group_Init_SQL(string $datetime):string {
 	return "".
 		//location 1
 		"INSERT INTO locations (id, name, status, admin_id, created, modified) VALUES ".
@@ -383,7 +388,7 @@ function get_Extra_Location_Group_Init_SQL($datetime) {
 		"(1, 1, 'Group 1', 1, '', '3,4', '', '', NULL, '".$datetime."', '2023-02-26 18:49:43');";
 }
 
-function get_Extra_User2Groups_Init_SQL($datetime) {
+function get_Extra_User2Groups_Init_SQL(string $datetime):string {
 	return "".
 		//users2groups
 		"INSERT INTO users2groups (id, user_id, group_id, forms_select, status, created, created_by, modified, modified_by) VALUES ".
@@ -393,7 +398,7 @@ function get_Extra_User2Groups_Init_SQL($datetime) {
 		"(4, 4, 1, NULL, 1, '".$datetime."', 'Auto_Init', '".$datetime."', 'Auto_Init');";
 }
 
-function get_Extra_DropdownsSample_Init_SQL($datetime) {
+function get_Extra_DropdownsSample_Init_SQL(string $datetime):string {
 	return "".
 		//dropdowns sample data
 		"INSERT INTO dropdowns (id, parent_id, name, options, status, created, modified) VALUES ".
@@ -408,7 +413,7 @@ function get_Extra_DropdownsSample_Init_SQL($datetime) {
 }
 
 
-function get_Sports_Init_SQL_EN($datetime) {
+function get_Sports_Init_SQL_EN(string $datetime):string {
 	return "".
 		"INSERT INTO sports (id, parent_id, name, options, status, created, modified) VALUES ".
 		"(1, 0, 'Without Sport Group', NULL, 1, '".$datetime."', '".$datetime."'),".
@@ -468,7 +473,7 @@ function get_Sports_Init_SQL_EN($datetime) {
 		"(58, 7, NULL, 'Badminton', 1, '".$datetime."', '".$datetime."');";
 }
 
-function get_Sports_Init_SQL_DE($datetime) {
+function get_Sports_Init_SQL_DE(string $datetime):string {
 	return "" .
 		"INSERT INTO sports (id, parent_id, name, options, status, created, modified) " . "VALUES" .
 		"(1, 0, 'Ohne Zuordnung', NULL, 1, '".$datetime."', '".$datetime."')," .

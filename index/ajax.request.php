@@ -167,6 +167,7 @@ switch ($request) {
 						require($PATH_2_ROOT.'php/inc.email.php');
 
 						$Subject = str_replace('{Username}', $user['uname'], $LANG->EMAIL_ACCOUNT_ACTIVATE_SUBJECT);
+						/** @var string $Message */
 						$Message = str_replace('{Username}', $user['uname'], $LANG->EMAIL_ACCOUNT_ACTIVATE_MESSSAGE);
 						$Message = str_replace('{HTTP}', $CONFIG['HTTP'], $Message);
 						$Message = str_replace('{DOMAIN}', $CONFIG['DOMAIN'], $Message);

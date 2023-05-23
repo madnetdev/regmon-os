@@ -28,7 +28,8 @@ WHERE g.id = ? AND u.level = 50 AND u.id = ?", array($group_id, $UID));
 LEFT JOIN `groups` gr ON gr.id = ? 
 WHERE FIND_IN_SET( u.id, gr.admins_id ) 
 AND (u.level = 40 OR u.level = 45) AND u.id = ?", array($group_id, $UID));
-			if (!$db->numberRows() > 0)  {
+			if ($db->numberRows() > 0)  {}
+			else {
 				echo '<script>'.
 						'V_TRAINER_R_PERMS=[]; '.
 						'V_TRAINER_W_PERMS=[];'.
@@ -145,8 +146,13 @@ if (($trainer AND $trainer_id) OR ($trainer_view AND $trainer_view_id)) {
 }
 
 
-
-function getCategoryForms($cat_id, $space='', $options=false) {
+/**
+ * @param int $cat_id
+ * @param string $space
+ * @param bool $options
+ * @return string
+ */
+function getCategoryForms(int $cat_id, string $space = '', bool $options = false):string {
 	global $forms, $box, $select, $edit, $trainer, $trainer_view, $group_forms_selected_arr, $group_forms_standard_arr, $trainer_forms_selected_read_arr, $trainer_forms_selected_write_arr, $athlete_id, $group_id, $UID, $CONFIG, $LANG;
 	
 	$html = '';
@@ -215,8 +221,9 @@ function getCategoryForms($cat_id, $space='', $options=false) {
 }
 
 
-function buildCategory($parent, $collapse_id_prefix, $level=1, $select=false) {
+function buildCategory(int $parent, string $collapse_id_prefix, int $level = 1, bool $select = false):string {
 	global $categories, $group_id, $box;
+
 	$html = '';
 	$space = '';
 	for ($i=1; $i<$level; $i++) $space .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';

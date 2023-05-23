@@ -3,13 +3,14 @@
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
 // print_r alias function
-function PR($array) {
+function PR(array $array):void {
 	echo "<pre>";
 	print_r($array);
 	echo "</pre>";
 }
 
-function get_User_2_Groups($_UID) {
+
+function get_User_2_Groups(int $_UID):array {
 	global $db;
 	$user_2_groups = array();
 	$rows = $db->fetch("SELECT group_id, status, modified FROM users2groups WHERE user_id = ? ", array($_UID));
@@ -22,7 +23,8 @@ function get_User_2_Groups($_UID) {
 	return $user_2_groups;
 }
 
-function get_Trainers_2_Groups() {
+
+function get_Trainers_2_Groups():array {
 	global $db;
 	$trainers_2_groups = array();
 	$rows = $db->fetch("SELECT u2g.group_id, GROUP_CONCAT(CONVERT(u.id, CHAR(11))) AS ids 
@@ -37,7 +39,7 @@ function get_Trainers_2_Groups() {
 	return $trainers_2_groups;
 }
 
-function get_Locations_array() {
+function get_Locations_array():array {
 	global $db;
 	$locations_arr = array();
 	$rows = $db->fetch("SELECT id, name, admin_id FROM locations WHERE status = 1 ORDER BY id", array()); 
@@ -49,7 +51,7 @@ function get_Locations_array() {
 	return $locations_arr;
 }
 
-function get_Group_Request_Status_Class($group_status) {
+function get_Group_Request_Status_Class(string $group_status):string {
 	$status_array = array(
 		'0' => 'G_no',
 		'1' => 'G_yes',
@@ -65,17 +67,19 @@ function get_Group_Request_Status_Class($group_status) {
 }
 
 // get Dashboard Links Array
-function get_Dashboard_Links_Array($_UID, $_GROUP) {
+function get_Dashboard_Links_Array(int $_UID, int $_GROUP):string {
 	global $db;
-	$dashboard_array = '';
+	$dashboard_js_array = '';
 	$dash_rows = $db->fetch("SELECT id, name, type, options, sort, color FROM dashboard WHERE user_id=? AND group_id=? ORDER BY  name", array($_UID, $_GROUP)); 
 	if ($db->numberRows() > 0) {
 		foreach ($dash_rows as $dash) {
-			if ($dashboard_array != '') $dashboard_array .= ',';
-			$dashboard_array .= '['.$dash['id'].',"'.$dash['name'].'","'.$dash['type'].'","'.$dash['options'].'",'.$dash['sort'].',"'.$dash['color'].'"]';
+			if ($dashboard_js_array != '') {
+				$dashboard_js_array .= ',';
+			}
+			$dashboard_js_array .= '['.$dash['id'].',"'.$dash['name'].'","'.$dash['type'].'","'.$dash['options'].'",'.$dash['sort'].',"'.$dash['color'].'"]';
 		}
 	}
-	return $dashboard_array;
+	return $dashboard_js_array;
 }
 
 ?>

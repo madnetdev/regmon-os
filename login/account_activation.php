@@ -41,6 +41,7 @@ if ($db->numberRows() > 0)  {
 
 			$Email_Subject = str_replace('{Username}', $user['uname'], $LANG->EMAIL_ACCOUNT_ACTIVATE_SUBJECT);
 
+			/** @var string $Email_Message */
 			$Email_Message = str_replace('{Username}', $user['uname'], $LANG->EMAIL_ACCOUNT_ACTIVATE_MESSSAGE);
 			$Email_Message = str_replace('{HTTP}', $CONFIG['HTTP'], $Email_Message);
 			$Email_Message = str_replace('{DOMAIN}', $CONFIG['DOMAIN'], $Email_Message);

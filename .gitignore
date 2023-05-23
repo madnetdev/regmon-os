@@ -12,6 +12,7 @@ node_modules/
 dist/
 package-lock.json
 composer.lock
+phpstan.neon
 
 # ignore composer vendor directory
 /vendor

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace REGmon;
 
 //Version
-$G_Version = "3.019";
+$G_Version = "3.020";
 $G_VER = "?ver=" . $G_Version;
 
 

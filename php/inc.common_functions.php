@@ -2,7 +2,7 @@
 
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
-function get_locations_select($options_grid=false) {
+function get_locations_select(bool $options_grid=false):string {
 	global $db;
 	$locations_select = '<select>'; 
 	$locations_select .= '<option></option>'; 
@@ -25,7 +25,7 @@ function get_locations_select($options_grid=false) {
 	}
 }
 
-function get_locations_admins_select($options_grid=false) {
+function get_locations_admins_select(bool $options_grid = false):string {
 	global $db;
 	//Admin Select Options
 	$locations_admins_select = '<select>'; 
@@ -49,7 +49,7 @@ function get_locations_admins_select($options_grid=false) {
 	}
 }
 
-function get_groups_select($options_grid=false) {
+function get_groups_select(bool $options_grid = false):string {
 	global $db;
 
 	$groups_select = '<select>'; 
@@ -74,7 +74,7 @@ function get_groups_select($options_grid=false) {
 	}
 }
 
-function get_groups_admins_select($options_grid=false, $where='') {
+function get_groups_admins_select(bool $options_grid = false, string $where = ''):string {
 	global $db;
 	$groups_admins_select = '<select>'; 
 	//$groups_admins_select .= '<option>&nbsp</option>'; //we not need empty option for multiple
@@ -97,7 +97,7 @@ function get_groups_admins_select($options_grid=false, $where='') {
 	}
 }
 
-function get_Sports_Groups($grid_options=false, $get_array=false) {
+function get_Sports_Groups(bool $grid_options = false, bool $get_array = false):mixed {
 	global $db;
 	$sport_groups_array = array();
 	$sports_groups_select = '<select>'; 
@@ -122,7 +122,7 @@ function get_Sports_Groups($grid_options=false, $get_array=false) {
 	return $sports_groups_select;
 }
 
-function get_Sports_Select_Options($grid_options = false) {
+function get_Sports_Select_Options(bool $grid_options = false):string {
 	global $db;
 	//Sports Select Options
 	$sports_select = '<select>'; 
@@ -143,7 +143,7 @@ function get_Sports_Select_Options($grid_options = false) {
 	return $sports_select;
 }
 
-function get_Sports_Select_Options_By_Group($sport_selected = '') {
+function get_Sports_Select_Options_By_Group(string $sport_selected = ''):string {
 	global $db;
 	//Sports Groups
 	$sports_groups_array = get_Sports_Groups(false, true); //get array
@@ -171,7 +171,7 @@ function get_Sports_Select_Options_By_Group($sport_selected = '') {
 				if ($Sports_open_group) {
 					$Sports_select_options_group .= '</optgroup>';
 				}
-				$Sports_select_options_group .= '<optgroup label="'.html_chars($Sports_group??'').'">';
+				$Sports_select_options_group .= '<optgroup label="'.html_chars($Sports_group).'">';
 				$Sports_open_group = true;
 			}
 			
@@ -194,7 +194,7 @@ function get_Sports_Select_Options_By_Group($sport_selected = '') {
 	return $Sports_select_options;
 }
 
-function get_Body_Height_Options($body_height_selected = '', $grid_options = false) {
+function get_Body_Height_Options(string $body_height_selected = '', bool $grid_options = false):string {
 	$body_height_options = '';
 	$user_height_grid_options = '0:';
 	$unit = ' cm';
@@ -213,7 +213,7 @@ function get_Body_Height_Options($body_height_selected = '', $grid_options = fal
 	return $body_height_options;
 }
 
-function get_Forms_with_Forms_Data_count_array($user_id, $group_id=false) {
+function get_Forms_with_Forms_Data_count_array(int $user_id, mixed $group_id = false):array {
 	global $db;
 
 	$Forms_with_Forms_Data_arr = array();

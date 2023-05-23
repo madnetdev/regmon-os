@@ -92,7 +92,7 @@ switch ($action) {
 	  
 
 	case 'sports_groups_select': // SELECT 
-		echo get_Sports_Groups();
+		echo get_Sports_Groups().'';
 	  break;
 
 

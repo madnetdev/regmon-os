@@ -2,22 +2,45 @@
 
 class Language {
     
+    /**
+     * @var static $instance
+     */
     private static $instance;
     
-    public   $language = '';
-    public   $Languages = array('en','de');
-    public   $Default_Language = 'en';
-    public   $Use_Multi_Language_Selector = true;
-    private  $tags = array();
+    /**
+     * @var string $language
+     */
+    public $language = '';
+    /**
+     * @var array $Languages
+     */
+    public $Languages = array('en','de');
+    /**
+     * @var string $Default_Language
+     */
+    public $Default_Language = 'en';
+    /**
+     * @var bool $Use_Multi_Language_Selector
+     */
+    public $Use_Multi_Language_Selector = true;
+    /**
+     * @var array $tags
+     */
+    private $tags = array();
     
-    public static function getInstance($REGmon_Folder, $Default_Language, $Use_Multi_Language_Selector) {
+    /**
+     * @param string $REGmon_Folder
+     * @param string $Default_Language
+     * @param bool $Use_Multi_Language_Selector
+     */
+    public static function getInstance(string $REGmon_Folder, string $Default_Language, bool $Use_Multi_Language_Selector) {
         if (self::$instance === null) {
             self::$instance = new self($REGmon_Folder, $Default_Language, $Use_Multi_Language_Selector);
         }
         return self::$instance;
     }
     
-    public function __construct($REGmon_Folder, $Default_Language, $Use_Multi_Language_Selector) {
+    public function __construct(string $REGmon_Folder, string $Default_Language, bool $Use_Multi_Language_Selector) {
 
 		if (!$Use_Multi_Language_Selector) {
             $this->Default_Language = $Default_Language;
@@ -78,7 +101,7 @@ class Language {
     	$this->tags = array();
     }
     
-    public function __get($tag) {
+    public function __get(string $tag):string {
         if (!isset($this->tags[$tag])) {
             error_log('Missing Language Tag : '.$tag);
             return '_['.$tag.']_';

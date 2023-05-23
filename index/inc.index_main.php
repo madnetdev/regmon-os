@@ -169,7 +169,9 @@ $DIS2 = ' display:none;';
 		<?php 	if ($TRAINER) { //Trainers --admin and others to fisrt column
 				 	if (!$THIS_GROUP_TRAINER) {
 						$dis_panel = true;
-					} else $dis_panel = false; 
+					} else {
+						$dis_panel = false;
+					}
 				 	if ($THIS_GROUP_TRAINER) { //only if trainer and trainer in group
 		?>
 							<?php /*##### Request_Access_From_Athletes ##########################*/?>

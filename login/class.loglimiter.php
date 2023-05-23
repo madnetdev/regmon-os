@@ -72,7 +72,7 @@ class LogLimiter {
 	 * 
 	 * @access private
 	 */
-	private function deleteExpired() {
+	private function deleteExpired():void {
 		$this->db->delete("login_blocks", "expire <= ?", array(time()));
 		$time_pass = time() - ($this->Block_Minutes * 60);
 		$this->db->delete("login_attempts", "date <= ?", array($time_pass));
@@ -82,7 +82,7 @@ class LogLimiter {
 	/**
 	 * Blocks the current IP
 	 */
-	function blockIP() {
+	function blockIP():void {
 		$values = array();			
 		$values['ip'] = $this->ip;
 		$values['expire'] = ($this->Block_Minutes * 60) + time();
@@ -105,7 +105,7 @@ class LogLimiter {
 	/**
 	* Logs a failed login attempt.
 	*/
-	function logFailedAttempt() {
+	function logFailedAttempt():void {
 		$values = array();			
 		$values['ip'] = $this->ip;
 		$values['date'] = time();
@@ -115,15 +115,16 @@ class LogLimiter {
 	/**
 	* Counts how many attempts from this IP.
 	*/
-	function countFailedAttempts() {
+	function countFailedAttempts():int {
 		$this->db->fetch("SELECT * FROM login_attempts WHERE ip = ?", array($this->ip));
 		return $this->db->numberRows();
 	}
 
 	/**
-	* Call this method when a login fails. Logs the attempt and checks if a block is needed. If is, does it.
+	* Call this method when a login fails. 
+	* Logs the attempt and checks if a block is needed. If is, does it.
 	*/
-	function failedAttempt() {
+	function failedAttempt():void {
 		$this->logFailedAttempt();
 		if ($this->countFailedAttempts() >= $this->Max_Attempts) {
 			$this->blockIP();
@@ -133,7 +134,7 @@ class LogLimiter {
 	/**
 	* Call this method when a login goes right. Deletes the attempts from this IP.
 	*/
-	function login() {
+	function login():void {
 		$this->db->delete("login_attempts", "ip = ?", array($this->ip));
 	}
  }

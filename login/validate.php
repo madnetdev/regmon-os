@@ -12,6 +12,8 @@ $logout = $PATH_2_ROOT.$CONFIG['REGmon_Folder'].'login/logout.php'; //logout pag
 
 $this_page = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],'/')+1);
 
+$UID = false;
+
 // Check if the cookies are set
 if (isset($_COOKIE['USERNAME']) AND isset($_COOKIE['UID'])) {
 

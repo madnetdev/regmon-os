@@ -9,10 +9,8 @@ $ath_id = (int)($_POST['ath_id'] ?? false);
 $dash_id = (int)($_POST['dash_id'] ?? false);
 if (!$group_id OR !$ath_id OR !$dash_id) exit;
 
-if ($dash_id AND $dash_id != '') {
-	//delete dashboard entry
-	$db->delete("dashboard", "user_id=? AND group_id=? AND id=?", array($ath_id, $group_id, $dash_id));
-}
+//delete dashboard entry
+$db->delete("dashboard", "user_id=? AND group_id=? AND id=?", array($ath_id, $group_id, $dash_id));
 
 //return the new Dashboard Links Array
 $Dashboard_Links_Arr = get_Dashboard_Links_Array($ath_id, $group_id);

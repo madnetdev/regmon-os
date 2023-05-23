@@ -7,8 +7,8 @@ require_once($PATH_2_ROOT.'export/inc.export_functions.php');
 require_once($PATH_2_ROOT.'php/inc.categories_functions.php');
 
 //give time for export
-ini_set("memory_limit",-1);
-ini_set("max_execution_time","0"); 
+ini_set("memory_limit", "-1");
+ini_set("max_execution_time", "0"); 
 set_time_limit(0); 
 
 $POST_gender = $_POST['gender'] ?? array();
@@ -124,24 +124,26 @@ if (count($POST_gender)) {
 }
 //year
 if (count($POST_year)) {
-	$where_year = " AND ( ";
+	$where_year = "";
 	foreach ($POST_year as $year) {
-		if ($where_year != '') $where_year .= " OR ";
+		if ($where_year != '') {
+			$where_year .= " OR ";
+		}
 		$where_year .= " birth_date LIKE '$year%' ";
 	}
-	$where_year .= " ) ";
-	$where_Athletes .= $where_year;
+	$where_Athletes .= " AND ( ".$where_year." ) ";
 	$Year_of_birth_selected = "'".implode("', '",$POST_year)."'";
 }
 //sport
 if (count($POST_sport)) {
-	$where_sports = " AND ( ";
+	$where_sports = "";
 	foreach($POST_sport as $sport) {
-		if ($where_sports != '') $where_sports .= " OR ";
+		if ($where_sports != '') {
+			$where_sports .= " OR ";
+		}
 		$where_sports .= "sport LIKE '%".$sport."%'";
 	}
-	$where_sports .= " ) ";
-	$where_Athletes = $where_sports;
+	$where_Athletes = " AND ( ".$where_sports." ) ";
 	$Sports_selected = "'".implode("', '",$POST_sport)."'";
 }
 //date from
@@ -455,7 +457,7 @@ if ($db->numberRows() > 0)  {
 						$form_data_columns .= '<td>'.$val[1].'</td>'; //export period_to
 						if ($val[2] != '') {
 							$time = explode(':', $val[2]??''); //get Period only -> "01:00"
-							$val = ($time[0]*60 + $time[1]); //convert to minutes
+							$val = (((int)$time[0]) * 60 + ((int)$time[1])); //convert to minutes
 						} else {
 							$val = 0; //convert to minutes
 						}
@@ -584,6 +586,9 @@ if ($no_data) {
 
 //Filename
 $Athletes_selected_filename = str_replace("'", '', $Athletes_selected);
+/** 
+ * @var string $filename 
+ */
 $filename = $LANG->EXPORT_FILENAME;
 $filename = str_replace('{DATE}', date("Ymd"), $filename);
 $filename = str_replace('{USERS_SELECTED}', $Athletes_selected_filename, $filename);

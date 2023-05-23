@@ -25,7 +25,7 @@ switch ($action) {
 		}
 		
 		// Check if all fields are filled up
-		if (trim($values['name']) == '') {
+		if ($values['name'] == '') {
 			echo $LANG->EMPTY_GROUP_NAME;
 			exit;
 		}
@@ -33,7 +33,7 @@ switch ($action) {
 		if ($ID != 0) { //from interface
 			$values['location_id'] = $ID;
 		}
-		if (trim($values['location_id']) == '') {
+		if ($values['location_id'] == '') {
 			echo $LANG->EMPTY_LOCATION_ID;
 			exit;
 		}

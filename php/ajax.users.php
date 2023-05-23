@@ -49,15 +49,14 @@ switch ($action) {
 		
 		
 		// Check if all fields are filled up
-		if (trim($values['uname']) == '') 		{
+		if ($values['uname'] == '') 		{
 			echo $LANG->WARN_EMPTY_USERNAME;
 			exit;
 		}
-		elseif (trim($values['passwd']) != trim($_POST['pass_confirm'])) {
+		elseif ($values['passwd'] != trim($_POST['pass_confirm'])) {
 			echo $LANG->WARN_CONFIRM_PASSWORD;
 			exit;
 		}
-		//elseif (trim($values['email']) != '') {
 		elseif (!filter_var($values['email'], FILTER_VALIDATE_EMAIL)) {
 			echo $LANG->WARN_INVALID_EMAIL;
 			exit;
@@ -65,7 +64,7 @@ switch ($action) {
 
 		//password ############################
 		//empty password
-		if (trim($values['passwd']) == '') {
+		if ($values['passwd'] == '') {
 			if ($action == 'add') {
 				//we need password
 				echo $LANG->WARN_EMPTY_PASSWORD;
@@ -79,22 +78,22 @@ switch ($action) {
 		//check password
 		else {
 			//check pass < 8 chars
-			if (strlen($values['passwd']) < 8) {
+			if (strlen($values['passwd'].'') < 8) {
 				echo $LANG->WARN_PASSWORD_CHARS;
 				exit;
 			}
 				
 			//check password strength
-			if (!(preg_match("#[0-9]+#", $values['passwd']) AND //one nubmer
-				  preg_match("#[a-z]+#", $values['passwd']) AND //one a-z
-				  preg_match("#[A-Z]+#", $values['passwd']))) //one A-Z
+			if (!(preg_match("#[0-9]+#", $values['passwd'].'') AND //one nubmer
+				  preg_match("#[a-z]+#", $values['passwd'].'') AND //one a-z
+				  preg_match("#[A-Z]+#", $values['passwd'].''))) //one A-Z
 			{
 				echo $LANG->WARN_WEAK_PASSWORD;
 				exit;
 			}
 		
 			//$values['passwd'] = MD5($values['passwd']);
-			$values['passwd'] = hash_Password($values['passwd']);
+			$values['passwd'] = hash_Password($values['passwd'].'');
 		}
 		//password ############################
 

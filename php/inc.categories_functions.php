@@ -2,14 +2,15 @@
 
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
-function getCategoryForms($category_id) {
+function getCategoryForms(int $category_id) {
 	global $forms, $order, $category_forms_ordered;
 	foreach ($forms[$category_id] as $row) {
 		$category_forms_ordered[$row['form_id']] = array($row['form_id'], $row['name'], $row['data_names'], $order);
 		$order++;
 	}
 }
-function buildCategory($parent) {
+
+function buildCategory(int $parent) {
 	global $categories;
 	if (isset($categories['parent_categories'][$parent])) {
 		foreach ($categories['parent_categories'][$parent] as $category_id) {
@@ -27,7 +28,8 @@ function buildCategory($parent) {
 		}
 	}
 }
-function get_All_Categories() {
+
+function get_All_Categories():array {
 	global $db, $forms, $categories;
 
 	//make an array to hold categories info and parent/child keys 

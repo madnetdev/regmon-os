@@ -2,7 +2,7 @@
 
 namespace visualCaptcha;
 
-use Zend\Cache\StorageFactory;
+//use Zend\Cache\StorageFactory;
 
 class Captcha {
     // Object that will have a reference for the session object
@@ -25,7 +25,7 @@ class Captcha {
 
     // All the cache options
     // Theses options are the related to \Zend\Cache\Storage
-    // By default, it´s been populated as null on Constructor, but you can use array options of Cache ZF2 backend   
+    // By default, itï¿½s been populated as null on Constructor, but you can use array options of Cache ZF2 backend   
     private $cache;
     
     // @param session is the default session object
@@ -65,12 +65,12 @@ class Captcha {
     
     /**
      * 
-     * @return \Zend\Cache\Storage\StorageInterface
+     * //@return \Zend\Cache\Storage\StorageInterface
      */
     private function setCache($cached, $options = null)
     {
-        if($cached)
-            return StorageFactory::factory($options);
+    //    if($cached)
+    //        return StorageFactory::factory($options);
         
         return false;
     }

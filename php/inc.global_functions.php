@@ -2,7 +2,7 @@
 
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
-function Exit_Message($message) {
+function Exit_Message(string $message):string {
 	return ''.
 		'<div style="text-align:center; font-size:20px;">'.
 			$message.
@@ -10,7 +10,7 @@ function Exit_Message($message) {
 }
 
 
-function html_chars($string) {
+function html_chars(string $string):string {
 	//return htmlspecialchars(utf8_encode($string));
 	//http://stackoverflow.com/questions/307623/utf-8-and-htmlentities-in-rss-feeds
 	//return utf8_encode(htmlentities($string,ENT_COMPAT,'utf-8'));

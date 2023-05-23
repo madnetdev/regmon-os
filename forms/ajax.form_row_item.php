@@ -12,8 +12,8 @@ $row_item_type = $_POST['row_item_type'] ?? "text";
 
 
 $row_item_arr = explode('_', $row_item);
-$row = $row_item_arr[0]; //row num
-$item = $row_item_arr[1]; //item num
+$row = (int)$row_item_arr[0]; //row num
+$item = (int)$row_item_arr[1]; //item num
 
 $html = '';
 

@@ -9,7 +9,7 @@ require (__DIR__.'/'.$PATH_2_ROOT.'vendor/autoload.php');
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-function SendEmail($EmailTo, $Subject, $Message) {
+function SendEmail(string $EmailTo, string $Subject, string $Message):string {
 	global $CONFIG;
 	$CE = $CONFIG['EMAIL'];
 

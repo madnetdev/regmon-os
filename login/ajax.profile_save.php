@@ -38,15 +38,15 @@ if (trim($_POST['passwd']) != '') {
 	}
 
 	//check pass < 8 chars
-	if (strlen($values['passwd']) < 8) {
+	if (strlen($_POST['passwd']) < 8) {
 		echo $LANG->WARN_PASSWORD_CHARS;
 		exit;
 	}
 
 	//check password strength
-	if (!(preg_match("#[0-9]+#", $values['passwd']) AND //one nubmer
-		  preg_match("#[a-z]+#", $values['passwd']) AND //one a-z
-		  preg_match("#[A-Z]+#", $values['passwd']))) //one A-Z
+	if (!(preg_match("#[0-9]+#", $_POST['passwd']) AND //one nubmer
+		  preg_match("#[a-z]+#", $_POST['passwd']) AND //one a-z
+		  preg_match("#[A-Z]+#", $_POST['passwd']))) //one A-Z
 	{
 		echo $LANG->WARN_WEAK_PASSWORD;
 		exit;
@@ -119,6 +119,7 @@ if ($sport_new != '') {
 		//Admin email for activation of new Sport
 		$profile = ($level_id>10?'<b>'.$profile.'</b>':$profile);
 		$Subject_admin = str_replace('{Sports}', $sport_new, $LANG->EMAIL_NEW_SPORTART_ADMIN_SUBJECT);
+		/** @var string $Message_admin */
 		$Message_admin = str_replace('{Username}', $_POST['uname'], $LANG->EMAIL_NEW_SPORTART_ADMIN_MESSSAGE);
 		$Message_admin = str_replace('{Lastname}', $_POST['lastname'], $Message_admin);
 		$Message_admin = str_replace('{Firstname}', $_POST['firstname'], $Message_admin);

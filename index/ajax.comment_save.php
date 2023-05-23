@@ -17,11 +17,11 @@ $t_showInGraph 	= isset($_POST['t_showInGraph']) ? $_POST['t_showInGraph'] : 'fa
 $t_color 		= $_POST['t_color'] ?? '#aaaaaa';
 
 if ($t_isAllDay == 'true') {
-	$selected_date_start = date("Y-m-d H:i:s", strtotime($t_date_start.' 00:00:00'));
-	$selected_date_end = date("Y-m-d H:i:s", strtotime($t_date_end.' 23:59:59'));
+	$selected_date_start = date("Y-m-d H:i:s", (int)strtotime($t_date_start.' 00:00:00'));
+	$selected_date_end = date("Y-m-d H:i:s", (int)strtotime($t_date_end.' 23:59:59'));
 } else {
-	$selected_date_start = date("Y-m-d H:i:s", strtotime($t_date_start.' '.$t_time_start));
-	$selected_date_end = date("Y-m-d H:i:s", strtotime($t_date_end.' '.$t_time_end));
+	$selected_date_start = date("Y-m-d H:i:s", (int)strtotime($t_date_start.' '.$t_time_start));
+	$selected_date_end = date("Y-m-d H:i:s", (int)strtotime($t_date_end.' '.$t_time_end));
 }
 
 if ($group_id AND $athlete_id)

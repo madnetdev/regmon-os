@@ -17,12 +17,12 @@ abstract class db {
 	protected $connection;
 	/**
 	 * Stores the last query
-	 * @var string
+	 * @var mixed
 	 */
 	protected $query;
 	/**
 	 * Stores the last query result
-	 * @var bool|mysqli_result
+	 * @var mixed|mysqli_result
 	 */
 	protected $result;
 	/**
@@ -32,7 +32,7 @@ abstract class db {
 	public $myError;
 	/**
 	 * Stores the logFile filename
-	 * @var string
+	 * @var mixed
 	 */
 	protected $logFile;
 	/**
@@ -172,7 +172,7 @@ abstract class db {
 	/**
 	 * abstract function _quoteField
 	 * @param mixed $field
-	 * @return void
+	 * @return string
 	 */
 	protected abstract function _quoteField($field);
 	/**
@@ -220,12 +220,12 @@ abstract class db {
 	 * Open a Conection with the Database
 	 * @param mixed $type
 	 * @param mixed $database
-	 * @param mixed $user
-	 * @param mixed $password
-	 * @param mixed $host
+	 * @param string $user
+	 * @param string $password
+	 * @param string $host
 	 * @return mixed
-	 */
-	public static function open($type, $database, $user = '', $password = '', $host = 'localhost', $Log_Slow_DB_Query_Seconds = false) {
+	 */ 
+	public static function open(mixed $type, mixed $database, string $user = '', string $password = '', string $host = 'localhost', int $Log_Slow_DB_Query_Seconds = 0):mixed {
 		$db = false;
 		switch($type) {
 			//case 'mysql':
@@ -457,7 +457,7 @@ abstract class db {
 	 * fetchRow - Fetch just 1 row
 	 * @param mixed $sql
 	 * @param mixed $parameters
-	 * @return array
+	 * @return mixed
 	 */
 	public function fetchRow($sql = null, $parameters = array()) {
 		if($sql != null) {
@@ -532,6 +532,7 @@ abstract class db {
 		krsort($namedParams);
 		
 		// split on question-mark and named placeholders
+		/** @var array $result */
 		$result = preg_split('/(\?|:[a-zA-Z0-9_-]+)/', $sql, -1, PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE);
 		
 		// every-other item in $result will be the placeholder that was found
@@ -723,13 +724,14 @@ class db_mysqli extends db {
 	/**
 	 * _open - Open a new connection to the MySQL server
 	 * aslo set the encoding to UTF8
-	 * @param mixed $database
-	 * @param mixed $user
-	 * @param mixed $password
-	 * @param mixed $host
+	 * @param string $database
+	 * @param string $user
+	 * @param string $password
+	 * @param string $host
+	 * @param int $Log_Slow_DB_Query_Seconds
 	 * @return bool|mysqli
 	 */
-	protected function _open($database, $user, $password, $host, $Log_Slow_DB_Query_Seconds) {
+	protected function _open(string $database, string $user, string $password, string $host, int $Log_Slow_DB_Query_Seconds) {
 		$this->database = $database;
 		$this->connection = mysqli_connect($host, $user, $password, $database);
 		$this->Log_Slow_DB_Query_Seconds = $Log_Slow_DB_Query_Seconds;
@@ -977,6 +979,8 @@ class db_mysqli extends db {
 	
 	/**
 	 * _log_error - Logs the error to the error_log
+	 * @param mixed $method
+	 * @param mixed $error
 	 * @return void
 	 */
 	protected function _log_error($method, $error) {

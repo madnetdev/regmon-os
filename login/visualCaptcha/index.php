@@ -3,7 +3,7 @@ require __DIR__ . '/Session.php';
 require __DIR__ . '/Captcha.php';
 
 // Initialize Session
-session_cache_limiter( false );
+session_cache_limiter();
 session_start();
 
 /**

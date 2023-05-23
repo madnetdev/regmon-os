@@ -27,7 +27,7 @@ switch ($action) {
 		}		
 		
 		// Check if all fields are filled up
-		if (trim($values['form_id']) == '') {
+		if ($values['form_id'] == '') {
 			echo $LANG->NO_FORM_SELECTED;
 			exit;
 		}
@@ -107,7 +107,7 @@ ORDER BY f2c.sort, f.name", array());
 				}
 				// view --normal load
 				else {
-					$responce->rows[$i] = $responce->rows[$i]['cell'] = array(
+					$responce->rows[$i] = array(
 						'',
 						$row['id'],
 						$row['category_id'],

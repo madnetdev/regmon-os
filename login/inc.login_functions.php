@@ -32,7 +32,7 @@ function verify_Password(string $password, string $password_hashed) {
  * This function creates a hashed version of the password using 
  * the SHA-256 algorithm and the pepper as a key. 
  * Finally, it hashes the result using the PASSWORD_DEFAULT algorithm and returns it.
- * @param string $password
+ * @param string $secret
  * @param string $pepper
  * @return string
  */

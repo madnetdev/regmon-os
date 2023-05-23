@@ -428,7 +428,7 @@ if ($db->numberRows() > 0)  {
 	$data = json_encode($series, JSON_NUMERIC_CHECK);
 
 	//give the { } at the end in case it is empty
-	$js_data = substr($data, 1, -1);
+	$js_data = substr($data.'', 1, -1);
 
 }
 else { //if No Data

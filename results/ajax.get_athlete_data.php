@@ -108,12 +108,12 @@ if (count($forms)) //if have forms
 	$date_from = '';
 	$date_to = '';
 	$series = array();
-	$form_id_2_name = array();
+	$form_id_2_name_arr = array();
 	
 	//comments from calendar
 	$comments = $db->fetch("SELECT * FROM comments WHERE showInGraph = 1 AND user_id=? AND group_id=? ORDER BY created", array($athlete_id, $group_id));
 	if ($db->numberRows() > 0)  {
-		$form_id_2_name['note'] = $LANG->NOTE;
+		$form_id_2_name_arr['note'] = $LANG->NOTE;
 		
 		$cell_id = Formula__Get_ALPHA_id('data', 0, false);
 		$series['note']['_1']['cell_id'] = $cell_id;
@@ -168,7 +168,7 @@ ORDER BY f.name, fd.created", array($athlete_id, $group_id));
 			$form_id = $form_data_columns['form_id'];
 			if (isset($forms[$form_id])) {
 				$form_name = $forms[$form_id][0];
-				$form_id_2_name[$form_id] = $form_name;
+				$form_id_2_name_arr[$form_id] = $form_name;
 				$form_data_names = $forms[$form_id][1]; //array
 				$res_json = json_decode($form_data_columns['res_json'], true);
 				
@@ -273,7 +273,7 @@ ORDER BY f.name, fd.created", array($athlete_id, $group_id));
 		
 
 		$data = json_encode($series, JSON_NUMERIC_CHECK);
-		$js_data .= substr($data,1,-1); //we give the { } at the end in case it is empty
+		$js_data .= substr($data.'', 1, -1); //we give the { } at the end in case it is empty
 
 		echo '<select id="Select__Athlete_Data_'.$athlete_id.'" name="Select__Athlete_Data_'.$athlete_id.'" multiple="multiple"></select>'.
 			' &nbsp; '.
@@ -288,9 +288,9 @@ ORDER BY f.name, fd.created", array($athlete_id, $group_id));
 				$LANG->RESULTS_NO_DATA.
 			'</div>';
 	}
-	if (count($form_id_2_name)) {
-		$form_id_2_name = json_encode($form_id_2_name);
-		$form_id_2_name = substr($form_id_2_name,1,-1); //we give the { } at the end in case it is empty
+	if (count($form_id_2_name_arr)) {
+		$form_id_2_name = json_encode($form_id_2_name_arr);
+		$form_id_2_name = substr($form_id_2_name.'', 1, -1); //we give the { } at the end in case it is empty
 	}
 } //if forms
 //if No forms

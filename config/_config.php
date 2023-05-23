@@ -27,7 +27,7 @@ $DB_CONFIG = array();
 $ENV_File = __DIR__ . '/' . $PATH_2_ROOT . '.env';
 $ENV_File_Sample = __DIR__ . '/' . $PATH_2_ROOT . '.env.sample';
 
-function get_DB_CONFIG__From_ENV_File($ENV_File) {
+function get_DB_CONFIG__From_ENV_File(string $ENV_File): array {
 	$DB_CONFIG_arr = array();
 	//load Enviroment Variables 
 	$lines = file($ENV_File, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
@@ -42,7 +42,7 @@ function get_DB_CONFIG__From_ENV_File($ENV_File) {
 	return $DB_CONFIG_arr;
 }
 
-function is_CONFIG_Option_Missing() {
+function is_CONFIG_Option_Missing():bool {
 	global $CONFIG;
 	if (
 		!isset($CONFIG['DOMAIN']) OR 
@@ -174,7 +174,7 @@ elseif ($db->myError) {
 			}
 		}
 	}
-	elseif ($db->myError) {
+	elseif ($db->myError != '') {
 		//table not exist
 		$SEC_check_config .= '<br>CONFIG_Table_Missing'.'<br>'.$db->myError;
 	}
@@ -242,7 +242,7 @@ if ($CONFIG['DB_Debug']) {
 
 //Load languages
 require_once(__DIR__.'/'.$PATH_2_ROOT.'php/class.language.php');
-$LANG = Language::getInstance($CONFIG['REGmon_Folder'], $CONFIG['Default_Language'], $CONFIG['Use_Multi_Language_Selector']);
+$LANG = Language::getInstance($CONFIG['REGmon_Folder'], $CONFIG['Default_Language'], !!$CONFIG['Use_Multi_Language_Selector']);
 
 
 //Load Date functions -> they based on language

@@ -2,7 +2,7 @@
 
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
-function get_Form_Rows($rows) {
+function get_Form_Rows(array $rows):string {
 	global $LANG, $EDIT, $G_ROW, $items_num;
 
 	$Item_Types_that_Count_as_Items = array(
@@ -88,7 +88,8 @@ function get_Form_Rows($rows) {
 	return $html;
 }
 
-function get_Form_Row_Item($type, $row, $item, $Accordion_Type = '0') {
+
+function get_Form_Row_Item(string $type, int $row, array $item, string $Accordion_Type = '0'):string {
 	global $LANG, $EDIT, $HAVE_DATA, $CHANGE, $VIEW, $FORM_DATA; 
 
 	$type_arr = array(
@@ -777,7 +778,7 @@ function get_Form_Row_Item($type, $row, $item, $Accordion_Type = '0') {
 			else $this_val = $r_no.'__'.$r_val;
 			$t_label = $r_val;
 			if ($t_label == '') $t_label = $empty_label;
-			$t_color = ($has_color ? get_Color($color_a, $color_b, $dd_items_count, $color_val) : 'none');
+			$t_color = ($has_color ? get_Color((int)$color_a, (int)$color_b, $dd_items_count, $color_val) : 'none');
 			
 			$html .= '<div class="s_radio'.($has_color?' radio_color':'').'" style="margin-bottom:5px; width:'.$width_per_item.'%; padding-top:4px; position:relative;">'.// border:1px solid blue; //for a space -> margin-left:1px; 
 						'<div class="boxx" style="position:relative; bottom:-42px; margin:-42px auto 0; height:42px; width:42px; border-radius:30px; background-color:'.$t_color.';"></div>'.
@@ -828,7 +829,7 @@ function get_Form_Row_Item($type, $row, $item, $Accordion_Type = '0') {
 			else $this_val = $r_no.'__'.$r_val;
 			$t_label = $r_val;
 			if ($t_label == '') $t_label = $empty_label;
-			$t_color = ($has_color ? get_Color($color_a, $color_b, $dd_items_count, $color_val) : 'none');
+			$t_color = ($has_color ? get_Color((int)$color_a, (int)$color_b, $dd_items_count, $color_val) : 'none');
 			
 			$html .= '<div class="s_radio" style="width:'.$width_per_item.'%; padding-top:4px; position:relative;">'.
 						'<div class="boxx" style="position:relative; bottom:-42px; margin:-42px auto 0; height:42px; width:42px; border-radius:30px; background-color:'.$t_color.';"></div>'.
@@ -993,7 +994,7 @@ function get_Form_Row_Item($type, $row, $item, $Accordion_Type = '0') {
 	return $html;
 }
 
-function get_Accordion_Panels($rw, $Panels, $accType) {
+function get_Accordion_Panels(int $rw, array $Panels, string $accType):string {
 	$html_Panels = '';
 	$i = 0;
 	foreach ($Panels as $Panel) {
@@ -1008,7 +1009,7 @@ function get_Accordion_Panels($rw, $Panels, $accType) {
 }
 
 
-function get_Available_Dropdowns($dds) {
+function get_Available_Dropdowns(string $dds):string {
 	global $db;
 	$dd = ''; 
 	$rows = $db->fetch("SELECT id, name FROM dropdowns WHERE status=1 AND name IS NOT NULL ORDER BY name", array()); 
@@ -1021,7 +1022,7 @@ function get_Available_Dropdowns($dds) {
 }
 
 
-function get_Dropdown_Options($dd, $val='', $only_vals=false, $only_val=false, $has_color=false, $color_a='120', $color_b='0') {
+function get_Dropdown_Options(int $dd, string $val = '', bool $only_vals = false, bool $only_val = false, bool $has_color = false, string $color_a = '120', string $color_b = '0'):mixed {
 	global $db;
 	$ddn = ''; 
 	$only_vals_arr = array(); 
@@ -1040,10 +1041,12 @@ WHERE d.id=? AND o.status=1 ORDER BY o.options", array($dd));
 				$arr[$tmp[0]] = $tmp[1];
 			}
 			else {
-				$t_color = ($has_color ? get_Color($color_a, $color_b, $rows_count, $color_val_single) : 'none');
+				$t_color = ($has_color ? get_Color((int)$color_a, (int)$color_b, $rows_count, $color_val_single) : 'none');
 				$ddn .=  '<option value="'.$row['options'].'"'.($val==$row['options']?' selected':'').' data-color="'.$t_color.'" style="background-color:'.$t_color.';">'.$row['options'].'</option>';
 				$only_vals_arr[$row['options']] = $row['options'];
-				if ($val==$row['options']) $only_val_txt = $row['options'];
+				if ($val == $row['options']) {
+					$only_val_txt = $row['options'];
+				}
 				$color_val_single++;
 			}
 		}
@@ -1052,10 +1055,18 @@ WHERE d.id=? AND o.status=1 ORDER BY o.options", array($dd));
 			$color_val = 0;
 			$val_count = count($arr);
 			foreach ($arr as $key => $value) {
-				$t_color = ($has_color ? get_Color($color_a, $color_b, $val_count, $color_val) : 'none');
-				$ddn .= '<option value="'.$key.'__'.$value.'"'.((("$val"=="$key") OR ($val==$key.'__'.$value))?' selected':'').' data-color="'.$t_color.'" style="background-color:'.$t_color.';">'.$value.'</option>';
+				$t_color = ($has_color ? get_Color((int)$color_a, (int)$color_b, $val_count, $color_val) : 'none');
+				
+				$ddn .= '<option value="'.$key.'__'.$value.'"'.
+							((("$val"=="$key") OR ($val==$key.'__'.$value))?' selected':'').
+							' data-color="'.$t_color.'" style="background-color:'.$t_color.';"'.
+						'>'.$value.'</option>';
+
 				$only_vals_arr[$key] = $value;
-				if (("$val"=="$key") OR ($val==$key.'__'.$value)) $only_val_txt = $key.'__'.$value;
+
+				if (("$val" == "$key") or ($val == $key . '__' . $value)) {
+					$only_val_txt = $key . '__' . $value;
+				}
 				$color_val++;
 			}
 		}
@@ -1070,7 +1081,7 @@ WHERE d.id=? AND o.status=1 ORDER BY o.options", array($dd));
 }
 
 
-function get_Color($start, $end, $numbers, $value){
+function get_Color(int $start, int $end, int $numbers, int $value):string {
 	$range = $end - $start;
 	$reverse = false;
 	if ($range < 0) {
@@ -1084,11 +1095,14 @@ function get_Color($start, $end, $numbers, $value){
 	} else {
 		$hue = $start + $this_range;
 	}
-	if ($hue == '360') $hue = '0'; //it wants 0 or 359 --else it gives grey
+	if ($hue == 360) {
+		$hue = 0; //it wants 0 or 359 --else it gives grey
+	}
 	//echo $start.'--'.$end.'--'.$range.'--'.$reverse.'--'.$one_range.'--'.$this_range.'--'.$hue."<br>";
    	//return "hsl(".$hue.",100%,50%)";
 	return convertHSL($hue, 100, 50, true);
 }
+
 
 //https://stackoverflow.com/a/31885018/5833265
 /**
@@ -1112,7 +1126,7 @@ function get_Color($start, $end, $numbers, $value){
  * @param bool $toHex whether you want hexadecimal equivalent or rgb equivalent
  * @return string usable in HTML or CSS
  */
-function convertHSL($h, $s, $l, $toHex=true){
+function convertHSL(int $h, int $s, int $l, bool $toHex=true):string {
     $h /= 360;
     $s /=100;
     $l /=100;
@@ -1172,16 +1186,17 @@ function convertHSL($h, $s, $l, $toHex=true){
               break;
         }
     }
-    $r = round($r * 255, 0);
-    $g = round($g * 255, 0);
-    $b = round($b * 255, 0);
+    $r = (int)round($r * 255, 0);
+    $g = (int)round($g * 255, 0);
+    $b = (int)round($b * 255, 0);
 
     if ($toHex) {
         $r = ($r < 15)? '0' . dechex($r) : dechex($r);
         $g = ($g < 15)? '0' . dechex($g) : dechex($g);
         $b = ($b < 15)? '0' . dechex($b) : dechex($b);
         return "#$r$g$b";
-    } else {
+    }
+	else {
         return "rgb($r, $g, $b)";    
     }
 }

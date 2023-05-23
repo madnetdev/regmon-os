@@ -16,16 +16,16 @@ $change_id = isset($_POST['change_id']) ? $_POST['change_id'] : 0;
 $selected_date = get_date_time_SQL('now');
 $selected_date_end = get_date_time_SQL('now');
 if (isset($_POST['form_date']) AND isset($_POST['form_time'])) {
-	$selected_date = date("Y-m-d H:i:s", strtotime($_POST['form_date'].' '.$_POST['form_time'].':00'));	
+	$selected_date = date("Y-m-d H:i:s", (int)strtotime($_POST['form_date'].' '.$_POST['form_time'].':00'));	
 	if (isset($_POST['form_time_end']) AND $_POST['form_time_end'] != '') {
-		$selected_date_end = date("Y-m-d H:i:s", strtotime($_POST['form_date'].' '.$_POST['form_time_end'].':00'));	
+		$selected_date_end = date("Y-m-d H:i:s", (int)strtotime($_POST['form_date'].' '.$_POST['form_time_end'].':00'));	
 	}
 }
 elseif (isset($_POST['form_date'])) {
-	$selected_date = date("Y-m-d H:i:s", strtotime($_POST['form_date'].' '.date("H:i:s")));	
+	$selected_date = date("Y-m-d H:i:s", (int)strtotime($_POST['form_date'].' '.date("H:i:s")));	
 }
 elseif (isset($_POST['form_time'])) {
-	$selected_date = date("Y-m-d H:i:s", strtotime(date("Y-m-d").' '.$_POST['form_time'].':00'));
+	$selected_date = date("Y-m-d H:i:s", (int)strtotime(date("Y-m-d").' '.$_POST['form_time'].':00'));
 }
 
 //unset fields not want

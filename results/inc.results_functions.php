@@ -2,8 +2,9 @@
 
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
-function get_Results_Period_Selection($date_from, $date_to, $submit_button = false) {
+function get_Results_Period_Selection(string $date_from, string $date_to, bool $submit_button = false):string {
 	global $LANG;
+
 	$html = ''.
 	'<div class="form-group" style="margin-bottom:0px;">'.
 		'<span style="float:left; margin-left:45px;">'.$LANG->FROM.'</span>'.
@@ -27,11 +28,13 @@ function get_Results_Period_Selection($date_from, $date_to, $submit_button = fal
 			'</div>'.
 		'</div>'.
 	'</div>';
+
 	return $html;
 }
 
-function get_info_lines_color_formula() {
+function get_info_lines_color_formula():string {
 	global $LANG;
+
 	return ''.
 	"<span class=\"help_colors\" title=\"<img src='img/highcharts_colors.png' class='img_colors'/>\">".
 		'<span class="help_question">?</span> '.$LANG->RESULTS_INFO_STANDAR_COLORS.
@@ -90,7 +93,7 @@ function get_info_lines_color_formula() {
 	'</div>';
 }
 
-function get_Select__Groups__Options($user_id, $group_id, $results_page) {
+function get_Select__Groups__Options(int $user_id, int $group_id, string $results_page):string {
 	global $db, $GROUP_ADMIN, $GROUP_ADMIN_2, $TRAINER, $ATHLETE, $Show_Only_Group_name;
 
 	//Groups Select in Locations ####################
@@ -198,7 +201,7 @@ function get_Select__Groups__Options($user_id, $group_id, $results_page) {
 
 
 //Formula__Get_ALPHA_id
-function Formula__Get_ALPHA_id($data_or_calc, $num, $second_pass) {
+function Formula__Get_ALPHA_id(string $data_or_calc, int $num, bool $second_pass):string {
 	$prefix = '';
 	if (!$second_pass) {
 		$num = ($data_or_calc == 'data' ? $num : $num - 1); //ajust num  only on fisrt pass
@@ -211,7 +214,7 @@ function Formula__Get_ALPHA_id($data_or_calc, $num, $second_pass) {
 }
 
 
-function get_No_Data_Error() {
+function get_No_Data_Error():string {
 	global $LANG;
 	
 	return ''.

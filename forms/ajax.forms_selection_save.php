@@ -15,6 +15,7 @@ if (isset($_POST['group_id']) AND isset($_POST['forms_select']))
 	//std_g_1_c_1_4=on&std_g_1_c_2_5=on  //standard
 	
 	//we replace default strings so it will reamin only the "category_form" ex. 1_4,2_5
+	/** @var string $forms_select */
 	$forms_select = str_replace('=on&sel_g_'.$group_id.'_c_', ',', $_POST['forms_select']);
 	$forms_select = str_replace(array('sel_g_'.$group_id.'_c_', '=on'), '', $forms_select);
 

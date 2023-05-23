@@ -87,9 +87,9 @@ ORDER BY u.id", array($UID, $UID, $group_id, $athlete_id));
 			}
 			$html .= '</select>';
 			
-			$html .= '<script>'+
-						'var axis_saved_data = {'.$t_data.'}; '+
-						'parent.V_AXIS_DATA = axis_saved_data;'+
+			$html .= '<script>'.
+						'var axis_saved_data = {'.$t_data.'}; '.
+						'parent.V_AXIS_DATA = axis_saved_data;'.
 					'</script>';	
 			
 			echo $html;

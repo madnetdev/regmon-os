@@ -87,7 +87,7 @@ switch ($action) {
 			}
 			//echo "<pre>";print_r($categories_array);echo "</pre>";
 
-			function buildCategorySelect($parent, $categories_array, $level=1) {
+			function buildCategorySelect(int $parent, array $categories_array, int $level = 1):string {
 				global $action;
 				$html = '';
 				$space = '';
@@ -149,7 +149,7 @@ ORDER BY parent_id, sort, name", array());
 			}
 			//echo "<pre>";print_r($categories_array);echo "</pre>";
 
-			function buildCategory($parent, $categories_array, $level=1) {
+			function buildCategory(int $parent, array $categories_array, int $level = 1):void {
 				global $categories;
 				if (isset($categories_array['parent_categories'][$parent])) {
 					foreach ($categories_array['parent_categories'][$parent] as $cat_id) {

@@ -14,7 +14,7 @@ $success = $PATH_2_ROOT; //index page
 
 
 // Initialize Session
-session_cache_limiter( false );
+session_cache_limiter();
 session_start();
 
 

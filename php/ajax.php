@@ -47,7 +47,7 @@ switch($ajax) {
 	
 
 ////////////////////////////////////
-function check_update_result($result) {
+function check_update_result(mixed $result):string {
 	global $LANG, $db;
 	
 	if ($result >= 1) {
@@ -68,7 +68,7 @@ function check_update_result($result) {
 }
 
 ////////////////////////////////////
-function check_insert_result($insert_id) {
+function check_insert_result(mixed $insert_id):string {
 	global $LANG, $db;
 	
 	if ($insert_id AND $insert_id == (int)$insert_id) {
@@ -93,7 +93,7 @@ function check_insert_result($insert_id) {
 }
 
 ////////////////////////////////////
-function check_delete_result($result) {
+function check_delete_result(mixed $result):string {
 	global $LANG;
 	
 	if (!$result) {
