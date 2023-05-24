@@ -3,11 +3,12 @@ declare(strict_types=1);
 
 namespace REGmon;
 
+
 //Version
-$G_Version = "3.8.24";
+require_once(__DIR__.'/version.php');
 $G_VER = "?ver=" . $G_Version;
 
-
+//Configuration
 require_once(__DIR__.'/config/_config.php');
 
 
