@@ -116,7 +116,17 @@
     ```
 
 
-3. When the containers are up and running :
+3. Create Database and User for the Database :
+
+    to continue the instalation you will need :
+    ```
+    DB_NAME
+    DB_USER
+    DB_PASS
+    ``` 
+
+
+4. When the containers are up and running :
 
     - Go to http://localhost:8000/ for the application
 
