@@ -156,7 +156,7 @@ const Production_Mode = <?=($CONFIG['Production_Mode']?'true':'false');?>;
 var V_ONLINE = true;
 
 <?php echo 'var'
-.' V_VER='.$G_Version
+.' V_VER="'.$G_Version.'"'
 .',V_Group_2_Location='.$Group_2_Location_json
 .',V_GROUPS_ADMINS_OPTIONS="'.$groups_admins_options_grid.'"'
 .',V_IS_ADMIN='.(int)($ADMIN OR $LOCATION_ADMIN OR $GROUP_ADMIN OR $GROUP_ADMIN_2)
