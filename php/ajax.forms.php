@@ -133,7 +133,7 @@ switch ($action) {
 				$options .= '' .
 					'<option value="' . $row['id'] . '">' .
 						//extern (intern)
-						html_chars($row['name'] ?? '') . ' (' . html_chars($row['name2'] ?? '') . ')' .
+						html_chars($row['name']) . ' (' . html_chars($row['name2']) . ')' .
 					'</option>';
 			}
 		}

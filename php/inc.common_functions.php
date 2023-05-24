@@ -10,7 +10,7 @@ function get_locations_select(bool $options_grid=false):string {
 	$rows = $db->fetch("SELECT id, name FROM locations WHERE status = 1 ORDER BY name", array()); 
 	if ($db->numberRows() > 0)  {
 		foreach ($rows as $row) {
-			$name = html_chars($row['name'] ?? '');
+			$name = html_chars($row['name']);
 			$locations_select .= '<option value="' . $row['id'] . '">' . $name . '</option>';
 			$locations_options_grid .= ';' . $row['id'] . ':' . $name;
 		}
@@ -34,7 +34,7 @@ function get_locations_admins_select(bool $options_grid = false):string {
 	$rows = $db->fetch("SELECT id, uname FROM users WHERE status = 1 AND level = 50 ORDER BY id", array());
 	if ($db->numberRows() > 0) {
 		foreach ($rows as $row) {
-			$uname = html_chars($row['uname'] ?? '');
+			$uname = html_chars($row['uname']);
 			$locations_admins_select .= '<option value="' . $row['id'] . '">' . $uname . '</option>';
 			$locations_admins_options_grid .= ';' . $row['id'] . ':' . $uname;
 		}
@@ -59,7 +59,7 @@ function get_groups_select(bool $options_grid = false):string {
 	$rows = $db->fetch("SELECT id, name FROM `groups` WHERE status > 0 ORDER BY name", array()); 
 	if ($db->numberRows() > 0)  {
 		foreach ($rows as $row) {
-			$name = html_chars($row['name'] ?? '');
+			$name = html_chars($row['name']);
 			$groups_select .= '<option value="' . $row['id'] . '">' . $name . '</option>';
 			$groups_options_grid .= ';' . $row['id'] . ':' . $name;
 		}
@@ -83,7 +83,7 @@ function get_groups_admins_select(bool $options_grid = false, string $where = ''
 	$rows = $db->fetch("SELECT id, uname FROM users WHERE status = 1 AND (level = 40 OR level = 45) $where ORDER BY id", array()); 
 	if ($db->numberRows() > 0)  {
 		foreach ($rows as $row) {
-			$uname = html_chars($row['uname'] ?? '');
+			$uname = html_chars($row['uname']);
 			$groups_admins_select .= '<option value="' . $row['id'] . '">' . $uname . '</option>';
 			$groups_admins_options_grid .= ';' . $row['id'] . ':' . $uname;
 		}
@@ -107,9 +107,9 @@ function get_Sports_Groups(bool $grid_options = false, bool $get_array = false):
 	if ($db->numberRows() > 0) {
 		foreach ($rows as $row) {
 			$sport_groups_array[$row['id']] = $row['name'];
-			$name = html_chars($row['name'] ?? '');
+			$name = html_chars($row['name']);
 			$sports_groups_select .= '<option value="' . $row['id'] . '">' . $name . '</option>';
-			$sport_groups_grid_options .= ';' . $row['id'] . ':' . html_chars($row['name'] ?? '');
+			$sport_groups_grid_options .= ';' . $row['id'] . ':' . html_chars($row['name']);
 		}
 	}
 	$sports_groups_select .= '</select>';
@@ -131,7 +131,7 @@ function get_Sports_Select_Options(bool $grid_options = false):string {
 	$rows = $db->fetch("SELECT options FROM sports WHERE status = 1 AND parent_id != 0 ORDER BY options", array()); 
 	if ($db->numberRows() > 0)  {
 		foreach ($rows as $row) {
-			$options = html_chars($row['options'] ?? '');
+			$options = html_chars($row['options']);
 			$sports_select .= '<option value="' . $options . '">' . $options . '</option>';
 			$sports_grid_options .= ';' . $options . ':' . $options;
 		}
@@ -176,7 +176,7 @@ function get_Sports_Select_Options_By_Group(string $sport_selected = ''):string 
 			}
 			
 			//option
-			$options = html_chars($row['options'] ?? '');
+			$options = html_chars($row['options']);
 			if ($Sports_group == '') { //no group -put at the end
 				$Sports_select_options .= '<option value="' . $options . '"' . $t_selected . '>' . $options . '</option>';
 			} else {

@@ -26,7 +26,7 @@ function get_Available_Forms(int $user_id):string {
 			if (!isset($forms_arr[$form['id']])) { //include each form once
 				$Forms_select_options .= '' .
 					'<option value="' . $form['id'] . '">' .
-						$form['id'] . '. ' . html_chars($form['name'] ?? '') .
+						$form['id'] . '. ' . html_chars($form['name']) .
 						($ATHLETE ? ' (' . $Forms_with_Forms_Data_arr[$form['id']] . ')' : '') .
 					'</option>';
 				$forms_arr[$form['id']] = 1;
@@ -112,7 +112,7 @@ ORDER BY gr.location_id, gr.name", array());
 			
 			$location_name = $row['location_name'];
 			$group_id = $row['id'];
-			$group_name = html_chars($row['name']??'');
+			$group_name = html_chars($row['name']);
 			$group_status = ($row['status']==3 ? $LANG->ST_PRIVATE : $LANG->ST_PUBLIC).', '.
 							(($row['status']==1 OR $row['status']==3) ? $LANG->ST_ACTIVE : $LANG->ST_INACTIVE);
 			

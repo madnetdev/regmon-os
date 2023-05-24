@@ -29,7 +29,7 @@ if ($db->numberRows() > 0)  {
 		$location_id = $row['location_id'];
 		$location_name = $row['location_name'];
 		$group_id = $row['id'];
-		$group_name = html_chars($row['name']??'');
+		$group_name = html_chars($row['name']);
 		$group_email = $row['email'];
 		
 

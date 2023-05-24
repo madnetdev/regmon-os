@@ -6,6 +6,7 @@ require('login/validate.php');
 require_once('php/inc.common_functions.php');
 require_once('export/inc.export_functions.php');
 
+ /** @var int $UID */
 
 $Groups_select_options_n_ids = get_Groups_select_options_n_ids($UID);
 $Groups_select_options = $Groups_select_options_n_ids[0];

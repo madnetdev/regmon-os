@@ -74,7 +74,7 @@ switch ($action) {
 		$rows = $db->fetch("SELECT name FROM tags WHERE status = 1 ORDER BY name", array()); 
 		if ($db->numberRows() > 0)  {
 			foreach ($rows as $row) {
-				$name = html_chars($row['name'] ?? '');
+				$name = html_chars($row['name']);
 				$options .= '<option value="' . $name . '">' . $name . '</option>';
 			}
 		}
