@@ -228,11 +228,13 @@ function get_DB_Migrations_Files(string $DB_Migrations_Directory):array {
 					continue;
 				}
 				if (filetype($DB_Migrations_Directory . $file) == 'file') {
-					$timestamp = filemtime($DB_Migrations_Directory . $file);
-					$files[$timestamp] = $file;
+					//$timestamp = filemtime($DB_Migrations_Directory . $file);
+					//not work all files has the same timestamp if you clone the project
+					//$files[$timestamp] = $file;
+					$files[] = $file;
 				}
 			}
-			krsort($files); //key reverse sort --latest first
+			//krsort($files); //key reverse sort --latest first
 			//echo '<pre>'; print_r($files);
 			closedir($handle);
 		}
@@ -245,8 +247,8 @@ function get_DB_Migrations_Files(string $DB_Migrations_Directory):array {
 			if (preg_match("/\." . $allowed_file_types . "$/i", $file)) {
 				$size = round(filesize($DB_Migrations_Directory . $file) / 1024, 2);
 				//$get_file = file_get_contents($dir . $file);
-				$file_timestamp = (int)filemtime($DB_Migrations_Directory . $file);
-				$file_date = date("Y-m-d H:i:s", $file_timestamp);
+				$file_timestamp = filemtime($DB_Migrations_Directory . $file);
+				$file_date = date("Y-m-d H:i:s", (int)$file_timestamp);
 
 				//only _init files
 				if (substr_count($file, '_init')) {
