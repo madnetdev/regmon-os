@@ -16,7 +16,7 @@ $PATH_2_ROOT = '../';
 
 //some basic data ################
 //4. the first Location [optional]
-//5. the fisrt Group [optional]
+//5. the first Group [optional]
 //6. the extra Admin Users (LocationAdmin, GroupAdmin, GroupAdmin2) [optional]
 //7. Sample Dropdowns [optional]
 //8. Sports Data [optional]
@@ -29,7 +29,7 @@ $ENV_File_Sample = __DIR__ . '/' . $PATH_2_ROOT . '.env.sample';
 
 function get_DB_CONFIG__From_ENV_File(string $ENV_File): array {
 	$DB_CONFIG_arr = array();
-	//load Enviroment Variables 
+	//load Environment Variables 
 	$lines = file($ENV_File, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 	foreach ($lines as $line) {
 		if (strpos(trim($line), '#') === 0) continue;
@@ -147,8 +147,8 @@ elseif ($db->myError) {
 			//TODO: check for missing database tables or fields
 			//TODO: not needed now. Maybe in the future for updates
 			//1. build app schema
-			//2. check app schema with current db and find differencies
-			//3. apply differencies to current db
+			//2. check app schema with current db and find differences
+			//3. apply differences to current db
 		}
 	}
 

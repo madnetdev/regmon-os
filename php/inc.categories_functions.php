@@ -75,7 +75,7 @@ function get_All_Categories():array {
 					[form_id] => 1
 					[category_id] => 17
 					[name] => Testformular
-					[data_names] => {"1":["Textfeld1","_Text"],"2":["number1","_Number"],"3":["number2","_Number"],"4":["Textareafeld1","_Textarea"],"5":["datum1","_Date"],"6":["uhrzeit1","_Time"],"7":["daueer1","_Period"],"8":["dropdown1","_Dropdown"],"9":["fragebogenformat1","_RadioButtons"]}
+					[data_names] => {"1":["Textfeld1","_Text"],"2":["number1","_Number"],"3":["number2","_Number"],"4":["Textareafeld1","_Textarea"],"5":["datum1","_Date"],"6":["uhrzeit1","_Time"],"7":["dauer1","_Period"],"8":["dropdown1","_Dropdown"],"9":["fragebogenformat1","_RadioButtons"]}
 				)
 			)
 		)

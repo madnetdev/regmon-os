@@ -71,10 +71,10 @@ switch ($action) {
 	case 'view': // SELECT one category forms
 	default: //view 
 		if ($action == 'categories_forms_all') {
-			$responce = array();
+			$response = array();
 			$where = "";
 		} else {
-			$responce = new stdClass();
+			$response = new stdClass();
 			$where = " WHERE f2c.category_id = ".$ID;
 		}
 		$rows = $db->fetch("SELECT f2c.id, f2c.form_id, f2c.category_id, f2c.sort, f2c.status, f2c.stop_date, f2c.created, f2c.created_by, f2c.modified, f2c.modified_by, f.name, f.name2, f.status as form_status 
@@ -89,7 +89,7 @@ ORDER BY f2c.sort, f.name", array());
 				$status = ($row['form_status']==1 ? $row['status'] : 0);
 				// categories_forms_all --json for local
 				if ($action == 'categories_forms_all') {
-					$responce[$row['category_id']][] = array(
+					$response[$row['category_id']][] = array(
 						'acc'			=> '',
 						'id'			=> $row['id'],
 						'category_id'	=> $row['category_id'],
@@ -107,7 +107,7 @@ ORDER BY f2c.sort, f.name", array());
 				}
 				// view --normal load
 				else {
-					$responce->rows[$i] = array(
+					$response->rows[$i] = array(
 						'',
 						$row['id'],
 						$row['category_id'],
@@ -127,19 +127,19 @@ ORDER BY f2c.sort, f.name", array());
 			}
 		}
 		
-		$responce = json_encode($responce);
+		$response = json_encode($response);
 		
 		if ($action == 'categories_forms_all') {
-			if ($responce == '[]') //if empty
+			if ($response == '[]') //if empty
 				echo '{}';
 			else 
-				echo $responce;
+				echo $response;
 		}
 		else { //view
-			if ($responce == '""') //if empty
+			if ($response == '""') //if empty
 				echo '{"rows":[]}';
 			else 
-				echo $responce;
+				echo $response;
 		}
 			
 	  break;

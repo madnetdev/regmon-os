@@ -3,9 +3,9 @@
 .ajaxMessage {z-index:10011; position:fixed; padding:0px; margin:0px; width:30%; top:40%; left:35%; text-align:center; color:rgb(255, 255, 0); border:0px; cursor:wait; text-shadow:red 1px 1px; font-size:18px; background-color:transparent;}
 .div_full { width:100%; height:100%; }
 .div_height {
-  height: 300px;
-  /*margin-left: -40px;
-  margin-right: -20px;*/
+	height: 300px;
+	/*margin-left: -40px;
+	margin-right: -20px;*/
 }
 .tooltip-inner {
     max-width: 450px;
@@ -14,18 +14,18 @@
     text-align: left;
 }
 .help_question {
-  cursor: pointer;
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  background-color: #89A4CC;
-  line-height: 16px;
-  color: White;
-  font-size: 13px;
-  font-weight: bold;
-  border-radius: 8px;
-  text-align: center;
-  position: relative;
+	cursor: pointer;
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background-color: #89A4CC;
+	line-height: 16px;
+	color: White;
+	font-size: 13px;
+	font-weight: bold;
+	border-radius: 8px;
+	text-align: center;
+	position: relative;
 }
 .help_colors, .help_lines, .help_formula {
 	cursor:pointer;
@@ -369,7 +369,7 @@ input.save_name { max-width:245px; display:inline-block; vertical-align:middle; 
 	stroke: #dddddd;
 }*/
 /*.highcharts-series-group .highcharts-point {
-  opacity: 0.5;
+	opacity: 0.5;
 }*/
 
 .multiselect-container>li.multiselect-all { margin-left: -10px; }

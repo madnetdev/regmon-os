@@ -141,7 +141,7 @@ if ($db->numberRows() > 0)  {
 	$html .= '</table></li></ul>';
 }
 else {
-	$html = '<div class="empty_message">'.$LANG->TRAINER_NOT_AVALABLE_REQUESTS.'</div>';
+	$html = '<div class="empty_message">'.$LANG->TRAINER_NOT_AVAILABLE_REQUESTS.'</div>';
 }
 $html .= '<div id="trainer_status_message" style="margin:2px 0; text-align:center;"></div>';
 

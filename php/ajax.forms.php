@@ -147,7 +147,7 @@ switch ($action) {
 	case 'view': // SELECT 
 	default:
 		if ($where != '') $where = ' WHERE 1 ' .$where;
-		$responce = new stdClass();
+		$response = new stdClass();
 		$rows = $db->fetch("SELECT id, name, name2, status, tags, created, created_by, modified, modified_by, 
 (SELECT GROUP_CONCAT(CAST(category_id AS CHAR)) FROM forms2categories WHERE form_id = f.id GROUP BY form_id) AS categories_ids 
 FROM forms f $where ORDER BY name", array()); //$sidx $sord
@@ -159,7 +159,7 @@ FROM forms f $where ORDER BY name", array()); //$sidx $sord
 			//			.'<span class="fa fa-external-link" style="margin-left:10px; color:#2e6e9e;"></span>';
 			
 			foreach ($rows as $row) {
-				$responce->rows[$i] = $responce->rows[$i]['cell'] = array(
+				$response->rows[$i] = $response->rows[$i]['cell'] = array(
 					'',
 					$row['id'],
 					$row['name'],
@@ -177,12 +177,12 @@ FROM forms f $where ORDER BY name", array()); //$sidx $sord
 			}
 		}
 		
-		$responce = json_encode($responce);
+		$response = json_encode($response);
 		
-		if ($responce == '""') //if empty
+		if ($response == '""') //if empty
 			echo '{"rows":[]}';
 		else 
-			echo $responce;
+			echo $response;
 			
 	  break;
 }

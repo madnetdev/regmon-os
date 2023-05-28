@@ -6,14 +6,14 @@ var Log = window.console.log.bind(window.console);
 
 //Debug1 this way logs the caller file and line number
 Object.defineProperty(this, "Debug1", {get: function (a,b) {
-  return V_DEBUG >= 1 ? console.log.bind(window.console, 'D1', '-') 
-               		  : function(){};}
+	return V_DEBUG >= 1 ? console.log.bind(window.console, 'D1', '-') 
+						: function(){};}
 });
 
 //Debug2 this way logs the caller file and line number
 Object.defineProperty(this, "Debug2", {get: function () {
-  return V_DEBUG >= 2 ? console.log.bind(window.console, 'D2', '-') 
-               		  : function(){};}
+	return V_DEBUG >= 2 ? console.log.bind(window.console, 'D2', '-') 
+						: function(){};}
 });
 
 
@@ -42,7 +42,7 @@ function replaceAll_Object(str, obj) {
 function replaceAll_Object_Exact(str, obj) {
 	Object.keys(obj).forEach(function(key,index) {
 		//console.log(str, key, obj[key]);
-		if (str == key) { //replace only if match exacly
+		if (str == key) { //replace only if match exactly
 			str = replaceAll(str, key, obj[key]);
 		}
 	});

@@ -50,32 +50,32 @@ function init_Permissions() {
 	checkPrivate('#Private');
 }
 
-function checkViewFrom(tview, tchange) {
-	if($(tview).is(':checked')) {
-		$(tview).parent().addClass('checked');
-		$(tchange).prop('disabled', false);
-		$(tchange).parent().removeClass('disabled');
+function checkViewFrom(t_view, t_change) {
+	if($(t_view).is(':checked')) {
+		$(t_view).parent().addClass('checked');
+		$(t_change).prop('disabled', false);
+		$(t_change).parent().removeClass('disabled');
 	} else {
-		$(tview).parent().removeClass('checked');
-		$(tchange).prop('disabled', true);
-		$(tchange).parent().addClass('disabled');
+		$(t_view).parent().removeClass('checked');
+		$(t_change).prop('disabled', true);
+		$(t_change).parent().addClass('disabled');
 		
-		$(tchange).prop('checked', false);
-		$(tchange).parent().removeClass('checked');
+		$(t_change).prop('checked', false);
+		$(t_change).parent().removeClass('checked');
 	}
 }
 
-function checkEditFrom(tchange) {
-	if($(tchange).is(':checked')) {
-		$(tchange).parent().addClass('checked');
+function checkEditFrom(t_change) {
+	if($(t_change).is(':checked')) {
+		$(t_change).parent().addClass('checked');
 	} else {
-		$(tchange).parent().removeClass('checked');
+		$(t_change).parent().removeClass('checked');
 	}
 }
 
-function checkPrivate(tview) {
-	if($(tview).is(':checked')) {
-		$(tview).parent().addClass('checked');
+function checkPrivate(t_view) {
+	if($(t_view).is(':checked')) {
+		$(t_view).parent().addClass('checked');
 		$(Perms_elems).each(function(i,el){
 			//uncheck
 			if ($(el+'Edit').is(':checked')) $(el+'Edit').trigger("click");
@@ -87,7 +87,7 @@ function checkPrivate(tview) {
 			$(el+'Edit').parent().addClass('private');
 		});
 	} else {
-		$(tview).parent().removeClass('checked');
+		$(t_view).parent().removeClass('checked');
 		$(Perms_elems).each(function(i,el){
 			$(el+'View').prop('disabled', false).trigger('change');
 			//$(el+'Edit').prop('disabled', true); //no need

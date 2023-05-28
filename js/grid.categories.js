@@ -255,12 +255,12 @@ $categories.jqGrid({
 			}
 		});
 		
-		//subgrid remove rounded conters and set background color
+		//subgrid remove rounded corners and set background color
 		$('#gbox_'+subgrid_table_id).removeClass('ui-corner-all');
 		$('#'+sub_pager).removeClass('ui-corner-bottom');
 		const parent_color = $categories.jqGrid('getRowData', row_id)['color'];
 		$("#"+subgrid_id).parent().css('padding', '2px').css("background", parent_color).prev().css("background", parent_color);
-		//set subgid width
+		//set subgrid width
 		$('#'+subgrid_table_id).jqGrid('setGridWidth', $categories.width()-30);
 		
 	} //subGridRowExpanded Forms end
@@ -301,7 +301,7 @@ else { //admin page
 			.children("div.ui-jqgrid-titlebar").css({"text-align":"center", "cursor":"pointer"})
 			.children("span.ui-jqgrid-title").css({"float":"none", "font-size": "17px"});
 
-	//Expand/Colapse grid from Caption click
+	//Expand/Collapse grid from Caption click
 	$($categories[0].grid.cDiv).on('click',function() {
 		if ($(pager).is(':hidden')) 
 			$(this).removeClass('ui-corner-all');

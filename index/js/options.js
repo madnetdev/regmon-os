@@ -3,7 +3,7 @@
 jQuery(function() 
 {
 	//#################################################
-	//ACCORDEON #######################################
+	//ACCORDION #######################################
 
 	$('#C_Requests_From_Trainers_link').on('click',function() {
 		if ($('#A_Requests_From_Trainers').text().trim()=='') {

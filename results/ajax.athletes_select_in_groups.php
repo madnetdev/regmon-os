@@ -51,7 +51,7 @@ LEFT JOIN `groups` g ON g.id = u2g.group_id
 WHERE u2g.group_id IN ($group_ids) AND u2g.status = 1 AND u.status = 1 $where_athletes 
 ORDER BY g.location_id, g.name, u.level DESC, u.firstname, u.lastname, u.id", array());
 if ($db->numberRows() > 0) {
-	//html support only one level optgroups
+	//html support only one level optgroup
 	$open_group = false;
 	$group = '';
 	$group_tmp = '';

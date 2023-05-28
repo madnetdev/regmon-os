@@ -174,7 +174,7 @@ function HTML_Template__Calculation_Button(form_group_id, save_id) {
 } //end HTML_Template__Calculation_Button
 
 
-//Forms Tempates Input + Buttons (Save, 2 Dash, Delete)
+//Forms Templates Input + Buttons (Save, 2 Dash, Delete)
 function HTML_Template__Forms_Templates__Actions(form_group_id, save_id) {
 	Debug1('     3.Html.Buttons.', '-', get_Function_Name(), '-', [...arguments]);
 
@@ -410,7 +410,7 @@ function HTML_Template__Athlete_Form_Field__Diagram_Options(data_or_calc, ath_id
 
 //new calculation item value config html
 function HTML_Template__Athlete_Form_Field__Formula_Options(ath_id, form_id, form_field_num, formula_cells, formula_period, formula_after, formula_X_axis_show, formula_Full_Period) {
-	Debug1('    3.Html.Options.Formura.', '-', get_Function_Name(), '-', [...arguments]);
+	Debug1('    3.Html.Options.Formula.', '-', get_Function_Name(), '-', [...arguments]);
 
 	//##### form_id here can be base_form_id or save_form_id (3 or 3_S15)
 
@@ -966,11 +966,11 @@ function HTML_Template__Interval_Form_Field__Diagram_Options(interval_id, field_
 				//INT
 				(is_interval_form && !is_single_column
 					? '<input type="hidden" name="interval_form[]" value="0"/>'+
-					  '<input type="hidden" name="formula_intividual[]" value="0"/>' 
+					  '<input type="hidden" name="formula_individual[]" value="0"/>' 
 					: ''
 				)+
 				//RAW
-				(!is_interval_form ? '<input type="hidden" name="formula_intividual[]" value="0"/>' : '')+
+				(!is_interval_form ? '<input type="hidden" name="formula_individual[]" value="0"/>' : '')+
 				//INT + INTSC
 				(is_interval_form ?
 					'<input type="hidden" name="formula_sub_period_INT[]" value="0"/>'+
@@ -1069,8 +1069,8 @@ function HTML_Template__Interval_Form_Field__Formula_Options(interval_id, field_
 			((is_interval_form && is_single_column) ? 
 				'<label style="font-weight:600; padding-left:35px;">'+
 					'<i>'+LANG.RESULTS.FORMULA_INDIVIDUAL+'?:&nbsp;&nbsp;</i>'+
-					'<input type="checkbox" class="formula_intividual_ck" style="vertical-align:text-top;" onchange="this.nextSibling.value=this.checked==true?1:0;">'+
-					'<input type="hidden" id="formula_intividual_'+calc_id+'" name="formula_intividual[]" value="0">'+
+					'<input type="checkbox" class="formula_individual_ck" style="vertical-align:text-top;" onchange="this.nextSibling.value=this.checked==true?1:0;">'+
+					'<input type="hidden" id="formula_individual_'+calc_id+'" name="formula_individual[]" value="0">'+
 					' &nbsp; <i style="color:gray;">{BAA}</i>'+
 				'</label>'
 			: '')+

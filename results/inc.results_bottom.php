@@ -34,9 +34,9 @@ $axis_html = '';
 $axis_html_2 = ''; //with axis_'id'
 $html_axis_table_first = '';
 $html_axis_table_rest = '';
-$axiss = $db->fetch("SELECT * FROM templates_axis ORDER BY name", array()); 
+$axis_rows = $db->fetch("SELECT * FROM templates_axis ORDER BY name", array()); 
 if ($db->numberRows() > 0) {
-	foreach ($axiss as $axis) {
+	foreach ($axis_rows as $axis) {
 		//dropdown ###############################
 		$selected = '';
 		//if ($form_id == $axis['id']) $selected = ' selected'; //select self
@@ -105,7 +105,6 @@ $axis_data .= '}';
 						<?=$axis_html;?>
 					</select>
 				</span>
-				<?php /*<span style="white-space:nowrap;"><span> eixa to button edo mesa*/?>
 				<button id="Axis__Load" type="button" class="btn btn-info" style="padding:4px 10px; margin-bottom:4px;"><i style="font-size:17px; vertical-align:text-bottom;" class="fa fa-repeat"></i>&nbsp;&nbsp;<b><?=$LANG->LOAD;?></b></button>
 				<button id="New_YAxis" type="button" class="btn btn-primary fancybox fancybox.iframe" href="results/page.results_axis.php" style="padding:4px 10px; float:right; margin-bottom:4px;"><i style="font-size:15px; vertical-align:middle;" class="fa fa-plus"></i>&nbsp;&nbsp;<b><?=$LANG->RESULTS_Y_AXIS_CREATE;?></b></button>
 			</div>

@@ -269,20 +269,20 @@ jQuery(function()
 					if (view.name=='month' || event.allDay) {
 						//return 'auto';
 						const popoverHeight = 220; //190;
-						const conteiner = $(window).height();
+						const container = $(window).height();
 						const scrollTop = $(window).scrollTop();
 						const offset = $(source).offset();				
-						if ((conteiner + scrollTop - offset.top - popoverHeight) > 0) {
+						if ((container + scrollTop - offset.top - popoverHeight) > 0) {
 							return 'bottom';
 						}
 						return 'top';
 					}
 					else {
 						const popoverHeight = 290; //190;
-						const conteiner = $('.fc-time-grid').height();
+						const container = $('.fc-time-grid').height();
 						//const scrollTop = $('.fc-scroller').scrollTop();
 						const offset = $(source).offset();				
-						if (conteiner - (offset.top+popoverHeight) > 150) {
+						if (container - (offset.top+popoverHeight) > 150) {
 							return 'bottom';
 						}
 						return 'top';
@@ -440,13 +440,13 @@ jQuery(function()
 				}
 			}
 			else {
-				const ptext = ''+
+				const p_text = ''+
 					'<div style="font-size:17px; padding:25px 10px; text-align:center; font-weight:bold;">' +
 						LANG.WRITE_ACCESS_PROBLEM +
 						'<div class="not_display" style="width:520px;"></div>'+
 					'</div>';
 				
-				$.fancybox($.extend({},fancyBoxDefaults,{minWidth: 300, content:ptext, beforeShow:function(){} }));
+				$.fancybox($.extend({},fancyBoxDefaults,{minWidth: 300, content:p_text, beforeShow:function(){} }));
 			}
 		},
 		eventMouseover: function(calEvent, jsEvent, view) {
@@ -475,7 +475,7 @@ jQuery(function()
 		//Go to date button
 		'<div class="input-group" id="datetimepicker_hiddenDate" style="float:left; margin-left:-3px;">'+
 			'<input type="hidden" id="hiddenDate"/>'+
-			'<button id="gotodate" type="button" title="'+LANG.BUTTON_DATUM_TOOLTIP+'" data-toggle="tooltip" data-placement="top" data-container="body" class="input-group-addon fc-button fc-state-default fc-corner-left fc-corner-right" style="height:25px; width:auto; padding:0 5px; border-left:1px solid rgba(0, 0, 0, 0.1);"><i class="fa fa-calendar"></i> '+LANG.BUTTON_DATUM+'</button>'+
+			'<button id="go_to_date" type="button" title="'+LANG.BUTTON_DATUM_TOOLTIP+'" data-toggle="tooltip" data-placement="top" data-container="body" class="input-group-addon fc-button fc-state-default fc-corner-left fc-corner-right" style="height:25px; width:auto; padding:0 5px; border-left:1px solid rgba(0, 0, 0, 0.1);"><i class="fa fa-calendar"></i> '+LANG.BUTTON_DATUM+'</button>'+
 		'</div>' +
 		//border-left: 1px solid rgba(0, 0, 0, 0.1); bcz the .input-group-addon which needed it, zero it
 		//addComment button
@@ -503,7 +503,7 @@ jQuery(function()
 		}
 	});
 	
-	$('#gotodate').hover(function() {
+	$('#go_to_date').hover(function() {
 		$(this).addClass('fc-state-hover');
 	}, function() {
 		$(this).removeClass('fc-state-hover');
@@ -619,7 +619,7 @@ function Select__Athletes__Init() {
 		$.cookie('ATHLETE', V_ATHLETE, { path: '/' + V_REGmon_Folder });
 		
 		//we not want anymore to change the options based on the selected user
-		//options is always from the current logged in user - verion > 1.911
+		//options is always from the current logged in user - version > 1.911
 		
 		load_Box_Forms_Menu();
 

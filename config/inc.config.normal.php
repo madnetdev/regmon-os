@@ -124,7 +124,7 @@
 				<fieldset id="fs-LogLimiter" class="coolfieldset fieldset3">
 					<legend>&nbsp; Login Limiter &nbsp;</legend>
 					<div class="text-muted" style="margin:-5px 0 5px; font-size:85%;">
-						limit bruteforces attacks
+						limit brute force attacks
 					</div>
 					<div style="text-align:left;">
 						<?=get_HTML_Input( //key, value, type, label, sub_label, placeholder
@@ -162,7 +162,7 @@
 							'ON', 
 							'OFF', 
 							'Use VisualCaptcha', 
-							'Limit bruteforces attacks. <br><i>Apache Rewrite Module should be Enabled</i>.'
+							'Limit brute force attacks. <br><i>Apache Rewrite Module should be Enabled</i>.'
 						);?>
 					</div>
 				</fieldset>
@@ -281,7 +281,7 @@
 							'ON', 
 							'OFF', 
 							'Use Multi Language Selector', 
-							'Enable/Disable the language selection Dropdown. &nbsp; <i class="fa fa-info-circle" style="font-size:18px; vertical-align:middle;" title="The inteface can be translated in multiple languages, '."\n".'but not the content (locations, groups, categories, forms, dropdowns, sports, tags).'."\n".'This will need a lot of work from users that need to deliver the same content for every avalable language."></i>'
+							'Enable/Disable the language selection Dropdown. &nbsp; <i class="fa fa-info-circle" style="font-size:18px; vertical-align:middle;" title="The interface can be translated in multiple languages, '."\n".'but not the content (locations, groups, categories, forms, dropdowns, sports, tags).'."\n".'This will need a lot of work from users that need to deliver the same content for every available language."></i>'
 						);?>
 
 						<?=get_HTML_Select( //key, value, options_arr, label, sub_label, placeholder
@@ -326,7 +326,7 @@ $('#Config_Test_Email').on("click", function (e) {
 	const valid_Email_Regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 	const Your_Test_Email = $('#Your_Test_Email').val();
 	
-  	if (Your_Test_Email != '' && valid_Email_Regex.test(Your_Test_Email)) {
+	if (Your_Test_Email != '' && valid_Email_Regex.test(Your_Test_Email)) {
 		$("#loading").show();
 		const post_data = get_Email_Config();
 		$.ajax({

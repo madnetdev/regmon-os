@@ -43,13 +43,13 @@ switch ($action) {
 		$values['admins_id'] = ltrim(rtrim($values['admins_id'],','),',');
 		$group_admins_ids_arr = explode(',', $values['admins_id']);
 		
-		$standord_admin = $db->fetchRow("SELECT admin_id FROM locations WHERE id=?", array($location_id));
-		$standord_admin = $standord_admin['admin_id']??'';
+		$location_admin = $db->fetchRow("SELECT admin_id FROM locations WHERE id=?", array($location_id));
+		$location_admin = $location_admin['admin_id']??'';
 		
 		//check if admin user
 		if (!$ADMIN) {
 			//check if is this Location Admin
-			if ($standord_admin != $UID) {
+			if ($location_admin != $UID) {
 				echo $LANG->NEED_ADMIN_RIGHTS;
 				exit; //no admin user
 			}
@@ -99,7 +99,7 @@ switch ($action) {
 				}
 
 				//Location Admin
-				$values['user_id'] = $standord_admin;
+				$values['user_id'] = $location_admin;
 				$save = $db->insert($values, "users2groups");
 
 				//Group Admins
@@ -178,7 +178,7 @@ switch ($action) {
 	case 'view': // SELECT /////////////////////////////////////////////////////////////////
 	default: //view
 		
-		$responce = new stdClass();
+		$response = new stdClass();
 
 		$where = '';
 		if ($ID != 0) {
@@ -194,17 +194,17 @@ switch ($action) {
 		$i=0;
 		if ($db->numberRows() > 0)  {
 			foreach ($rows as $row) {
-				//dont want groupadmins to see the private groups except if is admins of the group
+				//don't want groupadmins to see the private groups except if is admins of the group
 				if (($GROUP_ADMIN OR $GROUP_ADMIN_2) AND $row['status'] == 3) {
 					if (!in_array($UID, explode(',', $row['admins_id']??''))) {
 						continue;
 					}
 				}
-				//dont want groupadmins to see inactive groups
+				//don't want groupadmins to see inactive groups
 				if (($GROUP_ADMIN OR $GROUP_ADMIN_2) AND $row['status'] == 0) {
 					continue;
 				}
-				$responce->rows[$i] = $responce->rows[$i]['cell'] = array(
+				$response->rows[$i] = $response->rows[$i]['cell'] = array(
 					'',
 					$row['id'],
 					$row['location_id'],
@@ -220,12 +220,12 @@ switch ($action) {
 			}
 		}
 		
-		$responce = json_encode($responce);
+		$response = json_encode($response);
 		
-		if ($responce == '""') //if empty
+		if ($response == '""') //if empty
 			echo '{"rows":[]}';
 		else 
-			echo $responce;
+			echo $response;
 			
 	  break;
 }

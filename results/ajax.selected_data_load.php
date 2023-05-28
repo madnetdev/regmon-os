@@ -252,8 +252,8 @@ if ($db->numberRows() > 0)  {
 		if (count($res_json) != count($form_data_names)) {
 			$base_res_json = array();
 			//we make an array with all keys
-			foreach ($form_data_names as $tkey => $form_data_name) {
-				$base_res_json[$tkey] = '';
+			foreach ($form_data_names as $key => $form_data_name) {
+				$base_res_json[$key] = '';
 			}
 			//we add the missing keys
 			$res_json = $res_json + $base_res_json;

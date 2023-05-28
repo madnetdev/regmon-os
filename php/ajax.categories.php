@@ -126,7 +126,7 @@ switch ($action) {
 	case 'view': // SELECT 
 	default: //view
 
-		$responce = new stdClass();
+		$response = new stdClass();
 		$rows = $db->fetch("SELECT *, 
 (SELECT GROUP_CONCAT(CAST(form_id AS CHAR)) FROM forms2categories WHERE category_id = c.id GROUP BY category_id) AS forms_ids 
 FROM categories c 
@@ -172,7 +172,7 @@ ORDER BY parent_id, sort, name", array());
 			
 			foreach ($categories as $category) {
 				$forms_count = ($category['forms_ids']!='' ? count(explode(',', $category['forms_ids'])) : 0);
-				$responce->rows[$i] = $responce->rows[$i]['cell'] = array(
+				$response->rows[$i] = $response->rows[$i]['cell'] = array(
 					'',
 					$category['id'],
 					$category['parent_id'],
@@ -198,12 +198,12 @@ ORDER BY parent_id, sort, name", array());
 			}
 		}
 		
-		$responce = json_encode($responce);
+		$response = json_encode($response);
 		
-		if ($responce == '""') //if empty
+		if ($response == '""') //if empty
 			echo '{"rows":[]}';
 		else 
-			echo $responce;
+			echo $response;
 			
 	  break;
 }

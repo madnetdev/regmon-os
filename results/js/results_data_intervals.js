@@ -69,11 +69,11 @@ function Formula__Interval__Get_ALPHA_id(num, second_pass) {
 
 	let prefix = '';
 	if (!second_pass) {
-		num = num - 1; //ajust num only on fisrt pass
-		prefix = 'B'; //put B only on fisrt pass
+		num = num - 1; //adjust num only on first pass
+		prefix = 'B'; //put B only on first pass
 	}
 	
-	//in case APLHA_id is biger than 26 letters (English Alphabet)
+	//in case ALPHA_id is bigger than 26 letters (English Alphabet)
 	const extra_ALPHA_id = (num >= 26 ? Formula__Interval__Get_ALPHA_id(((num / 26 >> 0) - 1), true) : '');
 	const ALPHA_id = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[num % 26 >> 0];
 
@@ -223,7 +223,7 @@ function INTERVAL_DATA__Cells_Count__Update(interval_id, field_num, ath_index, a
 
 
 				if (!ath_V_INTERVAL_DATA[interval_data_index][3]) {
-					//fisrt cell
+					//first cell
 					ath_V_INTERVAL_DATA[interval_data_index][3] = i + 1;
 				}
 
@@ -471,8 +471,8 @@ function Table__Interval_Form_Field__RAW__Add(interval_id, col_field_name, field
 		const ath_index = index + 1;
 		const line_id = 'L' + ath_index;
 		const data_id = 'B' + ath_index;
-		const cell_id = Formula__Interval__Get_ALPHA_id(field_num, false) + Formula__Get_ALPHA_id_noPerfix(ath_index, false);
-		const cell_line_id = 'L' + Formula__Get_ALPHA_id_noPerfix(field_num, false) + Formula__Get_ALPHA_id_noPerfix(ath_index, false);
+		const cell_id = Formula__Interval__Get_ALPHA_id(field_num, false) + Formula__Get_ALPHA_id_noPrefix(ath_index, false);
+		const cell_line_id = 'L' + Formula__Get_ALPHA_id_noPrefix(field_num, false) + Formula__Get_ALPHA_id_noPrefix(ath_index, false);
 		const lang_field_name = col_field_name.replace('Formula', LANG.RESULTS.CALCULATION);
 		const col_field_data = Formula__Interval_Form_Field__Get_Empty_Data_Rows(interval_id, cell_id);
 		
@@ -517,7 +517,7 @@ function Table__Interval_Form_Field__RAW__Add(interval_id, col_field_name, field
 		$data_table.find('thead tr.thead_row4 th').eq(-1).after(row4);
 		
 
-		//fix headers colspans
+		//fix headers colspan
 		Table__Interval_Form__Colspan__Update(interval_id);
 
 
@@ -570,8 +570,8 @@ function Table__Interval_Form_Field__INT__Add(interval_id, col_field_name, field
 		const ath_index = index + 1;
 		const line_id = 'L' + ath_index;
 		const data_id = 'B' + ath_index;
-		const cell_id = Formula__Interval__Get_ALPHA_id(field_num, false) + Formula__Get_ALPHA_id_noPerfix(ath_index, false);
-		const cell_line_id = 'L' + Formula__Get_ALPHA_id_noPerfix(field_num, false) + Formula__Get_ALPHA_id_noPerfix(ath_index, false);
+		const cell_id = Formula__Interval__Get_ALPHA_id(field_num, false) + Formula__Get_ALPHA_id_noPrefix(ath_index, false);
+		const cell_line_id = 'L' + Formula__Get_ALPHA_id_noPrefix(field_num, false) + Formula__Get_ALPHA_id_noPrefix(ath_index, false);
 		const lang_field_name = col_field_name.replace('Formula', LANG.RESULTS.CALCULATION);
 		const col_field_data = Formula__Interval_Form_Field__Get_Empty_Data_Rows(interval_id, cell_id);
 		
@@ -609,14 +609,14 @@ function Table__Interval_Form_Field__INT__Add(interval_id, col_field_name, field
 			'<th class="th_cn_'+field_num+' th_'+data_id+' '+sep+'">'+
 				'<span class="field_name" data-name="'+col_field_name+'">'+	lang_field_name +'</span>'+
 			'</th>';
-				   
+
 		//put headers to table
 		$data_table.find('thead tr.thead_row2 th').eq(-1).after(row2);
 		$data_table.find('thead tr.thead_row3 th').eq(-1).after(row3);
 		$data_table.find('thead tr.thead_row4 th').eq(-1).after(row4);
 		
 
-		//fix headers colspans
+		//fix headers colspan
 		Table__Interval_Form__Colspan__Update(interval_id);
 
 
@@ -667,8 +667,8 @@ function Table__Interval_Form_Field__INTSC__Add(interval_id, col_field_name, fie
 	const ath_index = 1;
 	const line_id = 'L' + ath_index;
 	const data_id = 'B' + ath_index;
-	const cell_id = Formula__Interval__Get_ALPHA_id(field_num, false) + Formula__Get_ALPHA_id_noPerfix(ath_index, false);
-	const cell_line_id = 'L' + Formula__Get_ALPHA_id_noPerfix(field_num, false) + Formula__Get_ALPHA_id_noPerfix(ath_index, false);
+	const cell_id = Formula__Interval__Get_ALPHA_id(field_num, false) + Formula__Get_ALPHA_id_noPrefix(ath_index, false);
+	const cell_line_id = 'L' + Formula__Get_ALPHA_id_noPrefix(field_num, false) + Formula__Get_ALPHA_id_noPrefix(ath_index, false);
 	const lang_field_name = col_field_name.replace('Formula', LANG.RESULTS.CALCULATION);
 	const col_field_data = Formula__Interval_Form_Field__Get_Empty_Data_Rows(interval_id, cell_id);
 	
@@ -711,7 +711,7 @@ function Table__Interval_Form_Field__INTSC__Add(interval_id, col_field_name, fie
 	$data_table.find('thead tr.thead_row4 th').eq(-1).after(row4);
 	
 
-	//fix headers colspans
+	//fix headers colspan
 	Table__Interval_Form__Colspan__Update(interval_id);
 
 
@@ -1328,7 +1328,7 @@ function Formula__Interval__Replace_Templates_with_ids(formula, id, ath_id, save
 				column_name = 'L' + column_name.substring(1);
 			}
 
-			return column_name + Formula__Get_ALPHA_id_noPerfix(ath_id, false) + id;
+			return column_name + Formula__Get_ALPHA_id_noPrefix(ath_id, false) + id;
 		}
 
 		//INT data calculation single ##############################
@@ -1342,11 +1342,11 @@ function Formula__Interval__Replace_Templates_with_ids(formula, id, ath_id, save
 				return column_name + 'A' + id;
 			}
 			else { //range
-				return column_name + 'A' + id + ':' + column_name + Formula__Get_ALPHA_id_noPerfix(V_Selected__Athletes__With_Data.length, false) + id;
+				return column_name + 'A' + id + ':' + column_name + Formula__Get_ALPHA_id_noPrefix(V_Selected__Athletes__With_Data.length, false) + id;
 			}
 		}
 		
-		//INT-intividual data calculation single ###################
+		//INT-individual data calculation single ###################
 		else if (type == 'INTSC2' || type == 'LINES2') {
 			if (type == 'LINES2') {
 				column_name = 'L' + column_name.substring(1);
@@ -1379,7 +1379,7 @@ function Formula__Interval__Replace_Templates_with_ids(formula, id, ath_id, save
 				for (let i=0; i<calc_data_len; i++) {
 					//is in interval
 					if (calc_data[i][0] >= data[0] && calc_data[i][0] <= data[1]) {
-						//fisrt cell
+						//first cell
 						if (start_num == 0) {
 							start_num = calc_data[i][2];
 						}
@@ -1433,8 +1433,8 @@ function Formula__Interval__Update_N_Calculate(interval_id, field_num) {
 			});
 		}
 
-		if ($('#formula_intividual_' + interval_id + '_' + field_num).length) {
-			this_FIELD.intividual = Number($('#formula_intividual_' + interval_id + '_' + field_num).val());
+		if ($('#formula_individual_' + interval_id + '_' + field_num).length) {
+			this_FIELD.formula_intividual = Number($('#formula_individual_' + interval_id + '_' + field_num).val());
 		}
 
 
@@ -1465,7 +1465,7 @@ function Formula__Interval__Table__Cells__Update(interval_id, field_num) {
 
 	const save_form_id = this_FIELD.form_id;
 	const formula = this_FIELD.formula;
-	const is_intividual = this_FIELD.intividual;
+	const is_individual = this_FIELD.formula_intividual;
 
 	const cell_ids = Formula__Cell_ids_from_Formula__Get(formula);
 	const cell_id = cell_ids[0];
@@ -1481,7 +1481,7 @@ function Formula__Interval__Table__Cells__Update(interval_id, field_num) {
 		const int_V_INTERVAL_DATA = this_FIELD[1].data;
 		const table_elem = 'table#Table__Interval_Form_' + interval_id + ' tbody .td_cn_' + field_num + '.td_B1';
 
-		Formula__Interval__Table__Cells__Update_by_Type('', '', save_form_id, interval_id, this_DATA, int_V_INTERVAL_DATA, table_elem, is_calc, formula, 'INTSC', is_intividual);
+		Formula__Interval__Table__Cells__Update_by_Type('', '', save_form_id, interval_id, this_DATA, int_V_INTERVAL_DATA, table_elem, is_calc, formula, 'INTSC', is_individual);
 	}
 	//INT data form
 	else if (save_form_id == 'INT') {
@@ -1504,14 +1504,14 @@ function Formula__Interval__Table__Cells__Update(interval_id, field_num) {
 		});
 	}
 
-	Debug1('  2.Calc.R. Resfesh CALX ===============', [interval_id]);
-	//Resfesh CALX
+	Debug1('  2.Calc.R. Refresh CALX ===============', [interval_id]);
+	//Refresh CALX
 	$('#FI' + interval_id).calx('refresh');
 
 } //end Formula__Interval__Table__Cells__Update
 
 
-function Formula__Interval__Table__Cells__Update_by_Type(ath_id, ath_index, save_form_id, interval_id, this_DATA, type_V_INTERVAL_DATA, table_elem, is_calc, formula, type, is_intividual = false) {
+function Formula__Interval__Table__Cells__Update_by_Type(ath_id, ath_index, save_form_id, interval_id, this_DATA, type_V_INTERVAL_DATA, table_elem, is_calc, formula, type, is_individual = false) {
 	Debug1('  2.Calc.Copy.', '-', get_Function_Name(), '-', [...arguments]);
 
 	const cell_ids = Formula__Cell_ids_from_Formula__Get(formula);
@@ -1532,13 +1532,13 @@ function Formula__Interval__Table__Cells__Update_by_Type(ath_id, ath_index, save
 
 		//INTSC
 		if (type == 'INTSC') {
-			lines_count = Formula__Interval__Replace_Templates_with_ids('SUM({' + cell_id + '})', line_num, '', save_form_id, type_V_INTERVAL_DATA[line_num - 1], this_DATA[line_num - 1], 'user', (is_intividual ? 'LINES2' : 'LINES1'));
+			lines_count = Formula__Interval__Replace_Templates_with_ids('SUM({' + cell_id + '})', line_num, '', save_form_id, type_V_INTERVAL_DATA[line_num - 1], this_DATA[line_num - 1], 'user', (is_individual ? 'LINES2' : 'LINES1'));
 
-			new_formula = Formula__Interval__Replace_Templates_with_ids(formula, line_num, '', save_form_id, type_V_INTERVAL_DATA[line_num - 1], this_DATA[line_num - 1], 'user', (is_intividual ? 'INTSC2' : 'INTSC'));						
+			new_formula = Formula__Interval__Replace_Templates_with_ids(formula, line_num, '', save_form_id, type_V_INTERVAL_DATA[line_num - 1], this_DATA[line_num - 1], 'user', (is_individual ? 'INTSC2' : 'INTSC'));						
 		}
 		//INT
 		else if (type == 'INT') {
-			//filter for unique vals + map to add +{}
+			//filter for unique values + map to add +{}
 			//let lines_plus = cell_ids/*.filter(function(value, index, self) {return self.indexOf(value) === index;})*/.map(function (cell_id) { return '+{' + cell_id + '}'; }).join('').substring(1);
 			//substring to remove the first +
 			let lines_plus = cell_ids.map(function (cell_id) { return '+{' + cell_id + '}'; }).join('').substring(1);
@@ -1571,7 +1571,7 @@ function Formula__Interval__Table__Cells__Update_by_Type(ath_id, ath_index, save
 			new_formula_excel = '';
 		}
 		
-		//increace for the next pass
+		//increase for the next pass
 		line_num++;
 		
 		//format data

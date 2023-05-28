@@ -11,7 +11,7 @@
 class LogLimiter {
 
 	/**
-	 * Max attempts concessed before blocking.
+	 * Max attempts before blocking.
 	 *
 	 * @access private
 	 * @var integer
@@ -54,7 +54,7 @@ class LogLimiter {
 	 * Class constructor. Sets class vars and deletes expired attempts.
 	 *
 	 * @param object $db database object.
-	 * @param integer $Max_Attempts max attempts concessed before blocking.
+	 * @param integer $Max_Attempts max attempts before blocking.
 	 * @param integer $Block_Minutes time of blocking (minutes).
 	 * @param integer $Reset_Attempts_Minutes validity attempts in attempts counting (minutes).
 	 */

@@ -60,7 +60,7 @@ else {
 	}
 
 	//check password strength
-	if (!(preg_match("#[0-9]+#", $values['passwd']) AND //one nubmer
+	if (!(preg_match("#[0-9]+#", $values['passwd']) AND //one number
 		  preg_match("#[a-z]+#", $values['passwd']) AND //one a-z
 		  preg_match("#[A-Z]+#", $values['passwd']))) //one A-Z
 	{
@@ -81,15 +81,15 @@ else {
 	$profile = $level[1];
 
 	if ($_POST['location_group'] == 'Private') {
-		$grst = $db->fetchRow("SELECT gr.id, gr.location_id, gr.status, gr.private_key, gr.name, l.name AS location_name 
+		$gr_loc = $db->fetchRow("SELECT gr.id, gr.location_id, gr.status, gr.private_key, gr.name, l.name AS location_name 
 FROM `groups` gr 
 LEFT JOIN locations l ON l.id = gr.location_id 
 WHERE gr.status = 3 AND gr.private_key = ?", array($_POST['private_key'])); 
 		if ($db->numberRows() > 0)  {
-			$values['location_id'] 	= $grst['location_id'];
-			$location_name 			= $grst['location_name'];
-			$values['group_id'] 	= $grst['id'];
-			$group_name 			= $grst['name'];
+			$values['location_id'] 	= $gr_loc['location_id'];
+			$location_name 			= $gr_loc['location_name'];
+			$values['group_id'] 	= $gr_loc['id'];
+			$group_name 			= $gr_loc['name'];
 		}
 		else $register_ERROR = $LANG->REGISTER_PRIVATE_KEY_ERROR;
 	}

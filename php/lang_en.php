@@ -185,7 +185,7 @@ array(
 	'TAB_CATEGORIES'			=> 'Categories', 
 	'TAB_SPORTS_N_DROPDOWNS'	=> 'Lists (Sports, Dropdowns, etc.)',
 	'TAB_LOCATION_GROUPS'		=> 'Location Groups',
-	//calendar actions butttons
+	//calendar actions buttons
 	'INDEX_EDIT_RECORD'			=> 'Edit Entry',
 	'INDEX_VIEW_RECORD'			=> 'View Entry',
 	'INDEX_DELETE_RECORD'		=> 'Delete Entry',
@@ -277,9 +277,9 @@ array(
 	//Requests ########################################################
 
 	//Athlete Answers to Trainer Request menu
-	'TRAINER_NOT_AVALABLE_REQUESTS'	=> 'Not Available Trainers Request',
-	'TRAINER_NOT_AVALABLE'			=> 'Not Available Trainers',
-	'ATHLETES_NOT_AVALABLE'			=> 'Not Available Athletes',
+	'TRAINER_NOT_AVAILABLE_REQUESTS'=> 'Not Available Trainers Request',
+	'TRAINER_NOT_AVAILABLE'			=> 'Not Available Trainers',
+	'ATHLETES_NOT_AVAILABLE'		=> 'Not Available Athletes',
 
 	//Group
 	'GROUP_USERS_NO_REQUESTS'		=> 'No Users Requests',
@@ -349,7 +349,7 @@ array(
     'FORM_PREVIEW'				=> 'Preview',
     'FORM_PREVIEW_TITLE'		=> 'Form Preview',
 	'FORM_PREVIEW_WARNING'		=> 'This is a form preview. <br>Please click on the calendar or use the dashboard to enter data for this form.',
-	'WARN_FORM_EDIT' 			=> 'Found ({DATA_NUM}) data entries. <br> You can not edit the feature completely, only the texts and options. <br> To edit it fully you must first delete the data. (Admin Omly)',
+	'WARN_FORM_EDIT' 			=> 'Found ({DATA_NUM}) data entries. <br> You can not edit the feature completely, only the texts and options. <br> To edit it fully you must first delete the data. (Admin Only)',
 	'FORMS_DATA_DELETE_DATA'	=> 'Delete Data',
 	'FORMS_DATA_DELETED'		=> 'Data Deleted',
     'FORM_SAVE'					=> 'Save',
@@ -525,7 +525,7 @@ array(
 	'RESULTS_BUTTON_APPLY_CHANGES'=> 'Apply changes',
 	'RESULTS_NO_DATA_CHANGE_SELECTION'=> 'No data available. Please change the selection criteria above.',
 	'RESULTS_NO_DATA_SELECTED'	=> 'Nothing selected or displayed.',
-	'RESULTS_INFO_STANDAR_COLORS'=> 'Standard Colors',
+	'RESULTS_INFO_STANDARD_COLORS'=> 'Standard Colors',
 	'RESULTS_INFO_LINES'		=> 'Lines',
 	'RESULTS_INFO_FORMULA'		=> 'Formula Info',
 	'RESULTS_UPDATE_DIAGRAM'	=> 'Update Diagram',

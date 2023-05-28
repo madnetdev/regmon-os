@@ -183,7 +183,7 @@ function Fieldset__Athlete__Init(athlete_id, athlete_name) { //#####	 --FORMS_RE
 			//do nothing
 		} 
 		else {
-			//make Athelete data SELECT
+			//make Athlete data SELECT
 			Select__Athlete_Data__Init(athlete_id);
 
 			//add data button init
@@ -320,7 +320,7 @@ function Fieldset__Athlete_Form__Extra_Buttons__Init(ath_id, base_form_id, form_
 		//$('#F'+form_group_id).calx('calculate'); //calculate CALX
 	});
 	
-	//add caclulation button init
+	//add calculation button init
 	$('#Button__Athlete_Form_Field_CALC__Add' + form_group_id).on('click', function () {
 		Athlete_Form_Field_CALC__Add(ath_id, base_form_id, save_form_id, form_group_id, save_id, '');
 	});
@@ -366,7 +366,7 @@ function Fieldset__Athlete_Form__Extra_Buttons__Init(ath_id, base_form_id, form_
 		});
 	});
 	
-	//Delete Tempate
+	//Delete Template
 	$('#Button__Forms_Template__Delete' + form_group_id).confirmation({
 		href: 'javascript:void(0)',
 		title: function () {
@@ -413,7 +413,7 @@ function Fieldset__Athlete_Form__Extra_Buttons__Init(ath_id, base_form_id, form_
 				}
 			});
 		}
-	}); //end Delete Tempate
+	}); //end Delete Template
 } //end Fieldset__Athlete_Form__Extra_Buttons__Init
 
 
@@ -430,7 +430,7 @@ function Select__Athlete_Data__Init(ath_id) { //#####  --only in FORMS_RESULTS
 	for (const form_id in V_FORMS_DATA[ath_id]) {
 		if (Object.prototype.hasOwnProperty.call(V_FORMS_DATA[ath_id], form_id)) {
 			let form_data_length = 0;
-			let data_select_otions = '';
+			let data_select_options = '';
 			const form_data = V_FORMS_DATA[ath_id][form_id];
 			//loop form_data
 			for (const key_index in form_data) {
@@ -444,19 +444,19 @@ function Select__Athlete_Data__Init(ath_id) { //#####  --only in FORMS_RESULTS
 					}
 					let this_selected = false;
 					// data line option
-					data_select_otions += '<option value="' + data_line_val + '"' + (this_selected ? ' selected' : '') + '>' + data_line.name + '</option>';
+					data_select_options += '<option value="' + data_line_val + '"' + (this_selected ? ' selected' : '') + '>' + data_line.name + '</option>';
 				}
 			}
 			if (form_id == 'note') {
-				data_select_comments += '<optgroup label="' + V_FORM_id_2_name[form_id] + ' (' + form_data_length + ')">' + data_select_otions + '</optgroup>';
+				data_select_comments += '<optgroup label="' + V_FORM_id_2_name[form_id] + ' (' + form_data_length + ')">' + data_select_options + '</optgroup>';
 			}
 			else {
-				data_select += '<optgroup label="' + V_FORM_id_2_name[form_id] + ' (' + form_data_length + ')">' + data_select_otions + '</optgroup>';
+				data_select += '<optgroup label="' + V_FORM_id_2_name[form_id] + ' (' + form_data_length + ')">' + data_select_options + '</optgroup>';
 			}
 			
 			//Saved Form Templates
 			if (V_FORMS_TEMPLATES[form_id]) {
-				let saved_data_select_otions = '';
+				let saved_data_select_options = '';
 				for (let saved_form_id in V_FORMS_TEMPLATES[form_id]) {
 					if (Object.prototype.hasOwnProperty.call(V_FORMS_TEMPLATES[form_id], saved_form_id)) {
 						let this_selected = false;
@@ -467,11 +467,11 @@ function Select__Athlete_Data__Init(ath_id) { //#####  --only in FORMS_RESULTS
 						const option_text = V_FORMS_TEMPLATES[form_id][saved_form_id];
 						const option_value = ath_id + '|' + form_id + '|' + saved_form_id + '|save';
 						//option
-						saved_data_select_otions += '<option value="' + option_value + '"' + (this_selected ? ' selected' : '') + '>' + option_text.name + '</option>';
+						saved_data_select_options += '<option value="' + option_value + '"' + (this_selected ? ' selected' : '') + '>' + option_text.name + '</option>';
 					}
 				}
 				//optgroup 
-				data_select += '<optgroup label="' + V_FORM_id_2_name[form_id] + ' - (' + LANG.RESULTS.TEMPLATES + ')">' + saved_data_select_otions + '</optgroup>';
+				data_select += '<optgroup label="' + V_FORM_id_2_name[form_id] + ' - (' + LANG.RESULTS.TEMPLATES + ')">' + saved_data_select_options + '</optgroup>';
 			}
 		}
 	} //end loop forms

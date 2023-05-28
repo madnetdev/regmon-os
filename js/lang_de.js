@@ -1,18 +1,18 @@
 LANG = {
 	LANG_CURRENT	: 'de', //not change
 	
-	//moment date funcions
+	//moment date functions
 	MOMENT : {
 		DATE 			: 'DD.MM.YYYY', //moment format
 		DATE_TIME 		: 'DD.MM.YYYY HH:mm:ss', //moment format
 		DATE_TIME_NOSECS: 'DD.MM.YYYY HH:mm', //moment format --noSeconds
 	},
-	//grid date funcions
+	//grid date functions
 	GRID : {
 		DATE 			: 'd.m.Y',
 		DATE_TIME 		: 'd.m.Y H:i:s',
 	},
-	//datepicker date funcions
+	//datepicker date functions
 	DATEPICKER : {
 		DATE 			: 'dd.mm.yy',
 	},

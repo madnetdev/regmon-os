@@ -14,7 +14,7 @@ if (!$ADMIN AND !$LOCATION_ADMIN AND !$GROUP_ADMIN AND !$GROUP_ADMIN_2) {
 	exit;
 }
 
- 
+
 //######################################################
 //SAVE
 $axis_saved_data = '';
@@ -213,7 +213,7 @@ var V_DEBUG = <?=$DEBUG;?>;
 						<button id="save_selected" type="button" class="btn btn-success btn-sm" style="display:inline-block; margin-top:-3px;"><i style="font-size:17px; vertical-align:middle;" class="fa fa-floppy-o"></i>&nbsp;&nbsp;<b><?=$LANG->SAVE;?></b></button>
 					</div>
 					<div class="form-group" style="width:100%; padding-top:10px;">
-						<span id="saved_select_conteiner">
+						<span id="saved_select_container">
 							<?=$saves_html;?>
 						</span>
 						<span style="white-space:nowrap;">
@@ -226,7 +226,7 @@ var V_DEBUG = <?=$DEBUG;?>;
 
 			<div style="text-align:right;">
 				<span class="help_colors" title="<img src='<?=$PATH_2_ROOT;?>img/highcharts_colors.png' class='img_colors'/>">
-				<span class="help_question">?</span> <?=$LANG->RESULTS_INFO_STANDAR_COLORS;?></span> &nbsp; &nbsp; 
+				<span class="help_question">?</span> <?=$LANG->RESULTS_INFO_STANDARD_COLORS;?></span> &nbsp; &nbsp; 
 				<span class="help_lines" title="<img src='<?=$PATH_2_ROOT;?>img/chart_lines_<?=$LANG->LANG_CURRENT;?>.png' class='img_lines'/>">
 					<span class="help_question">?</span> <?=$LANG->RESULTS_INFO_LINES;?>
 				</span>

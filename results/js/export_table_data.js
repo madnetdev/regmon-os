@@ -121,7 +121,7 @@ function Export_Table_Data(csv_xlsx) {
 				let raw_header2 = '';
 				let int_header1 = '';
 				let int_header2 = '';
-				let add = 3; //cells to add from beggining
+				let add = 3; //cells to add from beginning
 
 				$('table#Table__Athlete_Form_'+form_group_id+' thead tr').each(function(tr_index, tr){
 					if (tr_index == '0') {
@@ -337,7 +337,7 @@ function Export_Table_Data(csv_xlsx) {
 				let form_title = [];
 				let raw_header2 = [];
 				let int_header2 = '';
-				let add = 3; //cells to add from beggining
+				let add = 3; //cells to add from beginning
 
 				$('table#Table__Athlete_Form_' + form_group_id + ' thead tr').each(function (tr_index, tr)
 				{
@@ -487,8 +487,8 @@ function Export_Table_Data(csv_xlsx) {
 			csv = data[1];
 		}
 		else { //RESULTS
-			const intt = get_CSV_int();
-			csv = data[1] + '\n\n\n' + intt;
+			const intervals = get_CSV_int();
+			csv = data[1] + '\n\n\n' + intervals;
 		}
 		
 

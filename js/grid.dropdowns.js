@@ -100,7 +100,7 @@ $dropdowns.jqGrid({
 		$('#gbox_' + subgrid_table_id).removeClass('ui-corner-all');
 		$('#' + sub_pager).removeClass('ui-corner-bottom');
 		
-		//set subgid width
+		//set subgrid width
 		$('#' + subgrid_table_id).jqGrid('setGridWidth', $dropdowns.width() - 27); //30
 		
 	} //end subGridRowExpanded options
@@ -128,7 +128,7 @@ $dropdowns.jqGrid('setCaption', $dropdowns.attr('alt'))
 	.children("div.ui-jqgrid-titlebar").css({"text-align":"center", "cursor":"pointer"})
 	.children("span.ui-jqgrid-title").css({"float":"none", "font-size": "17px"});
 
-//Expand/Colapse grid from Caption click
+//Expand/Collapse grid from Caption click
 $($dropdowns[0].grid.cDiv).on('click',function() {
 	if ($(pager).is(':hidden')) 
 		$(this).removeClass('ui-corner-all');

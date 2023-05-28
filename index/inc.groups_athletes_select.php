@@ -197,7 +197,7 @@ if ($ADMIN OR $THIS_LOCATION_ADMIN OR $THIS_GROUP_ADMIN OR $THIS_GROUP_ADMIN_2) 
 	$Athletes_Select .= '<script>jQuery(function(){Select__Athletes__Init();});</script>';
 }
 elseif ($TRAINER) {
-	//give the name in case dont have athlete yet
+	//give the name in case don't have athlete yet
 	$Athletes_Select = '<div class="just_name">'.$a_vorname.' &nbsp; '.$a_name.'</div>';
 
 	//Select Athletes in Group with Trainer this User-$UID

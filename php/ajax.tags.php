@@ -88,12 +88,12 @@ switch ($action) {
 	case 'view': // SELECT 
 	default: //view
 		
-		$responce = new stdClass();
+		$response = new stdClass();
 		$rows = $db->fetch("SELECT * FROM tags ORDER BY name", array()); 
 		$i=0;
 		if ($db->numberRows() > 0)  {
 			foreach ($rows as $row) {
-				$responce->rows[$i] = $responce->rows[$i]['cell'] = array(
+				$response->rows[$i] = $response->rows[$i]['cell'] = array(
 					'',
 					$row['id'],
 					$row['name'],
@@ -107,12 +107,12 @@ switch ($action) {
 			}
 		}
 		
-		$responce = json_encode($responce);
+		$response = json_encode($response);
 		
-		if ($responce == '""') //if empty
+		if ($response == '""') //if empty
 			echo '{"rows":[]}';
 		else 
-			echo $responce;
+			echo $response;
 			
 	  break;
 }

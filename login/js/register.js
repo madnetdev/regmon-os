@@ -128,7 +128,7 @@ jQuery(function($) {
 	});
 
 
-	// Other Fileds  ######################################
+	// Other Fields  ######################################
 
 	//Check and radio input styles
 	$('input.check_radio').iCheck({

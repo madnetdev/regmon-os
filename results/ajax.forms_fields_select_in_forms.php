@@ -82,8 +82,8 @@ if ($db->numberRows() > 0) {
 
 
 
-$forms_fileds_option = '';
-$forms_fileds_option_comments = '';
+$forms_fields_option = '';
+$forms_fields_option_comments = '';
 
 // get available forms
 $forms = array();
@@ -93,7 +93,7 @@ WHERE status = 1 AND id IN ($selected_forms_ids) AND id IN ($where_forms)
 ORDER BY name", array());
 //print_r($rows); exit;
 if ($db->numberRows() > 0)  {
-	//html support only one level optgroups
+	//html support only one level optgroup
 	$FLD_open_group = false;
 	$FLD_group = '';
 	$FLD_group_last = '';
@@ -103,17 +103,17 @@ if ($db->numberRows() > 0)  {
 		//Group
 		if ($FLD_group <> $FLD_group_last) {
 			if ($FLD_open_group) {
-				$forms_fileds_option .= '</optgroup>';
+				$forms_fields_option .= '</optgroup>';
 				//saves
 				if (isset($Forms_Templates_Data[$FLD_group_last_id])) {
-					$forms_fileds_option .= '<optgroup label="'.$FLD_group_last.'-'.$LANG->TEMPLATES.'">';
+					$forms_fields_option .= '<optgroup label="'.$FLD_group_last.'-'.$LANG->TEMPLATES.'">';
 					foreach ($Forms_Templates_Data[$FLD_group_last_id] as $save_id => $save_name) {
-						$forms_fileds_option .= '<option value="SV_'.$FLD_group_last_id.'_'.$save_id.'">'.$save_name.'</option>';
+						$forms_fields_option .= '<option value="SV_'.$FLD_group_last_id.'_'.$save_id.'">'.$save_name.'</option>';
 					}
-					$forms_fileds_option .= '</optgroup>';
+					$forms_fields_option .= '</optgroup>';
 				}
 			}
-			$forms_fileds_option .= '<optgroup label="'.$FLD_group.' ('.$Forms_with_Forms_Data_arr[$row['id']].')">';
+			$forms_fields_option .= '<optgroup label="'.$FLD_group.' ('.$Forms_with_Forms_Data_arr[$row['id']].')">';
 			$FLD_open_group = true;
 		}
 		//options
@@ -121,27 +121,27 @@ if ($db->numberRows() > 0)  {
 		foreach ($fields_arr as $key => $field) {
 			//EXTRA Fields ///////////////////////////////////////
 			if ($field[1] == '_Period') {
-				$forms_fileds_option .= '<option value="'.$row['id'].'_'.$key.'_From">'.$field[0].'_'.$LANG->FROM.'</option>';
-				$forms_fileds_option .= '<option value="'.$row['id'].'_'.$key.'_To">'.$field[0].'_'.$LANG->TO.'</option>';
+				$forms_fields_option .= '<option value="'.$row['id'].'_'.$key.'_From">'.$field[0].'_'.$LANG->FROM.'</option>';
+				$forms_fields_option .= '<option value="'.$row['id'].'_'.$key.'_To">'.$field[0].'_'.$LANG->TO.'</option>';
 			}
 			if ($field[1] == '_Dropdown' OR $field[1] == '_RadioButtons') {
-				$forms_fileds_option .= '<option value="'.$row['id'].'_'.$key.'_S">'.$field[0].'_S</option>';
+				$forms_fields_option .= '<option value="'.$row['id'].'_'.$key.'_S">'.$field[0].'_S</option>';
 			}
 			//EXTRA Fields ///////////////////////////////////////
-			$forms_fileds_option .= '<option value="'.$row['id'].'_'.$key.'">'.$field[0].'</option>';
+			$forms_fields_option .= '<option value="'.$row['id'].'_'.$key.'">'.$field[0].'</option>';
 		}
 		$FLD_group_last = $FLD_group;
 		$FLD_group_last_id = $row['id'];
 	}
 	if ($FLD_open_group) {
-		$forms_fileds_option .= '</optgroup>';
+		$forms_fields_option .= '</optgroup>';
 		//saves for the last form
 		if (isset($Forms_Templates_Data[$FLD_group_last_id])) {
-			$forms_fileds_option .= '<optgroup label="'.$FLD_group_last.'-'.$LANG->TEMPLATES.'">';
+			$forms_fields_option .= '<optgroup label="'.$FLD_group_last.'-'.$LANG->TEMPLATES.'">';
 			foreach ($Forms_Templates_Data[$FLD_group_last_id] as $save_id => $save_name) {
-				$forms_fileds_option .= '<option value="SV_'.$FLD_group_last_id.'_'.$save_id.'">'.$save_name.'</option>';
+				$forms_fields_option .= '<option value="SV_'.$FLD_group_last_id.'_'.$save_id.'">'.$save_name.'</option>';
 			}
-			$forms_fileds_option .= '</optgroup>';
+			$forms_fields_option .= '</optgroup>';
 		}
 	}
 	
@@ -151,10 +151,10 @@ WHERE showInGraph = 1 AND CONCAT(group_id,'_',user_id) IN ($selected_athletes_id
 ORDER BY created", array());
 	if ($db->numberRows() > 0)  {
 		if ($comments['count']) {
-			$forms_fileds_option_comments .= '<optgroup label="'.$LANG->NOTE.' ('.$comments['count'].')">';
-			$forms_fileds_option_comments .= '<option value="note_1">'.$LANG->NOTE.'</option>';
-			$forms_fileds_option_comments .= '<option value="note_2">'.$LANG->NOTE_PERIOD.'</option>';
-			$forms_fileds_option_comments .= '</optgroup>';
+			$forms_fields_option_comments .= '<optgroup label="'.$LANG->NOTE.' ('.$comments['count'].')">';
+			$forms_fields_option_comments .= '<option value="note_1">'.$LANG->NOTE.'</option>';
+			$forms_fields_option_comments .= '<option value="note_2">'.$LANG->NOTE_PERIOD.'</option>';
+			$forms_fields_option_comments .= '</optgroup>';
 		}
 	}
 }
@@ -165,9 +165,9 @@ ORDER BY created", array());
 	<div id="Select__Forms_Fields__Row">
 		<span class="wiz-title"><?=$LANG->RESULTS_SELECT_FIELDS;?> : &nbsp; </span>
 		<select id="Select__Forms_Fields" name="Select__Forms_Fields" multiple="multiple" style="display:none;">
-			<?=$forms_fileds_option_comments . $forms_fileds_option;?>
+			<?=$forms_fields_option_comments . $forms_fields_option;?>
 		</select> &nbsp; 
-<?php if ($forms_fileds_option != '') { ?>
+<?php if ($forms_fields_option != '') { ?>
 	 	<button id="Button__Select__Forms_Fields__Submit" class="forward" title="<?= $LANG->RESULTS_BUTTON_APPLY_CHANGES;?>"></button>
 <?php } else { //change Loading to NoData ?>
 	 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

@@ -217,7 +217,7 @@ abstract class db {
 	}
 
 	/**
-	 * Open a Conection with the Database
+	 * Open a Connection with the Database
 	 * @param mixed $type
 	 * @param mixed $database
 	 * @param string $user
@@ -601,7 +601,7 @@ abstract class db {
 	
 	/**
 	 * prepareData
-	 * This should be protected and overloadable by driver classes
+	 * This should be protected and over loadable by driver classes
 	 * @param mixed $data
 	 * @return array
 	 */
@@ -723,7 +723,7 @@ class db_mysqli extends db {
 
 	/**
 	 * _open - Open a new connection to the MySQL server
-	 * aslo set the encoding to UTF8
+	 * also set the encoding to UTF8
 	 * @param string $database
 	 * @param string $user
 	 * @param string $password

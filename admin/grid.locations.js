@@ -226,7 +226,7 @@ $locations.jqGrid('setCaption', $locations.attr('alt'))
 	.children("div.ui-jqgrid-titlebar").css({"text-align":"center", "cursor":"pointer"})
 	.children("span.ui-jqgrid-title").css({"float":"none", "font-size": "17px"});
 
-//Expand/Colapse grid from Caption click
+//Expand/Collapse grid from Caption click
 $($locations[0].grid.cDiv).on('click',function() {
 	if ($(pager).is(':hidden')) 
 		$(this).removeClass('ui-corner-all');
@@ -244,7 +244,7 @@ $(window).on('resize', function() {
 		$locations.jqGrid('setGridWidth', $(window).width()-30);
 	}
 	else {
-		if ($("div[id^=locations_loc_]").length > 0) { //haven't close the last yet here so 1 insteed of 0 
+		if ($("div[id^=locations_loc_]").length > 0) { //haven't close the last yet here so 1 instead of 0 
 			$locations.jqGrid('setGridWidth', (grid_width_Max+30));
 		} else {
 			$locations.jqGrid('setGridWidth', grid_width_Max);

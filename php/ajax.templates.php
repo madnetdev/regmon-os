@@ -72,7 +72,7 @@ switch ($action) {
 
 	case 'templates_forms': // SELECT 
 
-		$responce = new stdClass();
+		$response = new stdClass();
 
 		$forms = $db->fetchAllwithKey("SELECT id, name, name2, status FROM forms WHERE status = 1 $where ORDER BY id", array() ,'id');
 		//echo "<pre>";print_r($forms);exit;
@@ -82,7 +82,7 @@ switch ($action) {
 		$i=0;
 		if ($db->numberRows() > 0)  {
 			foreach ($saves as $save) {
-				$responce->rows[$i] = $responce->rows[$i]['cell'] = array(
+				$response->rows[$i] = $response->rows[$i]['cell'] = array(
 					'',
 					$save['id'],
 					$save['form_id'],
@@ -106,25 +106,25 @@ switch ($action) {
 			}
 		}
 		
-		$responce = json_encode($responce);
+		$response = json_encode($response);
 		
-		if ($responce == '""') //if empty
+		if ($response == '""') //if empty
 			echo '{"rows":[]}';
 		else 
-			echo $responce;
+			echo $response;
 			
 	  break;
 	  
 	  
 	case 'templates_results': // SELECT 
 		
-		$responce = new stdClass();
+		$response = new stdClass();
 		$saves2 = $db->fetchAllwithKey("SELECT id, user_id, location_id, group_id, name, created, created_by, modified, modified_by FROM templates_results ORDER BY name", array(), 'id'); 
 		//GlobalView, LocationView, GroupView, TrainerView, Private, 
 		$i=0;
 		if ($db->numberRows() > 0)  {
 			foreach ($saves2 as $save) {
-				$responce->rows[$i] = $responce->rows[$i]['cell'] = array(
+				$response->rows[$i] = $response->rows[$i]['cell'] = array(
 					'',
 					$save['id'],
 					$save['name'],
@@ -145,25 +145,25 @@ switch ($action) {
 			}
 		}
 		
-		$responce = json_encode($responce);
+		$response = json_encode($response);
 		
-		if ($responce == '""') //if empty
+		if ($response == '""') //if empty
 			echo '{"rows":[]}';
 		else 
-			echo $responce;
+			echo $response;
 			
 	  break;
 
 	
 	case 'templates_axis': // SELECT 
-		$responce = new stdClass();
+		$response = new stdClass();
 
 		$axis = $db->fetchAllwithKey("SELECT id, user_id, location_id, group_id, name, created, created_by, modified, modified_by FROM templates_axis ORDER BY name", array(), 'id');
 		//GlobalView, LocationView, GroupView, TrainerView, Private, 
 		$i=0;
 		if ($db->numberRows() > 0)  {
 			foreach ($axis as $save) {
-				$responce->rows[$i] = $responce->rows[$i]['cell'] = array(
+				$response->rows[$i] = $response->rows[$i]['cell'] = array(
 					'',
 					$save['id'],
 					$save['name'],
@@ -184,12 +184,12 @@ switch ($action) {
 			}
 		}
 		
-		$responce = json_encode($responce);
+		$response = json_encode($response);
 		
-		if ($responce == '""') //if empty
+		if ($response == '""') //if empty
 			echo '{"rows":[]}';
 		else 
-			echo $responce;
+			echo $response;
 			
 	  break;
 

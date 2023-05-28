@@ -92,8 +92,8 @@ var fancyBoxDefaults_iframe = {
 		const _self = this;
 		setTimeout(function () {
 			const iframe = document.getElementById( $($(_self)[0].content).attr('id') );
-			const elmnt = iframe.contentWindow.document.getElementById("fancy_placeholder");
-			$(elmnt).hide();
+			const element = iframe.contentWindow.document.getElementById("fancy_placeholder");
+			$(element).hide();
 		}, 0);
 	}
 };

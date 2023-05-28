@@ -145,14 +145,14 @@ require('index/inc.groups_athletes_select.php');
 <script type="text/javascript">
 //fix bfcach problem when browser back button is pressed and page not load properly
 window.addEventListener( "pageshow", function (event) {
-  	var load_from_bfcach = event.persisted || (typeof window.performance != "undefined" && window.performance.navigation.type === 2);
-  	if (load_from_bfcach) {
-    	window.location.reload();
-  	}
+	var load_from_bfcach = event.persisted || (typeof window.performance != "undefined" && window.performance.navigation.type === 2);
+	if (load_from_bfcach) {
+		window.location.reload();
+	}
 });
 
 const V_REGmon_Folder = '<?=$CONFIG['REGmon_Folder'];?>';
-const Production_Mode = <?=($CONFIG['Production_Mode']?'true':'false');?>;
+const Production_Mode = <?=($CONFIG['Production_Mode'] ? 'true' : 'false');?>;
 var V_ONLINE = true;
 
 <?php echo 'var'

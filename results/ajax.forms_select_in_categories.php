@@ -53,7 +53,7 @@ LEFT JOIN categories c ON c.id = f2c.category_id
 WHERE f.status = 1 AND c.status = 1 AND CONCAT(f2c.category_id,'_',f2c.form_id) IN ($where_forms) 
 ORDER BY c.parent_id, c.sort, c.id, f.name", array());
 if ($db->numberRows() > 0)  {
-	//html support only one level optgroups
+	//html support only one level optgroup
 	$open_group = false;
 	$group = '';
 	$group_tmp = '';

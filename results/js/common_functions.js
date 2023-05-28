@@ -234,7 +234,7 @@ function DATA__Interval_Form__Get(interval_id) {
 	const data_is_single_column 	= $("#FI" + interval_id + " input[name='is_single_column[]']");
 	const data_is_interval_form 	= $("#FI" + interval_id + " input[name='is_interval_form[]']");
 	const data_interval_form 		= $("#FI" + interval_id + " [name='interval_form[]']");
-	const data_formula_intividual 	= $("#FI" + interval_id + " input[name='formula_intividual[]']");
+	const data_formula_individual 	= $("#FI" + interval_id + " input[name='formula_individual[]']");
 	const data_formula_input 		= $("#FI" + interval_id + " textarea[name='formula_input[]']");
 
 	const data_formula_sub_period 		= $("#FI" + interval_id + " input[name='formula_sub_period_INT[]']");
@@ -273,7 +273,7 @@ function DATA__Interval_Form__Get(interval_id) {
 			is_interval_form: 	$(data_is_interval_form[i]).val(),
 			interval_form: 		$(data_interval_form[i]).val(),
 			interval_form_name: $(data_interval_form[i]).find('option:selected').text(),
-			formula_intividual: $(data_formula_intividual[i]).val(),
+			formula_intividual: $(data_formula_individual[i]).val(),
 			formula_input: 		$(data_formula_input[i]).val(),
 			formula_sub_period: $(data_formula_sub_period[i]).val()
 		};
@@ -359,7 +359,7 @@ function Forms_Template__Form_Fields__Values__Set(ath_id, form_id, save_id, Save
 
 	if (type == 'Interval' && save_id) {
 		//we need to check this 2 data sources for differences and alert
-		//let Saved_Data = V_FORMS_TEMPLATES[form_id][save_id].data; //to dinoume sto function tora
+		//let Saved_Data = V_FORMS_TEMPLATES[form_id][save_id].data;
 		//let Saved_Data = V_RESULTS_TEMPLATES[save_id].Data_Forms[ath_form_saveid];
 		Forms_Template_Data = V_FORMS_TEMPLATES[form_id][save_id].data;
 		//check length
@@ -1260,11 +1260,11 @@ function Formula__Get_ALPHA_id(data_or_calc, num, second_pass) {
 	
 	let prefix = '';
 	if (!second_pass) {
-		num = (data_or_calc == 'data' ? num : num - 1); //ajust num  only on fisrt pass
-		prefix = (data_or_calc == 'data' ? 'R' : 'B'); //put R or B only on fisrt pass
+		num = (data_or_calc == 'data' ? num : num - 1); //adjust num  only on first pass
+		prefix = (data_or_calc == 'data' ? 'R' : 'B'); //put R or B only on first pass
 	}
 
-	//extra_ALPHA_id in case APLHA_id is biger than 26 letters (English Alphabet)
+	//extra_ALPHA_id in case ALPHA_id is bigger than 26 letters (English Alphabet)
 	const extra_ALPHA_id = (num >= 26 ? Formula__Get_ALPHA_id(data_or_calc, ((num / 26 >> 0) - 1), true) : '');
 	const ALPHA_id = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[num % 26 >> 0];
 
@@ -1272,16 +1272,16 @@ function Formula__Get_ALPHA_id(data_or_calc, num, second_pass) {
 }
 
 
-//Formula__Get_ALPHA_id_noPerfix  no 'B' prefix
-function Formula__Get_ALPHA_id_noPerfix(num, second_pass) {
+//Formula__Get_ALPHA_id_noPrefix  no 'B' prefix
+function Formula__Get_ALPHA_id_noPrefix(num, second_pass) {
 	Debug2('      4.Calc.Num.', '-', get_Function_Name(), '-', [...arguments]);
 
 	if (!second_pass) {
-		num = num - 1; //ajust num  only on fisrt pass
+		num = num - 1; //adjust num  only on first pass
 	}
 
-	//in case APLHA_id is biger than 26 letters (English Alphabet)
-	const extra_ALPHA_id = (num >= 26 ? Formula__Get_ALPHA_id_noPerfix(((num / 26 >> 0) - 1), true) : '');
+	//in case ALPHA_id is bigger than 26 letters (English Alphabet)
+	const extra_ALPHA_id = (num >= 26 ? Formula__Get_ALPHA_id_noPrefix(((num / 26 >> 0) - 1), true) : '');
 	const ALPHA_id = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[num % 26 >> 0];
 
 	return extra_ALPHA_id + ALPHA_id;
@@ -1315,7 +1315,7 @@ function Formula__Table__Cells_Rowspan__Update(ath_id, form_id, form_field_num) 
 	this_DATA.data = []; //reset data array
 	
 	///###########################################
-	//fisrt we make the rowspan=1 for all so then we can apply the new rowspan easy 
+	//first we make the rowspan=1 for all so then we can apply the new rowspan easy 
 	const table_column = this_DATA.table_column - 1;
 	//remove all td_B
 	$('#F' + form_group_id + ' .td_B' + form_field_num).remove();
@@ -1539,7 +1539,7 @@ function Formula__Table__Cells_Rowspan__Update(ath_id, form_id, form_field_num) 
 	
 	
 	Debug1('  2.Calc.U. Update CALX ===============', [form_group_id]);
-	//Resfesh CALX
+	//Refresh CALX
 	$('#F'+form_group_id).calx('update'); //we needed here for the sheet to get the new cells
 }
 	
@@ -1581,7 +1581,7 @@ function Formula__Table__Cells__Update(ath_id, form_id, form_field_num) {
 			//out of date cells are empty
 		}
 		else if (row.hasClass('start_After_Cell')) {
-			//skiped rowspan_after cells are empty
+			//skipped rowspan_after cells are empty
 		}
 		else {
 			new_formula = Formula__Replace_Templates_with_ids(formula, line_num, this_DATA.data, this_DATA.rowspan_period, formula_Full_Period, 'user');
@@ -1635,7 +1635,7 @@ function Formula__Table__Cells__Update(ath_id, form_id, form_field_num) {
 				//end
 				//has end with +
 				if (this_DATA.data[line_num - 1][6]) {
-					//an exei end with -
+					//has end with -
 					if (this_DATA.data[line_num - 1][8] &&
 						(this_DATA.data[line_num - 1][8] > this_DATA.data[line_num - 1][6]))
 					{
@@ -1647,7 +1647,7 @@ function Formula__Table__Cells__Update(ath_id, form_id, form_field_num) {
 						intEnd_datetime = this_DATA.data[line_num - 1][6];
 					}
 				}
-				//an exei end with -
+				//has end with -
 				else if (this_DATA.data[line_num - 1][8]) {
 					intEnd_datetime = this_DATA.data[line_num - 1][8];
 				}
@@ -1657,7 +1657,7 @@ function Formula__Table__Cells__Update(ath_id, form_id, form_field_num) {
 					new_formula += intStart_datetime + ' -> ' + intEnd_datetime;
 				}
 			}
-			//increace for the next pass
+			//increase for the next pass
 			line_num++;
 		}
 		
@@ -1683,7 +1683,7 @@ function Formula__Table__Cells__Update(ath_id, form_id, form_field_num) {
 
 
 	//Debug1('  2.Calc.U. Update CALX ===============', [form_group_id]);
-	//Resfesh CALX
+	//Refresh CALX
 	//$('#F'+form_group_id).calx('update'); //refresh
 } //end Formula__Table__Cells__Update
 	
@@ -1871,7 +1871,7 @@ function Formula__Replace_Templates_with_ids(formula, id, data, rowspan_period, 
 		}
 		
 		//get what after the (+ or -)
-		//get the nubmer
+		//get the number
 		let num = parseInt(line.replace(/\D+/g, ''));
 		
 		//get the period
@@ -2118,7 +2118,7 @@ function DATE__Interval_Rowspans_All__Get_Array(rowspan, rowspan_period, rowspan
 
 	if (rowspan_period == 'lines') {
 		console.log('Error! Trying to get intervals with "lines" as period.');
-		//stack into loop if this happend --so return here
+		//stack into loop if this happened --so return here
 		return [];
 	}
 

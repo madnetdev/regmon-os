@@ -84,7 +84,7 @@ switch ($action) {
 			}
 				
 			//check password strength
-			if (!(preg_match("#[0-9]+#", $values['passwd'].'') AND //one nubmer
+			if (!(preg_match("#[0-9]+#", $values['passwd'].'') AND //one number
 				  preg_match("#[a-z]+#", $values['passwd'].'') AND //one a-z
 				  preg_match("#[A-Z]+#", $values['passwd'].''))) //one A-Z
 			{
@@ -213,7 +213,7 @@ switch ($action) {
 
 	case 'trainer': // SELECT 
 		
-		$responce = new stdClass();
+		$response = new stdClass();
 		$sidx = $sidx ?? '';
 		$sord = $sord ?? '';
 
@@ -253,7 +253,7 @@ switch ($action) {
 		if ($db->numberRows() > 0) {
 			$i = 0;
 			foreach ($rows as $row) {
-				$responce->rows[$i] = $responce->rows[$i]['cell'] = array(
+				$response->rows[$i] = $response->rows[$i]['cell'] = array(
 					$row['id'],
 					$row['firstname'],
 					$row['lastname'],
@@ -270,19 +270,19 @@ switch ($action) {
 			}
 		}
 
-		$responce = json_encode($responce);
+		$response = json_encode($response);
 		
-		if ($responce == '""') //if empty
+		if ($response == '""') //if empty
 			echo '{"rows":[]}';
 		else 
-			echo $responce;
+			echo $response;
 			
 	  break;
 
 
 	case 'group': // SELECT 
 		
-		$responce = new stdClass();
+		$response = new stdClass();
 		$sidx = $sidx ?? '';
 		$sord = $sord ?? '';
 
@@ -319,7 +319,7 @@ switch ($action) {
 		if ($db->numberRows() > 0)  {
 			$i=0;
 			foreach ($rows as $row) {
-				$responce->rows[$i] = $responce->rows[$i]['cell'] = array(
+				$response->rows[$i] = $response->rows[$i]['cell'] = array(
 					'',
 					$row['id'],
 					$row['uname'],
@@ -344,12 +344,12 @@ switch ($action) {
 			}
 		}
 
-		$responce = json_encode($responce);
+		$response = json_encode($response);
 		
-		if ($responce == '""') //if empty
+		if ($response == '""') //if empty
 			echo '{"rows":[]}';
 		else 
-			echo $responce;
+			echo $response;
 			
 	  break;
 
@@ -357,7 +357,7 @@ switch ($action) {
 	case 'view': // SELECT 
 	default: //view
 		
-		$responce = new stdClass();
+		$response = new stdClass();
 
 		$wher = "WHERE 1 ";
 		if (!$ADMIN) {
@@ -370,9 +370,9 @@ switch ($action) {
 		$rows = $db->fetch("SELECT * FROM users $where ORDER BY id", array()); 
 		$i=0;
 		if ($db->numberRows() > 0)  {
-			$responce = new stdClass();
+			$response = new stdClass();
 			foreach ($rows as $row) {
-				$responce->rows[$i] = $responce->rows[$i]['cell'] = array(
+				$response->rows[$i] = $response->rows[$i]['cell'] = array(
 					'',
 					$row['id'],
 					//$row['account'],
@@ -410,12 +410,12 @@ switch ($action) {
 			}
 		}
 
-		$responce = json_encode($responce);
+		$response = json_encode($response);
 		
-		if ($responce == '""') //if empty
+		if ($response == '""') //if empty
 			echo '{"rows":[]}';
 		else 
-			echo $responce;
+			echo $response;
 			
 	  break;
 }

@@ -664,7 +664,7 @@ function Chart__Update() {
 			ax_color = '#000000';
 		}
 
-		//make sure that there is no tranparency in axis color
+		//make sure that there is no transparency in axis color
 		if (ax_color.indexOf('rgba') != -1) { //if is rgba
 			//replace the number with dot '.' and parenthesis with '1)' to remove transparency 
 			//https://stackoverflow.com/questions/16065998/replacing-changing-alpha-in-rgba-javascript
@@ -1061,7 +1061,7 @@ function Chart__Update() {
 					const ath_id = INTERVAL_DATA[interval_id][field_id][row].ath_id;
 					if (show_athlete_name) {
 						if (ath_id == 'INT' || ath_id == 'INTSC') {
-							col_ATH.name = temp_name + ' (' + Object.values(V_Selected__Athletes__ID_Name).join(', ') + ')'; //add aths names
+							col_ATH.name = temp_name + ' (' + Object.values(V_Selected__Athletes__ID_Name).join(', ') + ')'; //add athletes names
 						} else {
 							col_ATH.name = temp_name + ' (' + V_Selected__Athletes__ID_Name[ath_id] + ')'; //add ath name
 						}
@@ -1223,7 +1223,7 @@ function Chart__Update() {
 
 
 			if (V_RESULTS_PAGE == 'RESULTS') {
-				//allways false here so it doesnt make group with the Intervals
+				//always false here so it doesn't make group with the Intervals
 				USED_DATA[ath_id][form_id][field_name].grouping = false;
 			}
 

@@ -5,7 +5,7 @@
 	background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="100%" width="100%"><text x="50%" y="30%" fill="grey" font-size="40" opacity="0.75" dominant-baseline="middle" text-anchor="middle"><tspan x="50%">Zum Eintragen von Daten</tspan><tspan x="50%" dy="75">bitte in den Kalender klicken.</tspan></text></svg>');
 }
 .fc-unthemed td.fc-today {
- 	/*background: #fcf8e3; --we give trasparency so the watermark 'no entries' can be visible */
+ 	/*background: #fcf8e3; --we give transparency so the watermark 'no entries' can be visible */
   	background: rgba(252, 248, 227, 0.75);
 }
 

@@ -103,14 +103,14 @@ switch ($action) {
 
 	case 'options': // SELECT 
 		
-		$responce = new stdClass();
+		$response = new stdClass();
 		$sidx = $sidx ?? '';
 		$sord = $sord ?? '';
 		$rows = $db->fetch("SELECT * FROM sports WHERE status = 1 AND parent_id=? ORDER BY $sidx $sord", array($ID)); 
 		$i=0;
 		if ($db->numberRows() > 0)  {
 			foreach ($rows as $row) {
-				$responce->rows[$i] = $responce->rows[$i]['cell'] = array(
+				$response->rows[$i] = $response->rows[$i]['cell'] = array(
 					'',
 					$row['id'],
 					$row['parent_id'],
@@ -123,12 +123,12 @@ switch ($action) {
 			}
 		}
 		
-		$responce = json_encode($responce);
+		$response = json_encode($response);
 		
-		if ($responce == '""') //if empty
+		if ($response == '""') //if empty
 			echo '{"rows":[]}';
 		else 
-			echo $responce;
+			echo $response;
 
 	break;
 	  
@@ -136,14 +136,14 @@ switch ($action) {
 	case 'view': // SELECT 
 	default: //view
 		
-		$responce = new stdClass();
+		$response = new stdClass();
 		$sidx = $sidx ?? '';
 		$sord = $sord ?? '';
 		$rows = $db->fetch("SELECT * FROM sports WHERE parent_id = 0 ORDER BY $sidx $sord", array()); 
 		$i=0;
 		if ($db->numberRows() > 0)  {
 			foreach ($rows as $row) {
-				$responce->rows[$i] = $responce->rows[$i]['cell'] = array(
+				$response->rows[$i] = $response->rows[$i]['cell'] = array(
 					'',
 					$row['id'],
 					$row['name'],
@@ -155,12 +155,12 @@ switch ($action) {
 			}
 		}
 		
-		$responce = json_encode($responce);
+		$response = json_encode($response);
 		
-		if ($responce == '""') //if empty
+		if ($response == '""') //if empty
 			echo '{"rows":[]}';
 		else 
-			echo $responce;
+			echo $response;
 			
 	  break;
 }

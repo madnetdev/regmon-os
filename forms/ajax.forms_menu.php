@@ -120,7 +120,7 @@ if (!$edit) {
 }
 
 
-//init vals
+//init values
 $trainer_forms_selected_read_arr = array();
 $trainer_forms_selected_read_str = '0';
 $trainer_forms_selected_write_arr = array();
@@ -325,18 +325,18 @@ if ($box AND !$trainer_view) {
 //Trainers see/change Comments 
 //echo 'trainer:'.$trainer.'view:'.$trainer_view;
 if ($trainer OR $trainer_view) {
-	$thtml = '';
+	$t_html = '';
 	if ($trainer) { //athlete can see/change what forms trainer have access
 		$select_elem = 'sel_g_'.$group_id.'_c_'.'Note_n';
 		$standard_elem = 'std_g_'.$group_id.'_c_'.'Note_n';
-		$thtml = '<input name="'.$select_elem.'" type="checkbox" class="check_box"'.(in_array('Note_n', $trainer_forms_selected_read_arr)?' checked':'').'>'.
+		$t_html = '<input name="'.$select_elem.'" type="checkbox" class="check_box"'.(in_array('Note_n', $trainer_forms_selected_read_arr)?' checked':'').'>'.
 				'<input name="'.$standard_elem.'" type="checkbox" class="standard"'.(in_array('Note_n', $trainer_forms_selected_write_arr)?' checked':'').'>';
 	}
 	elseif ($trainer_view) { //trainer see what forms have access given by athlete
-		$thtml = '<span class="icheckbox_flat-yellow2s'.(in_array('Note_n', $trainer_forms_selected_read_arr)?' checked':'').'" style="vertical-align:text-bottom;"></span>&nbsp; '.
+		$t_html = '<span class="icheckbox_flat-yellow2s'.(in_array('Note_n', $trainer_forms_selected_read_arr)?' checked':'').'" style="vertical-align:text-bottom;"></span>&nbsp; '.
 				'<span class="icheckbox_flat-green2s'.(in_array('Note_n', $trainer_forms_selected_write_arr)?' checked':'').'" style="vertical-align:text-bottom;"></span>';
 	}
-	$thtml = ''.
+	$t_html = ''.
 		'<ul style="box-shadow:0px 0px 5px 0px black;">'.
 			'<li style="background:#446f91;">'.
 				'<div style="padding:0 5px 10px;">'.
@@ -349,7 +349,7 @@ if ($trainer OR $trainer_view) {
 						'<td style="width:70px; padding-left:2px;">'.
 							'<a>'.
 								'<span class="span_rs" style="padding-left:5px;">'.
-									$thtml.
+									$t_html.
 								'</span>'.
 							'</a>'.
 						'</td>'.
@@ -360,7 +360,7 @@ if ($trainer OR $trainer_view) {
 
 	// if has read or write access
 	if ($trainer OR in_array('Note_n', $trainer_forms_selected_read_arr) OR in_array('Note_n', $trainer_forms_selected_write_arr)) {
-		echo $thtml;
+		echo $t_html;
 	}
 }
 

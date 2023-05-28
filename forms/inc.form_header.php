@@ -372,10 +372,15 @@ JOIN users2trainers u2t ON u.id = u2t.user_id AND u2g.group_id = u2t.group_id AN
 WHERE u2g.group_id = ? AND u2g.status = 1 ORDER BY u.id", array($UID, $UID, $GROUP)); */
 	$rows = $db->fetch("SELECT u2g.group_id, g.name AS group_name, u.id, u.uname, u.lastname, u.firstname, u2t.forms_select_write 
 FROM users2groups u2g 
-LEFT JOIN `groups` g ON (g.id = u2g.group_id)
-LEFT JOIN users u ON (u.id = u2g.user_id AND u.status = 1)
-LEFT JOIN users2trainers u2t ON (u.id = u2t.user_id AND u2g.group_id = u2t.group_id AND u2t.status = 1 AND u2t.trainer_id = ?)
-WHERE u2g.status = 1 AND ( ( CONCAT(',',u2t.forms_select_write,',') LIKE '%,$cat_form_id,%' AND u.level = 10 ) OR ( u.id = ? AND u2g.group_id IN ($Trainer_Group_in) ) )
+LEFT JOIN `groups` g ON (g.id = u2g.group_id) 
+LEFT JOIN users u ON (u.id = u2g.user_id AND u.status = 1) 
+LEFT JOIN users2trainers u2t ON (u.id = u2t.user_id AND u2g.group_id = u2t.group_id AND u2t.status = 1 AND u2t.trainer_id = ?) 
+WHERE u2g.status = 1 
+AND ( 
+		( CONCAT(',',u2t.forms_select_write,',') LIKE '%,".$cat_form_id.",%' AND u.level = 10 ) 
+		OR 
+		( u.id = ? AND u2g.group_id IN (".$Trainer_Group_in.") ) 
+	)
 ORDER BY u2g.group_id, u.level DESC, u.firstname, u.lastname, u.id", array($UID, $UID));
 // AND u2g.group_id = ? //now we get all groups
 //, $GROUP //,13_5, = ,13_5, in trainer perms

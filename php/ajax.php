@@ -20,7 +20,7 @@ $ID = isset($_REQUEST['ID']) ? (int)$_REQUEST['ID'] : 0; //regmon_id
 $sidx = isset($_REQUEST['sidx']) ? $_REQUEST['sidx'] : '';	// get index for sorting
 $sord = isset($_REQUEST['sord']) ? $_REQUEST['sord'] : ''; 	// get sorting direction
 
-$responce = new stdClass();
+$response = new stdClass();
 
 $where = '';
 

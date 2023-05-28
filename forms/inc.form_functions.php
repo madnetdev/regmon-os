@@ -123,7 +123,7 @@ function get_Form_Row_Item(string $type, int $row, array $item, string $Accordio
 	//td class required
 	$rc_td = '';
 	if ($is_required AND !$VIEW) $rc_td = ' required'; //class
-	//imput class required
+	//input class required
 	$rc = 'textfield'; //class
 	if ($is_required AND !$VIEW) $rc .= ' required'; //class
 	//change value
@@ -167,20 +167,20 @@ function get_Form_Row_Item(string $type, int $row, array $item, string $Accordio
 		$HTML_edit_name = ''.
 				$LANG->FORM_OUTPUT_NAME.':<br>'.	
 				'<input name="c_'.$id.'_name" type="text" value="'.$name.'" class="c_name required">'.
-				'<hr class="seperator">';
+				'<hr class="separator">';
 
 		//placeholder
 		$HTML_edit_placeholder = ''.
 				$LANG->FORM_PLACEHOLDER.':<br>'.
 				'<input name="c_'.$id.'_placeholder" type="text" value="'.$placeholder.'" class="c_placeholder">'.
-				'<hr class="seperator">';
+				'<hr class="separator">';
 
 		//required
 		$HTML_edit_required = ''.
 				$LANG->FORM_ITEM_REQUIRED.':<span class="span_required">*</span>'.
 				'<input type="checkbox"'.($is_required?' checked':'').' onchange="this.nextSibling.value=this.checked==true?1:0;">'.
 				'<input type="hidden" name="c_'.$id.'_required" value="'.($is_required?'1':'0').'" class="c_required">'.
-				'<hr class="seperator">';
+				'<hr class="separator">';
 
 		//width
 		$HTML_edit_width = ''.
@@ -219,7 +219,7 @@ function get_Form_Row_Item(string $type, int $row, array $item, string $Accordio
 						'<option value="360"'.($color_b=='360'?' selected':'').'>Red</option>'.
 					'</select>'.
 				'</div>'.
-				'<hr class="seperator">';
+				'<hr class="separator">';
 	}
 
 	//_Empty ################################################
@@ -370,7 +370,7 @@ function get_Form_Row_Item(string $type, int $row, array $item, string $Accordio
 				'<input name="c_'.$id.'_bold" type="radio" value="0" data-toggle="button"'.($bold=='0'?' checked':'').'>'.$LANG->FORM_ITEM_BOLD_FULL.
 			'</label>'.
 		'</div>'.
-		'<hr class="seperator">'.
+		'<hr class="separator">'.
 		$HTML_edit_width.
 	'</div>'.
 	//------------>>>>>>
@@ -474,7 +474,7 @@ function get_Form_Row_Item(string $type, int $row, array $item, string $Accordio
 			' <i class="fa fa-arrow-right"></i> '.
 			$LANG->FORM_ITEM_MAX.': <input name="c_'.$id.'_nmmax" type="text" value="'.$max.'" style="width:25%;" class="c_max">'.
 		'</div>'.
-		'<hr class="seperator">'.
+		'<hr class="separator">'.
 		'<div class="btn-group btn_group_2" data-toggle="buttons">'.
 			'<label class="btn btn-default'.(!$decimal?' active':'').'">'.
 				'<input name="c_'.$id.'_numintdec" type="radio" value="integer" data-toggle="button"'.(!$decimal?' checked':'').'>'.$LANG->FORM_ITEM_INTEGER.
@@ -483,7 +483,7 @@ function get_Form_Row_Item(string $type, int $row, array $item, string $Accordio
 				'<input name="c_'.$id.'_numintdec" type="radio" value="decimal" data-toggle="button"'.($decimal?' checked':'').'>'.$LANG->FORM_ITEM_DECIMAL.
 			'</label>'.
 		'</div>'.
-		'<hr class="seperator">'.
+		'<hr class="separator">'.
 		$HTML_edit_required.
 		$HTML_edit_width.
 	'</div>'.
@@ -587,10 +587,10 @@ function get_Form_Row_Item(string $type, int $row, array $item, string $Accordio
 		$LANG->FORM_PLACEHOLDER_FROM_TO.':<br>'.
 		'<input name="c_'.$id.'_placeholder_from" type="text" value="'.$placeholder_from.'" class="c_placeholder_from" style="width:50%;">'.
 		'<input name="c_'.$id.'_placeholder_to" type="text" value="'.$placeholder_to.'" class="c_placeholder_to" style="width:50%;">'.
-		'<hr class="seperator">'.
+		'<hr class="separator">'.
 		$LANG->FORM_PLACEHOLDER_PERIOD.':<br>'.
 		'<input name="c_'.$id.'_placeholder" type="text" value="'.$placeholder.'" class="c_placeholder">'.
-		'<hr class="seperator">'.
+		'<hr class="separator">'.
 		$HTML_edit_required.
 		$HTML_edit_width.
 	'</div>'.
@@ -600,7 +600,7 @@ function get_Form_Row_Item(string $type, int $row, array $item, string $Accordio
 		$html .= ''.
 			'<td id="rowItem_'.$id.'" class="rowItem s_input cm_it'.$rc_td.'" style="width:'.$width.'%;" data-row_item="'.$id.'">'.
 			  ($EDIT ? $HTML_edit_div . '<div class="rowItem_div">' :'').
-			  
+			
 				'<div class="input-group clockpicker period" id="clockpicker_from_'.$id.'" data-id="'.$id.'" data-placement="bottom" data-align="left" data-default="now" style="display:inline-table; width:31%;">'.
 					'<span class="input-group-addon" style="padding:6px;"><span class="fa fa-clock-o"></span></span>'.
 				($EDIT
@@ -647,13 +647,13 @@ function get_Form_Row_Item(string $type, int $row, array $item, string $Accordio
 						$HTML_edit_name.
 						$LANG->FORM_PLACEHOLDER.':<br>'.
 						'<input name="c_'.$id.'_opt" type="text" value="'.$opt.'" class="c_opt">'.
-						'<hr class="seperator">'.
+						'<hr class="separator">'.
 						$LANG->FORM_DROPDOWN.':<br>'.
 						'<select name="c_'.$id.'_dd" class="c_dd">'.
 							'<option value="" selected>'.$LANG->FORM_ITEM_SELECT_OPTION.'</option>'.
 							get_Available_Dropdowns($dd).
 						'</select>'.
-						'<hr class="seperator">'.
+						'<hr class="separator">'.
 						$HTML_edit_color.
 						$HTML_edit_required.
 						$HTML_edit_width.
@@ -735,13 +735,13 @@ function get_Form_Row_Item(string $type, int $row, array $item, string $Accordio
 				'<input name="c_'.$id.'_talign" type="radio" value="right" data-toggle="button"'.($talign=='right'?' checked':'').'>'.$LANG->FORM_ITEM_ALIGN_RIGHT.
 			'</label>'.
 		'</div>'.
-		'<hr class="seperator">'.
+		'<hr class="separator">'.
 		$LANG->FORM_ITEM_RADIO.':<br>'.
 		'<select name="c_'.$id.'_rdd" class="c_rdd">'.
 			'<option value="" selected>'.$LANG->FORM_ITEM_SELECT_OPTION.'</option>'.
 			get_Available_Dropdowns($rdd).
 		'</select><br>'.
-		'<hr class="seperator">'.
+		'<hr class="separator">'.
 		$HTML_edit_color.
 		$HTML_edit_required.
 		$HTML_edit_width.
@@ -865,7 +865,7 @@ function get_Form_Row_Item(string $type, int $row, array $item, string $Accordio
 				'<input name="c_'.$id.'_accType" type="radio" value="1" data-toggle="button"'.($accType=='1'?' checked':'').'>'.$LANG->FORM_ITEM_PANEL_OPEN_MULTI.''.//multiple
 			'</label>'.
 		'</div>'.
-		'<hr class="seperator">'.
+		'<hr class="separator">'.
 		$HTML_edit_width.
 	'</div>'.
 	//-------->>>>>>

@@ -185,7 +185,7 @@ array(
 	'TAB_CATEGORIES'			=> 'Kategorien',
 	'TAB_SPORTS_N_DROPDOWNS'	=> 'Listen (Sportarten, Dropdowns, usw.)', 
 	'TAB_LOCATION_GROUPS'		=> 'Standort Gruppen',
-	//calendar actions butttons
+	//calendar actions buttons
 	'INDEX_EDIT_RECORD'			=> 'Eintrag bearbeiten',
 	'INDEX_VIEW_RECORD'			=> 'Eintrag anzeigen',
 	'INDEX_DELETE_RECORD'		=> 'Eintrag löschen',
@@ -277,9 +277,9 @@ array(
 	//Requests ########################################################
 
 	//Athlete Answers to Trainer Request menu
-	'TRAINER_NOT_AVALABLE_REQUESTS'	=> 'Bisher gab es noch keine Traineranfragen.', //'Nicht vorhanden Traineranfragen',
-	'TRAINER_NOT_AVALABLE'			=> 'Es wurden noch keine Trainer freigeschaltet.', //'Nicht verfügbar Trainers',
-	'ATHLETES_NOT_AVALABLE'			=> 'Es wurde noch nichts freigegeben.', //'Nicht verfügbar Sportler',
+	'TRAINER_NOT_AVAILABLE_REQUESTS'=> 'Bisher gab es noch keine Traineranfragen.', //'Nicht vorhanden Traineranfragen',
+	'TRAINER_NOT_AVAILABLE'			=> 'Es wurden noch keine Trainer freigeschaltet.', //'Nicht verfügbar Trainers',
+	'ATHLETES_NOT_AVAILABLE'		=> 'Es wurde noch nichts freigegeben.', //'Nicht verfügbar Sportler',
 
 	//Group
 	'GROUP_USERS_NO_REQUESTS'		=> 'Keine Nutzeranfragen',
@@ -525,7 +525,7 @@ array(
 	'RESULTS_BUTTON_APPLY_CHANGES'=> 'Änderungen übernehmen',
 	'RESULTS_NO_DATA_CHANGE_SELECTION'=> 'Keine Daten vorhanden. Bitte ändere die Auswahlkriterien oben.',
 	'RESULTS_NO_DATA_SELECTED'	=> 'Nichts ausgewählt oder anzuzeigen.',
-	'RESULTS_INFO_STANDAR_COLORS'=> 'Standardfarben',
+	'RESULTS_INFO_STANDARD_COLORS'=> 'Standardfarben',
 	'RESULTS_INFO_LINES'		=> 'Linien',
 	'RESULTS_INFO_FORMULA'		=> 'Formelinfo',
 	'RESULTS_UPDATE_DIAGRAM'	=> 'Update-Diagramm',

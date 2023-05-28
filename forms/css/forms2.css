@@ -82,7 +82,7 @@ td.cm_it hr { margin:24px 0; border-top:2px solid #dfdfdf; }
 
 .fancybox-back { top:30px; }
 
-/*overright bootstrap for GRP, ATHLETE selects*/
+/*override bootstrap for GRP, ATHLETE selects*/
 @media (min-width: 1200px) { 
 	.container { width: auto; } /*1170px*/
 }

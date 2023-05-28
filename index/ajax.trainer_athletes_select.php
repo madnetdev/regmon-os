@@ -38,7 +38,7 @@ if ($db->numberRows() > 0) {
 	$html .= '</select>';
 }
 else {
-	$html = '<div class="empty_message">'.$LANG->ATHLETES_NOT_AVALABLE.'</div>';
+	$html = '<div class="empty_message">'.$LANG->ATHLETES_NOT_AVAILABLE.'</div>';
 }
 
 echo $html;

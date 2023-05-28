@@ -16,7 +16,7 @@ $group_id = (int)($_POST['group_id'] ?? $GROUP);
 //if TRAINER we limit to forms that can see 
 $where_trainer = '';
 $where_trainer2 = '';
-if ($TRAINER) { //from ajax.forms_data.php but litle changed
+if ($TRAINER) { //from ajax.forms_data.php but little changed
 	if ($athlete_id == '-1' OR $athlete_id != $UID) { //athlete-trainer
 		if ($athlete_id == '-1') $athlete_id = $UID; //self as athlete-trainer
 		$trainer_id = $UID;
@@ -87,8 +87,8 @@ $rows = $db->fetch("SELECT f.id, f.name, f.data_names
 FROM forms f 
 LEFT JOIN forms2categories f2c ON f2c.form_id = f.id 
 LEFT JOIN categories c ON c.id = f2c.category_id 
-WHERE f.status = 1 AND c.status = 1 $where_trainer2 $where_forms ORDER BY c.parent_id, c.sort, c.id, f.id", array());
-//f.status = 1 AND c.status = 1 --edo thelo na ta perno ola --auta prepei na mpoun sto teliko query kai meta isos kai edo
+WHERE f.status = 1 AND c.status = 1 $where_trainer2 $where_forms 
+ORDER BY c.parent_id, c.sort, c.id, f.id", array());
 if ($db->numberRows() > 0)  {
 	foreach ($rows as $row) {
 		$forms[$row['id']] = array($row['name'], json_decode($row['data_names'], true));
@@ -176,8 +176,8 @@ ORDER BY f.name, fd.created", array($athlete_id, $group_id));
 				if (count($res_json) != count($form_data_names) AND is_array($form_data_names)) {
 					$base_res_json = array();
 					//make an array with all keys
-					foreach ($form_data_names as $tkey => $form_data_name) {
-						$base_res_json[$tkey] = '';
+					foreach ($form_data_names as $key => $form_data_name) {
+						$base_res_json[$key] = '';
 					}
 					//add the missing keys
 					$res_json = $res_json + $base_res_json;

@@ -353,7 +353,7 @@ LANG = {
 		AUTO 					: 'Auto',
 		FORMULA 				: 'Formula',
 		FORMULA_BEAUTIFY		: 'Beautify Formula',
-		FORMULA_CALCULATE		: 'Calulate Formula',
+		FORMULA_CALCULATE		: 'Calculate Formula',
 		FORMULA_INDIVIDUAL		: 'Individual',
 		CALCULATION 			: 'Calculation',
 		DIAGRAM_FIELD_NAME 		: 'Name',

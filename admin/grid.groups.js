@@ -142,7 +142,7 @@ $groups.jqGrid('setCaption', $groups.attr('alt'))
 	.children("div.ui-jqgrid-titlebar").css({"text-align":"center", "cursor":"pointer"})
 	.children("span.ui-jqgrid-title").css({"float":"none", "font-size": "17px"});
 
-//Expand/Colapse grid from Caption click
+//Expand/Collapse grid from Caption click
 $($groups[0].grid.cDiv).on('click',function() {
 	if ($(pager).is(':hidden')) 
 		$(this).removeClass('ui-corner-all');

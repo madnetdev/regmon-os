@@ -46,11 +46,6 @@ img {
 }
 /*Grid shadow*/
 /*
-#gbox_billing, #editmodbilling, #delmodbilling, #viewmodbilling, #alertmod_billing,
-#gbox_teams, #editmodteams, #delmodteams, #viewmodteams, #alertmod_teams,
-#gbox_users, #editmodusers, #delmodusers, #viewmodusers, #alertmod_users,
-#gbox_users_all, #editmodusers_all, #delmodusers_all, #viewmodusers_all, #alertmod_users_all,
-#gbox_grid , #editmodgrid, #delmodgrid, #viewmodgrid, #alertmod_grid
 *=contain, ^=starts, $=ends
 */
 div[id^='gbox_']:not([id$='_t_tree']):not([id$='_t']), div[id^='editmod'], div[id^='delmod'], div[id^='viewmod'], div[id^='alertmod_']
@@ -83,11 +78,11 @@ div[id^='gbox_']:not([id$='_t_tree']):not([id$='_t']), div[id^='editmod'], div[i
     white-space: normal; /*mozila* /
 }*/
 
-/* mozila show bigger dont know why*/
+/* mozila show bigger don't know why*/
 .ui-jqdialog { font-size:10px;}
 
 
-/* edit form seperator */
+/* edit form separator */
 .ui-jqdialog-content .DataTD {
 	border-right: 1px dotted #AAA !important;
 }
@@ -114,7 +109,7 @@ div[id^='gbox_']:not([id$='_t_tree']):not([id$='_t']), div[id^='editmod'], div[i
 	filter:Alpha(Opacity=60) !important;
 }
 
-/*gia to footer grid buttons , na tous dinei ligo aera pros ta deksia*/
+/*for footer grid buttons, some space at right*/
 div.ui-pg-div {
 	padding-right: 10px !important;
 }

@@ -27,7 +27,7 @@ if ($db->numberRows() > 0) {
 	$html .= '</select>';
 }
 else {
-	$html = '<div class="empty_message">'.$LANG->TRAINER_NOT_AVALABLE.'</div>';
+	$html = '<div class="empty_message">'.$LANG->TRAINER_NOT_AVAILABLE.'</div>';
 	///html = 'NO_TRAINERS';
 }
 

@@ -408,7 +408,7 @@ async function Selected__DATA__init() {
 			resolve('Chart__Update Loaded');
 		});
 		
-		//end of proccess at Chart__Update
+		//end of process at Chart__Update
 	}
 	//load selected data
 	else {
@@ -484,7 +484,7 @@ function Fieldset__Athlete__Init(athlete_id, athlete_name) { //#####	 --RESULTS 
 						const data_line = V_FORMS_DATA[athlete_id][key_form_id][key_index];
 						const form_id = key_form_id;
 						const field_name = data_line.name;
-						const field_num = key_index.substring(1); //cut the '_' from the begining
+						const field_num = key_index.substring(1); //cut the '_' from the beginning
 						if (V_FORMS_DO[form_id] &&
 							V_FORMS_DO[form_id].indexOf(field_num) != -1) //if form field is selected
 						{
@@ -511,7 +511,7 @@ function Fieldset__Athlete__Init(athlete_id, athlete_name) { //#####	 --RESULTS 
 						//key_form_id = 3_S18
 						const data_line = V_FORMS_DATA[athlete_id][key_form_id][key_index];
 						const field_name = data_line.name;
-						//cut the '_' from the begining
+						//cut the '_' from the beginning
 						const field_num = key_index.substring(1);
 
 						if (V_FORMS_DO[base_form_id] &&
@@ -1048,7 +1048,7 @@ function DATA__Interval_Form_Fields__Values__Set(Saved_Data, interval_id) {
 	
 	const data_is_interval_form 	= $("#"+form_int_id+" input[name='is_interval_form[]']");
 	const data_interval_form 		= $("#"+form_int_id+" [name='interval_form[]']");
-	const data_formula_intividual 	= $("#"+form_int_id+" input[name='formula_intividual[]']");
+	const data_formula_individual 	= $("#"+form_int_id+" input[name='formula_individual[]']");
 	const data_formula_input 		= $("#"+form_int_id+" textarea[name='formula_input[]']");
 
 	const data_formula_sub_period 		= $("#"+form_int_id+" input[name='formula_sub_period_INT[]']");
@@ -1103,9 +1103,9 @@ function DATA__Interval_Form_Fields__Values__Set(Saved_Data, interval_id) {
 				//let calc_id = replaceAll(saved_sel_val, '|', '_');
 				let calc_id = interval_id + '_' + Field_Data.field_id;
 				if (Field_Data.is_interval_form == 'true' && Field_Data.formula_intividual == '1') {
-					$(data_formula_intividual[i]).prev().trigger("click");
-					//$('#formula_intividual_ck_'+calc_id).prop('checked', true);
-					//$('#formula_intividual_'+calc_id).val('1');
+					$(data_formula_individual[i]).prev().trigger("click");
+					//$('#formula_individual_ck_'+calc_id).prop('checked', true);
+					//$('#formula_individual_'+calc_id).val('1');
 				}
 				else {
 					$(data_interval_form[i]).val(Field_Data.interval_form).trigger('change');

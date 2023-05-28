@@ -37,7 +37,7 @@ function get_info_lines_color_formula():string {
 
 	return ''.
 	"<span class=\"help_colors\" title=\"<img src='img/highcharts_colors.png' class='img_colors'/>\">".
-		'<span class="help_question">?</span> '.$LANG->RESULTS_INFO_STANDAR_COLORS.
+		'<span class="help_question">?</span> '.$LANG->RESULTS_INFO_STANDARD_COLORS.
 	'</span> &nbsp; &nbsp; '.
 	"<span class=\"help_lines\" title=\"<img src='img/chart_lines_".$LANG->LANG_CURRENT.".png' class='img_lines'/>\">".
 		'<span class="help_question">?</span> '.$LANG->RESULTS_INFO_LINES.
@@ -59,7 +59,7 @@ function get_info_lines_color_formula():string {
 			'<tr><td>8</td><td>Minimum - var1 (7 Tage)</td><td>=MIN(D7:D13)</td><td>MIN({RA}:{RA+6})</td><td>MIN({RA}:{RA+6d})</td></tr>'.
 			'<tr><td>9</td><td>Maximum - var1 (7 Tage)</td><td>=MAX(D7:D13)</td><td>MAX({RA}:{RA+6})</td><td>MAX({RA}:{RA+6d})</td></tr>'.
 			'<tr><td>10</td><td>Mittelwert - var1 (7 Tage)</td><td>=AVERAGEIF(D7:D13;">0";D7:D13)</td><td>AVERAGEIF({RA}:{RA+6},\'>0\',{RA}:{RA+6}) or <br>AVERAGEIF({RA}:{RA+6},\'>0\')</td><td>AVERAGEIF({RA}:{RA+6d},\'>0\')</td></tr>'.
-			'<tr><td>11</td><td>Standardabweichung - var1 (7 Tage)</td><td>=STDEV.P(IF(D7:D13>0;D7:D13))</td><td>STDEVP({RA}:{RA+6}) <br> STDEVPN0({RA}:{RA+6}) = no zero/false vals</td><td>STDEVP({RA}:{RA+6d})</td></tr>'.
+			'<tr><td>11</td><td>Standardabweichung - var1 (7 Tage)</td><td>=STDEV.P(IF(D7:D13>0;D7:D13))</td><td>STDEVP({RA}:{RA+6}) <br> STDEVPN0({RA}:{RA+6}) = no zero/false values</td><td>STDEVP({RA}:{RA+6d})</td></tr>'.
 			'<tr><td>12</td><td>bedingte aggregierte Daten - if var3=1 -> sum var1 (7 Tage)</td><td>=SUMIF(F7:F13;1;D7:D13) </td><td>SUMIF({RC}:{RC+6},\'=1\',{RA}:{RA+6})</td><td>SUMIF({RC}:{RC+6d},\'=1\',{RA}:{RA+6d})</td></tr>'.
 			'<tr><td>13</td><td>bedingte aggregierte Daten - if var3=3 -> sum var1 (14 Tage)</td><td>=SUMIF(F7:F20;3;D7:D20)</td><td>SUMIF({RC}:{RC+13},\'=3\',{RA}:{RA+13})</td><td>SUMIF({RC}:{RC+13d},\'=3\',{RA}:{RA+13d})</td></tr>'.
 			'<tr><td colspan="5" style="text-align:left;">'.
@@ -87,7 +87,7 @@ function get_info_lines_color_formula():string {
 				"EDATE({DD},'-15d') = 2018-03-31<br>".
 				"EDATE({DD},'-4m') = 2017-12-15".
 				'<br style="line-height:30px;">'.
-				'<b>valid intervals</b> = d,day,days, m,month,months, y,year,years / t,tag,tage, m,monat,monate, j,jahr,jahre (Lowercase,Uppercase or compination)'.
+				'<b>valid intervals</b> = d,day,days, m,month,months, y,year,years / t,tag,tage, m,monat,monate, j,jahr,jahre (Lowercase,Uppercase or combination)'.
 			'</td></tr>'.
 		'</table>'.
 	'</div>';
@@ -149,7 +149,7 @@ function get_Select__Groups__Options(int $user_id, int $group_id, string $result
 				}
 			}
 			
-			$gr_adms = explode(',', $group_admins);
+			$gr_admins = explode(',', $group_admins);
 
 			//Group optgroup
 			if ($GP_group <> $GP_group_tmp) {
@@ -169,7 +169,7 @@ function get_Select__Groups__Options(int $user_id, int $group_id, string $result
 			//filter out what each level account cannot see
 			if ($GROUP_ADMIN OR $GROUP_ADMIN_2) {
 				//THIS_GROUP_ADMIN
-				if (in_array($user_id, $gr_adms)) {
+				if (in_array($user_id, $gr_admins)) {
 					$Select__Groups__Options .= $option;
 				}
 				//Group User
@@ -204,10 +204,10 @@ function get_Select__Groups__Options(int $user_id, int $group_id, string $result
 function Formula__Get_ALPHA_id(string $data_or_calc, int $num, bool $second_pass):string {
 	$prefix = '';
 	if (!$second_pass) {
-		$num = ($data_or_calc == 'data' ? $num : $num - 1); //ajust num  only on fisrt pass
-		$prefix = ($data_or_calc == 'data' ? 'R' : 'B'); //put R or B only on fisrt pass
+		$num = ($data_or_calc == 'data' ? $num : $num - 1); //adjust num  only on first pass
+		$prefix = ($data_or_calc == 'data' ? 'R' : 'B'); //put R or B only on first pass
 	}
-	//in case APLHA_id is biger than 26 letters (English Alphabet)
+	//in case ALPHA_id is bigger than 26 letters (English Alphabet)
 	$extra_ALPHA_id = ($num >= 26 ? Formula__Get_ALPHA_id($data_or_calc, (($num / 26 >> 0) - 1), true) : '');
 	$ALPHA_id = substr('ABCDEFGHIJKLMNOPQRSTUVWXYZ', ($num % 26 >> 0), 1);
 	return $prefix . $extra_ALPHA_id . $ALPHA_id;
@@ -218,7 +218,7 @@ function get_No_Data_Error():string {
 	global $LANG;
 	
 	return ''.
-	 	'<div class="Error_No_Data">'.
+		'<div class="Error_No_Data">'.
 			$LANG->RESULTS_NO_DATA_CHANGE_SELECTION.
 		'</div>'.
 		'<script>'.

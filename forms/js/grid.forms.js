@@ -121,7 +121,7 @@ $forms.jqGrid({
 });
 
 if (!V_GROUP_ADMIN_2) {
-	//dublicate button
+	//duplicate button
 	$forms.jqGrid("navButtonAdd", pager, {
 		iconsOverText: true,
 		buttonicon: "fa-copy",
@@ -156,7 +156,7 @@ else { //admin page
 		.children("div.ui-jqgrid-titlebar").css({"text-align":"center", "cursor":"pointer"})
 		.children("span.ui-jqgrid-title").css({"float":"none", "font-size": "17px"});
 
-	//Expand/Colapse grid from Caption click
+	//Expand/Collapse grid from Caption click
 	$($forms[0].grid.cDiv).on('click',function() {
 		if ($(pager).is(':hidden')) 
 			$(this).removeClass('ui-corner-all');

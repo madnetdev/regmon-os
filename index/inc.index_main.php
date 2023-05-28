@@ -166,8 +166,8 @@ $DIS2 = ' display:none;';
 					################################################################### */?>
 					<div class="col-sm-6">
 						<div class="panel-group" id="accordion2">
-		<?php 	if ($TRAINER) { //Trainers --admin and others to fisrt column
-				 	if (!$THIS_GROUP_TRAINER) {
+		<?php 	if ($TRAINER) { //Trainers --admin and others to first column
+					if (!$THIS_GROUP_TRAINER) {
 						$dis_panel = true;
 					} else {
 						$dis_panel = false;

@@ -236,7 +236,7 @@ if ($users_ids != '') //##################################################
 // Categories ###################################
 // make the view order
 $category_forms_ordered = array();
-//$category_forms_ordered[$row['form_id']] = array($row['form_id'], $row['name'], $row['data_names'], $order); //informatic
+//$category_forms_ordered[$row['form_id']] = array($row['form_id'], $row['name'], $row['data_names'], $order); //informatics
 $order = 0;
 
 
@@ -469,7 +469,7 @@ if ($db->numberRows() > 0)  {
 					}
 
 					if (substr_count($val, '.') == 1) { 
-						//in excel dots may tranlated to dates --so we give commas
+						//in excel dots may translated to dates --so we give commas
 						$form_data_columns .= '<td>'.str_replace('.', ',', $val).'</td>'; 
 					}
 					else { //maybe it is a date

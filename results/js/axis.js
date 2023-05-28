@@ -166,7 +166,7 @@ $('#save_selected').on('click', function()
 		$.post('ajax.template_save.php', post_data, function(data, result) {
 			if (data != 'ERROR') {
 				//update axis_saved_data json
-				$("#saved_select_conteiner").html(data);
+				$("#saved_select_container").html(data);
 
 				//update parent
 				parent.Axis__After_Action__Update((id != 0 ? 'update' : 'new'), axis_data, id, title);
@@ -200,7 +200,7 @@ $('#delete_saved').off('click').confirmation({
 				alert(data);
 			}
 			else if (data != 'ERROR') {
-				$("#saved_select_conteiner").html(data);
+				$("#saved_select_container").html(data);
 				//update parent
 				parent.Axis__After_Action__Update('delete', '', id, '');
 			}

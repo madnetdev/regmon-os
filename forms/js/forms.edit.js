@@ -261,7 +261,7 @@ function Page_Events_Init(page_num) {
 		$(this).addClass('trans5');
 	});
 
-	//init Row draging --need to called once in a Page
+	//init Row dragging --need to called once in a Page
 	if (!V_HAVE_DATA) {
 		$("#fieldset_"+page_num+" > .edit_step > .main_font > ul.row_sortable").sortable({  
 			items:"> li.row_sort",
@@ -362,13 +362,13 @@ New_Row_Events = function (row) {
 		}
 	});
 	
-	//init Row-Item draging --need to called once in a Row
-	if (!V_HAVE_DATA) { //init draging
+	//init Row-Item dragging --need to called once in a Row
+	if (!V_HAVE_DATA) { //init dragging
 		$('#Row_'+row+' > div.row_div > table > tbody > tr.row_item_sort').sortable({  
 			items:"> td",
 			connectWith: "tr.row_item_sort",
 			//containment:"ul.page_sortable", //"ul.item_sortable", //moves in 
-			handle: '.rowItem_edit > .c_handler > .rowItem_Drag', //thelei ena epipedo meta to selector
+			handle: '.rowItem_edit > .c_handler > .rowItem_Drag', //needs one level after selector
 			//helper: "clone",
 			revert: 300,
 			opacity: '.5',
@@ -871,7 +871,7 @@ function Accordion_init(type, item) {
 	});
 	
 	
-	//init AccPanel draging --need to called once in a Accordion
+	//init AccPanel dragging --need to called once in a Accordion
 	if (!V_HAVE_DATA) {
 		$("#accordion_"+item).sortable({  
 			items:"> .AccPanel",
@@ -895,7 +895,7 @@ function Accordion_init(type, item) {
 		rowItem_AccordionPanel_EditLink_init($(this).find('> .rowItem_edit > .c_handler_acc > a.rowItem_AccPanel_EditLink'), type, item, acc_item);
 
 		
-		//init AccPanel Row draging --need to called once in a AccPanel
+		//init AccPanel Row dragging --need to called once in a AccPanel
 		if (!V_HAVE_DATA) {
 			$(this).find('> .rowItem_div > .panel  > .accordionPanel > .panel-body > ul.row_sortable').sortable({  
 				items:"> li.row_sort",
@@ -937,7 +937,7 @@ function Accordion_Panel_init(type, item, acc_item, is_new) {
 	rowItem_AccordionPanel_EditLink_init($('#AccPanel_' + item + '_' + acc_item + ' > .rowItem_edit > .c_handler_acc > a.rowItem_AccPanel_EditLink'), type, item, acc_item);
 	
 	
-	//init AccPanel Row draging --need to called once in a AccPanel
+	//init AccPanel Row dragging --need to called once in a AccPanel
 	if (!V_HAVE_DATA) {
 		$('#AccPanel_'+item+'_'+acc_item).find('> .rowItem_div > .panel  > .accordionPanel > .panel-body > ul.row_sortable').sortable({  
 			items:"> li.row_sort",
@@ -1727,7 +1727,7 @@ get_Form_JSON = function()
 		obj.align = elems.find('input[name$=_accAlign]:checked').val(); //$=ends with
 		obj.bold = elems.find('input[name$=_accBold]:checked').val(); //$=ends with
 		obj.open = $(elems.find('input[name$=_accOpen]')[0]).is(':checked'); //$=ends with
-		//obj.width = elems.find('.c_width').val(); //is allways 100%
+		//obj.width = elems.find('.c_width').val(); //is always 100%
 		obj.Rows = Rows_obj;
 		return obj;
 	}
@@ -1907,8 +1907,8 @@ $("button.preview").on('click',function() {
 $("button.save").on('click',function() {
 	loading.show();
 	let c_name_missing = false;
-	let page_display_times_conflic = false;
-	let page_display_times_conflic2 = false;
+	let page_display_times_conflict = false;
+	let page_display_times_conflict2 = false;
 
 	$(".popover").popover('destroy'); //first remove all popups
 
@@ -1918,7 +1918,7 @@ $("button.save").on('click',function() {
 			if ($(this).val() == '1') {
 				const page_times = $(this).parents('.page_sort').find('.page_display_times').val();
 				if (page_times != '0') {
-					page_display_times_conflic = true;
+					page_display_times_conflict = true;
 
 					parent.Swal({
 						type: 'error',
@@ -1940,7 +1940,7 @@ $("button.save").on('click',function() {
 		});
 
 		if (normal_pages == '0') {
-			page_display_times_conflic2 = true;
+			page_display_times_conflict2 = true;
 			parent.Swal({
 				type: 'error',
 				title: DISPLAY_TIMES_INFO_ERROR,
@@ -1975,8 +1975,8 @@ $("button.save").on('click',function() {
 
 
 		if (!c_name_missing &&
-			!page_display_times_conflic &&
-			!page_display_times_conflic2)
+			!page_display_times_conflict &&
+			!page_display_times_conflict2)
 		{
 			get_Form_JSON();
 

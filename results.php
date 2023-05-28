@@ -12,7 +12,7 @@ require('results/inc.results_top.php');
 
 <section class="container" id="main">
 	<div id="wizard_container">
- 
+
 		<div id="top-wizard">
 			<div class="wiz-title"><i><?=$LANG->RESULTS_PAGE_HEADER;?>:</i></div>
 			<div class="shadow"></div>

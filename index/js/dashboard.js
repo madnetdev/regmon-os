@@ -268,7 +268,7 @@ function get_dash_content(dash) {
 		}
 	});
 
-	$('.colorpicker').remove(); //remove colorpickers
+	$('.colorpicker').remove(); //remove all colorpicker
 	
 
 	const html = ''+

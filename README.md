@@ -47,7 +47,7 @@
 
 3. Create Database and User for the Database :
 
-    to continue the instalation you will need :
+    to continue the installation you will need :
     ```
     DB_NAME
     DB_USER
@@ -100,12 +100,12 @@
     docker-compose up
     ```
     
-    For running containers as deamon and take the console back
+    For running containers as daemon and take the console back
     ```
     docker-compose up -d
     ```
     
-    For stoping containers
+    For stopping containers
     ```
     docker-compose down
     ```
@@ -118,7 +118,7 @@
 
 3. Create Database and User for the Database :
 
-    to continue the instalation you will need :
+    to continue the installation you will need :
     ```
     DB_NAME
     DB_USER
@@ -161,7 +161,7 @@
     - create some Dropdown Menus
     - create new Sports and new Sports Categories 
     - register some Athletes and Trainers accounts 
-    - aprove new Users to the Group
+    - approve new Users to the Group
     - manage Group Users
     - assign Athletes to Trainers 
     - give permissions to Trainers on Athletes Forms Data

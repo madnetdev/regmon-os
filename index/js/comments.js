@@ -168,7 +168,7 @@ function init_Comments_Create(from) {
 			$("#isAllDay").prop('checked', true).trigger('change');
 		}
 	}
-	else if (from == 'Cal_agendaDay' || from == 'Cal_agendaWeek') { //click cal-ollday bat --date 
+	else if (from == 'Cal_agendaDay' || from == 'Cal_agendaWeek') { //click cal-allday bat --date 
 		//allday false for week-day click
 		if (in_cal) {
 			$("#isAllDay").prop('checked', false).trigger('change');
@@ -270,7 +270,7 @@ function item_Comment_Date_init(element, pos) {
 		$(this).find('input').trigger('change'); //this=div
 	});
 
-	$(element).data("DateTimePicker").widgetPositioning({horizontal: pos, vertical: 'bottom'}); //dont know why needed again here to work
+	$(element).data("DateTimePicker").widgetPositioning({horizontal: pos, vertical: 'bottom'}); //don't know why needed again here to work
 }
 
 

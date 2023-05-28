@@ -198,7 +198,7 @@ $users.jqGrid('setCaption', $users.attr('alt') +' '+ users_Grouping)
 	.children("div.ui-jqgrid-titlebar").css({"text-align":"center", "cursor":"pointer"})
 	.children("span.ui-jqgrid-title").css({"float":"none", "font-size": "17px"});
 
-//Expand/Colapse grid from Caption click
+//Expand/Collapse grid from Caption click
 $($users[0].grid.cDiv).on('click',function(e) {
 	if (e.target.id == 'UserGrouping') return false; //stop trigger caption click when click on UserGrouping select
 	if ($(pager).is(':hidden')) 

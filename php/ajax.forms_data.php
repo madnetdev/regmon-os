@@ -29,11 +29,11 @@ switch ($action) {
 		//echo check_update_result($result);
 		
 	  break;
-	  
+
 	case 'cal_count': //get count
 	case 'cal': // SELECT 
 		
-		$responce = array();
+		$response = array();
 		
 		$group_id = (int)($_REQUEST['group_id'] ?? 0);
 		$start = isset($_REQUEST['start']) ? date("Y-m-d 00:00:00", strtotime($_REQUEST['start'])) : date("Y-m-d", strtotime("-1 week"));
@@ -98,7 +98,7 @@ switch ($action) {
 					if ($row['created_end'] != '' AND $row['created'] != $row['created_end']) {
 						$date_time_end = $row['created_end'];
 					}
-					$responce[$i] = $responce[$i]['cell'] = array(
+					$response[$i] = $response[$i]['cell'] = array(
 						"id" => $row['id'],
 						"title" => $forms_names[$row['form_id']]['name'],
 						"start" => $row['created'],
@@ -111,7 +111,7 @@ switch ($action) {
 							'<button id="forms_data_deactivate_'.$row['id'].'" type="button" class="bttn" style="padding:3px 10px; width:190px;">'.$LANG->INDEX_DEACTIVATE_RECORD.' &nbsp; <i class="fa fa-eye-slash" style="font-size:16px;"></i></button>'.
 							//activate form_data entry
 							'<button id="forms_data_activate_'.$row['id'].'" type="button" class="bttn" style="padding:3px 10px; width:190px;">'.$LANG->INDEX_ACTIVATE_RECORD.' &nbsp; <i class="fa fa-eye" style="font-size:16px;"></i></button>'.
-							//edit form ////////////////////////an mporei
+							//edit form --if can
 							(($athlete_id == $UID OR ($trainer_view AND in_array($row['category_id'].'_'.$row['form_id'],$trainer_write_arr)))?
 								'<br>'.
 								'<button id="Cal_Edit_'.$row['id'].'" type="button" class="bttn fancybox fancybox.iframe" href="form.php?change=true&id='.$row['form_id'].'&cat_id='.$row['category_id'].'&from_data_id='.$row['id'].'&group_id='.$row['group_id'].'&athlete_id='.$athlete_id.'" style="margin-top:10px; padding:3px 10px; width:190px;">'.$LANG->INDEX_EDIT_RECORD.'&nbsp; &nbsp;<i class="fa fa-edit" style="font-size:16px;"></i></button>'
@@ -122,7 +122,7 @@ switch ($action) {
 							//view results
 							'<br>'.
 							'<button id="Cal_Res_Sub_'.$row['id'].'" type="button" class="bttn fancybox fancybox.iframe" href="forms_results.php?athlete_id='.$athlete_id.'&id='.$row['form_id'].'&cat_id='.$row['category_id'].'&timestamp='.(strtotime($row['created']) + 30*60).'&iframe'.$sec.'" style="margin-top:10px; padding:3px 10px; width:190px;">'.$LANG->INDEX_VIEW_RESULTS.' &nbsp; &nbsp;<i class="fa fa-bar-chart" style="font-size:16px;"></i></button>'.
-							//delete form.save ////////////////////////an mporei
+							//delete form.save --if can
 							(($athlete_id == $UID OR ($trainer_view AND in_array($row['category_id'].'_'.$row['form_id'],$trainer_write_arr)))?
 								'<br>'.
 								'<button id="Cal_Res_Del_'.$row['id'].'" type="button" class="bttnR" style="margin-top:10px; padding:3px 10px; width:190px;">'.$LANG->INDEX_DELETE_RECORD.' &nbsp; <i class="fa fa-trash-o" style="font-size:16px;"></i></button>'
@@ -153,8 +153,8 @@ switch ($action) {
 						}
 						//FIXES //////////////////////////////////////////////////
 						
-						$responce[$i] = $responce[$i]['cell'] = array(
-							//comments need to have different id than normal events so no conflic
+						$response[$i] = $response[$i]['cell'] = array(
+							//comments need to have different id than normal events so no conflict
 							"id" => -$row['id'],
 							"title" => $row['name'],
 							"start" => $start,
@@ -178,12 +178,12 @@ switch ($action) {
 				}
 			}
 			
-			$responce = json_encode($responce);
+			$response = json_encode($response);
 			
-			if ($responce == '""') //if empty
+			if ($response == '""') //if empty
 				echo '[]';
 			else 
-				echo $responce;
+				echo $response;
 		
 		} //$action != 'cal_count' end
 		else { //cal_count
@@ -196,11 +196,11 @@ switch ($action) {
 		}
 		
 	  break;
-	  
+
 	case 'view': // SELECT 
 	default: //view
 		
-		$responce = new stdClass();
+		$response = new stdClass();
 		$sidx = $sidx ?? '';
 		$sord = $sord ?? '';
 		$group_id = (int)($_REQUEST['group_id'] ?? 0);
@@ -213,7 +213,7 @@ switch ($action) {
 		$i=0;
 		if ($db->numberRows() > 0)  {
 			foreach ($rows as $row) {
-				$responce->rows[$i] = $responce->rows[$i]['cell'] = array(
+				$response->rows[$i] = $response->rows[$i]['cell'] = array(
 					//'',
 					$row['id'],
 					$row['user_id'],
@@ -228,12 +228,12 @@ switch ($action) {
 			}
 		}
 		
-		$responce = json_encode($responce);
+		$response = json_encode($response);
 		
-		if ($responce == '""') //if empty
+		if ($response == '""') //if empty
 			echo '{"rows":[]}';
 		else 
-			echo $responce;
+			echo $response;
 			
 	  break;
 }

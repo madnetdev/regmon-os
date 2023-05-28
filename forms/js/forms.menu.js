@@ -108,8 +108,8 @@ function init_Forms_Selection_Menu(elem, type) {
 					form_id: form
 				};
 				$.post('forms/ajax.form_default_template_select.php', post_data, function (data, result) {
-					const savebt = '<hr><button type="button" id="save_default_template_' + id + '" class="save" style="margin:5px;">' + LANG.BUTTON_SAVE + ' &nbsp; </button>';
-					$('#' + id).html(data + savebt);
+					const save_bt = '<hr><button type="button" id="save_default_template_' + id + '" class="save" style="margin:5px;">' + LANG.BUTTON_SAVE + ' &nbsp; </button>';
+					$('#' + id).html(data + save_bt);
 
 					$('#save_default_template_' + id).off('click').on('click', function () {
 						//const temp_id = $('#select_template_'+id+' option:selected').val(); //not work

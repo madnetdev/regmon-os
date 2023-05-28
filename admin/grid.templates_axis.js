@@ -85,7 +85,7 @@ $templates_axis.jqGrid({
 	refresh:true, refreshtext: LANG.BUTTON_RELOAD,
 	reloadGridOptions: { fromServer: true }
 })
-//dublicate button
+//duplicate button
 .jqGrid("navButtonAdd", pager, {
 	iconsOverText: true,
 	buttonicon: "fa-copy",
@@ -125,7 +125,7 @@ $templates_axis.jqGrid('setCaption', $templates_axis.attr('alt') +' '+ templates
 	.children("div.ui-jqgrid-titlebar").css({"text-align":"center", "cursor":"pointer"})
 	.children("span.ui-jqgrid-title").css({"float":"none", "font-size": "17px"});
 
-//Expand/Colapse grid from Caption click
+//Expand/Collapse grid from Caption click
 $($templates_axis[0].grid.cDiv).on('click',function(e) {
 	if (e.target.id == 'templates_axis_Grouping') return false; //stop trigger caption click when click on UserGrouping select
 	if ($(pager).is(':hidden')) 
