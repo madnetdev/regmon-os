@@ -23,21 +23,24 @@ $PATH_2_ROOT = '../';
 //#############################################
 
 
+$CONFIG = array();
 $DB_CONFIG = array();
 $ENV_File = __DIR__ . '/' . $PATH_2_ROOT . '.env';
 $ENV_File_Sample = __DIR__ . '/' . $PATH_2_ROOT . '.env.sample';
 
-function get_DB_CONFIG__From_ENV_File(string $ENV_File): array {
+function get_DB_CONFIG__From_ENV_File(string $ENV_File):mixed {
 	$DB_CONFIG_arr = array();
 	//load Environment Variables 
 	$lines = file($ENV_File, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-	foreach ($lines as $line) {
-		if (strpos(trim($line), '#') === 0) continue;
-		list($name, $value) = explode('=', $line, 2);
-		$name = trim($name);
-		$value = trim($value);
-		//putenv(sprintf('%s=%s', $name, $value));
-		$DB_CONFIG_arr[$name] = $value;
+	if (is_array($lines)) {
+		foreach ($lines as $line) {
+			if (strpos(trim($line), '#') === 0) continue;
+			list($name, $value) = explode('=', $line, 2);
+			$name = trim($name);
+			$value = trim($value);
+			//putenv(sprintf('%s=%s', $name, $value));
+			$DB_CONFIG_arr[$name] = $value;
+		}
 	}
 	return $DB_CONFIG_arr;
 }
@@ -64,7 +67,6 @@ function is_CONFIG_Option_Missing():bool {
 		!isset($CONFIG['SEC_Encrypt_Secret']) OR 
 		!isset($CONFIG['SEC_Hash_IP']) OR 
 		!isset($CONFIG['LogLimiter']['Max_Attempts']) OR 
-		!isset($CONFIG['LogLimiter']['Reset_Attempts_Minutes']) OR 
 		!isset($CONFIG['LogLimiter']['Block_Minutes']) OR 
 		!isset($CONFIG['Use_VisualCaptcha']) OR 
 		!isset($CONFIG['Use_Multi_Language_Selector']) OR 
@@ -102,7 +104,7 @@ mysqli_report(MYSQLI_REPORT_OFF);
 
 //Init DB ###############################################
 require_once(__DIR__.'/'.$PATH_2_ROOT.'php/class.db.php');	
-$db = db::open('mysqli', $DB_CONFIG['DB_Name'], $DB_CONFIG['DB_User'], $DB_CONFIG['DB_Pass'], $DB_CONFIG['DB_Host']);
+$db = db::open('mysqli', $DB_CONFIG['DB_Name'].'', $DB_CONFIG['DB_User'].'', $DB_CONFIG['DB_Pass'].'', $DB_CONFIG['DB_Host'].'');
 //Init DB ###############################################
 
 
@@ -242,7 +244,7 @@ if ($CONFIG['DB_Debug']) {
 
 //Load languages
 require_once(__DIR__.'/'.$PATH_2_ROOT.'php/class.language.php');
-$LANG = Language::getInstance($CONFIG['REGmon_Folder'], $CONFIG['Default_Language'], !!$CONFIG['Use_Multi_Language_Selector']);
+$LANG = Language::getInstance($CONFIG['REGmon_Folder'].'', $CONFIG['Default_Language'].'', !!$CONFIG['Use_Multi_Language_Selector']);
 
 
 //Load Date functions -> they based on language

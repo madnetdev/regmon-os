@@ -1,6 +1,10 @@
 <?php
 declare(strict_types=1);
 
+//from config.php
+/** @var string $ENV_File */
+/** @var string $DB_Migration_File_Selected */
+
 //echo '<pre>'; print_r($_SERVER);
 
 $Config_Normal_Page = false;
@@ -136,12 +140,18 @@ if (isset($SEC_check_config)) {
 	
 			//conn to DB ok (Host, User, Pass) --> lets check if DB exist
 			if ($conn) {
-				$DB_exist = mysqli_fetch_array(mysqli_query($conn, "SHOW DATABASES LIKE '".$_POST['DB_Name']."'"));
-				if (!empty($DB_exist)) { //exist
-					$Config_Test_Database_Success = 'DB Connection : Success<br>Database "'.$_POST['DB_Name'].'" Exist';
+				$DB_Name = mysqli_real_escape_string($conn, $_POST['DB_Name']); 
+				$DB_exist_sql = mysqli_query($conn, "SHOW DATABASES LIKE '".$DB_Name."'");
+				$DB_exist = false;
+				if ($DB_exist_sql instanceof mysqli_result) {
+					$DB_exist = mysqli_fetch_array($DB_exist_sql);
+				}
+
+				if (is_array($DB_exist)) { //exist
+					$Config_Test_Database_Success = 'DB Connection : Success<br>Database "'.$DB_Name.'" Exist';
 				}
 				else { //not exist
-					$Config_Test_Database_Error = 'Database "'.$_POST['DB_Name'].'" does not exist';
+					$Config_Test_Database_Error = 'Database "'.$DB_Name.'" does not exist';
 				}
 			}
 		}
@@ -167,7 +177,7 @@ if (isset($SEC_check_config)) {
 			$DB_Migration_File = $DB_Migrations_Directory . $DB_Migration_File_Selected;
 			$DB_Migration_File_content = file_get_contents($DB_Migration_File);
 
-			if ($DB_Migration_File_content != '') {
+			if ($DB_Migration_File_content) {
 				//Set MySQLi to throw exceptions 
 				mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 				
@@ -175,9 +185,10 @@ if (isset($SEC_check_config)) {
 				try {
 					//supposed we have a db connection
 					$conn = mysqli_connect($DB_CONFIG['DB_Host'], $DB_CONFIG['DB_User'], $DB_CONFIG['DB_Pass'], $DB_CONFIG['DB_Name']);
-
-					//execute multi query
-					mysqli_multi_query($conn, $DB_Migration_File_content);
+					if ($conn) {
+						//execute multi query
+						mysqli_multi_query($conn, $DB_Migration_File_content);
+					}
 				}
 				catch( mysqli_sql_exception $e ) {
 					$db_error = true;
@@ -250,8 +261,10 @@ if (isset($SEC_check_config)) {
 				$db_error = false;
 				try {
 					$conn = mysqli_connect($DB_CONFIG['DB_Host'], $DB_CONFIG['DB_User'], $DB_CONFIG['DB_Pass'], $DB_CONFIG['DB_Name']);
-					//execute multi query
-					mysqli_multi_query($conn, $Main_Data_sql);
+					if ($conn) {
+						//execute multi query
+						mysqli_multi_query($conn, $Main_Data_sql);
+					}
 				}
 				catch( mysqli_sql_exception $e ) {
 					$db_error = true;

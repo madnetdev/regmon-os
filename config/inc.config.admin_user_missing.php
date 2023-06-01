@@ -1,7 +1,10 @@
-<?php // config - Admin User Missing ?>
+<?php // config - Admin User Missing 
 
-<?php if (!isset($SEC_check_config) OR $SEC_check_config != 'APP_Admin_User_Missing') exit; ?>
+//from config.php
+/** @var string $APP_Admin_User_Save_Error */
 
+if (!isset($SEC_check_config) OR $SEC_check_config != 'APP_Admin_User_Missing') exit;
+?>
 
 <form name="form_AdminUser" id="form_AdminUser" action="config.php" method="POST">
 

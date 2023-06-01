@@ -16,7 +16,7 @@ if (!$data_ids OR !$athletes_ids OR $athletes_ids == "''" OR !$date_from OR !$da
 	exit;
 }
 
-
+/** @var object $FORMS_DO */
 $FORMS_DO = array();
 
 $data_ids_arr = explode(',', $data_ids);
@@ -64,7 +64,7 @@ ORDER BY form_id, name", array());
 	if ($db->numberRows() > 0) {
 		foreach ($saves as $save) {
 			$SAVES_forms_names[ $save['id'] ] = $save['name'];
-			$data_json = json_decode($save['data_json'], true);
+			$data_json = (array)(object)json_decode($save['data_json'], true);
 			//echo "<pre>"; print_r($data_json['data']); echo "</pre>";
 			foreach ($data_json['data'] as $data_key => $data_field) {
 				//only form fields, not 'calculation' formulas
@@ -201,11 +201,14 @@ ORDER BY fd.user_id, f.name, fd.created", array());
 if ($db->numberRows() > 0)  {
 	$user_id_last = '';
 	$form_id_last = '';
-	foreach ($forms_data as $form_data_fields) {
+	$series_count = 0;
+	$_field_key = '';
+	foreach ($forms_data as $form_data_fields) 
+	{
 		$user_id = $form_data_fields['user_id'];
 		$form_id = $form_data_fields['form_id'];
 		$form_name = $forms[$form_id][0];
-		$form_data_names = $forms[$form_id][1]; //array
+		$form_data_names = (array)$forms[$form_id][1]; //array
 		
 		//forms_n_fields array
 		if (!array_key_exists($form_id, $forms_n_fields)) {
@@ -245,11 +248,12 @@ if ($db->numberRows() > 0)  {
 		
 
 		//results
-		$res_json = json_decode($form_data_fields['res_json'], true);
+		$res_json = (array)json_decode($form_data_fields['res_json'], true);
 		
 
 		//if we have less keys than we need  (wrong input) --> need to fix here
-		if (count($res_json) != count($form_data_names)) {
+		if (count($res_json) != 
+		count($form_data_names)) {
 			$base_res_json = array();
 			//we make an array with all keys
 			foreach ($form_data_names as $key => $form_data_name) {
@@ -314,7 +318,7 @@ if ($db->numberRows() > 0)  {
 					$series[$user_id][$form_id][$_field_key . '_S']['type'] = '_Text';
 
 					//can be a single_value or Num__String
-					$data_input = explode('__', $field_data);
+					$data_input = explode('__', $field_data.'');
 					//Num__String
 					if (isset($data_input[1])) {
 						$data_input = $data_input[1] . ''; //get string only
@@ -377,7 +381,7 @@ if ($db->numberRows() > 0)  {
 			{
 				//copy form data to saved form
 				if (isset($FORMS_DO['saves']) AND isset($FORMS_DO['saves'][$form_id_last])) {
-					foreach ($FORMS_DO['saves'][$form_id_last] as $save_form_id) {
+					foreach ((array)$FORMS_DO['saves'][$form_id_last] as $save_form_id) {
 						//copy form data to saved form
 						$series[$user_id_last][$form_id_last . '_S' . $save_form_id] = $series[$user_id_last][$form_id_last];
 						
@@ -406,7 +410,7 @@ if ($db->numberRows() > 0)  {
 	
 	//copy form data to saved forms
 	if (isset($FORMS_DO['saves']) AND isset($FORMS_DO['saves'][$form_id_last])) {
-		foreach ($FORMS_DO['saves'][$form_id_last] as $save_form_id) {
+		foreach ((array)$FORMS_DO['saves'][$form_id_last] as $save_form_id) {
 			//copy form data to saved form
 			$series[$user_id_last][$form_id_last . '_S' . $save_form_id] = $series[$user_id_last][$form_id_last];
 			

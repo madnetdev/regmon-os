@@ -9,7 +9,7 @@ if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 //get forms_data counts & sql filters for forms that have data
 $where_forms = '0';
 // get Forms with forms_data
-$Forms_with_Forms_Data_arr = get_Forms_with_Forms_Data_count_array($UID);
+$Forms_with_Forms_Data_arr = (array)get_Forms_with_Forms_Data_count_array($UID);
 if (count($Forms_with_Forms_Data_arr)) {
 	$where_forms = implode(',', array_keys($Forms_with_Forms_Data_arr));
 }
@@ -25,12 +25,15 @@ LEFT JOIN forms f ON f.id = t.form_id
 $where_forms 
 ORDER BY t.form_id, t.name", array(), 'form_id', 'id'); 
 if ($db->numberRows() > 0) {
-	foreach ($saves as $fid => $save_id) {
-		$saves_tmp = '';
-		foreach ($save_id as $save_id => $save) {
-			$saves_tmp .= '<option value="' . $save['form_id'] . '__' . $save_id . '">' . html_chars($save['name']) . '</option>';
+	foreach ($saves as $form_id => $save_arr) {
+		$form_name = '';
+		$saves_options = '';
+		foreach ($save_arr as $save_id => $save) {
+			$form_name = html_chars($save['form_name']);
+			$saves_options .= '<option value="' . $save['form_id'] . '__' . $save_id . '">' . html_chars($save['name']) . '</option>';
 		}
-		$dash_saves_options .= '<optgroup label="' . html_chars($save['form_name']) . '">' . $saves_tmp . '</optgroup>';
+
+		$dash_saves_options .= '<optgroup label="' . $form_name . '">' . $saves_options . '</optgroup>';
 	}
 }
 

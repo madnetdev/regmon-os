@@ -13,12 +13,12 @@ if (!isset($_REQUEST['i'])) {
 
 
 $ajax = $_REQUEST['i'];
-$action = isset($_REQUEST['oper']) ? $_REQUEST['oper'] : '';
-$id = isset($_REQUEST['id']) ? (int)$_REQUEST['id'] : 0; //db_id
-$ID = isset($_REQUEST['ID']) ? (int)$_REQUEST['ID'] : 0; //regmon_id
+$action = $_REQUEST['oper'] ?? '';
+$id = (int)($_REQUEST['id'] ?? 0); //db_id
+$ID = (int)($_REQUEST['ID'] ?? 0); //regmon_id
 
-$sidx = isset($_REQUEST['sidx']) ? $_REQUEST['sidx'] : '';	// get index for sorting
-$sord = isset($_REQUEST['sord']) ? $_REQUEST['sord'] : ''; 	// get sorting direction
+$sidx = $_REQUEST['sidx'] ?? ''; // get index for sorting
+$sord = $_REQUEST['sord'] ?? ''; // get sorting direction
 
 $response = new stdClass();
 
@@ -38,7 +38,7 @@ switch($ajax) {
 	case 'templates':
 	//case 'users_files':
 	//case 'importTrackers':
-	//case 'config': //not here -it is a special page
+	//case 'config': //not here -it is a standalone page
 		if (file_exists('ajax.'.$ajax.'.php')) {
 			include('ajax.'.$ajax.'.php');
 		}
@@ -71,10 +71,10 @@ function check_update_result(mixed $result):string {
 function check_insert_result(mixed $insert_id):string {
 	global $LANG, $db;
 	
-	if ($insert_id AND $insert_id == (int)$insert_id) {
+	if (is_int($insert_id)) {
 		return 'OK_insert';
 	}
-	elseif (!$insert_id) { 
+	elseif (is_bool($insert_id) AND !$insert_id) { 
 		if (substr_count($db->_error(), 'Duplicate entry') <> 0) {
 			return $LANG->WARN_USERNAME_EXIST;
 		}
@@ -85,9 +85,15 @@ function check_insert_result(mixed $insert_id):string {
 	}
 	else {
 		//we get the error in $insert_id --instead of $db->_error()
-		if (substr_count($insert_id.'', 'Duplicate entry') <> 0) {
-			return $LANG->WARN_USERNAME_EXIST;
+		if (is_string($insert_id)) {
+			if (substr_count($insert_id, 'Duplicate entry') <> 0) {
+				return $LANG->WARN_USERNAME_EXIST;
+			}
+			else {
+				return $insert_id;
+			}
 		}
+		
 		return 'OK_insert';
 	}
 }

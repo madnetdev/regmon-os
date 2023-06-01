@@ -1,5 +1,10 @@
 <?php // ajax Categories
 
+//ajax.php
+/** @var string $action */
+/** @var int $id */
+/** @var string $where */
+
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
 switch ($action) {
@@ -87,8 +92,7 @@ switch ($action) {
 			}
 			//echo "<pre>";print_r($categories_array);echo "</pre>";
 
-			function buildCategorySelect(int $parent, array $categories_array, int $level = 1):string {
-				global $action;
+			function buildCategorySelect(mixed $parent, mixed $categories_array, string $action, int $level):string {
 				$html = '';
 				$space = '';
 
@@ -97,7 +101,7 @@ switch ($action) {
 				}
 
 				if (isset($categories_array['parent_categories'][$parent])) {
-					foreach ($categories_array['parent_categories'][$parent] as $cat_id) {
+					foreach ((array)$categories_array['parent_categories'][$parent] as $cat_id) {
 
 						$dis = (($action=='get_Categories_Select_Root' AND $level==3) ? ' disabled' : '');
 						
@@ -107,14 +111,15 @@ switch ($action) {
 								'</option>';
 
 						if (isset($categories_array['parent_categories'][$cat_id])) { //have childs
-							$html .= buildCategorySelect($cat_id, $categories_array, $level + 1); //get childs
+							//get childs
+							$html .= buildCategorySelect($cat_id, $categories_array, $action, $level + 1);
 						}
 					}
 				}
 				return $html;
 			}
 
-			$options .= buildCategorySelect(0, $categories_array);
+			$options .= buildCategorySelect(0, $categories_array, $action, 1);
 		}
 		$options .= '</select>';
 		
@@ -134,12 +139,11 @@ ORDER BY parent_id, sort, name", array());
 //WHERE c.status = 1 --need to see all here
 		$i=0;
 		if ($db->numberRows() > 0)  {
-			$categories = array();
-			$categories_conf = array();
-			$categories_array = array(
-				'categories' => array(),
-				'parent_categories' => array()
-			);
+			$categories = [];
+			$categories_array = [
+				'categories' => [],
+				'parent_categories' => []
+			];
 			
 			foreach ($rows as $row) {
 				//categories array with id as key
@@ -149,23 +153,29 @@ ORDER BY parent_id, sort, name", array());
 			}
 			//echo "<pre>";print_r($categories_array);echo "</pre>";
 
-			function buildCategory(int $parent, array $categories_array, int $level = 1):void {
-				global $categories;
+			/**
+			 * Recursively builds an array of categories and their children
+			 *
+			 * @param mixed  $parent           Parent category ID
+			 * @param mixed  $categories_array Array of categories and their children
+			 * @param int    $level            Current level of the category in the hierarchy
+			 * @param mixed  $categories       Variable as a reference, so the changes made to it inside the function will be reflected in the variable outside the function.
+			 * @return void
+			 */
+			function buildCategoryArray(mixed $parent, mixed $categories_array, int $level, mixed &$categories):void {
 				if (isset($categories_array['parent_categories'][$parent])) {
-					foreach ($categories_array['parent_categories'][$parent] as $cat_id) {
+					foreach ((array)$categories_array['parent_categories'][$parent] as $cat_id) {
 						$categories_array['categories'][$cat_id]['level'] = $level-1;
 						$categories_array['categories'][$cat_id]['isLeaf'] = !isset($categories_array['parent_categories'][$cat_id])?true:false;
 						$categories[] = $categories_array['categories'][$cat_id];
-						//$categories_conf[] = ;
 						if (isset($categories_array['parent_categories'][$cat_id])) { //have childs
-							buildCategory($cat_id, $categories_array, $level+1); //get childs
+							buildCategoryArray($cat_id, $categories_array, $level + 1, $categories); //get childs
 						}
 					}
 				}
-				//return $html;
 			}
 			
-			buildCategory(0, $categories_array);
+			buildCategoryArray(0, $categories_array, 1, $categories);
 			//echo "<pre>";print_r($categories);echo "</pre>";
 			//exit;
 			

@@ -1,6 +1,12 @@
-<?php // config - Empty Database ?>
+<?php // config - Empty Database 
 
-<?php if (!isset($SEC_check_config) OR $SEC_check_config != 'APP_Database_Empty') exit; ?>
+//from config.php
+/** @var string $DB_Migration_File_Selected */
+/** @var mixed $DB_Migrations_Files_arr */
+/** @var string $DB_Migration_File_Error */
+
+if (!isset($SEC_check_config) OR $SEC_check_config != 'APP_Database_Empty') exit;
+?>
 
 
 <form name="form_db" id="form_db" action="config.php" method="POST">

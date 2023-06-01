@@ -3,6 +3,18 @@ $PATH_2_ROOT = '../';
 require_once($PATH_2_ROOT.'_settings.regmon.php');
 require($PATH_2_ROOT.'login/validate.php');
 
+/** @var int $UID */
+/** @var int $GROUP */
+/** @var bool $ADMIN */
+/** @var bool $LOCATION_ADMIN */
+/** @var bool $GROUP_ADMIN */
+/** @var bool $GROUP_ADMIN_2 */
+/** @var array<array> $CONFIG */
+/** @var mixed $LANG */
+/** @var mixed $db */
+/** @var string $G_VER */
+
+
 $DEBUG = (int)($_GET['debug'] ?? 0);
 
 $results_page = 'AXIS';

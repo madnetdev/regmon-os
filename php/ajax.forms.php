@@ -1,5 +1,11 @@
 <?php // ajax Forms
 
+//ajax.php
+/** @var string $action */
+/** @var int $id */
+/** @var int $ID */
+/** @var string $where */
+
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
 switch ($action) {

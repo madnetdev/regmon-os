@@ -1,9 +1,35 @@
 <?php // inc Form Header 
 
+//from form.php
+/** @var bool $PREVIEW */
+/** @var bool $EDIT */
+/** @var bool $VIEW */
+/** @var bool $CHANGE */
+/** @var bool $HAVE_DATA */
+/** @var int $group_id */
+/** @var int $form_id */
+/** @var int $timer */
+/** @var int $timer_time_sec */
+/** @var int $timer_time_step */
+/** @var int $timer_time_min */
+/** @var int $timer_time_period */
+/** @var int $answers_step */
+/** @var bool $is_iOS */
+/** @var int $category_id */
+/** @var int $athlete_id */
+/** @var mixed $FORM_DATA */
+/** @var int $HAVE_DATA_NUM */
+/** @var string $form_title */
+/** @var int $days_has */
+/** @var mixed $days_arr */
+/** @var string $selected_date */
+/** @var string $cat_form_id */
+
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
 //#####################################################################################
 $no_forms_css = true;
+$title = $LANG->FORMS_PAGE_TITLE;
 require('php/inc.html_head.php');
 //#####################################################################################
 ?>
@@ -144,7 +170,7 @@ var V_ANSWERED = [];
 	<?php } ?>
 	<?php if ($CHANGE AND $FORM_DATA) { ?>
 		<input name="change" type="hidden" value="true">
-		<input name="change_id" type="hidden" value="<?=$FORM_DATA['id'];?>">
+		<input name="change_id" type="hidden" value="<?=$FORM_DATA['id'].'';?>">
 	<?php } ?>
 	</form>
 
@@ -159,7 +185,7 @@ var V_ANSWERED = [];
 				<?php /*<button type="button" id="home" class="home"> &nbsp; <?=$LANG->HOMEPAGE;?></button>*/?>
 <?php if ($EDIT) { ?>
 	<?php if ($HAVE_DATA) { ?>
-				<div style="margin-top:15px;" class="alert alert-danger"><?=str_replace('{DATA_NUM}', $HAVE_DATA_NUM, $LANG->WARN_FORM_EDIT);?>
+				<div style="margin-top:15px;" class="alert alert-danger"><?=str_replace('{DATA_NUM}', $HAVE_DATA_NUM.'', $LANG->WARN_FORM_EDIT);?>
 		<?php if ($ADMIN) { ?>
 					<br>
 					<button class="btn btn-sm btn-danger delete_forms_data_2_edit" data-form-id="<?=$form_id;?>" type="button"><?=$LANG->FORMS_DATA_DELETE_DATA;?></button>
@@ -195,8 +221,8 @@ var V_ANSWERED = [];
 
 <?php if ($VIEW) { ?>
 	<div id="top-wizard" style="font-size:15px;">
-		<span style="white-space:nowrap;"><?=$LANG->RESULTS_CREATED;?>: <b><?=get_date_time($FORM_DATA['created']);?></b></span> &nbsp; - &nbsp; 
-		<span style="white-space:nowrap;"><?=$LANG->RESULTS_MODIFIED;?>: <b><?=get_date_time($FORM_DATA['modified']);?></b></span>
+		<span style="white-space:nowrap;"><?=$LANG->RESULTS_CREATED;?>: <b><?=get_date_time($FORM_DATA['created'].'');?></b></span> &nbsp; - &nbsp; 
+		<span style="white-space:nowrap;"><?=$LANG->RESULTS_MODIFIED;?>: <b><?=get_date_time($FORM_DATA['modified'].'');?></b></span>
 		<div class="shadow"></div>
 	</div>
 <?php } else { //if (!$VIEW) ##################### ?>
@@ -234,6 +260,9 @@ var V_ANSWERED = [];
 						<label id="days_has_label" for="days_has_ck" style="font-weight:600; margin-left:-12px; margin-bottom:0; color:#555;">&nbsp;&nbsp;&nbsp;&nbsp;<?=$LANG->FORM_DAYS_AVAILABLE;?> : </label>
 						<input type="checkbox" id="days_has_ck" class="days_has_ck" onchange="this.nextSibling.value=this.checked==true?1:0; return false;"<?=($days_has?' checked':'');?>><input type="hidden" id="days_has" name="days_has" value="<?=($days_has?'1':'0');?>">
 					</legend>
+
+					<?php $days_arr = (array)$days_arr;?>
+
 					<div id="form_days_div"<?=($days_has?'':' style="display:none;"');?>>
 						<label><?=$LANG->FORM_DAY_MON;?>: </label>
 						<input type="checkbox" onchange="this.nextSibling.value=this.checked==true?1:0; return false;"<?=(in_array('1',$days_arr)?' checked':'');?>>
@@ -293,7 +322,7 @@ var V_ANSWERED = [];
 						$t_date_time = get_date_SQL($selected_date) . date(" H:").$t_minutes; //.':00';
 					}
 				}
-				$t_date_time = get_date_time_noSecs($t_date_time);
+				$t_date_time = get_date_time_noSecs($t_date_time.'');
 				$t_date_time_add_2_hours = date("Y-m-d H:i:s", strtotime($t_date_time)+(60*60));
 				$t_date_time_end = get_date_time_noSecs($t_date_time_add_2_hours);
 				$date_time = explode(' ', $t_date_time);

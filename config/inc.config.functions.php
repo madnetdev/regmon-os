@@ -99,9 +99,9 @@ function get_HTML_Textarea(string $config_key, string $config_value, string $inp
 }
 
 
-function get_HTML_Select(string $config_key, string $config_value, array $options_arr, string $label, string $sub_label, string $placeholder):string {
+function get_HTML_Select(string $config_key, string $config_value, mixed $options_arr, string $label, string $sub_label, string $placeholder):string {
 	$options = '';
-	foreach($options_arr as $option) {
+	foreach((array)$options_arr as $option) {
 		if (is_array($option)) {
 			$option_value = $option[0];
 			$option_name = $option[1];
@@ -198,7 +198,7 @@ function get_Database_Fields(bool $disabled = true):string {
 			'Debug Database Queries Filename', 
 			'', 
 			'__log_query.log',
-			!$disabled
+			false
 		);
 
 		$html .= get_HTML_Radio_Check_Buttons__On_Off( //key, value, option_on, option_off, label, sub_label, disabled
@@ -208,7 +208,7 @@ function get_Database_Fields(bool $disabled = true):string {
 			'OFF', 
 			'Debug Database Queries', 
 			'Writes every sql query to the DB_Debug_File in each file directory',
-			!$disabled
+			false
 		);
 	}
 
@@ -216,13 +216,13 @@ function get_Database_Fields(bool $disabled = true):string {
 }
 
 
-function get_DB_Migrations_Files(string $DB_Migrations_Directory):array {
+function get_DB_Migrations_Files(string $DB_Migrations_Directory):mixed {
 	$DB_Migrations_Files_arr = [];
 
 	if (is_dir($DB_Migrations_Directory)) {
+		$files = array();
 		//get list and sort
 		if ($handle = opendir($DB_Migrations_Directory)) {
-			$files = array();
 			while (false !== ($file = readdir($handle))) {
 				if ($file == '.' or $file == '..') {
 					continue;
@@ -278,7 +278,7 @@ function get_CONFIG__REGmon_Folder():string {
 }
 
 
-function get_CONFIG_Defaults_array(array $POST = array()):array {
+function get_CONFIG_Defaults_array(mixed $POST = array()):mixed {
 	global $_SERVER;
 
 	$REGmon_Folder = get_CONFIG__REGmon_Folder();
@@ -296,7 +296,6 @@ function get_CONFIG_Defaults_array(array $POST = array()):array {
 		'Default_Language' 				=> $POST['Default_Language'] 			?? 'en',
 		'LogLimiter' => array(
 			'Max_Attempts' 			 => $POST['LogLimiter_Max_Attempts'] 			?? 5,
-			'Reset_Attempts_Minutes' => $POST['LogLimiter_Reset_Attempts_Minutes'] 	?? 10,
 			'Block_Minutes' 		 => $POST['LogLimiter_Block_Minutes'] 			?? 10
 		),
 		'EMAIL' => array(
@@ -318,7 +317,7 @@ function get_CONFIG_Defaults_array(array $POST = array()):array {
 }
 
 
-function Save_Configuration(array $config_arr, bool $init = false):string {
+function Save_Configuration(mixed $config_arr, bool $init = false):string {
 	global $db, $CONFIG;
 	
 	if ($init) { //problems --no user
@@ -337,7 +336,7 @@ function Save_Configuration(array $config_arr, bool $init = false):string {
 	}
 	elseif ($config_arr['EMAIL']['Password'] != '') {
 		//encrypt pass
-		$config_arr['EMAIL']['Password'] = Encrypt_String($config_arr['EMAIL']['Password']);
+		$config_arr['EMAIL']['Password'] = Encrypt_String($config_arr['EMAIL']['Password'].'');
 	}
 	
 

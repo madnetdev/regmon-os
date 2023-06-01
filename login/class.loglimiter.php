@@ -27,18 +27,9 @@ class LogLimiter {
 	private $Block_Minutes = 0;
 
 	/**
-	 * Validity attempts in attempts counting (minutes)
-	 *
-	 * @access private
-	 * @var integer
-	 */
-	private $Reset_Attempts_Minutes = 0;
-
-	/**
 	 * MySQL connection handler.
 	 *
 	 * @access private
-	 * @var object
 	 */
 	private $db;
 
@@ -53,17 +44,15 @@ class LogLimiter {
 	/**
 	 * Class constructor. Sets class vars and deletes expired attempts.
 	 *
-	 * @param object $db database object.
+	 * @param mixed $db database object.
 	 * @param integer $Max_Attempts max attempts before blocking.
 	 * @param integer $Block_Minutes time of blocking (minutes).
-	 * @param integer $Reset_Attempts_Minutes validity attempts in attempts counting (minutes).
 	 */
-	function __construct($db, $Max_Attempts, $Block_Minutes, $Reset_Attempts_Minutes) {
+	function __construct($db, $Max_Attempts, $Block_Minutes) {
 		$this->db = $db;
 		$this->ip = $_SERVER['REMOTE_ADDR'];
 		$this->Max_Attempts = $Max_Attempts;
 		$this->Block_Minutes = $Block_Minutes;
-		$this->Reset_Attempts_Minutes = $Reset_Attempts_Minutes;
 		$this->deleteExpired();
 	}
 
@@ -115,7 +104,7 @@ class LogLimiter {
 	/**
 	* Counts how many attempts from this IP.
 	*/
-	function countFailedAttempts():int {
+	function countFailedAttempts():mixed {
 		$this->db->fetch("SELECT * FROM login_attempts WHERE ip = ?", array($this->ip));
 		return $this->db->numberRows();
 	}

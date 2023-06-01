@@ -1,5 +1,10 @@
 <?php // ajax Users
 
+//ajax.php
+/** @var string $action */
+/** @var int $id */
+/** @var string $where */
+
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
 switch ($action) {
@@ -165,7 +170,7 @@ switch ($action) {
 		}
 
 	  break;
-	  
+
 
 	case 'del': // DELETE 
 		

@@ -1,5 +1,18 @@
 <?php //Diagram, Axis, js Data 
 
+//from inc.results_top.php
+/** @var bool $is_iframe  */
+/** @var int $template */
+/** @var int $group_id */
+/** @var int $athlete_id */
+/** @var int $cat_id */
+/** @var int $form_id */
+//from forms_result.php
+/** @var string $results_page */
+/** @var string $u_vorname */
+/** @var string $u_name */
+/** @var int $template_id */
+
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 ?>
 
@@ -47,8 +60,8 @@ if ($db->numberRows() > 0) {
 		$i++;
 		
 		//all axis table #########################
-		$data_json = json_decode($axis['data_json'], true);
-		$axis_json = $data_json['axis'];
+		$data_json = (array)json_decode($axis['data_json'], true);
+		$axis_json = (array)$data_json['axis'];
 		$axis_pos = ($axis_json['pos']=='true' ? $LANG->RIGHT : $LANG->LEFT);
 		$axis_color_style = ($axis_json['color'] ? ' style="background:'.$axis_json['color'].';"' : '');
 		$html_axis_tmp = ''.
@@ -175,8 +188,8 @@ if ($db->numberRows() > 0) {
 	}
 }
 
+$templates_data = '';
 if ($results_page == 'RESULTS') {
-	$templates_data = '';
 	//can see all at the moment
 	$saves2 = $db->fetchAllwithKey("SELECT id, name, data_json FROM templates_results ORDER BY name", array(), 'id'); 
 	//GlobalView, LocationView, GroupView, TrainerView, Private

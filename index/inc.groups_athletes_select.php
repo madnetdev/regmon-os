@@ -98,7 +98,7 @@ if ($db->numberRows() > 0)  {
 		}
 		
 		//group status - class
-		$g_class = get_Group_Request_Status_Class($group_status);
+		$g_class = get_Group_Request_Status_Class($group_status.'');
 		//group status - text
 		$g_text = $LANG->{'GROUP_STATUS_REQUEST_'.$group_status};
 		
@@ -147,8 +147,10 @@ $GROUP = $GROUP ?? '';
 
 //Trainer
 $THIS_GROUP_TRAINER = false;
-$GROUP_Trainers = explode(',', (isset($groups2location[$GROUP][4])?$groups2location[$GROUP][4]:''));
-if (in_array($UID, $GROUP_Trainers)) $THIS_GROUP_TRAINER = true;
+$GROUP_Trainers = explode(',', (isset($groups2location[$GROUP][4]) ? $groups2location[$GROUP][4].'' : ''));
+if (in_array($UID, $GROUP_Trainers)) {
+	$THIS_GROUP_TRAINER = true;
+}
 
 
 //Athletes Name

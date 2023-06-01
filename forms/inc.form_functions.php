@@ -2,7 +2,7 @@
 
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
-function get_Form_Rows(array $rows):string {
+function get_Form_Rows(mixed $rows):string {
 	global $LANG, $EDIT, $G_ROW, $items_num;
 
 	$Item_Types_that_Count_as_Items = array(
@@ -20,9 +20,10 @@ function get_Form_Rows(array $rows):string {
 	
 	//rows ######################################
 	$html = '';
-	foreach ($rows as $row) {
+	foreach ((array)$rows as $row) {
 		$G_ROW++;
 		$rw = $G_ROW;
+
 		if ($EDIT) {
 			$html .= ''.
 			'<li id="Row_'.$rw.'" class="row_sort" data-row="'.$rw.'">'.
@@ -32,30 +33,36 @@ function get_Form_Rows(array $rows):string {
 				'</div>'.
 				'<div class="row_div">';
 		}
-		
-		if ($EDIT) 
-			 $html .= '<table class="RowTable-edit text_inline box2 trans" border="0"><tbody>'; 
-		else $html .= '<table class="RowTable text_inline box2" border="0"><tbody>'; 
+
+		if ($EDIT) {
+			$html .= '<table class="RowTable-edit text_inline box2 trans" border="0"><tbody>';
+		} else {
+			$html .= '<table class="RowTable text_inline box2" border="0"><tbody>';
+		}
 		
 		$html .= 		'<tr class="row_item_sort" data-row="'.$rw.'">';
 
 		//items ###########################
 		$items_count = 0;
 		if (isset($row['items'])) {
-			$items_count = count($row['items']);
-			foreach ($row['items'] as $item) {
-				$html .= get_Form_Row_Item($item['type'], $rw, $item);
+			$items_arr = (array)$row['items'];
+			$items_count = count($items_arr);
+			foreach ($items_arr as $item) {
+				$html .= get_Form_Row_Item($item['type'].'', $rw, $item);
 				//if ($item['required'] == '1') $items_num++; //only required items
 				//all items can have value
-				if (in_array($item['type'], $Item_Types_that_Count_as_Items)) $items_num++;
+				if (in_array($item['type'], $Item_Types_that_Count_as_Items)) {
+					$items_num++;
+				}
 			}
 		}
 		//items end #######################
 
 		
-		if ($EDIT) //dummy td.rowItem-init to have a starting point for inserting more items
-			$html .=		'<td class="rowItem-init'.($items_count?' hidden':'').'" style="width:1%;"></td>';
-		
+		if ($EDIT) { //dummy td.rowItem-init to have a starting point for inserting more items
+			$html .= 		'<td class="rowItem-init' . ($items_count ? ' hidden' : '') . '" style="width:1%;"></td>';
+		}
+
 		$html .= 		'</tr>';
 
 		$html .= 	'</tbody></table>';
@@ -85,11 +92,12 @@ function get_Form_Rows(array $rows):string {
 		}
 	}
 	//rows end ###############################
+
 	return $html;
 }
 
 
-function get_Form_Row_Item(string $type, int $row, array $item, string $Accordion_Type = '0'):string {
+function get_Form_Row_Item(string $type, int $row, mixed $item, string $Accordion_Type = '0'):string {
 	global $LANG, $EDIT, $HAVE_DATA, $CHANGE, $VIEW, $FORM_DATA; 
 
 	$type_arr = array(
@@ -143,7 +151,7 @@ function get_Form_Row_Item(string $type, int $row, array $item, string $Accordio
 
 	$html = '';	
 	$HTML_edit_div = $HTML_edit_type__no = $HTML_edit_link = $HTML_edit_unid = '';
-	$HTML_edit_name = $HTML_edit_placeholder = $HTML_edit_required = $HTML_edit_width = '';
+	$HTML_edit_name = $HTML_edit_placeholder = $HTML_edit_required = $HTML_edit_width = $HTML_edit_color = '';
 
 	if ($EDIT) {
 		//main standard fields in case of EDIT
@@ -309,7 +317,7 @@ function get_Form_Row_Item(string $type, int $row, array $item, string $Accordio
 	}
 	//_Html #################################################
 	elseif ($type == '_Html') {
-		$text = htmlspecialchars_decode($item['text'] ?? '');
+		$text = htmlspecialchars_decode(($item['text'] ?? '').'');
 		if ($EDIT) {
 			$HTML_edit_div = ''.
 				'<div class="rowItem_edit">'.
@@ -437,9 +445,9 @@ function get_Form_Row_Item(string $type, int $row, array $item, string $Accordio
 				($EDIT 
 				? $HTML_edit_div.
 				'<div class="rowItem_div">'.
-					'<textarea name="c_'.$id.'_txa" type="text" class="'.$rc.' form-control" placeholder="'.str_replace('<br>',"\n",$placeholder).'"></textarea>'
+					'<textarea name="c_'.$id.'_txa" type="text" class="'.$rc.' form-control" placeholder="'.str_replace('<br>',"\n",$placeholder.'').'"></textarea>'
 				: ''.
-				'<textarea name="'.$unid.'" type="text" class="'.$rc.' form-control" placeholder="'.str_replace('<br>',"\n",$placeholder).'"'.($VIEW?' disabled':'').'>'.str_replace('<br>',"\n",$ch_val).'</textarea>'
+				'<textarea name="'.$unid.'" type="text" class="'.$rc.' form-control" placeholder="'.str_replace('<br>',"\n",$placeholder.'').'"'.($VIEW?' disabled':'').'>'.str_replace('<br>',"\n",$ch_val).'</textarea>'
 				).
 				($EDIT ? '</div>' :'').
 			'</td>'.
@@ -522,7 +530,7 @@ function get_Form_Row_Item(string $type, int $row, array $item, string $Accordio
 		$html .= ''.
 			'<td id="rowItem_'.$id.'" class="rowItem s_input cm_it'.$rc_td.'" style="width:'.$width.'%;" data-row_item="'.$id.'">'.
 			  ($EDIT ? $HTML_edit_div . '<div class="rowItem_div">' :'').
-			  
+
 				'<div class="input-group date" id="datetimepicker_'.$id.'" style="width:100%;">'.
 				($EDIT
 					? '<input name="c_'.$id.'_date" type="text" class="'.$rc.' form-control" value="'.'" placeholder="'.$placeholder.'">'
@@ -554,7 +562,7 @@ function get_Form_Row_Item(string $type, int $row, array $item, string $Accordio
 		$html .= ''.
 			'<td id="rowItem_'.$id.'" class="rowItem s_input cm_it'.$rc_td.'" style="width:'.$width.'%;" data-row_item="'.$id.'">'.
 			  ($EDIT ? $HTML_edit_div . '<div class="rowItem_div">' :'').
-			  
+
 				'<div class="input-group clockpicker time" id="clockpicker_'.$id.'" data-placement="bottom" data-align="left" data-default="now">'.
 				($EDIT
 					? '<input name="c_'.$id.'_time" type="text" class="'.$rc.' form-control time" value="'.'" placeholder="'.$placeholder.'">'
@@ -751,7 +759,7 @@ function get_Form_Row_Item(string $type, int $row, array $item, string $Accordio
 		}
 		
 		//count items and calculate width per item
-		$dd_items_arr = get_Dropdown_Options($rdd, '', true, false);
+		$dd_items_arr = (array)get_Dropdown_Options($rdd, '', true, false);
 		$dd_items_count = (count($dd_items_arr)>0?count($dd_items_arr):1);
 		$width_per_item = 100 / $dd_items_count;
 		
@@ -810,7 +818,7 @@ function get_Form_Row_Item(string $type, int $row, array $item, string $Accordio
 		$rdd = $item['rdd'] ?? '';
 		$rc = 'check_radio';
 		
-		$dd_items_arr = get_Dropdown_Options($rdd, '', true, false);
+		$dd_items_arr = (array)get_Dropdown_Options($rdd, '', true, false);
 		$dd_items_count = (count($dd_items_arr)>0?count($dd_items_arr):1);
 		$width_per_item = 100 / $dd_items_count; //x items
 		
@@ -973,7 +981,7 @@ function get_Form_Row_Item(string $type, int $row, array $item, string $Accordio
 						'<div class="panel-body">'.
 							($EDIT ? '<ul class="row_sortable">' : '').
 							
-							((isset($item['Rows']) AND count($item['Rows'])) ? get_Form_Rows($item['Rows']) : '').
+							((isset($item['Rows']) AND count((array)$item['Rows'])) ? get_Form_Rows($item['Rows']) : '').
 
 							($EDIT ? '</ul>' : '').
 
@@ -994,10 +1002,10 @@ function get_Form_Row_Item(string $type, int $row, array $item, string $Accordio
 	return $html;
 }
 
-function get_Accordion_Panels(int $rw, array $Panels, string $accType):string {
+function get_Accordion_Panels(int $rw, mixed $Panels, string $accType):string {
 	$html_Panels = '';
 	$i = 0;
-	foreach ($Panels as $Panel) {
+	foreach ((array)$Panels as $Panel) {
 		//0=basic(1 open), 1=multiple --if basic only first can be opened
 		if ($accType == '0' and $i != 0) {
 			$Panel['open'] = false;
@@ -1009,20 +1017,20 @@ function get_Accordion_Panels(int $rw, array $Panels, string $accType):string {
 }
 
 
-function get_Available_Dropdowns(string $dds):string {
+function get_Available_Dropdowns(mixed $selected_id):string {
 	global $db;
 	$dd = ''; 
 	$rows = $db->fetch("SELECT id, name FROM dropdowns WHERE status=1 AND name IS NOT NULL ORDER BY name", array()); 
 	if ($db->numberRows() > 0)  {
 		foreach ($rows as $row) {
-			$dd .= '<option value="'.$row['id'].'"'.($dds==$row['id']?' selected':'').'>'.$row['name'].'</option>';
+			$dd .= '<option value="'.$row['id'].'"'.($selected_id==$row['id']?' selected':'').'>'.$row['name'].'</option>';
 		}
 	}
 	return $dd;
 }
 
 
-function get_Dropdown_Options(int $dd, string $val = '', bool $only_vals = false, bool $only_val = false, bool $has_color = false, string $color_a = '120', string $color_b = '0'):mixed {
+function get_Dropdown_Options(mixed $dd, string $val = '', bool $only_vals = false, bool $only_val = false, bool $has_color = false, string $color_a = '120', string $color_b = '0'):mixed {
 	global $db;
 	$ddn = ''; 
 	$only_vals_arr = array(); 

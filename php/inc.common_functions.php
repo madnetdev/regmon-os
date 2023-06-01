@@ -213,14 +213,16 @@ function get_Body_Height_Options(string $body_height_selected = '', bool $grid_o
 	return $body_height_options;
 }
 
-function get_Forms_with_Forms_Data_count_array(int $user_id, mixed $group_id = false):array {
+function get_Forms_with_Forms_Data_count_array(int $user_id, mixed $group_id = false):mixed {
 	global $db;
 
 	$Forms_with_Forms_Data_arr = array();
+
 	$where_group = '';
 	if ($group_id) {
 		$where_group = "AND group_id = ?";
 	}
+
 	$forms_data = $db->fetch("SELECT COUNT(*) AS count, form_id 
 FROM forms_data 
 WHERE user_id=? $where_group AND form_id > 0 AND status = 1 
@@ -230,6 +232,7 @@ GROUP BY form_id", array($user_id, $group_id));
 			$Forms_with_Forms_Data_arr[$form_data['form_id']] = $form_data['count'];
 		}
 	}
+
 	return $Forms_with_Forms_Data_arr;
 }
 

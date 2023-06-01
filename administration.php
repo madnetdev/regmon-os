@@ -12,7 +12,7 @@ $locations_admins_options_grid = get_locations_admins_select(true);
 $groups_options_grid = get_groups_select(true);
 $groups_admins_options_grid = get_groups_admins_select(true);
 
-$sports_groups_options_grid = get_Sports_Groups(true);
+$sports_groups_options_grid = get_Sports_Groups(true) . '';
 $sports_options_grid = get_Sports_Select_Options(true);
 
 $body_height_options_grid = get_Body_Height_Options('', true);

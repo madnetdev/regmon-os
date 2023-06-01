@@ -1,5 +1,13 @@
 <?php // inc index main 
 
+//inc.groups_athletes_select.php
+/** @var string $Groups_select_options */
+/** @var array $private_groups */
+/** @var string $Athlete_Name */
+/** @var string $Athletes_Select */
+/** @var string $selected_GROUP_name */
+/** @var string $selected_LOCATION_name */
+
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
 $DIS = ' style="display:none;"';
@@ -106,7 +114,9 @@ $DIS2 = ' display:none;';
 			<?php 	if ($ADMIN OR $LOCATION_ADMIN OR $GROUP_ADMIN OR $GROUP_ADMIN_2) {
 						if (!$ADMIN AND !$THIS_LOCATION_ADMIN AND !$THIS_GROUP_ADMIN AND !$THIS_GROUP_ADMIN_2) {
 							$dis_panel = true;
-						} else $dis_panel = false; 
+						} else {
+							$dis_panel = false; 
+						}
 			?>
 							<?php /*##### Group Requests ######################################*/?>
 							<div class="panel panel-default"<?=($dis_panel?$DIS:'');?> style="margin-top:8px;">
@@ -172,6 +182,7 @@ $DIS2 = ' display:none;';
 					} else {
 						$dis_panel = false;
 					}
+
 				 	if ($THIS_GROUP_TRAINER) { //only if trainer and trainer in group
 		?>
 							<?php /*##### Request_Access_From_Athletes ##########################*/?>

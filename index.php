@@ -14,6 +14,11 @@ $sports_options_grid = get_Sports_Select_Options(true);
 $body_height_options_grid = get_Body_Height_Options('', true);
 
 require('index/inc.groups_athletes_select.php');
+
+//inc.groups_athletes_select.php
+/** @var string $Group_2_Location_json */
+/** @var string $selected_GROUP_name */
+/** @var string $User_2_Groups_json */
 ?>
 <!DOCTYPE html>
 <html lang="<?=$LANG->LANG_CURRENT;?>">

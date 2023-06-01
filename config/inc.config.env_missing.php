@@ -1,6 +1,13 @@
-<?php // config - ENV file missing ?>
+<?php // config - ENV file missing 
 
-<?php if (!isset($SEC_check_config) OR $SEC_check_config != 'ENV_File_Missing') exit; ?>
+//from config.php
+/** @var string $ENV_File_Content */
+/** @var string $ENV_File_Missing_Error */
+/** @var string $Config_Test_Database_Error */
+/** @var string $Config_Test_Database_Success */
+
+if (!isset($SEC_check_config) OR $SEC_check_config != 'ENV_File_Missing') exit;
+?>
 
 
 <div id="middle-wizard">

@@ -1,5 +1,10 @@
 <?php // ajax Dropdowns
 
+//ajax.php
+/** @var string $action */
+/** @var int $id */
+/** @var int $ID */
+
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
 switch ($action) {
@@ -55,9 +60,7 @@ switch ($action) {
 		
 		// INSERT 
 		if ($action == 'add') {
-			if (isset($ID)) {
-				$values['parent_id'] = $ID;
-			}
+			$values['parent_id'] = $ID;
 			$values['modified'] = get_date_time_SQL('now');
 			$values['created'] = get_date_time_SQL('now');
 			

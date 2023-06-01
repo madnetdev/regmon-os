@@ -35,6 +35,7 @@ $location_name = '';
 $group_id = 0;
 $group_name = '';
 $profile = '';
+$level_id = '';
 
 
 $row = $db->fetchRow("SELECT * FROM users WHERE id = ?", array($UID));
@@ -59,13 +60,13 @@ if ($db->numberRows() > 0)  {
 	$email = $row['email'];
 	$telephone = $row['telephone'];
 
-	$level = $row['level'];
-		if ($level == 99) $level = $LANG->LVL_ADMIN;
-	elseif ($level == 50) $level = $LANG->LVL_LOCATION;
-	elseif ($level == 45) $level = $LANG->LVL_GROUP_ADMIN;
-	elseif ($level == 40) $level = $LANG->LVL_GROUP_ADMIN_2;
-	elseif ($level == 30) $level = $LANG->LVL_TRAINER;
-	elseif ($level == 10) $level = $LANG->LVL_ATHLETE;
+	$level = (int)$row['level'];
+		if ($level == 99) $profile = $LANG->LVL_ADMIN;
+	elseif ($level == 50) $profile = $LANG->LVL_LOCATION;
+	elseif ($level == 45) $profile = $LANG->LVL_GROUP_ADMIN;
+	elseif ($level == 40) $profile = $LANG->LVL_GROUP_ADMIN_2;
+	elseif ($level == 30) $profile = $LANG->LVL_TRAINER;
+	elseif ($level == 10) $profile = $LANG->LVL_ATHLETE;
 
 	$dashboard = $row['dashboard'];
 	$lastlogin = get_date_time($row['lastlogin'].'');
@@ -85,7 +86,6 @@ if ($db->numberRows() > 0)  {
 		$group_id = $row['group_id'];
 		$level_id = $row['level'];
 	}
-	$profile = $level;
 }
 
 $SP_select_options = get_Sports_Select_Options_By_Group($sport);

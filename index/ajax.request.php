@@ -12,6 +12,8 @@ if (!$request) {
 
 
 $message = '';
+$values = array();
+
 switch ($request) {
 
 	// Users 2 groups ####################################
@@ -88,10 +90,12 @@ switch ($request) {
 			{ //update - cancel wait
 				$row = $db->fetchRow("SELECT status FROM users2groups WHERE user_id = ? AND group_id = ?", array($UID, $group_id)); 
 				if ($db->numberRows() > 0)  {
-					 	if ($row['status'] == '7') $values['status'] = '5';
+					$values['status'] = '0';
+
+						if ($row['status'] == '7')  $values['status'] = '5';
 					elseif ($row['status'] == '17') $values['status'] = '15';
-					elseif ($row['status'] == '8') $values['status'] = '0';
-					elseif ($row['status'] == '9') $values['status'] = '-1';
+					elseif ($row['status'] == '8')  $values['status'] = '0';
+					elseif ($row['status'] == '9')  $values['status'] = '-1';
 					
 					if ($values['status'] != '-1') {
 						$values['modified'] = get_date_time_SQL('now');
@@ -129,7 +133,7 @@ switch ($request) {
 		echo $message;
 		
 	  break;
-	  
+
 
 	// Users 2 Group Answer #######################################
 	//the group (groupadmin) answer to the User request for access to the Group
@@ -248,12 +252,12 @@ switch ($request) {
 		}
 		
 	  break;
-	  
+
 
 	//################################################################
 	//################################################################
 	//################################################################
-	  
+
 	// Users 2 Trainer 
 	//a Trainer ask an Athlete for Access
 	case 'user2trainer':
@@ -322,6 +326,8 @@ switch ($request) {
 					$row = $db->fetchRow("SELECT status FROM users2trainers WHERE user_id = ? AND group_id = ? AND trainer_id=?", array($athlete_id, $group_id, $trainer_id)); 
 					if ($db->numberRows() > 0)  {
 						if ($row['status'] == $athlete_status) { //if not already changed from another request
+							$values['status'] = '0';
+					
 								if ($athlete_status == '7') $values['status'] = '5';
 							elseif ($athlete_status == '17')$values['status'] = '15';
 							elseif ($athlete_status == '8') $values['status'] = '0';

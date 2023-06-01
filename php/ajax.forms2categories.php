@@ -1,5 +1,10 @@
 <?php // ajax Forms 2 Categories
 
+//ajax.php
+/** @var string $action */
+/** @var int $id */
+/** @var int $ID */
+
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
 switch ($action) {
@@ -32,7 +37,7 @@ switch ($action) {
 			exit;
 		}
 
-		//without test for dublicate name --we want dublicate names
+		//without test for duplicate name --we want duplicate names
 
 		// INSERT
 		if ($action == 'add') 
@@ -75,6 +80,7 @@ switch ($action) {
 			$where = "";
 		} else {
 			$response = new stdClass();
+
 			$where = " WHERE f2c.category_id = ".$ID;
 		}
 		$rows = $db->fetch("SELECT f2c.id, f2c.form_id, f2c.category_id, f2c.sort, f2c.status, f2c.stop_date, f2c.created, f2c.created_by, f2c.modified, f2c.modified_by, f.name, f.name2, f.status as form_status 
@@ -85,7 +91,7 @@ ORDER BY f2c.sort, f.name", array());
 		$i=0;
 		if ($db->numberRows() > 0)  {
 			foreach ($rows as $row) {
-				// if form is inactiv put the same to category/form
+				// if form is inactive put the same to category/form
 				$status = ($row['form_status']==1 ? $row['status'] : 0);
 				// categories_forms_all --json for local
 				if ($action == 'categories_forms_all') {
@@ -107,6 +113,7 @@ ORDER BY f2c.sort, f.name", array());
 				}
 				// view --normal load
 				else {
+					/** @var mixed $response */
 					$response->rows[$i] = array(
 						'',
 						$row['id'],

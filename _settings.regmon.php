@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace REGmon;
+use stdClass;
 
 
 //Version
@@ -30,7 +31,7 @@ $CONFIG_SES = [
 	 * if the 'exit_after' is true then exit current page
 	 * else continue to the current page after the extension page load
 	 * ex.
-	 * 'main_page.php' => ['__extension_page.php', exit_after]
+	 * 'main_page.php' 			=> ['__extension_page.php', exit_after]
 	 */
 	//'administration.php' 		=> ['__administration.php', true],
 	//'export.php' 				=> ['__export.php', true],
@@ -46,7 +47,10 @@ $CONFIG_SES = [
 	//'_settings.regmon.php' 	=> ['__settings.regmon.php', false],
 ];
 
-
+$CONFIG_SES_enabled = false;
+if (count($CONFIG_SES)) {
+	$CONFIG_SES_enabled = true;
+}
 
 
 /**
@@ -56,18 +60,20 @@ $CONFIG_SES = [
  * so we can extend this too, but can be tricky 
  * ===================================================
  */
-$settings_page = '_settings.regmon.php';
 //check Simple_Extension_System
-if (isset($CONFIG_SES[$settings_page])) {
-	$extension_page = $CONFIG_SES[$settings_page][0];
-	$exit_after = $CONFIG_SES[$settings_page][1];
-	if (file_exists($extension_page)) 
-	{
-		require($extension_page);
+if ($CONFIG_SES_enabled) {
+	$settings_page = '_settings.regmon.php';
+	if (isset($CONFIG_SES[$settings_page])) {
+		$extension_page = $CONFIG_SES[$settings_page][0];
+		$exit_after = $CONFIG_SES[$settings_page][1];
+		if (file_exists($extension_page)) 
+		{
+			require($extension_page);
 
-		if ($exit_after) {
-			//exit current page
-			exit;
+			if ($exit_after) {
+				//exit current page
+				exit;
+			}
 		}
 	}
 }
@@ -94,7 +100,7 @@ else {
 }
 
 
-//logging recomendations from php.ini-production & php.ini-development
+//logging recommendations from php.ini-production & php.ini-development
 if ($CONFIG['Production_Mode']) {
 	ini_set('display_errors', '0');
 	ini_set('display_startup_errors', '0');
@@ -123,18 +129,18 @@ ini_set('default_charset', 'utf-8');
  */
 $current_page = str_replace('/', '', $_SERVER['PHP_SELF']);
 //check Simple_Extension_System
-if (isset($CONFIG_SES[$current_page])) {
-	$extension_page = $CONFIG_SES[$current_page][0];
-	$exit_after = $CONFIG_SES[$current_page][1];
-	if (file_exists($extension_page)) 
-	{
-		require($extension_page);
+if ($CONFIG_SES_enabled) {
+	if (isset($CONFIG_SES[$current_page])) {
+		$extension_page = $CONFIG_SES[$current_page][0];
+		$exit_after = $CONFIG_SES[$current_page][1];
+		if (file_exists($extension_page)) {
+			require($extension_page);
 
-		if ($exit_after) {
-			//exit current page
-			exit;
+			if ($exit_after) {
+				//exit current page
+				exit;
+			}
 		}
 	}
 }
-
 ?>

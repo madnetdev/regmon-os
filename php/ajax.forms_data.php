@@ -1,5 +1,10 @@
 <?php // ajax Forms Data
 
+//ajax.php
+/** @var string $action */
+/** @var int $ID */
+/** @var string $where */
+
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
 switch ($action) {
@@ -35,6 +40,7 @@ switch ($action) {
 		
 		$response = array();
 		
+		$athlete_id = $ID;
 		$group_id = (int)($_REQUEST['group_id'] ?? 0);
 		$start = isset($_REQUEST['start']) ? date("Y-m-d 00:00:00", strtotime($_REQUEST['start'])) : date("Y-m-d", strtotime("-1 week"));
 		$end = isset($_REQUEST['end']) ?  date("Y-m-d 23:59:59", strtotime($_REQUEST['end'])) : date("Y-m-d");
@@ -43,14 +49,13 @@ switch ($action) {
 		$where_trainer = '';
 		$trainer_read_arr = array();
 		$trainer_write_arr = array();
-		$athlete_id = $ID ?? 0; //for php int
 		
 		if ($TRAINER) {
 			if ($athlete_id == '-1') {
 				$athlete_id = $UID; //self as athlete-trainer
 			}
 			if ($ID == '-1' OR $athlete_id != $UID) { //athlete-trainer
-				$trainer_id = $UID ?? 0; //for php int
+				$trainer_id = $UID;
 				$trainer_view = true;
 				
 				//Users2Trainers //get trainer selected Forms

@@ -8,7 +8,6 @@ require_once('no_validate.php');
 $PATH_2_ROOT = '../';
 
 $register_ERROR = '';
-$new_data = false;
 
 //the following check is additional so the $db->insert not return duplicate error
 $row = $db->fetchRow("SELECT * FROM users WHERE uname = ?", array($uname)); 
@@ -16,7 +15,8 @@ if ($db->numberRows() > 0)  {
 	$register_ERROR = $LANG->WARN_USERNAME_EXIST;
 }
 else {
-	$new_data = true;
+	$location_name = '';
+	$group_name = '';
 	
 	$values = array();			
 	foreach ($_POST as $key => $val) {
@@ -91,7 +91,9 @@ WHERE gr.status = 3 AND gr.private_key = ?", array($_POST['private_key']));
 			$values['group_id'] 	= $gr_loc['id'];
 			$group_name 			= $gr_loc['name'];
 		}
-		else $register_ERROR = $LANG->REGISTER_PRIVATE_KEY_ERROR;
+		else {
+			$register_ERROR = $LANG->REGISTER_PRIVATE_KEY_ERROR;
+		}
 	}
 	else {
 		$location_group = explode('|', $_POST['location_group'].'|||');
@@ -100,6 +102,7 @@ WHERE gr.status = 3 AND gr.private_key = ?", array($_POST['private_key']));
 		$values['group_id'] 	= $location_group[2];
 		$group_name 			= $location_group[3];
 	}
+
 	$values['last_ip'] = '';
 	$values['modified'] = get_date_time_SQL('now');
 	$values['created'] = get_date_time_SQL('now');
@@ -118,9 +121,16 @@ WHERE gr.status = 3 AND gr.private_key = ?", array($_POST['private_key']));
 			}
 		}
 		foreach ($_POST['sport'] as $sport) {
-			if ($values['sport'] != '') $values['sport'] .= ', ';
-			if ($sport_to_user != '') $sport_to_user .= ', ';
-			if ($sport_to_admin != '') $sport_to_admin .= ', ';
+			if ($values['sport'] != '') {
+				$values['sport'] .= ', ';
+			}
+			if ($sport_to_user != '') {
+				$sport_to_user .= ', ';
+			}
+			if ($sport_to_admin != '') {
+				$sport_to_admin .= ', ';
+			}
+
 			//if sport not exist
 			if (!in_array($sport, $sports_arr)) {
 				$activate_sport_code = MD5($CONFIG['SEC_Encrypt_Secret'] . $values['uname'].$sport);
@@ -242,11 +252,11 @@ require($PATH_2_ROOT.'php/inc.html_head.php');
 	<div class="row">
         <div class="col-md-12" style="text-align:center; padding-top:80px;">
 		<?php if ($register_ERROR != '') { ?>
-         	<h1 style="color:#333"><?=$LANG->ERROR;?></h1>
+			<h1 style="color:#333"><?=$LANG->ERROR;?></h1>
 			<br>
 			<h3 style="color: #ff0000"><?=$register_ERROR;?></h3>
 		<?php } else { ?>
-         	<h1 style="color:#333"><?=$LANG->REGISTER_THANKS;?></h1>
+			<h1 style="color:#333"><?=$LANG->REGISTER_THANKS;?></h1>
 			<br>
 			<h3 style="color: #6C3"><?=$LANG->REGISTER_SUBMIT_SUCCESS;?></h3>
 			<h3 style="color: #ffbf00"><?=$LANG->REGISTER_SUBMIT_WAIT_ACTIV;?></h3>

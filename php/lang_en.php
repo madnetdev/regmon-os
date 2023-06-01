@@ -343,6 +343,7 @@ array(
 	###################################################################
 	
 	//FORMS
+	'FORMS_PAGE_TITLE' 			=> 'Forms - REGmon',
 	'FORM_PAGE'					=> 'Page',
     'FORM_BACKWARD'				=> 'Backward',
     'FORM_FORWARD'				=> 'Forward', 

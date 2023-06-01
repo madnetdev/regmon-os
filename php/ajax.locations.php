@@ -1,5 +1,9 @@
 <?php // ajax Locations
 
+//ajax.php
+/** @var string $action */
+/** @var int $id */
+
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
 switch ($action) {
@@ -71,7 +75,7 @@ switch ($action) {
 		}
 
 	  break;
-	  
+
 
 	case 'del': // DELETE 
 		
@@ -98,7 +102,7 @@ switch ($action) {
 		*/
 
 	  break;
-	  
+
 
 	case 'locations_admins_select': // SELECT
 		echo get_locations_admins_select();
@@ -112,7 +116,7 @@ switch ($action) {
 		echo get_locations_select(true);
 	  break;
 
-	  
+
 	case 'view': // SELECT 
 	default: //view
 		

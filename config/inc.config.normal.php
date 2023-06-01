@@ -1,7 +1,10 @@
-<?php // config - normal configuration page ?>
+<?php // config - normal configuration page 
 
-<? if ((!isset($SEC_check_config)) AND $SEC_check != $CONFIG['SEC_Page_Secret']) exit; ?>
+//from config.php
+/** @var bool $CONFIG_Key_Missing */
 
+if ((!isset($SEC_check_config)) AND $SEC_check != $CONFIG['SEC_Page_Secret']) exit; 
+?>
 
 <form name="form1" id="form_Config" action="config.php" method="POST">
 	<div id="middle-wizard">
@@ -137,15 +140,6 @@
 						);?>
 
 						<?=get_HTML_Input( //key, value, type, label, sub_label, placeholder
-							'LogLimiter_Reset_Attempts_Minutes', 
-							$CONFIG['LogLimiter']['Reset_Attempts_Minutes'], 
-							'number', 
-							'Reset Attempts Minutes', 
-							'Remaining time to reset attempts (in minutes). Counting after the last attempt. def: 10', 
-							'10'
-						);?>
-
-						<?=get_HTML_Input( //key, value, type, label, sub_label, placeholder
 							'LogLimiter_Block_Minutes', 
 							$CONFIG['LogLimiter']['Block_Minutes'], 
 							'number', 
@@ -202,7 +196,7 @@
 
 						<?=get_HTML_Input( //key, value, type, label, sub_label, placeholder
 							'EMAIL_Password', 
-							Decrypt_String($CONFIG['EMAIL']['Password']), 
+							Decrypt_String($CONFIG['EMAIL']['Password']).'', 
 							'password', 
 							'SMTP Password', 
 							'', 

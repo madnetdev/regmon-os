@@ -3,14 +3,14 @@
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
 // print_r alias function
-function PR(array $array):void {
+function PR(mixed $array):void {
 	echo "<pre>";
 	print_r($array);
 	echo "</pre>";
 }
 
 
-function get_User_2_Groups(int $_UID):array {
+function get_User_2_Groups(int $_UID):mixed {
 	global $db;
 	$user_2_groups = array();
 	$rows = $db->fetch("SELECT group_id, status, modified FROM users2groups WHERE user_id = ? ", array($_UID));
@@ -24,7 +24,7 @@ function get_User_2_Groups(int $_UID):array {
 }
 
 
-function get_Trainers_2_Groups():array {
+function get_Trainers_2_Groups():mixed {
 	global $db;
 	$trainers_2_groups = array();
 	$rows = $db->fetch("SELECT u2g.group_id, GROUP_CONCAT(CONVERT(u.id, CHAR(11))) AS ids 
@@ -39,7 +39,7 @@ function get_Trainers_2_Groups():array {
 	return $trainers_2_groups;
 }
 
-function get_Locations_array():array {
+function get_Locations_array():mixed {
 	global $db;
 	$locations_arr = array();
 	$rows = $db->fetch("SELECT id, name, admin_id FROM locations WHERE status = 1 ORDER BY id", array()); 

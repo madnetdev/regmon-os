@@ -33,7 +33,7 @@ if ($group_id AND $athlete_id AND $id)
 	if ($TRAINER) {
 		//check if not the same user --not for admin
 		if ($athlete_id != $UID AND ($UID != 1)) {
-			if (!$athlete_id) {
+			if ($athlete_id == '0') {
 				$athlete_id = $UID;
 			}
 			//Select Athletes in Group with Trainer this User-$UID

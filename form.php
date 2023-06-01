@@ -41,8 +41,8 @@ if ((isset($_REQUEST['sec']) AND $sec !== $sec_OK) OR ($ATHLETE AND $athlete_id 
 }
 
 
-$debug = true;
-$debug = false;
+//$debug = true;
+//$debug = false;
 //if ($PREVIEW) $debug = true;
 
 $cat_form_id = $category_id.'_'.$form_id;
@@ -85,12 +85,12 @@ if ($db->numberRows() > 0)  {
 	$forms_name = $row['name']; //external
 	$forms_name2 = $row['name2']; //internal
 	if ($PREVIEW) {
-		$form = json_decode(($form_json ?? '{}'), true);
-		$form_names = json_decode(($form_json_names ?? '{}'), true);
+		$form = (array)json_decode(($form_json ?? '{}'), true);
+		$form_names = (array)json_decode(($form_json_names ?? '{}'), true);
 	}
 	else {
-		$form = json_decode(($row['data_json'] ?? '{}'), true);
-		$form_names = json_decode(($row['data_names'] ?? '{}'), true);
+		$form = (array)json_decode(($row['data_json'] ?? '{}'), true);
+		$form_names = (array)json_decode(($row['data_names'] ?? '{}'), true);
 	}
 	if ($PREVIEW_USER) $PREVIEW = true;
 }
@@ -119,8 +119,8 @@ if (!count($form)) {
 	$form = json_decode($form_json_str, true);
 }
 
-if ($debug) { echo "<br><br><pre>"; print_r($form); echo "</pre>"; }
-if ($debug) { echo "<br><br><pre>"; print_r($form_names); echo "</pre>"; }
+//if ($debug) { echo "<br><br><pre>"; print_r($form); echo "</pre>"; }
+//if ($debug) { echo "<br><br><pre>"; print_r($form_names); echo "</pre>"; }
 
 
 //Form Title
@@ -175,7 +175,7 @@ $HAVE_DATA_NUM = 0;
 $forms_data_count = $db->fetchRow("SELECT COUNT(*) AS forms_data_count FROM forms_data WHERE form_id = ?", array($form_id)); 
 if ($forms_data_count['forms_data_count'] > 0)  {
 	$HAVE_DATA = true;
-	$HAVE_DATA_NUM = $forms_data_count['forms_data_count'];
+	$HAVE_DATA_NUM = (int)$forms_data_count['forms_data_count'];
 }
 
 
@@ -196,7 +196,8 @@ if ($CHANGE OR $VIEW) {
 		$FORM_DATA['id'] = $forms_data_row['id'];
 		$FORM_DATA['created'] = $forms_data_row['created'];
 		$FORM_DATA['modified'] = $forms_data_row['modified'];
-		if ($debug) { echo "<br><br><pre>";print_r($FORM_DATA);echo "</pre>"; }
+
+		//if ($debug) { echo "<br><br><pre>"; print_r($FORM_DATA);echo "</pre>"; }
 	}
 }
 
@@ -215,7 +216,6 @@ if (isset($form['pages'])) {
 	}
 	foreach ($form['pages'] as $page) {
 		$pg++;
-		$view_page = true;
 		$demo_page = false;
 		$page_display_times = '0'; //not all forms have this, so we doing that
 		if (isset($page['display_times'])) $page_display_times = $page['display_times'];
@@ -228,90 +228,88 @@ if (isset($form['pages'])) {
 		}
 		$pages_num_visible++;
 		
-		if ($view_page OR $EDIT) {
 			
-			//title #################################################
-			if ($EDIT)
-			{
-				//
-				$html.='<li class="page_sort'.($pg==1?' first_page':'').'">';
-				$html .= '<span id="pageDrag_'.$pg.'" class="page-drag trans5 hid"><i class="fa fa-arrows"></i></span>';
-				$html .= '<fieldset id="fieldset_'.$pg.'" class="coolfieldset" data-page-id="'.$pg.'">'.
-							'<legend> '.$LANG->FORM_PAGE.': '.$pg.'&nbsp;</legend>'.
-							'<input type="hidden" name="page[]" value="'.$pg.'">'.
-							'<div class="edit_step">';
-						
-				if (!$HAVE_DATA) {
-					//close button - except first page
-					$html .= ($pg!=1?'<span id="p_close_page_'.$pg.'" class="close_page"></span>':'');
-				}
-				$html .= ''.	//limit the display times of this page
-								'<div style="text-align:center;" title="'.$LANG->FORM_DISPLAY_TIMES_INFO.'">'. 
-									'<label for="page_display_times_'.$pg.'">'.$LANG->FORM_DISPLAY_TIMES.' : &nbsp;</label>'.
-									//display times select
-									'<select id="page_display_times_'.$pg.'" class="page_display_times">'.
-										'<option value="0"'.($page_display_times=='0'?' selected':'').'>'.$LANG->FORM_DISPLAY_TIMES_0.'</option>'.
-										'<option value="1"'.($page_display_times=='1'?' selected':'').'>'.$LANG->FORM_DISPLAY_TIMES_1.'</option>'.
-										'<option value="2"'.($page_display_times=='2'?' selected':'').'>'.$LANG->FORM_DISPLAY_TIMES_2.'</option>'.
-										'<option value="3"'.($page_display_times=='3'?' selected':'').'>'.$LANG->FORM_DISPLAY_TIMES_3.'</option>'.
-										'<option value="4"'.($page_display_times=='4'?' selected':'').'>'.$LANG->FORM_DISPLAY_TIMES_4.'</option>'.
-										'<option value="5"'.($page_display_times=='5'?' selected':'').'>'.$LANG->FORM_DISPLAY_TIMES_5.'</option>'.
-									'</select>'.
-								'</div>'.
-								'<h3 style="white-space:nowrap;">'.
-									//title input
-									'<input type="text" id="page_title_'.$pg.'" class="c_page_title"'.
-										' placeholder="'.$LANG->FORM_PAGE_TITLE.'"'.
-										' value="'.html_chars($page['title']).'"'.
-										($page['title_center']=='1'?' style="text-align:center;"':'').'>'.
-									//title align center checkbox
-									'<span class="c_page_title_center trans20">'.
-										'<label for="page_title_center_'.$pg.'">'.$LANG->FORM_TITLE_CENTER.'</label>'.
-										'<input type="checkbox" id="page_title_center_'.$pg.'"'.($page['title_center']=='1'?' checked':'').'>'.
-									'</span>'.
+		//title #################################################
+		if ($EDIT)
+		{
+			//
+			$html.='<li class="page_sort'.($pg==1?' first_page':'').'">';
+			$html .= '<span id="pageDrag_'.$pg.'" class="page-drag trans5 hid"><i class="fa fa-arrows"></i></span>';
+			$html .= '<fieldset id="fieldset_'.$pg.'" class="coolfieldset" data-page-id="'.$pg.'">'.
+						'<legend> '.$LANG->FORM_PAGE.': '.$pg.'&nbsp;</legend>'.
+						'<input type="hidden" name="page[]" value="'.$pg.'">'.
+						'<div class="edit_step">';
+					
+			if (!$HAVE_DATA) {
+				//close button - except first page
+				$html .= ($pg!=1?'<span id="p_close_page_'.$pg.'" class="close_page"></span>':'');
+			}
+			$html .= ''.	//limit the display times of this page
+							'<div style="text-align:center;" title="'.$LANG->FORM_DISPLAY_TIMES_INFO.'">'. 
+								'<label for="page_display_times_'.$pg.'">'.$LANG->FORM_DISPLAY_TIMES.' : &nbsp;</label>'.
+								//display times select
+								'<select id="page_display_times_'.$pg.'" class="page_display_times">'.
+									'<option value="0"'.($page_display_times=='0'?' selected':'').'>'.$LANG->FORM_DISPLAY_TIMES_0.'</option>'.
+									'<option value="1"'.($page_display_times=='1'?' selected':'').'>'.$LANG->FORM_DISPLAY_TIMES_1.'</option>'.
+									'<option value="2"'.($page_display_times=='2'?' selected':'').'>'.$LANG->FORM_DISPLAY_TIMES_2.'</option>'.
+									'<option value="3"'.($page_display_times=='3'?' selected':'').'>'.$LANG->FORM_DISPLAY_TIMES_3.'</option>'.
+									'<option value="4"'.($page_display_times=='4'?' selected':'').'>'.$LANG->FORM_DISPLAY_TIMES_4.'</option>'.
+									'<option value="5"'.($page_display_times=='5'?' selected':'').'>'.$LANG->FORM_DISPLAY_TIMES_5.'</option>'.
+								'</select>'.
+							'</div>'.
+							'<h3 style="white-space:nowrap;">'.
+								//title input
+								'<input type="text" id="page_title_'.$pg.'" class="c_page_title"'.
+									' placeholder="'.$LANG->FORM_PAGE_TITLE.'"'.
+									' value="'.html_chars($page['title']).'"'.
+									($page['title_center']=='1'?' style="text-align:center;"':'').'>'.
+								//title align center checkbox
+								'<span class="c_page_title_center trans20">'.
+									'<label for="page_title_center_'.$pg.'">'.$LANG->FORM_TITLE_CENTER.'</label>'.
+									'<input type="checkbox" id="page_title_center_'.$pg.'"'.($page['title_center']=='1'?' checked':'').'>'.
+								'</span>'.
+							'</h3>';
+		} // if ($EDIT) end
+		else {
+			//enable submit button if it is the last page
+			$html .= 	'<div class="step row box1 '.((count($form['pages'])==$pg)?'submit':'').'">'
+							//wizard need at least one input to work 
+							.'<input type="hidden">';
+
+			//show page title
+			if (isset($page['title'])) {
+				$html .= 		'<h3 style="'.($page['title_center']?'text-align:center;':'').'">'.
+									htmlspecialchars_decode($page['title']).
 								'</h3>';
-			} // if ($EDIT) end
-			else {
-				//enable submit button if it is the last page
-				$html .= 	'<div class="step row box1 '.((count($form['pages'])==$pg)?'submit':'').'">'
-								//wizard need at least one input to work 
-								.'<input type="hidden">';
-
-				//show page title
-				if (isset($page['title'])) {
-					$html .= 		'<h3 style="'.($page['title_center']?'text-align:center;':'').'">'.
-										htmlspecialchars_decode($page['title']).
-									'</h3>';
-				}
 			}
-			//title end #############################################
-			
-			
-			$html .= 			'<span class="main_font">';
+		}
+		//title end #############################################
+		
+		
+		$html .= 			'<span class="main_font">';
 
-			if ($EDIT) $html .= 	'<ul class="row_sortable">';
-			
-			//rows 
-			if (isset($page['rows'])) {
-				//form Rows ##########################
-				$html .= get_Form_Rows($page['rows']);
-			}
-			
-			if ($EDIT) $html .= 	'</ul>';
-			
-			if ($EDIT AND !$HAVE_DATA) { //new Row button
-				$html .= 				'<div style="text-align:center; margin-top:10px;"><button type="button" id="page_'.$pg.'_newRow" class="newRow" data-page="'.$pg.'"> &nbsp; '.$LANG->FORM_ROW_ADD.'</button></div>';
-			}
-			$html .= 			'</span>'; //main_font end
+		if ($EDIT) $html .= 	'<ul class="row_sortable">';
+		
+		//rows 
+		if (isset($page['rows'])) {
+			//form Rows ##########################
+			$html .= get_Form_Rows($page['rows']);
+		}
+		
+		if ($EDIT) $html .= 	'</ul>';
+		
+		if ($EDIT AND !$HAVE_DATA) { //new Row button
+			$html .= 				'<div style="text-align:center; margin-top:10px;"><button type="button" id="page_'.$pg.'_newRow" class="newRow" data-page="'.$pg.'"> &nbsp; '.$LANG->FORM_ROW_ADD.'</button></div>';
+		}
+		$html .= 			'</span>'; //main_font end
 
-			$html .= 		'</div>'; //step end
+		$html .= 		'</div>'; //step end
 
-			if ($EDIT) {
-				$html .= ''.
-						'</fieldset><br><br>'.
-					'</li>';
-			}
-		} //if ($view_page OR $EDIT) end
+		if ($EDIT) {
+			$html .= ''.
+					'</fieldset><br><br>'.
+				'</li>';
+		}
 	} //foreach ($form['pages'] end
 
 	if ($EDIT) $html .= '</ul>'; //ul class="page_sortable" end

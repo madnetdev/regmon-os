@@ -38,7 +38,7 @@ $where_Forms_Data__Dates = "";
 $where_Forms_Data__Forms = "";
 
 
-$Groups_All_arr = get_All_Groups_array();
+$Groups_All_arr = (array)get_All_Groups_array();
 $Groups_available_ids = '';
 
 
@@ -49,12 +49,13 @@ if (count($POST_groups)) {
 		if ($Groups_selected != '') {
 			$Groups_selected .= ', ';
 		}
-		$Groups_selected .= "'".$Groups_All_arr[(int)$group_id]."'";
+		$group_id = (int)$group_id;
+		$Groups_selected .= "'".$Groups_All_arr[$group_id.'']."'";
 		
 		if ($Groups_available_ids != '') {
 			$Groups_available_ids .= ', ';
 		}
-		$Groups_available_ids .= (int)$group_id;
+		$Groups_available_ids .= $group_id;
 	}
 
 	if ($Groups_available_ids != '') {
@@ -65,8 +66,8 @@ else {
 	//if POST_groups == all --check what each one can see
 	
 	$Groups_select_options_n_ids = get_Groups_select_options_n_ids($UID);
-	$Groups_select_options = $Groups_select_options_n_ids[0];
-	$Groups_available_ids = $Groups_select_options_n_ids[1];
+	$Groups_select_options = $Groups_select_options_n_ids[0].'';
+	$Groups_available_ids = $Groups_select_options_n_ids[1].'';
 }
 
 
@@ -96,15 +97,15 @@ else {
 	if ($ADMIN OR $LOCATION_ADMIN OR $GROUP_ADMIN OR $GROUP_ADMIN_2) {
 		$Select__Athletes__Options_n_ids = get_Select__Athletes__Options_n_ids__for_Admins($UID, $Groups_available_ids);
 		//$Select__Athletes__Options = $Select__Athletes__Options_n_ids[0]; //not needed here
-		$Athletes_available_ids = $Select__Athletes__Options_n_ids[1];
-		$where_Athletes .= " AND id IN (". $Athletes_available_ids .")";
+		$Athletes_available_ids = $Select__Athletes__Options_n_ids[1].'';
 	}
 	elseif ($TRAINER) {
-		$Athletes_available_ids = get_Select__Athletes__Options_n_ids__for_Trainer($UID, $Groups_available_ids);
+		$Select__Athletes__Options_n_ids = get_Select__Athletes__Options_n_ids__for_Trainer($UID, $Groups_available_ids);
 		//$Select__Athletes__Options = $Select__Athletes__Options_n_ids[0]; //not needed here
-		$Athletes_available_ids = $Select__Athletes__Options_n_ids[1];
-		$where_Athletes .= " AND id IN (". $Athletes_available_ids .")";
+		$Athletes_available_ids = $Select__Athletes__Options_n_ids[1].'';
 	}
+
+	$where_Athletes .= " AND id IN (". $Athletes_available_ids .")";
 }
 
 
@@ -226,6 +227,8 @@ if (count($POST_fields)) {
 $Users_arr_n_ids = get_Users_array_n_ids($where_Athletes);
 $users_arr = $Users_arr_n_ids[0];
 $users_ids = $Users_arr_n_ids[1];
+
+$Data_Table_HTML = '';
 $no_data = false;
 
 if ($users_ids != '') //##################################################
@@ -268,7 +271,7 @@ GROUP BY category_id, form_id, user_id, res_json
 ORDER BY form_id", array()); 
 foreach ($forms_data_rows_tmp as $data_row) {
 	if ($TRAINER) {
-		if (!in_array($data_row['category_id'].'_'.$data_row['form_id'], $Trainer_Forms_Read_Permissions_arr[$data_row['user_id']])) {
+		if (!in_array($data_row['category_id'].'_'.$data_row['form_id'], (array)$Trainer_Forms_Read_Permissions_arr[$data_row['user_id']])) {
 			//if trainer not have read form permissions
 			continue;
 		}
@@ -299,7 +302,7 @@ $data_rows = '';
 foreach ($Forms_Data_ordered_arr as $Forms_Data_row) {
 	$form_id = $Forms_Data_row[0];
 	$form_name = $Forms_Data_row[1];
-	$form_res_names = json_decode($Forms_Data_row[2],true); //[0=name, 1=type]
+	$form_res_names = (array)json_decode($Forms_Data_row[2],true); //[0=name, 1=type]
 	$form_res_names_Num = count($form_res_names);
 
 	$header_forms_data_names[$form_id] = '';
@@ -347,7 +350,7 @@ ORDER BY user_id, group_id, created", array());
 if ($db->numberRows() > 0)  {
 	foreach ($comments_data as $comment) {
 		if ($TRAINER) {
-			if (!in_array('Note_n', $Trainer_Forms_Read_Permissions_arr[$comment['user_id']])) {
+			if (!in_array('Note_n', (array)$Trainer_Forms_Read_Permissions_arr[$comment['user_id']])) {
 				//if trainer not have read form permissions
 				continue;
 			}
@@ -419,7 +422,7 @@ if ($db->numberRows() > 0)  {
 
 	foreach ($all_data_rows as $data_row) {
 		if ($TRAINER) {
-			if (!in_array($data_row['category_id'].'_'.$data_row['form_id'], $Trainer_Forms_Read_Permissions_arr[$data_row['user_id']])) {
+			if (!in_array($data_row['category_id'].'_'.$data_row['form_id'], (array)$Trainer_Forms_Read_Permissions_arr[$data_row['user_id']])) {
 				//if trainer not have read form permissions
 				continue;
 			}
@@ -437,7 +440,7 @@ if ($db->numberRows() > 0)  {
 		$date_last = $date_time[0];
 
 		//form_data
-		$res_json = json_decode($data_row['res_json'],true);
+		$res_json = (array)json_decode($data_row['res_json'],true);
 
 		$form_data_columns = '';
 		
@@ -445,7 +448,7 @@ if ($db->numberRows() > 0)  {
 		foreach ($Forms_Data_ordered_arr as $Forms_Data_row) { //loop all Forms_Data
 			$form_id = $Forms_Data_row[0];
 			if ($data_row['form_id'] == $form_id AND count($res_json)) {
-				$form_fields = json_decode($Forms_Data_row[2],true);
+				$form_fields = (array)json_decode($Forms_Data_row[2],true);
 				//echo "<pre>"; print_r($res_json); print_r($form_fields); echo "</pre>"; 
 
 				foreach ($form_fields as $key => $name_type) {
@@ -468,6 +471,7 @@ if ($db->numberRows() > 0)  {
 						$val = $dd[0];
 					}
 
+					$val = $val . '';
 					if (substr_count($val, '.') == 1) { 
 						//in excel dots may translated to dates --so we give commas
 						$form_data_columns .= '<td>'.str_replace('.', ',', $val).'</td>'; 

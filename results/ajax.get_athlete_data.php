@@ -169,8 +169,8 @@ ORDER BY f.name, fd.created", array($athlete_id, $group_id));
 			if (isset($forms[$form_id])) {
 				$form_name = $forms[$form_id][0];
 				$form_id_2_name_arr[$form_id] = $form_name;
-				$form_data_names = $forms[$form_id][1]; //array
-				$res_json = json_decode($form_data_columns['res_json'], true);
+				$form_data_names = (array)$forms[$form_id][1]; //array
+				$res_json = (array)json_decode($form_data_columns['res_json'], true);
 				
 				//if we have less keys than we need  (wrong input) --> need to fix here
 				if (count($res_json) != count($form_data_names) AND is_array($form_data_names)) {
@@ -222,7 +222,7 @@ ORDER BY f.name, fd.created", array($athlete_id, $group_id));
 							$series[$form_id][$s_key.'_S']['num'] = $series_count;
 							$series[$form_id][$s_key.'_S']['name'] = $data_name.'_S';
 							$series[$form_id][$s_key.'_S']['type'] = "_Text";
-							$data_input = explode('__', $res); //can be a single_value or Num__String
+							$data_input = explode('__', $res.''); //can be a single_value or Num__String
 							if (isset($data_input[1])) { //Num__String
 								$data_input = $data_input[1]; //get string only
 							} else {

@@ -5,14 +5,14 @@ class Language {
     /**
      * @var static $instance
      */
-    private static $instance;
+    private static $instance = null;
     
     /**
      * @var string $language
      */
     public $language = '';
     /**
-     * @var array $Languages
+     * @var mixed $Languages
      */
     public $Languages = array('en','de');
     /**
@@ -24,7 +24,7 @@ class Language {
      */
     public $Use_Multi_Language_Selector = true;
     /**
-     * @var array $tags
+     * @var mixed $tags
      */
     private $tags = array();
     
@@ -40,6 +40,11 @@ class Language {
         return self::$instance;
     }
     
+    /**
+     * @param string $REGmon_Folder
+     * @param string $Default_Language
+     * @param bool $Use_Multi_Language_Selector
+     */
     public function __construct(string $REGmon_Folder, string $Default_Language, bool $Use_Multi_Language_Selector) {
 
 		if (!$Use_Multi_Language_Selector) {
@@ -47,7 +52,7 @@ class Language {
             $this->language = $Default_Language;
         }
 		elseif (isset($_REQUEST['lang'])) {
-            if (in_array($_REQUEST['lang'], $this->Languages)) {
+            if (in_array($_REQUEST['lang'], (array)$this->Languages)) {
                 $this->language = $_REQUEST['lang'];
             }
         } 
@@ -87,7 +92,7 @@ class Language {
             $this->language = $this->Default_Language;
         }
 		
-        if (!in_array($this->language, $this->Languages)) { 
+        if (!in_array($this->language, (array)$this->Languages)) { 
 			$this->language = $this->Default_Language;
         }
 
@@ -97,11 +102,11 @@ class Language {
     }
     
     public function __destruct() {
-    	$this->language = '';
-    	$this->tags = array();
+        $this->language = '';
+        $this->tags = array();
     }
     
-    public function __get(string $tag):string {
+    public function __get(mixed $tag):mixed {
         if (!isset($this->tags[$tag])) {
             error_log('Missing Language Tag : '.$tag);
             return '_['.$tag.']_';

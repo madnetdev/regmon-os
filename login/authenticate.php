@@ -34,9 +34,9 @@ $USER = $ACCOUNT = $UID = $USERNAME = false;
 require_once('class.loglimiter.php');
 $Blocked_IP = false;
 $CLL = $CONFIG['LogLimiter'];
-$LogLimiter = new LogLimiter($db, $CLL['Max_Attempts'], $CLL['Block_Minutes'], $CLL['Reset_Attempts_Minutes']);
+$LogLimiter = new LogLimiter($db, $CLL['Max_Attempts'], $CLL['Block_Minutes']);
 if ($LogLimiter->checkBlock()) { // if true this IP is blocked
-	//die("Sorry, but we are not enjoyed by your bruteforce attempt!"); 
+	//die("Sorry, but we are not enjoyed by your brute force attempt!"); 
 	$Blocked_IP = true;
 }
 
@@ -76,7 +76,7 @@ if ($Captcha AND !$Blocked_IP) {
 
 		if (verify_Password($password, $USER["passwd"])) 
 		{
-			//successfull login
+			//successful login
 
 			//Valid User --logged in and active
 			if ($USER["status"] == '1') {
@@ -105,9 +105,9 @@ if ($Captcha AND !$Blocked_IP) {
 				 * include username, password, (IP) 
 				 * so if any of them changes, logout the user
 				 */
-				$hash_string = $CONFIG['SEC_Hash_Secret'] . $USERNAME . ($CONFIG['SEC_Hash_IP'] ? $UIP : '') . $USER['passwd'];
+				$HASH = hash_Secret($CONFIG['SEC_Hash_Secret'] . $USERNAME . ($CONFIG['SEC_Hash_IP'] ? $UIP : '') . $USER['passwd'], $CONFIG['SEC_Hash_Secret']);
+				
 				unset($USER['passwd']);
-				$HASH = hash_Secret($hash_string, $CONFIG['SEC_Hash_Secret']);
 								
 
 				setcookie ("UID", $UID, 0, '/'.$CONFIG['REGmon_Folder']);
@@ -195,6 +195,6 @@ else {
 
 
 //Redirect to new page
-header( 'Location: ' . ($new_page ?: '/') );
+header( 'Location: ' . $new_page );
 exit; 
 ?>

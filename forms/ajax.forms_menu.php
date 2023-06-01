@@ -3,16 +3,16 @@ $PATH_2_ROOT = '../';
 require_once($PATH_2_ROOT.'_settings.regmon.php');
 require($PATH_2_ROOT.'login/validate.php');
 
-$group_id 	= (int)($_POST['group_id'] ?? false);
-$trainer_id = (int)($_POST['trainer_id'] ?? false);
-$athlete_id = (int)($_POST['athlete_id'] ?? false);
+$group_id 	= (int)($_POST['group_id'] ?? 0);
+$trainer_id = (int)($_POST['trainer_id'] ?? 0);
+$athlete_id = (int)($_POST['athlete_id'] ?? 0);
+
+if (!$group_id) exit;
 
 $edit 		= ((isset($_POST['edit']) AND $_POST['edit'] == 'true') ? true : false);
 $select 	= ((isset($_POST['select']) AND $_POST['select'] == 'true') ? true : false);
 $trainer 	= ((isset($_POST['trainer']) AND $_POST['trainer'] == 'true') ? true : false);
 $box 		= ((isset($_POST['box']) AND $_POST['box'] == 'true') ? true : false);
-if (!$group_id) exit;
-
 
 
 if ($edit) {
@@ -152,7 +152,7 @@ if (($trainer AND $trainer_id) OR ($trainer_view AND $trainer_view_id)) {
  * @param bool $options
  * @return string
  */
-function getCategoryForms(int $cat_id, string $space = '', bool $options = false):string {
+function getCategoryForms_Html(int $cat_id, string $space = '', bool $options = false):string {
 	global $forms, $box, $select, $edit, $trainer, $trainer_view, $group_forms_selected_arr, $group_forms_standard_arr, $trainer_forms_selected_read_arr, $trainer_forms_selected_write_arr, $athlete_id, $group_id, $UID, $CONFIG, $LANG;
 	
 	$html = '';
@@ -221,7 +221,7 @@ function getCategoryForms(int $cat_id, string $space = '', bool $options = false
 }
 
 
-function buildCategory(int $parent, string $collapse_id_prefix, int $level = 1, bool $select = false):string {
+function buildCategory_Html(int $parent, string $collapse_id_prefix, int $level = 1, bool $select = false):string {
 	global $categories, $group_id, $box;
 
 	$html = '';
@@ -250,19 +250,21 @@ function buildCategory(int $parent, string $collapse_id_prefix, int $level = 1, 
 
 				if (isset($categories['forms'][$cat_id])) {
 					if ($select) 
-						$html .= getCategoryForms($cat_id, $space, $select); //get forms
+						$html .= getCategoryForms_Html($cat_id, $space, $select); //get forms
 					else $html .= ''.
 								'<div style="padding:0 5px 10px;">'.
 									'<table style="width:100%;">'.
-										getCategoryForms($cat_id, $space, $select). //get forms
+										getCategoryForms_Html($cat_id, $space, $select). //get forms
 									'</table></div>';
 				}
 
 				// have childs
-				if (isset($categories['parent_categories'][$cat_id]) AND $categories['has_forms'][$cat_id]) {
-					if ($select) 
-						$html .= buildCategory($cat_id, $collapse_id_prefix, $level+1, $select); //get childs
-					else $html .= buildCategory($cat_id, $collapse_id_prefix, $level+1, $select); //get childs
+				if (isset($categories['parent_categories'][$cat_id])) {
+					if ($select) {
+						$html .= buildCategory_Html($cat_id, $collapse_id_prefix, $level + 1, $select); //get childs
+					} else {
+						$html .= buildCategory_Html($cat_id, $collapse_id_prefix, $level + 1, $select); //get childs
+					}
 				}
 				
 				if ($select)
@@ -404,7 +406,7 @@ if ($db->numberRows() > 0)  {
 	if ($trainer) 	$collapse_id_prefix .= '_trn';
 	if ($edit) 		$collapse_id_prefix .= '_edt';
 	
-	$html = buildCategory(0, $collapse_id_prefix, 1, false); //global $categories
+	$html = buildCategory_Html(0, $collapse_id_prefix, 1, false); //global $categories
 
 	if ($box AND $athlete_id == $UID) {
 		$html .= '<button type="button" id="Go_2_Forms_Select_Menu" class="bttn" style="padding:3px 10px; width:100%; border:1px #ccc solid;">'.$LANG->FORM_MENU_GO_2_FORM_SELECT.' &nbsp; &nbsp;<i class="fa fa-list-alt" style="font-size:17px; vertical-align:bottom;"></i></button>';
@@ -435,7 +437,7 @@ V_TRAINER_W_PERMS = ['All'];
 <?php if (!$select AND !$trainer AND !$edit) { 
 //TODO: check - this changes in every Athlete change, but it only has to do with main user 
 ?>
-V_CATEGORIES_FORMS_OPTIONS = '<option value="Note_n" style="background:#aaaaaa;"><?=$LANG->FORM_MENU_COMMENT;?></option><?=buildCategory(0, $collapse_id_prefix, 1, true);?>';
+V_CATEGORIES_FORMS_OPTIONS = '<option value="Note_n" style="background:#aaaaaa;"><?=$LANG->FORM_MENU_COMMENT;?></option><?=buildCategory_Html(0, $collapse_id_prefix, 1, true);?>';
 <?php } ?>
 
 jQuery(function() {

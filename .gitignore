@@ -12,7 +12,6 @@ node_modules/
 dist/
 package-lock.json
 composer.lock
-phpstan.neon
 
 # ignore composer vendor directory
 /vendor
@@ -81,3 +80,4 @@ Thumbs.db
 !_node_modules.zip
 !_regmondb_*.sql
 !.env.sample
+!.github

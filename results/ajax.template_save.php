@@ -69,7 +69,7 @@ ORDER BY u.id", array($UID, $UID, $group_id, $athlete_id));
 	$table = $template_type;
 
 	//print_r($values);
-	if ($id AND $id != 0) {
+	if ($id !== 0) {
 		$save = $db->update($values, $table, "user_id=? AND group_id=? AND id=?", array($athlete_id, $group_id, $id));
 	}
 	else {
@@ -145,7 +145,7 @@ ORDER BY u.id", array($UID, $UID, $group_id, $athlete_id));
 			//all data saves
 			else {
 				$rows = $db->fetch("SELECT * FROM templates_forms WHERE user_id=? AND group_id=? ORDER BY name", array($athlete_id, $group_id)); 
-				$t_data = '{';
+				$t_data = '';
 				$html = '<select id="saved_select" name="saved_select" class="form-control">';
 				if ($db->numberRows() > 0) {
 					foreach ($rows as $row) {
@@ -160,7 +160,7 @@ ORDER BY u.id", array($UID, $UID, $group_id, $athlete_id));
 						$t_data .= $row['id'].':'.$row['data_json'];
 					}
 				}
-				$t_data .= '}';
+				$t_data .= '{'.$t_data.'}';
 				$html .= '</select>';
 				$html .= '<script>V_FORMS_TEMPLATES = '.$t_data.'</script>';
 				

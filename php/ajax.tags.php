@@ -1,5 +1,9 @@
 <?php // ajax Tags
 
+//ajax.php
+/** @var string $action */
+/** @var int $id */
+
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
 switch ($action) {

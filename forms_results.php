@@ -8,6 +8,18 @@ require('results/inc.results_functions.php');
 $results_page = 'FORMS_RESULTS'; //need to pass this for inc.results_top
 require('results/inc.results_top.php');
 
+//from inc.results_top.php
+/** @var bool $is_iframe  */
+/** @var int $group_id */
+/** @var int $athlete_id */
+/** @var int $cat_id */
+/** @var int $form_id */
+/** @var string $Show_Only_Group_name */
+/** @var string $Select__Groups__Options */
+/** @var string $info_lines_color_formula */
+/** @var string $date_from */
+/** @var string $date_to */
+
 $u_name = '';
 $u_vorname = '';
 $users_data_option = '';
@@ -73,11 +85,11 @@ elseif ($TRAINER AND !$is_iframe) { //from athletes_select.php but changed
 	$s_vorname = $USER['firstname'] != '' ? $USER['firstname'] : $USER['uname'];
 	$trainer_users_select = '<option value="'.$UID.'"'.(!$has_selected?' selected':'').'>'.$s_vorname.' '.$s_name.'</option>'.$trainer_users_select;
 	$users_data_option = $trainer_users_select;
-	if (!$has_selected) {
+	/*if (!$has_selected) {
 		$u_name = $s_name;
 		$u_vorname = $s_vorname;
 		$has_selected = true;
-	}
+	}*/
 	if ($athlete_id != $UID AND !$has_selected) {
 		echo Exit_Message($LANG->NO_ACCESS_RIGHTS);
 		exit;

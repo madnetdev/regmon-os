@@ -1,5 +1,7 @@
 <?php // inc results_top
 
+/** @var string $results_page */
+
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
 $template 	= $_GET['vor'] ?? 0;

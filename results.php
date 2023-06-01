@@ -7,6 +7,13 @@ require('results/inc.results_functions.php');
 
 $results_page = 'RESULTS';
 require('results/inc.results_top.php');
+
+//inc,results_top.php
+/** @var bool $is_iframe */
+/** @var string $date_from */
+/** @var string $date_to */
+/** @var string $Select__Groups__Options */
+/** @var string $info_lines_color_formula */
 ?>
 
 

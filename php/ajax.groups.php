@@ -1,5 +1,10 @@
 <?php // ajax Groups
 
+//ajax.php
+/** @var string $action */
+/** @var int $id */
+/** @var int $ID */
+
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 
 switch ($action) {
@@ -17,9 +22,12 @@ switch ($action) {
 				case 'private_key': 
 					$values[$key] = $val;
 				  break;
-				case 'stop_date':	
-					if ($val != '') $values[$key] = get_date_SQL($val.'');
-					else $values[$key] = array("NULL"); //=NULL
+				case 'stop_date':
+					if ($val != '') {
+						$values[$key] = get_date_SQL($val . '');
+					} else {
+						$values[$key] = array("NULL"); //=NULL
+					}
 				  break;
 			}
 		}
@@ -40,8 +48,9 @@ switch ($action) {
 		$location_id = $values['location_id'];
 		
 		//remove first and last commas
-		$values['admins_id'] = ltrim(rtrim($values['admins_id'],','),',');
-		$group_admins_ids_arr = explode(',', $values['admins_id']);
+		/** @var mixed $values['admins_id'] */
+		$values['admins_id'] = ltrim(rtrim($values['admins_id'].'', ','), ',');
+		$group_admins_ids_arr = explode(',', $values['admins_id'].'');
 		
 		$location_admin = $db->fetchRow("SELECT admin_id FROM locations WHERE id=?", array($location_id));
 		$location_admin = $location_admin['admin_id']??'';
@@ -135,7 +144,7 @@ switch ($action) {
 		}
 
 	  break;
-	  
+
 
 	case 'del': // DELETE 
 		

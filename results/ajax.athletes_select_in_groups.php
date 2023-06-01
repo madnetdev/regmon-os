@@ -69,9 +69,9 @@ if ($db->numberRows() > 0) {
 		//option
 		$athlete_name = $row['lastname'] != '' ? $row['lastname'] : $row['uname'];
 		$athlete_vorname = $row['firstname'] != '' ? $row['firstname'] : $row['uname'];
-		if ($GROUP_ADMIN AND !$THIS_GROUP_ADMIN AND $athlete_id != $row['id']) {
+		if ($GROUP_ADMIN AND !$THIS_GROUP_ADMIN AND $UID != $row['id']) {
 		}
-		elseif ($GROUP_ADMIN_2 AND !$THIS_GROUP_ADMIN_2 AND $athlete_id != $row['id']) {
+		elseif ($GROUP_ADMIN_2 AND !$THIS_GROUP_ADMIN_2 AND $UID != $row['id']) {
 		}
 		else {
 			$Select__Athletes__Options .= '<option value="'.$row['group_id'].'_'.$row['id'].'">'.$athlete_vorname.' '.$athlete_name.' - '.$row['sport'].'</option>';
@@ -92,10 +92,10 @@ if ($db->numberRows() > 0) {
 			<?=$Select__Athletes__Options;?>
 		</select> &nbsp; 
 <?php if ($Select__Athletes__Options != '') { ?>
-	 	<button id="Button__Select__Athletes__Submit" class="forward" title="<?= $LANG->RESULTS_BUTTON_APPLY_CHANGES;?>"></button>
+		<button id="Button__Select__Athletes__Submit" class="forward" title="<?= $LANG->RESULTS_BUTTON_APPLY_CHANGES;?>"></button>
 <?php } else { //change Loading to NoData ?>
-	 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 	<?=get_No_Data_Error();?>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<?=get_No_Data_Error();?>
 <?php } ?>
 	</div>
 </span>

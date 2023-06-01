@@ -1,5 +1,11 @@
 <?php // inc Form Footer 
 
+//from form.php
+/** @var bool $VIEW */
+/** @var bool $PREVIEW */
+/** @var bool $EDIT */
+/** @var int $pages_num_visible */
+
 if ($SEC_check != $CONFIG['SEC_Page_Secret']) exit;
 ?>
 

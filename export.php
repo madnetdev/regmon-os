@@ -9,8 +9,8 @@ require_once('export/inc.export_functions.php');
  /** @var int $UID */
 
 $Groups_select_options_n_ids = get_Groups_select_options_n_ids($UID);
-$Groups_select_options = $Groups_select_options_n_ids[0];
-$Groups_available_ids = $Groups_select_options_n_ids[1];
+$Groups_select_options = $Groups_select_options_n_ids[0] . '';
+$Groups_available_ids = $Groups_select_options_n_ids[1] . '';
 
 
 //get Select__Athletes__Options + Athletes_available_ids

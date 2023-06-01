@@ -117,7 +117,7 @@ if ($db->numberRows() > 0)  {
 			$FLD_open_group = true;
 		}
 		//options
-		$fields_arr = json_decode($row['data_names'], true);
+		$fields_arr = (array)json_decode($row['data_names'], true);
 		foreach ($fields_arr as $key => $field) {
 			//EXTRA Fields ///////////////////////////////////////
 			if ($field[1] == '_Period') {

@@ -8,7 +8,7 @@ function get_Available_Forms(int $user_id):string {
 	$where_forms = '';
 	if ($ATHLETE) { // only for Athletes
 		// get Forms with forms_data
-		$Forms_with_Forms_Data_arr = get_Forms_with_Forms_Data_count_array($user_id);
+		$Forms_with_Forms_Data_arr = (array)get_Forms_with_Forms_Data_count_array($user_id);
 		if (count($Forms_with_Forms_Data_arr)) {
 			$where_forms = implode(',', array_keys($Forms_with_Forms_Data_arr));
 		} else {
@@ -36,7 +36,7 @@ function get_Available_Forms(int $user_id):string {
 	return $Forms_select_options;
 }
 
-function get_Trainer_Groups_array(int $user_id):array {
+function get_Trainer_Groups_array(int $user_id):mixed {
 	global $db;
 
 	$Trainer_Groups_arr = array();
@@ -54,7 +54,7 @@ WHERE u2g.status = 1 AND u.id = ?", array($user_id));
 	return $Trainer_Groups_arr;
 }
 
-function get_Athlete_Groups_array(int $user_id):array {
+function get_Athlete_Groups_array(int $user_id):mixed {
 	global $db;
 	//get Athlete Groups
 	$Athlete_Groups_arr = array();
@@ -67,7 +67,7 @@ function get_Athlete_Groups_array(int $user_id):array {
 	return $Athlete_Groups_arr;
 }
 
-function get_Groups_select_options_n_ids(int $user_id):array {
+function get_Groups_select_options_n_ids(int $user_id):mixed {
 	global $db, $TRAINER, $ATHLETE, $ADMIN, $GROUP_ADMIN, $GROUP_ADMIN_2, $LANG;
 	
 	if ($TRAINER) {
@@ -148,7 +148,7 @@ ORDER BY gr.location_id, gr.name", array());
 //export + export_data ####################################
 
 
-function get_Select__Athletes__Options_n_ids__for_Admins(int $user_id, string $Groups_available_ids):array {
+function get_Select__Athletes__Options_n_ids__for_Admins(int $user_id, string $Groups_available_ids):mixed {
 	global $db, $ADMIN, $LOCATION_ADMIN, $GROUP_ADMIN, $GROUP_ADMIN_2;
 
 	$where_level = '';
@@ -189,7 +189,7 @@ ORDER BY u.firstname, u.lastname, u.id", array($user_id));
 }
 
 
-function get_Select__Athletes__Options_n_ids__for_Trainer(int $user_id, string $Groups_available_ids):array {
+function get_Select__Athletes__Options_n_ids__for_Trainer(int $user_id, string $Groups_available_ids):mixed {
 	global $db;
 
 	$where_groups = "AND u2g.group_id IN (" . $Groups_available_ids . ")";
@@ -221,7 +221,7 @@ ORDER BY u.firstname, u.lastname, u.id", array($user_id));
 
 //export_data ####################################
 
-function get_Trainer_Forms_Read_Permissions_array(int $trainer_id, string $Athletes_available_ids):array {
+function get_Trainer_Forms_Read_Permissions_array(int $trainer_id, string $Athletes_available_ids):mixed {
 	global $db;
 
 	$Trainer_Forms_Read_Permissions_arr = array();
@@ -238,7 +238,7 @@ function get_Trainer_Forms_Read_Permissions_array(int $trainer_id, string $Athle
 	return $Trainer_Forms_Read_Permissions_arr;
 }
 
-function get_Users_array_n_ids(string $where_Athletes):array {
+function get_Users_array_n_ids(string $where_Athletes):mixed {
 	global $db;
 	$users_arr = array();
 	$users_ids = '';
@@ -266,7 +266,7 @@ function get_Users_array_n_ids(string $where_Athletes):array {
 	return array($users_arr, $users_ids);
 }
 
-function get_Group_Users(int $group_id):array {
+function get_Group_Users(int $group_id):mixed {
 	global $db;
 	$users = array();
 	$users_ids = array();
@@ -295,7 +295,7 @@ ORDER BY u.firstname, u.lastname, u.id", array($group_id));
 	return array($users_ids, $users);
 }
 
-function get_All_Forms():array {
+function get_All_Forms():mixed {
 	global $db;
 	$rows = $db->fetch("SELECT f2c.form_id, f2c.category_id, f.name, f.data_names FROM forms2categories f2c
 LEFT JOIN forms f ON form_id = f.id
@@ -310,7 +310,7 @@ WHERE f.status = 1 ORDER BY f2c.category_id, f.name", array());
 	return $forms;
 }
 
-function get_All_Groups_array():array {
+function get_All_Groups_array():mixed {
 	global $db, $LANG;
 
 	$groups = array();
