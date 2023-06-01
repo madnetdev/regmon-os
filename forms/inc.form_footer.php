@@ -23,8 +23,7 @@ if (!$VIEW) { ?>
 		<button type="submit" class="saveSubmit"><?=$LANG->FORM_SAVE;?> &nbsp; </button> <?php //form data save ?>
 		<div id="keep_form_open_div">
 			<label id="keep_form_open_label" for="keep_form_open_ck" style="font-weight:600; margin:5px 0 0; color:#555;"> <?=$LANG->FORM_KEEP_AFTER_SAVE;?> : </label>
-			<input type="checkbox" id="keep_form_open_ck" class="keep_form_open_ck" onchange="this.nextSibling.value=this.checked==true?1:0; return false;">
-			<input type="hidden" id="keep_form_open" value="0">
+			<input type="checkbox" id="keep_form_open_ck" class="keep_form_open_ck" onchange="this.nextSibling.value=this.checked==true?1:0;"><?php /*need to be in the same line*/?><input type="hidden" id="keep_form_open" value="0">
 		</div>
 	<?php } else { // if !EDIT ?>
 
