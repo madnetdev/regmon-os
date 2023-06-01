@@ -456,18 +456,18 @@ const V_Athletes_2_Groups = <?=json_encode($Athletes_2_Group);?>;
 </script>
 
 			<div class="col-sm-6 grouping" style="text-align:left; border-left:3px solid #aaa;">
-				<div id="Select_Group_row" style="white-space:nowrap; margin:1px; height:35px; margin-left:8px;">
+				<div id="Form_Select_Group_row" style="white-space:nowrap; margin:1px; height:35px; margin-left:8px;">
 					<span id="Group_Title" style="font-size:14px; font-weight:bold; vertical-align:middle;"><?=$LANG->FORM_GROUP_S;?> : </span> 
 					<span class="input-group-addon" style="width:25px; height:28px; padding:5px; display:inline-table; margin-right:-5px; border-top-left-radius:4px; border-bottom-left-radius:4px; "><span class="fa fa-users"></span></span>
-					<select name="Select_Group[]" id="Select_Group" multiple style="width:100%; max-width:350px; font-size:17px; vertical-align:middle; color:#444; font-weight:bold;">
+					<select name="Form_Select_Group" id="Form_Select_Group" multiple style="width:100%; max-width:350px; font-size:17px; vertical-align:middle; color:#444; font-weight:bold;">
 						<?=$Groups_select_options;?>
 					</select>
 					<span class="input-group-addon" style="width:25px; height:28px; padding:5px; display:inline-table; margin-left:-5px; border:2px solid #ccc;"><span class="fa fa-users"></span></span>
 				</div>
-				<div id="Select_Athletes_row" style="white-space:nowrap; margin:1px; height:35px;">
+				<div id="Form_Select_Athletes_row" style="white-space:nowrap; margin:1px; height:35px;">
 					<span id="Athlete_Title" style="font-size:14px; font-weight:bold; vertical-align:middle;"><?=$LANG->FORM_ATHLETE_S;?> : </span> 
 					<span class="input-group-addon" style="width:25px; height:28px; padding:4px 7px; font-size:16px; display:inline-table; margin-right:-6px; border-top-left-radius:4px; border-bottom-left-radius:4px;"><span class="fa fa-user"></span></span>
-					<select id="Select_Athletes" style="width:100%; max-width:350px; font-size:17px; vertical-align:middle; color:#444; font-weight:bold;">
+					<select id="Form_Select_Athletes" style="width:100%; max-width:350px; font-size:17px; vertical-align:middle; color:#444; font-weight:bold;">
 						<?=$Athletes_Select;?>
 					</select>
 					<span class="input-group-addon" style="width:25px; height:28px; padding:4px 7px; font-size:16px; display:inline-table; margin-left:-6px; border:2px solid #ccc;"><span class="fa fa-user"></span></span>

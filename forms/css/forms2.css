@@ -100,7 +100,7 @@ td.cm_it hr { margin:24px 0; border-top:2px solid #dfdfdf; }
 	.time-group { margin-left:41px !important; }
 }
 @media (max-width: 410px) { 
-	#Select_Group_row { margin-left:1px !important; }
+	#Form_Select_Group_row { margin-left:1px !important; }
 	#Group_Title { display:none; }
 	#Athlete_Title { display:none; }
 }
@@ -109,8 +109,8 @@ td.cm_it hr { margin:24px 0; border-top:2px solid #dfdfdf; }
 	#form_time_title { display:none !important; }
 }
 
-#Select_Group_box {max-width:220px;}
-#Select_Athletes_box {max-width:220px;}
+#Form_Select_Group_box {max-width:220px;}
+#Form_Select_Athletes_box {max-width:220px;}
 
 .multiselect-clear-filter { padding: 5px 12px; }
 .multiselect-container.dropdown-menu>.disabled>a,
@@ -125,7 +125,7 @@ td.cm_it hr { margin:24px 0; border-top:2px solid #dfdfdf; }
 .multiselect .multiselect-selected-text { /*font-size:16px;*/ font-weight:bold; }
 .multiselect.dropdown-toggle { height:28px; line-height:10px; border-radius:0; border-width:2px; }
 
-#Select_Athletes_box .dropdown-menu label.radio input[type=radio] { visibility: hidden; } /*hide radio buttons*/
-#Select_Athletes_box .dropdown-menu label.radio { padding-left:25px; }
+#Form_Select_Athletes_box .dropdown-menu label.radio input[type=radio] { visibility: hidden; } /*hide radio buttons*/
+#Form_Select_Athletes_box .dropdown-menu label.radio { padding-left:25px; }
 .multiselect.dropdown-toggle.btn-default { background:#fff; }
 

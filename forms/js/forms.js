@@ -233,7 +233,8 @@ $('form#wrapped').on('submit', function(e){
 		get_data += '&group_id=' + $('#group_id').val();
 		get_data += '&athlete_id=' + $('#athlete_id').val();
 		
-		$.post('forms/ajax.form_data_save.php', get_data, function(data, result){
+		$.post('forms/ajax.form_data_save.php', get_data, function (data, result) {
+			
 			if ($('#keep_form_open').val() != '1') {
 				$(window).off('beforeunload'); //disable unload warning
 				if (is_iOS()) {
@@ -245,6 +246,7 @@ $('form#wrapped').on('submit', function(e){
 					}
 				}
 			}
+
 			if (typeof(parent.$) !== 'undefined') {
 				parent.Swal({
 					type: 'success',
@@ -275,9 +277,9 @@ $("#form_time_now").on('click',function() {
 });
 
 //Group Select
-$('#Select_Group').multiselect({ //http://davidstutz.github.io/bootstrap-multiselect/
+$('#Form_Select_Group').multiselect({ //http://davidstutz.github.io/bootstrap-multiselect/
 	maxHeight: 300,
-	buttonContainer: '<div class="btn-group" id="Select_Group_box" />',
+	buttonContainer: '<div class="btn-group" id="Form_Select_Group_box" />',
 	buttonWidth: '100%',
 	enableFiltering: true,
 	enableCaseInsensitiveFiltering: true,
@@ -293,15 +295,17 @@ $('#Select_Group').multiselect({ //http://davidstutz.github.io/bootstrap-multise
 	disableIfEmpty: true,
 	disabledText: LANG.GROUPS_SELECT_NO_GROUP
 });
-//$('#Select_Group').multiselect('rebuild');
+//$('#Form_Select_Group').multiselect('rebuild');
 if (V_CHANGE) {
-	$('#Select_Group').multiselect('disable');
+	$('#Form_Select_Group').multiselect('disable');
 }
+//TODO: Form_Select_Group not working as expected
+$('#Form_Select_Group').multiselect('disable');
 
 //Athlete Select
-$('#Select_Athletes').multiselect({ //http://davidstutz.github.io/bootstrap-multiselect/
+$('#Form_Select_Athletes').multiselect({ //http://davidstutz.github.io/bootstrap-multiselect/
 	maxHeight: 300,
-	buttonContainer: '<div class="btn-group" id="Select_Athletes_box" />',
+	buttonContainer: '<div class="btn-group" id="Form_Select_Athletes_box" />',
 	buttonWidth: '100%',
 	enableFiltering: true,
 	enableCaseInsensitiveFiltering: true,
@@ -318,19 +322,22 @@ $('#Select_Athletes').multiselect({ //http://davidstutz.github.io/bootstrap-mult
 	disabledText: LANG.ATHLETES_SELECT_NO_ATHLETE
 });
 if (V_CHANGE) {
-	$('#Select_Athletes').multiselect('disable');
+	$('#Form_Select_Athletes').multiselect('disable');
 }
-$('#Select_Athletes').on('change', function() {
+//TODO: Form_Select_Athletes not working as expected
+$('#Form_Select_Athletes').multiselect('disable');
+
+$('#Form_Select_Athletes').on('change', function() {
 	const ath_id = $(this).val();
 	$("#athlete_id").val( ath_id );
 	let options = '';
 	V_Athletes_2_Groups[ath_id].forEach(function(group_id) {
 		options += '<option value="'+group_id+'"'+(group_id==V_GROUP?' selected':'')+'>'+V_GroupsNames[group_id]+'</option>';
 	});
-	$('#Select_Group').html(options);
-	$('#Select_Group').multiselect('rebuild');
+	$('#Form_Select_Group').html(options);
+	$('#Form_Select_Group').multiselect('rebuild');
 });
-$("#athlete_id").val( $("#Select_Athletes").val() );
+$("#athlete_id").val( $("#Form_Select_Athletes").val() );
 
 
 
@@ -345,7 +352,7 @@ $('input, textarea').on('change', function(event){
 		return false;
 	}
 	if (t_name == '' || t_name == undefined) {
-		return false; //Select_Group, Select_Athletes checkboxes
+		return false; //Form_Select_Group, Form_Select_Athletes checkboxes
 	}
 	
 	on_Change_Update_ProcessBar(this);
@@ -438,8 +445,8 @@ function on_Change_Select(self) {
 	const t_name = $(self).attr('name');
 	if (t_name == undefined) return false;
 	else if (t_name == 'timer_period') return false;
-	else if (t_name == 'Select_Group[]') return false;
-	else if (t_name == 'Select_Athletes') return false;
+	else if (t_name == 'Form_Select_Group') return false;
+	else if (t_name == 'Form_Select_Athletes') return false;
 
 	on_Change_Update_ProcessBar(self);
 
