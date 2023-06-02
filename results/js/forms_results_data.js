@@ -249,11 +249,21 @@ function Fieldset__Athlete__Init(athlete_id, athlete_name) { //#####	 --FORMS_RE
 							//1_189__0__26.11.2019__02.12.2019
 							date_from = forms_template[3] + ' 00:00';
 							date_to = forms_template[4] + ' 23:59';
+
+							if (V_LANG_CURRENT == 'de') {
+								date_from = moment(forms_template[3] + ' 00:00:00', 'DD.MM.YYYY HH:mm:ss').format('DD.MM.YYYY HH:mm');
+								date_to = moment(forms_template[4] + ' 23:59:59', 'DD.MM.YYYY HH:mm:ss').format('DD.MM.YYYY HH:mm');
+							}
 						}
 						else if (forms_template[2] == '1') {
 							//1_175__1__2__week
 							date_from = moment().subtract(forms_template[3], forms_template[4]).format('YYYY-MM-DD') + ' 00:00';
 							date_to = moment().format('YYYY-MM-DD') + ' 23:59';
+
+							if (V_LANG_CURRENT == 'de') {
+								date_from = moment().subtract(forms_template[3], forms_template[4]).format('DD.MM.YYYY') + ' 00:00';
+								date_to = moment().format('DD.MM.YYYY') + ' 23:59';
+							}
 						}
 
 						//init multiselect
@@ -332,11 +342,19 @@ function Fieldset__Athlete_Form__Extra_Buttons__Init(ath_id, base_form_id, form_
 	
 	//Add selected Forms_Template to Dashboard
 	$('#Button__Forms_Template__2_Dashboard_' + form_group_id).on('click', function () {
+		let date_from = moment(V_DATE_FROM + ':00', 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD');
+		let date_to = moment(V_DATE_TO + ':59', 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD');
+		
+		if (V_LANG_CURRENT == 'de') {
+			date_from = moment(V_DATE_FROM + ':00', 'DD.MM.YYYY HH:mm:ss').format('YYYY-MM-DD');
+			date_to = moment(V_DATE_TO + ':59', 'DD.MM.YYYY HH:mm:ss').format('YYYY-MM-DD');
+		}
+	
 		const options = base_form_id + '__' +
 			save_id + '__' +
 			'0' + '__' +
-			moment(V_DATE_FROM + ':00', 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD') + '__' +
-			moment(V_DATE_TO + ':59', 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD');
+			date_from + '__' + date_to;
+		
 		const data = {
 			group_id: V_Group_id,
 			ath_id: V_UID,

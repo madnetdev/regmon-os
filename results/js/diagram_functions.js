@@ -526,8 +526,14 @@ function Chart__Update() {
 	
 	// X AXIS ##################################################################
 	//we have YYYY-MM-DD HH:mm in t_date_from, t_date_to 
-	const t_date_from = moment($('#t_date_from').val() + ':00', 'YYYY-MM-DD HH:mm:ss');
-	const t_date_to = moment($('#t_date_to').val() + ':59', 'YYYY-MM-DD HH:mm:ss');
+	let t_date_from = moment($('#t_date_from').val() + ':00', 'YYYY-MM-DD HH:mm:ss');
+	let t_date_to = moment($('#t_date_to').val() + ':59', 'YYYY-MM-DD HH:mm:ss');
+
+	if ($('#t_date_from').val().indexOf('.') !== -1) { //german date
+		t_date_from = moment($('#t_date_from').val() + ':00', 'DD.MM.YYYY HH:mm:ss');
+		t_date_to = moment($('#t_date_to').val() + ':00', 'DD.MM.YYYY HH:mm:ss');
+	}
+
 	const x_min = t_date_from.format("YYYY MM DD HH mm ss").split(' ');
 	const x_max = t_date_to.format("YYYY MM DD HH mm ss").split(' ');
 

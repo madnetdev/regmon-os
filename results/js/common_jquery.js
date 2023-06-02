@@ -5,9 +5,15 @@ jQuery(function() {
 	//set global variables
 	V_DATE_FROM = $('#t_date_from').val();
 	V_DATE_TO = $('#t_date_to').val();
+
 	V_DATE_FROM_moment = moment(V_DATE_FROM + ':00', 'YYYY-MM-DD HH:mm:ss');
 	V_DATE_TO_moment = moment(V_DATE_TO + ':00', 'YYYY-MM-DD HH:mm:ss');
-	
+
+	if (V_LANG_CURRENT == 'de') {
+		V_DATE_FROM_moment = moment(V_DATE_FROM + ':00', 'DD.MM.YYYY HH:mm:ss');
+		V_DATE_TO_moment = moment(V_DATE_TO + ':00', 'DD.MM.YYYY HH:mm:ss');
+	}
+
 
 	//init collapsible
 	$(".coolfieldset").collapsible();
@@ -60,6 +66,9 @@ jQuery(function() {
 		$('#datetimepicker_to').data("DateTimePicker").minDate(e.date);
 		V_DATE_FROM = $('#t_date_from').val();
 		V_DATE_FROM_moment = moment(V_DATE_FROM + ':00', 'YYYY-MM-DD HH:mm:ss');
+		if (V_LANG_CURRENT == 'de') {
+			V_DATE_FROM_moment = moment(V_DATE_FROM + ':00', 'DD.MM.YYYY HH:mm:ss');
+		}
 
 		if (V_RESULTS_PAGE == 'FORMS_RESULTS') {
 			Table__DATA__Filter_by_DATE();
@@ -70,7 +79,11 @@ jQuery(function() {
 	$("#datetimepicker_to").on("dp.change", function (e) {
 		$('#datetimepicker_from').data("DateTimePicker").maxDate(e.date);
 		V_DATE_TO = $('#t_date_to').val();
+
 		V_DATE_TO_moment = moment(V_DATE_TO + ':00', 'YYYY-MM-DD HH:mm:ss');
+		if (V_LANG_CURRENT == 'de') {
+			V_DATE_TO_moment = moment(V_DATE_TO + ':00', 'DD.MM.YYYY HH:mm:ss');
+		}
 		
 		if (V_RESULTS_PAGE == 'FORMS_RESULTS') {
 			Table__DATA__Filter_by_DATE();

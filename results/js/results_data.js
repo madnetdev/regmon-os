@@ -750,6 +750,12 @@ function Results_Template__Load(save_id, save_name) {
 	let date_from = moment(save.date_from + ':00', 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD HH:mm');
 	let date_to = moment(save.date_to + ':59', 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD HH:mm');
 	
+	if (V_LANG_CURRENT == 'de') {
+		date_from = moment(save.date_from + ':00', 'YYYY-MM-DD HH:mm:ss').format('DD.MM.YYYY HH:mm');
+		date_to = moment(save.date_to + ':59', 'YYYY-MM-DD HH:mm:ss').format('DD.MM.YYYY HH:mm');
+	}
+
+
 	if (V_OPEN_TEMPLATE != '0') {
 		const template_arr = V_OPEN_TEMPLATE.split('__');
 		
@@ -760,15 +766,26 @@ function Results_Template__Load(save_id, save_name) {
 			//189__0__26.11.2019__02.12.2019
 			date_from = template_arr[2] + ' 00:00';
 			date_to = template_arr[3] + ' 23:59';
+
+			if (V_LANG_CURRENT == 'de') {
+				date_from = moment(template_arr[2] + ' 00:00:00', 'YYYY-MM-DD HH:mm:ss').format('DD.MM.YYYY HH:mm');
+				date_to = moment(template_arr[3] + ' 23:59:59', 'YYYY-MM-DD HH:mm:ss').format('DD.MM.YYYY HH:mm');
+			}
 		}
 		else if (template_arr[1] == '1') {
 			//175__1__2__week
 			date_from = moment().subtract(template_arr[2], template_arr[3]).format('YYYY-MM-DD') + ' 00:00';
 			date_to = moment().format('YYYY-MM-DD') + ' 23:59';
+
+			if (V_LANG_CURRENT == 'de') {
+				date_from = moment().subtract(template_arr[2], template_arr[3]).format('DD.MM.YYYY') + ' 00:00';
+				date_to = moment().format('DD.MM.YYYY') + ' 23:59';
+			}
 		}
 
 		V_OPEN_TEMPLATE = '0';
 	}
+	
 	
 	$('#datetimepicker_from').data("DateTimePicker").date(date_from);
 	$('#datetimepicker_to').data("DateTimePicker").date(date_to);
