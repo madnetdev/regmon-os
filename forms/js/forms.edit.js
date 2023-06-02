@@ -399,7 +399,7 @@ button_Copy_Row_Click = function (element) {
 		const old_row_num = $(this).attr('data-row');
 		const new_row_num = get_New_Row_num();
 
-		const new_row = $(this).parent().parent('li.row_sort').clone().html();
+		let new_row = $(this).parent().parent('li.row_sort').clone().html();
 
 		if (new_row.indexOf('data-type="_Accordion"') == -1) { //one line
 			//first Row only
