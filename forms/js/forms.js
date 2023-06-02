@@ -192,23 +192,19 @@ $('form#wrapped').wizard({
 });
 
 
-if (V_PREVIEW) {
-	//disable submit button
-	$('button[type=submit]').prop('disabled', 'disabled');
-}
-
-if (V_PREVIEW || V_CHANGE) {
-	//hide keep_form_open check
-	$('#keep_form_open_div').hide();
-}
-
-
-
 //disable submit button after click + disable warn when leaving page after submit
 $('form#wrapped').on('submit', function(e){
 	if (!V_EDIT) {
 		const inputs = $('form#wrapped').wizard('state').step.find(':input');
+		const inputs_top = $('form#wrapped #top-wizard').find(':input');
+
 		if (!inputs.valid() && $('label.error:visible').length != 0) {
+			$("html, body").animate({
+				scrollTop: $('label.error:visible').offset().top - 50
+			}, "slow");
+			return false;
+		}
+		else if (!inputs_top.valid() && $('label.error:visible').length != 0) {
 			$("html, body").animate({
 				scrollTop: $('label.error:visible').offset().top - 50
 			}, "slow");
@@ -226,14 +222,13 @@ $('form#wrapped').on('submit', function(e){
 		}
 	
 		//post with ajax
-		//TODO: check post get params
-		let get_data = $('form#wrapped').serialize();
-		get_data += '&form_id=' + $('#form_id').val();
-		get_data += '&category_id=' + $('#category_id').val();
-		get_data += '&group_id=' + $('#group_id').val();
-		get_data += '&athlete_id=' + $('#athlete_id').val();
+		let post_data = $('form#wrapped').serialize();
+		post_data += '&form_id=' + $('#form_id').val();
+		post_data += '&category_id=' + $('#category_id').val();
+		post_data += '&group_id=' + $('#group_id').val();
+		post_data += '&athlete_id=' + $('#athlete_id').val();
 		
-		$.post('forms/ajax.form_data_save.php', get_data, function (data, result) {
+		$.post('forms/ajax.form_data_save.php', post_data, function (data, result) {
 			
 			if ($('#keep_form_open').val() != '1') {
 				$(window).off('beforeunload'); //disable unload warning
@@ -270,74 +265,86 @@ $('form#wrapped').on('submit', function(e){
 
 
 
+if (V_PREVIEW) {
+	//disable submit button
+	$('button[type=submit]').prop('disabled', 'disabled');
+}
+
+if (V_PREVIEW || V_CHANGE) {
+	//hide keep_form_open check
+	$('#keep_form_open_div').hide();
+}
+
+
+
 //button Now
 $("#form_time_now").on('click',function() {
 	$('#form_time').val( moment().format("HH:mm") ); 
 	$('#form_time_end').val( moment().add(1, 'hour').format("HH:mm") ); 
 });
 
+
 //Group Select
-$('#Form_Select_Group').multiselect({ //http://davidstutz.github.io/bootstrap-multiselect/
-	maxHeight: 300,
-	buttonContainer: '<div class="btn-group" id="Form_Select_Group_box" />',
-	buttonWidth: '100%',
-	enableFiltering: true,
-	enableCaseInsensitiveFiltering: true,
-	filterPlaceholder: LANG.SELECT_SEARCH,
-	enableCollapsibleOptGroups: true,
-	enableClickableOptGroups: true,
-	nonSelectedText: LANG.GROUPS_SELECT_PLACEHOLDER,
-	numberDisplayed: 1,
-	nSelectedText: ' - ' + LANG.GROUPS_SELECTED,
-	includeSelectAllOption: true,
-	selectAllText: LANG.SELECT_ALL,
-	allSelectedText: LANG.ALL_SELECTED,
-	disableIfEmpty: true,
-	disabledText: LANG.GROUPS_SELECT_NO_GROUP
-});
-//$('#Form_Select_Group').multiselect('rebuild');
+setTimeout(() => {
+	$('#Form_Select_Groups').multiselect({ //http://davidstutz.github.io/bootstrap-multiselect/
+		maxHeight: 300,
+		buttonContainer: '<div class="btn-group" id="Form_Select_Groups_box" />',
+		buttonWidth: '100%',
+		enableFiltering: true,
+		enableCaseInsensitiveFiltering: true,
+		filterPlaceholder: LANG.SELECT_SEARCH,
+		enableCollapsibleOptGroups: true,
+		enableClickableOptGroups: true,
+		nonSelectedText: LANG.GROUPS_SELECT_PLACEHOLDER,
+		numberDisplayed: 1,
+		nSelectedText: ' - ' + LANG.GROUPS_SELECTED,
+		includeSelectAllOption: true,
+		selectAllText: LANG.SELECT_ALL,
+		allSelectedText: LANG.ALL_SELECTED,
+		disableIfEmpty: true,
+		disabledText: LANG.GROUPS_SELECT_NO_GROUP
+	});
+}, 0);
+//$('#Form_Select_Groups').multiselect('rebuild');
 if (V_CHANGE) {
-	$('#Form_Select_Group').multiselect('disable');
+	$('#Form_Select_Groups').multiselect('disable');
 }
-//TODO: Form_Select_Group not working as expected
-$('#Form_Select_Group').multiselect('disable');
 
 //Athlete Select
-$('#Form_Select_Athletes').multiselect({ //http://davidstutz.github.io/bootstrap-multiselect/
-	maxHeight: 300,
-	buttonContainer: '<div class="btn-group" id="Form_Select_Athletes_box" />',
-	buttonWidth: '100%',
-	enableFiltering: true,
-	enableCaseInsensitiveFiltering: true,
-	filterPlaceholder: LANG.SELECT_SEARCH,
-	enableCollapsibleOptGroups: true,
-	enableClickableOptGroups: true,
-	nonSelectedText: LANG.ATHLETES_SELECT_PLACEHOLDER,
-	numberDisplayed: 1,
-	nSelectedText: ' - ' + LANG.ATHLETES_SELECTED,
-	includeSelectAllOption: true,
-	selectAllText: LANG.SELECT_ALL,
-	allSelectedText: LANG.ALL_SELECTED,
-	disableIfEmpty: true,
-	disabledText: LANG.ATHLETES_SELECT_NO_ATHLETE
-});
+setTimeout(() => {
+	$('#Form_Select_Athlete').multiselect({ //http://davidstutz.github.io/bootstrap-multiselect/
+		maxHeight: 300,
+		buttonContainer: '<div class="btn-group" id="Form_Select_Athlete_box" />',
+		buttonWidth: '100%',
+		enableFiltering: true,
+		enableCaseInsensitiveFiltering: true,
+		filterPlaceholder: LANG.SELECT_SEARCH,
+		enableCollapsibleOptGroups: true,
+		enableClickableOptGroups: true,
+		nonSelectedText: LANG.ATHLETES_SELECT_PLACEHOLDER,
+		numberDisplayed: 1,
+		nSelectedText: ' - ' + LANG.ATHLETES_SELECTED,
+		includeSelectAllOption: true,
+		selectAllText: LANG.SELECT_ALL,
+		allSelectedText: LANG.ALL_SELECTED,
+		disableIfEmpty: true,
+		disabledText: LANG.ATHLETES_SELECT_NO_ATHLETE
+	});
+}, 0);
 if (V_CHANGE) {
-	$('#Form_Select_Athletes').multiselect('disable');
+	$('#Form_Select_Athlete').multiselect('disable');
 }
-//TODO: Form_Select_Athletes not working as expected
-$('#Form_Select_Athletes').multiselect('disable');
-
-$('#Form_Select_Athletes').on('change', function() {
+$('#Form_Select_Athlete').on('change', function() {
 	const ath_id = $(this).val();
 	$("#athlete_id").val( ath_id );
 	let options = '';
 	V_Athletes_2_Groups[ath_id].forEach(function(group_id) {
 		options += '<option value="'+group_id+'"'+(group_id==V_GROUP?' selected':'')+'>'+V_GroupsNames[group_id]+'</option>';
 	});
-	$('#Form_Select_Group').html(options);
-	$('#Form_Select_Group').multiselect('rebuild');
+	$('#Form_Select_Groups').html(options);
+	$('#Form_Select_Groups').multiselect('rebuild');
 });
-$("#athlete_id").val( $("#Form_Select_Athletes").val() );
+$("#athlete_id").val( $("#Form_Select_Athlete").val() );
 
 
 
@@ -352,7 +359,7 @@ $('input, textarea').on('change', function(event){
 		return false;
 	}
 	if (t_name == '' || t_name == undefined) {
-		return false; //Form_Select_Group, Form_Select_Athletes checkboxes
+		return false; //Form_Select_Groups, Form_Select_Athlete checkboxes
 	}
 	
 	on_Change_Update_ProcessBar(this);
@@ -411,7 +418,9 @@ function update_ProgressBar(id, val) {
 	if (val != '') {
 		if (V_ANSWERED.indexOf(id) == -1) {
 			V_ANSWERED.push(id);
-			if (!V_CHANGE) $("#progress").progressbar("value", V_ANSWERED.length * V_ANSWERS_STEP);
+			if (!V_CHANGE) {
+				$("#progress").progressbar("value", V_ANSWERED.length * V_ANSWERS_STEP);
+			}
 		}
 	}
 	else {
@@ -445,8 +454,8 @@ function on_Change_Select(self) {
 	const t_name = $(self).attr('name');
 	if (t_name == undefined) return false;
 	else if (t_name == 'timer_period') return false;
-	else if (t_name == 'Form_Select_Group') return false;
-	else if (t_name == 'Form_Select_Athletes') return false;
+	else if (t_name == 'Form_Select_Groups[]') return false;
+	else if (t_name == 'Form_Select_Athlete') return false;
 
 	on_Change_Update_ProcessBar(self);
 

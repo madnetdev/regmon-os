@@ -3,14 +3,15 @@ $PATH_2_ROOT = '../';
 require_once($PATH_2_ROOT.'_settings.regmon.php');
 require($PATH_2_ROOT.'login/validate.php');
 
-$athlete_id = isset($_POST['athlete_id']) ? $_POST['athlete_id'] : $UID;
-$form_id = isset($_POST['form_id']) ? $_POST['form_id'] : 0;
-$category_id = isset($_POST['category_id']) ? $_POST['category_id'] : 0;
-$group_id = isset($_POST['group_id']) ? $_POST['group_id'] : $GROUP;
-$Form_Select_Group = isset($_POST['Form_Select_Group']) ? $_POST['Form_Select_Group'] : array();
+$athlete_id = $_POST['athlete_id'] ?? $UID;
+$form_id = $_POST['form_id'] ?? 0;
+$category_id = $_POST['category_id'] ?? 0;
+$group_id = $_POST['group_id'] ?? $GROUP;
+$Form_Select_Groups = $_POST['Form_Select_Groups'] ?? array();
+$Form_Select_Athlete = $_POST['Form_Select_Athlete'] ?? '';
 
 $CHANGE = (isset($_POST['change']) AND ($_POST['change']=='true')) ? true : false;
-$change_id = isset($_POST['change_id']) ? $_POST['change_id'] : 0;
+$change_id = $_POST['change_id'] ?? 0;
 
 //selected_date + selected_date_end
 $selected_date = get_date_time_SQL('now');
@@ -38,7 +39,8 @@ unset($_POST['form_time']);
 unset($_POST['form_time_end']);
 unset($_POST['change']);
 unset($_POST['change_id']);
-unset($_POST['Form_Select_Group']);
+unset($_POST['Form_Select_Groups']);
+unset($_POST['Form_Select_Athlete']);
 
 // Save 
 $values = array();
@@ -63,9 +65,14 @@ else {
 	//Insert
 	$values['created_by'] = $USERNAME;
 
-    //multiply Groups Selection
-	if (count($Form_Select_Group)) {
-		foreach ($Form_Select_Group as $group_id) {
+    //Form Athlete Selection
+	if ($Form_Select_Athlete != '') {
+		$values['user_id'] = $Form_Select_Athlete;
+	}
+
+    //Form Groups Selection multiply
+	if ($Form_Select_Groups != '') {
+		foreach ($Form_Select_Groups as $group_id) {
 			$values['group_id'] = $group_id;
             //save form_data in each Selected Group
 			$insert_id = $db->insert($values, "forms_data");
