@@ -679,12 +679,13 @@ function Forms_Template__Save(ath_id, form_id, save_id, save_name) { //#####	 --
 		//if the name is the same as the selected text then save with the same id, else save new
 		const id = (save_name_new == save_name ? save_id : 0);
 		const post_data = {
-			group_id	: V_Group_id,
-			athlete_id	: ath_id,
-			id			: id,
-			title		: save_name_new,
-			form_id		: base_form_id,
-			data		: JSON.stringify(data)
+			group_id		: V_Group_id,
+			athlete_id		: ath_id,
+			id				: id,
+			title			: save_name_new,
+			form_id			: base_form_id,
+			template_type	: 'forms',
+			data			: JSON.stringify(data)
 		};
 		Debug2('1.Template.Save.Valid. Forms_Template__Save - template_save', [post_data]);
 
