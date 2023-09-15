@@ -110,7 +110,11 @@ if (isset($SEC_check_config)) {
 
 		$CONFIG_Default = get_CONFIG_Defaults_array();
 		
-		$CONFIG = $CONFIG ?? $CONFIG_Default;
+		if (empty($CONFIG)) {
+			$CONFIG = $CONFIG_Default;
+		}
+
+		// $CONFIG = $CONFIG ?? $CONFIG_Default;
 	}
 	
 	//never comes here --this need work
@@ -212,37 +216,69 @@ if (isset($SEC_check_config)) {
 
 				$password = $_POST['Admin_Password'];
 				$email = $_POST['Admin_Email'];
-				$Extra_Location_Group = (int)$_POST['Extra_Location_Group'];
-				$Extra_DropdownsSample = (int)$_POST['Extra_DropdownsSample'];
+				$Extra_Location_Groups_Users = (int)$_POST['Extra_Location_Groups_Users'];
+				$Extra_SampleData = (int)$_POST['Extra_SampleData'];
 				$Sports_Data = $_POST['Sports_Data'];
 				$datetime = date('Y-m-d H:i:s');
 				$extra_data = true;
 
 				$Main_Data_sql = '';
 
-				//Admin User
+				// add admin User
 				$Main_Data_sql .= get_Admin_User_Init_SQL($password, $email, $datetime);
 					
-				if ($Extra_Location_Group) {
+				if ($Extra_Location_Groups_Users) {
 					$Main_Data_sql .= "\n";
-					//extra Admin Users
-					$Main_Data_sql .= get_Extra_Admin_Users_Init_SQL($password, $email, $datetime);
+					// extra users
+					$Main_Data_sql .= get_Extra_Users_Init_SQL($password, $email, $datetime);
 
 					$Main_Data_sql .= "\n";
-					//location 1 + Group 1
-					$Main_Data_sql .= get_Extra_Location_Group_Init_SQL($datetime);
+					// location 1 and groups 1/2
+					$Main_Data_sql .= get_Extra_LocationGroupsSample_Init_SQL($datetime);
 
 					$Main_Data_sql .= "\n";
-					//users2groups
+					// users2groups
 					$Main_Data_sql .= get_Extra_User2Groups_Init_SQL($datetime);
 				}
 
-				if ($Extra_DropdownsSample) {
-					//dropdowns sample data
+				if ($Extra_SampleData) {
+					// dropdowns sample data
 					$Main_Data_sql .= get_Extra_DropdownsSample_Init_SQL($datetime);
+
+					$Main_Data_sql .= "\n";
+					// forms sample data
+					$Main_Data_sql .= get_Extra_FormsTagsSample_Init_SQL($datetime);
+
+					$Main_Data_sql .= "\n";
+					// actual data for specific forms
+					$Main_Data_sql .= get_Extra_FormsSampleData_Init_SQL($datetime);
+
+					$Main_Data_sql .= "\n";
+					// actual data for specific forms
+					$Main_Data_sql .= get_Extra_NotesSampleData_Init_SQL($datetime);
+
+					$Main_Data_sql .= "\n";
+					// categories sample data
+					$Main_Data_sql .= get_Extra_CategoriesSample_Init_SQL($datetime);
+
+					$Main_Data_sql .= "\n";
+					// forms2categories
+					$Main_Data_sql .= get_Extra_Forms2Categories_Init_SQL($datetime);
+
+					$Main_Data_sql .= "\n";
+					// users2trainers
+					$Main_Data_sql .= get_Extra_Users2Trainers_Init_SQL($datetime);
+
+					$Main_Data_sql .= "\n";
+					// dashboard sample data
+					$Main_Data_sql .= get_Extra_DashboardSample_Init_SQL($datetime);
+
+					$Main_Data_sql .= "\n";
+					// form templates sample data
+					$Main_Data_sql .= get_FormTemplates_Init_SQL_DE($datetime);
 				}
 
-				//Sports Data
+				//sports Data
 				if ($Sports_Data == 'en') {
 					$Main_Data_sql .= "\n";
 					$Main_Data_sql .= get_Sports_Init_SQL_EN($datetime);
