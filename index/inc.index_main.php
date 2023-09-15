@@ -81,7 +81,7 @@ $DIS2 = ' display:none;';
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordion1" href="#C_Athlete_Forms_Select" id="C_Athlete_Forms_Select_link" class="collapsed"><?=$LANG->TAB_ATHLETE_2_GROUP_FORM_SELECTION;?> ( <?=$selected_GROUP_name;?> )</a>
+										<a data-toggle="collapse" data-parent="#accordion1" href="#C_Athlete_Forms_Select" id="C_Athlete_Forms_Select_link" class="collapsed"><?=$LANG->TAB_ATHLETE_2_GROUP_FORM_SELECTION;?> (<?=$selected_GROUP_name;?>)</a>
 									</h4>
 								</div>
 								<div id="C_Athlete_Forms_Select" class="panel-collapse collapse">
@@ -122,7 +122,7 @@ $DIS2 = ' display:none;';
 							<div class="panel panel-default"<?=($dis_panel?$DIS:'');?> style="margin-top:8px;">
 								<div class="panel-heading h_group_admin">
 									<h4 class="panel-title" style="position:relative;">
-										<a data-toggle="collapse" data-parent="#accordion1" href="#C_Group_Requests" id="C_Group_Requests_link" class="collapsed"><?=$LANG->TAB_GROUP_ACCESS;?> ( <?=$selected_GROUP_name;?> )</a>
+										<a data-toggle="collapse" data-parent="#accordion1" href="#C_Group_Requests" id="C_Group_Requests_link" class="collapsed"><?=$LANG->TAB_GROUP_ACCESS;?> (<?=$selected_GROUP_name;?>)</a>
 										<span id="GRP_requestsCount">
 											<span id="GRP_requestsCountValue">0</span>
 										</span>
@@ -139,7 +139,7 @@ $DIS2 = ' display:none;';
 							<div class="panel panel-default"<?=($dis_panel?$DIS:'');?> style="margin-top:6px; margin-bottom:7px;">
 								<div class="panel-heading h_group_admin">
 									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordion1" href="#C_Group_Users" id="C_Group_Users_link" class="collapsed"><?=$LANG->TAB_GROUP_USERS;?><span id="GROUPS_name"><?=' &nbsp; ( '.$selected_GROUP_name.' )';?></span></a>
+										<a data-toggle="collapse" data-parent="#accordion1" href="#C_Group_Users" id="C_Group_Users_link" class="collapsed"><?=$LANG->TAB_GROUP_USERS;?><span id="GROUPS_name"><?='&nbsp; ('.$selected_GROUP_name.')';?></span></a>
 									</h4>
 								</div>
 								<div id="C_Group_Users" class="panel-collapse collapse">
@@ -320,7 +320,7 @@ $DIS2 = ' display:none;';
 							<div class="panel panel-default">
 								<div class="panel-heading h_location_admin">
 									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordion2" href="#C_Location_Groups" id="C_Location_Groups_link" class="collapsed"><?=$LANG->TAB_LOCATION_GROUPS;?><span id="LOCATION_GROUPS_name"><?=' &nbsp; ( '.$selected_LOCATION_name.' )';?></span></a>
+										<a data-toggle="collapse" data-parent="#accordion2" href="#C_Location_Groups" id="C_Location_Groups_link" class="collapsed"><?=$LANG->TAB_LOCATION_GROUPS;?><span id="LOCATION_GROUPS_name"><?='&nbsp; ('.$selected_LOCATION_name.')';?></span></a>
 									</h4>
 								</div>
 								<div id="C_Location_Groups" class="panel-collapse collapse">

@@ -5,7 +5,7 @@ array(
 	//Languages
 	'LANG_CURRENT' 	=> 'de', //not change
 	'LANG_ENGLISH' 	=> 'English',
-	'LANG_GERMAN' 	=> 'German',
+	'LANG_GERMAN' 	=> 'Deutsch',
 
 	//all pages
     'APP_NAME'			=> 'REGmon',
@@ -62,7 +62,7 @@ array(
 	'LOGIN_CONTACT'		=> 'Kontakt',
 	'LOGIN_FAIL_TXT_1' 	=> 'Der Benutzername oder das Passwort ist falsch!',
 	'LOGIN_FAIL_TXT_2' 	=> 'Bitte versuchen Sie es erneut.',
-	'LOGIN_FAIL_TXT_3' 	=> 'Das Symbol ist falsch',
+	'LOGIN_FAIL_TXT_3' 	=> 'Das Symbol ist falsch.',
 	'LOGIN_FAIL_TXT_4' 	=> 'Bitte versuchen Sie es erneut.',
 	'LOGIN_FAIL_TXT_5' 	=> 'Ihr Konto ist inaktiv.',
 	'LOGIN_FAIL_TXT_6' 	=> 'Bitte kontaktieren Sie unsere Support-Abteilung.',
@@ -124,8 +124,8 @@ array(
 	'PROFILE_GROUP' 			=> 'Gruppe (aktiv)',
 	'PROFILE_LEVEL' 			=> 'Profil',
 	'PROFILE_DASHBOARD_ON_LOGIN'=> 'Dashboard nach dem Login',
-	'PROFILE_DASHBOARD_CLOSED'	=> 'Geschlossen',
-	'PROFILE_DASHBOARD_OPENED'	=> 'Geöffnet',
+	'PROFILE_DASHBOARD_CLOSED'	=> 'geschlossen',
+	'PROFILE_DASHBOARD_OPENED'	=> 'geöffnet',
 	'PROFILE_SAVED'				=> 'Das Formular wurde gespeichert.',
 	'PROFILE_NOT_SAVED'			=> 'Das Formular wird nicht gespeichert.',
 	'PROFILE_LAST_LOGIN' 		=> 'Letzte Anmeldung',
@@ -139,7 +139,7 @@ array(
 	'WARN_CONFIRM_PASSWORD' => 'Warnung! Passwort und Passwort bestätigen stimmt nicht überein',
 	'WARN_EMPTY_PASSWORD' 	=> 'Warnung! leeres Passwort',
 	'WARN_PASSWORD_CHARS' 	=> 'Warnung! Das Passwort muss mindestens 8 Zeichen lang sein',
-	'WARN_WEAK_PASSWORD' 	=> 'Achtung! Schwaches Passwort <br>(Erforderlich [a-z] + [A-Z] + [0-9])',
+	'WARN_WEAK_PASSWORD' 	=> 'Achtung! Schwaches Passwort <br>(folgende Zeichen sind erforderlich: [a-z] + [A-Z] + [0-9])',
 	'WARN_INVALID_EMAIL' 	=> 'Warnung! Ungültige E-Mail-Adresse',
 	'WARN_CHANGE_MAIN_NAME' => 'Warnung! Sie können den Benutzernamen des Hauptkontos nicht ändern',
 	'WARN_DEACT_YOUR_ACC' 	=> 'Warnung! Sie können Ihr Konto nicht deaktivieren',
@@ -168,23 +168,23 @@ array(
 	'INDEX_EXPORT_LINK' 		=> 'Datenabfrage (Export)',
 	'INDEX_IMPORT_LINK' 		=> 'Import',
 	//dashboard
-	'DASHBOARD_ON_LOGIN'		=> 'Beim Login öffnen?',
+	'DASHBOARD_ON_LOGIN'		=> 'Dashboad beim Login öffnen?',
 	'DASHBOARD_NEW_LINK'		=> 'Dashboard-Link hinzufügen',
 	//tabs / panels
-	'TAB_ATHLETE_2_GROUP_FORM_SELECTION'=> 'meine Formularauswahl',
-	'TAB_FORMS_ACCESS_TO_TRAINERS'		=> 'Trainerfreigaben',
-	'TAB_FORMS_ACCESS_FROM_ATHLETES'	=> 'Freigaben der Sportler',
-	'TAB_TRAINER_REQUESTS_2_ATHLETES'	=> 'Sportlerverwaltung', //'Zugriffsanfrage an Sportler stellen',
-	'TAB_ATHLETE_REQUESTS_FROM_TRAINERS'=> 'Trainerverwaltung', //'Angeforderter Zugriff von Trainer',
-	'TAB_IMPORT_EXPORT' 		=> 'Datenmanagement (Export, Import, Transfer, usw.)',
-	'TAB_GROUP_ACCESS'  		=> 'Gruppenzugang',
+	'TAB_ATHLETE_2_GROUP_FORM_SELECTION'=> 'Meine Formularauswahl',
+	'TAB_FORMS_ACCESS_TO_TRAINERS'		=> 'Freigaben für Trainer:innen',
+	'TAB_FORMS_ACCESS_FROM_ATHLETES'	=> 'Freigaben der Athlet:innen',
+	'TAB_TRAINER_REQUESTS_2_ATHLETES'	=> 'Zugriff auf Athlet:innen',
+	'TAB_ATHLETE_REQUESTS_FROM_TRAINERS'=> 'Zugriff von Trainer:innen',
+	'TAB_IMPORT_EXPORT' 		=> 'Datenmanagement (Export)', // no import implemented
+	'TAB_GROUP_ACCESS'  		=> 'Gruppenanfragen',
 	'TAB_GROUP_LEAVE'   		=> 'Gruppe verlassen',
-	'TAB_GROUP_FORMS'   		=> 'verfügbare Formulare',
-	'TAB_GROUP_USERS'			=> 'Gruppennutzer',
+	'TAB_GROUP_FORMS'   		=> 'Formularauswahl für diese Gruppe',
+	'TAB_GROUP_USERS'			=> 'Gruppennutzer:innen',
 	'TAB_FORMS'					=> 'Formulare',
 	'TAB_CATEGORIES'			=> 'Kategorien',
 	'TAB_SPORTS_N_DROPDOWNS'	=> 'Listen (Sportarten, Dropdowns, usw.)', 
-	'TAB_LOCATION_GROUPS'		=> 'Standort Gruppen',
+	'TAB_LOCATION_GROUPS'		=> 'Gruppen dieses Standorts',
 	//calendar actions buttons
 	'INDEX_EDIT_RECORD'			=> 'Eintrag bearbeiten',
 	'INDEX_VIEW_RECORD'			=> 'Eintrag anzeigen',
@@ -223,18 +223,18 @@ array(
 	//ajax.categories
 	'EMPTY_CATEGORY_NAME' 	=> 'Warnung! Leere Name',
 	//ajax.forms2categories
-	'NO_FORM_SELECTED' 		=> 'Warnung! keine Formular ausgewählt',
+	'NO_FORM_SELECTED' 		=> 'Warnung! Kein Formular ausgewählt',
 	//ajax.forms
 	'EMPTY_FORM_NAME' 		=> 'Warnung! Leere Name',
-	'WARN_FORM_DELETE'		=> 'Warnung! Kann nicht löschen. Habe ({DATA_NUM}) Datenerfassung',
+	'WARN_FORM_DELETE'		=> 'Warnung! Daten können nicht gelöscht werden, es existieren ({DATA_NUM}) Datenerfassung',
 	//ajax.sports
 	'EMPTY_SPORT_NAME' 		=> 'Warnung! Leere Sportart',
 	'WARN_SPORT_EXIST' 		=> 'Warnung! Dieses Sportart ist bereits vorhanden. <br> Bitte benutzen Sie einen anderen Namen.',
 	'EMPTY_SPORT_GROUP' 	=> 'Warnung! Leere Sportgruppe',
 	'WARN_SPORT_GROUP_EXIST'=> 'Warnung! Dieses Sportgruppe ist bereits vorhanden. <br> Bitte benutzen Sie einen anderen Namen.',
 	//ajax.tags
-	'EMPTY_TAG_NAME' 		=> 'Warnung! Leere Tag Name',
-	'WARN_TAG_EXIST' 		=> 'Warnung! Dieses Tag ist bereits vorhanden. <br> Bitte benutzen Sie einen anderen Namen.',
+	'EMPTY_TAG_NAME' 		=> 'Warnung! Leerer Kennzeichen-Name (tag)',
+	'WARN_TAG_EXIST' 		=> 'Warnung! Dieses Kennzeichen (tag) ist bereits vorhanden. <br> Bitte benutzen Sie einen anderen Namen.',
 	//ajax.dropdowns
 	'EMPTY_DROPDOWN_NAME' 	=> 'Warnung! Leere Dropdown name',
 	'WARN_DROPDOWN_NAME_EXIST'=> 'Warnung! Dieses Dropdown name ist bereits vorhanden. <br> Bitte benutzen Sie einen anderen Namen.',
@@ -285,8 +285,8 @@ array(
 	'GROUP_USERS_NO_REQUESTS'		=> 'Keine Nutzeranfragen',
 	'REQUEST_FOR_X_GROUP'			=> 'Zugang zur Gruppe "<b>{GROUP}</b>" anfordern', //'Anfragen für Gruppenzuordnung',
 	'REQUEST_FOR_GROUP_CANCEL'		=> 'Abbrechen der Gruppenzuordnung',
-	'REQUEST_FOR_GROUP_CANCELED'	=> 'Der Anfrage wurde gelöscht',
-	'REQUEST_GROUP_LEAVE_USER'		=> 'Gruppenzuordnung aufheben', //'Anfrage verlasen',
+	'REQUEST_FOR_GROUP_CANCELED'	=> 'Die Anfrage wurde gelöscht',
+	'REQUEST_GROUP_LEAVE_USER'		=> 'Gruppenzuordnung aufheben', //'Anfrage verlassen',
 
 	'REQUEST_WAS_SENT_AT'			=> 'Die Anfrage wurde um {DATE_TIME} geschickt',
 	'REQUEST_SENDING_ERROR'			=> 'Fehler beim Versenden der Anfrage',
@@ -297,9 +297,9 @@ array(
 	'REQUEST_FOR_ACCESS_CANCEL'		=> 'Zugriffsanfrage abbrechen', //'Abbrechen Anfragen', //'Abbrechen Anfragen für Zuordnung',
 	'REQUEST_TRAINER_LEAVE_ATHLETE'	=> 'Zuordnung aufheben', //Cancel Access Athlete (by Trainer)
 	'REQUEST_ATHLETE_LEAVE_TRAINER'	=> 'Zuordnung aufheben', //Cancel Access Trainer (by Athlete)
-	'REQUEST_ACCEPT'				=> 'Anfrage angenommen',
-	'REQUEST_REJECT'				=> 'Anfrage abgelehnt',
-	'REQUEST_USER_INACTIVE'			=> 'Inaktive',
+	'REQUEST_ACCEPT'				=> 'Anfrage annehmen',
+	'REQUEST_REJECT'				=> 'Anfrage ablehnen',
+	'REQUEST_USER_INACTIVE'			=> 'Inaktiv',
 
 	########################################################
 	//Request Status Icons Explain (tooltips) --> the same on .js file
@@ -314,7 +314,7 @@ array(
 
 	//Groups
 	//0+1 the same as above
-	'STATUS_REQ_ACCEPT_SRV_END'			=> 'Datenerfassung Beendete', //2 Request Accepted - Data Collection Ended - Form Expired
+	'STATUS_REQ_ACCEPT_SRV_END'			=> 'Datenerfassung beendet', //2 Request Accepted - Data Collection Ended - Form Expired
 	'STATUS_CANCELED_ACCESS_USER'		=> 'Zugangsabbruch (vom Nutzer)', //5 Canceled Access (by User)
 	'STATUS_CANCELED_ACCESS_GROUPADMIN'	=> 'Zugangsabbruch (vom Gruppenadmin)', //15 Canceled Access (by Groupadmin)
 	'STATUS_REQ_WAIT_CANCELED_USER'		=> 'Warte auf Zugriffserlaubnis (nach Zugangsabbruch vom Nutzer)', //7 Waiting Access (after Canceled Access by User)
@@ -329,7 +329,7 @@ array(
 	'GROUP_STATUS_REQUEST_-1'	=> 'Keine Anfragen',
 	'GROUP_STATUS_REQUEST_0'	=> 'Anfrage abgelehnt', //0
 	'GROUP_STATUS_REQUEST_1'	=> 'Anfrage angenommen', //1
-	'GROUP_STATUS_REQUEST_2'	=> 'Datenerfassung Beendete', //2
+	'GROUP_STATUS_REQUEST_2'	=> 'Datenerfassung beendet', //2
 	'GROUP_STATUS_REQUEST_5'	=> 'Zugangsabbruch (vom Nutzer)', //5
 	'GROUP_STATUS_REQUEST_15'	=> 'Zugangsabbruch (vom Gruppenadmin)', //15
 	'GROUP_STATUS_REQUEST_7'	=> 'Warte auf Zugriffserlaubnis (nach Zugangsabbruch vom Nutzer)', //7
@@ -541,8 +541,8 @@ array(
 	'RESULTS_TEMPLATES_DASH_TITLE'=> 'Vorlage mit Dashboard verknüpfen',
 	'RESULTS_TEMPLATES_SAVE_TEXT'=> 'Aktuelle Konfiguration als Vorlage speichern',
 
-	'RESULTS_CREATED'			=> 'Eintrag',
-	'RESULTS_MODIFIED'			=> 'Bearbeitet',
+	'RESULTS_CREATED'			=> 'Datum und Uhrzeit im Kalender',
+	'RESULTS_MODIFIED'			=> 'Zuletzt bearbeitet',
 	'RESULTS_NO_DATA' 			=> 'Keine Daten',
 	'RESULTS_RESET' 			=> 'Zurücksetzen',
 	'RESULTS_COLOR' 			=> 'Farbe',

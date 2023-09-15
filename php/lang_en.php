@@ -5,11 +5,11 @@ array(
 	//Languages
 	'LANG_CURRENT' 	=> 'en', //not change
 	'LANG_ENGLISH' 	=> 'English',
-	'LANG_GERMAN' 	=> 'German',
+	'LANG_GERMAN' 	=> 'Deutsch',
 
 	//all pages
     'APP_NAME'			=> 'REGmon',
-    'APP_INFO'			=> 'Regeneration management through Athlete monitoring',
+    'APP_INFO'			=> 'Regeneration management through athlete monitoring',
     'HOMEPAGE'			=> 'Homepage',
     'PAGE_TOP'			=> 'Page top',
     'SAVE'				=> 'Save',
@@ -124,8 +124,8 @@ array(
 	'PROFILE_GROUP' 			=> 'Group (active)',
 	'PROFILE_LEVEL' 			=> 'Profile',
 	'PROFILE_DASHBOARD_ON_LOGIN'=> 'Dashboard after login',
-	'PROFILE_DASHBOARD_CLOSED'	=> 'Closed',
-	'PROFILE_DASHBOARD_OPENED'	=> 'Opened',
+	'PROFILE_DASHBOARD_CLOSED'	=> 'closed',
+	'PROFILE_DASHBOARD_OPENED'	=> 'opened',
 	'PROFILE_SAVED'				=> 'The form has been saved.',
 	'PROFILE_NOT_SAVED'			=> 'The form is not saved.',
 	'PROFILE_LAST_LOGIN' 		=> 'Last Login',
@@ -139,7 +139,7 @@ array(
 	'WARN_CONFIRM_PASSWORD' => 'Warning! Password and Password Confirm do not match',
 	'WARN_EMPTY_PASSWORD' 	=> 'Warning! Empty Password',
 	'WARN_PASSWORD_CHARS' 	=> 'Warning! The password must be at least 8 characters long',
-	'WARN_WEAK_PASSWORD' 	=> 'Warning! Weak Password <br>(Required [a-z] + [A-Z] + [0-9])',
+	'WARN_WEAK_PASSWORD' 	=> 'Warning! Weak Password <br>(required characters: [a-z] + [A-Z] + [0-9])',
 	'WARN_INVALID_EMAIL' 	=> 'Warning! Invalid E-mail address',
 	'WARN_CHANGE_MAIN_NAME' => 'Warning! You cannot change the username of the main account',
 	'WARN_DEACT_YOUR_ACC' 	=> 'Warning! You cannot deactivate your account',
@@ -168,23 +168,23 @@ array(
 	'INDEX_EXPORT_LINK' 		=> 'Data Request (Export)',
 	'INDEX_IMPORT_LINK' 		=> 'Import',
 	//dashboard
-	'DASHBOARD_ON_LOGIN'		=> 'Open after login?',
+	'DASHBOARD_ON_LOGIN'		=> 'Open dashboard after login?',
 	'DASHBOARD_NEW_LINK'		=> 'New Dashboard Link',
 	//tabs / panels
-	'TAB_ATHLETE_2_GROUP_FORM_SELECTION'=> 'Forms Selection',
-	'TAB_FORMS_ACCESS_TO_TRAINERS'		=> 'Forms Access to Trainers',
-	'TAB_FORMS_ACCESS_FROM_ATHLETES'	=> 'Forms Access from Athletes',
-	'TAB_TRAINER_REQUESTS_2_ATHLETES'	=> 'Request Access from Athletes',
-	'TAB_ATHLETE_REQUESTS_FROM_TRAINERS'=> 'Requested Access by Trainers',
-	'TAB_IMPORT_EXPORT' 		=> 'Data Management (Import, Export)',
+	'TAB_ATHLETE_2_GROUP_FORM_SELECTION'=> 'My Forms Selection',
+	'TAB_FORMS_ACCESS_TO_TRAINERS'		=> 'Form Permissions for Trainer(s)',
+	'TAB_FORMS_ACCESS_FROM_ATHLETES'	=> 'Form Permissions of Athlete(s)',
+	'TAB_TRAINER_REQUESTS_2_ATHLETES'	=> 'Request Access from Athlete(s)',
+	'TAB_ATHLETE_REQUESTS_FROM_TRAINERS'=> 'Requested Access by Trainer(s)',
+	'TAB_IMPORT_EXPORT' 		=> 'Data Management (Export)', // no import implemented
 	'TAB_GROUP_ACCESS'  		=> 'Group Access',
 	'TAB_GROUP_LEAVE'   		=> 'Leave Group',
-	'TAB_GROUP_FORMS'   		=> 'Group Available Forms',
+	'TAB_GROUP_FORMS'   		=> 'Group Forms Selection',
 	'TAB_GROUP_USERS'			=> 'Group Users',
 	'TAB_FORMS'					=> 'Forms',
 	'TAB_CATEGORIES'			=> 'Categories', 
 	'TAB_SPORTS_N_DROPDOWNS'	=> 'Lists (Sports, Dropdowns, etc.)',
-	'TAB_LOCATION_GROUPS'		=> 'Location Groups',
+	'TAB_LOCATION_GROUPS'		=> 'Groups of this Location',
 	//calendar actions buttons
 	'INDEX_EDIT_RECORD'			=> 'Edit Entry',
 	'INDEX_VIEW_RECORD'			=> 'View Entry',
@@ -260,7 +260,7 @@ array(
 	'TRAINER_USERS' 		=> 'Users Accounts',
 
 	//location groups
-	'LOCATION_GROUPS'		=> 'Location Groups',
+	'LOCATION_GROUPS'		=> 'Groups of this Location',
 
 	//sports
 	'SPORT' 					=> 'Sport',
@@ -541,8 +541,8 @@ array(
 	'RESULTS_TEMPLATES_DASH_TITLE'=> 'Link Template to Dashboard',
 	'RESULTS_TEMPLATES_SAVE_TEXT'=> 'Save current configuration as template',
 
-	'RESULTS_CREATED'			=> 'Created',
-	'RESULTS_MODIFIED'			=> 'Modified',
+	'RESULTS_CREATED'			=> 'date and time in the calender',
+	'RESULTS_MODIFIED'			=> 'last modification',
 	'RESULTS_NO_DATA' 			=> 'No Data',
 	'RESULTS_RESET' 			=> 'Reset',
 	'RESULTS_COLOR' 			=> 'Color',
