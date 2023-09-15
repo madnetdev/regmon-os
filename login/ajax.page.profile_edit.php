@@ -54,9 +54,16 @@ if ($db->numberRows() > 0)  {
 		$birth_day = $birth_arr[2];
 	}
 
-	$sport = $row['sport'];
+	if (is_string($row['sport'])){
+		$sport = $row['sport'];
+	}
+
 	$sex = $row['sex'];
-	$body_height = $row['body_height'];
+
+	if (is_string($row['body_height'])){
+		$body_height = $row['body_height'];
+	}
+	
 	$email = $row['email'];
 	$telephone = $row['telephone'];
 

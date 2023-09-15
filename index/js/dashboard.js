@@ -322,31 +322,31 @@ function get_dash_content(dash) {
 				'<label>'+LANG.DASH.OPTION+' :&nbsp;</label>'+
 				'<select id="dash_Options_select" class="dash_option" style="width:187px;">'+
 					'<option value="">'+LANG.DASH.OPTION_SELECT+'</option>'+
-					'<option value="1">'+LANG.DASH.OPTION_1+'</option>'+
-					'<option value="2">'+LANG.DASH.OPTION_2+'</option>'+
-					'<option value="15">'+LANG.DASH.OPTION_15+'</option>'+ //window.location.href = 'import.php';
-					'<option value="16">'+LANG.DASH.OPTION_16+'</option>'+ //window.location.href = 'export.php';
+					'<option value="1">'+LANG.DASH.OPTION_1+'</option>'+ // OPTION_1: 'My Forms Selection'
+					// '<option value="2">'+LANG.DASH.OPTION_2+'</option>'+ // OPTION_2: 'Data Management (Import, Export)'
+					// '<option value="15">'+LANG.DASH.OPTION_15+'</option>'+ //window.location.href = 'import.php'; // OPTION_15: 'Import'
+					'<option value="16">'+LANG.DASH.OPTION_16+'</option>'+ //window.location.href = 'export.php'; // OPTION_16: 'Export'
 					((V_ADMIN || V_LOCATION_ADMIN || V_GROUP_ADMIN || V_GROUP_ADMIN_2) ? //only this Group Admins
-						'<option value="3">'+LANG.DASH.OPTION_3+'</option>'+
-						'<option value="4">'+LANG.DASH.OPTION_4+'</option>'
+						'<option value="3">'+LANG.DASH.OPTION_3+'</option>'+ // OPTION_3: 'Group Requests'
+						'<option value="4">'+LANG.DASH.OPTION_4+'</option>' // OPTION_4: 'Group Users'
 					: '')+
-					//'<option value="5">'+LANG.DASH.OPTION_5+'</option>'+ //Trainingsgruppe verlassen
+					//'<option value="5">'+LANG.DASH.OPTION_5+'</option>'+ // OPTION_5: 'Leave Group'
 					((V_GROUP_TRAINER) ? //only Group Trainers
-						'<option value="6">'+LANG.DASH.OPTION_6+'</option>'+
-						'<option value="7">'+LANG.DASH.OPTION_7+'</option>'
+						'<option value="6">'+LANG.DASH.OPTION_6+'</option>'+ // OPTION_6: 'Request Access from Athlete(s)'
+						'<option value="7">'+LANG.DASH.OPTION_7+'</option>' // OPTION_7: 'Form Permissions of Athlete(s)'
 					: '')+
 					(V_IS_ATHLETE ? //only Athletes
-						'<option value="8">'+LANG.DASH.OPTION_8+'</option>'+
-						'<option value="9">'+LANG.DASH.OPTION_9+'</option>'
+						'<option value="8">'+LANG.DASH.OPTION_8+'</option>'+ // OPTION_8: 'Requested Access by Trainers(s)'
+						'<option value="9">'+LANG.DASH.OPTION_9+'</option>' // OPTION_9: 'Form Permissions for Trainer(s)'
 					: '')+
 					((V_ADMIN || V_LOCATION_ADMIN || V_GROUP_ADMIN || V_GROUP_ADMIN_2) ? //only this Group Admins
-						'<option value="10">'+LANG.DASH.OPTION_10+'</option>'+
-						'<option value="11">'+LANG.DASH.OPTION_11+'</option>'+
-						'<option value="12">'+LANG.DASH.OPTION_12+'</option>'+
-						'<option value="13">'+LANG.DASH.OPTION_13+'</option>'
+						'<option value="10">'+LANG.DASH.OPTION_10+'</option>'+ // OPTION_10: 'Group Forms Selection'
+						'<option value="11">'+LANG.DASH.OPTION_11+'</option>'+ // OPTION_11: 'Forms'
+						'<option value="12">'+LANG.DASH.OPTION_12+'</option>'+ // OPTION_12: 'Categories'
+						'<option value="13">'+LANG.DASH.OPTION_13+'</option>' // OPTION_13: 'Lists (Sports, Dropdowns, etc.)'
 					: '')+
-					(V_IS_ADMIN ? //only Admins
-						'<option value="14">'+LANG.DASH.OPTION_14+'</option>'
+					(V_IS_ADMIN || V_LOCATION_ADMIN ? //only admin and location admins
+						'<option value="14">'+LANG.DASH.OPTION_14+'</option>' // OPTION_14: 'Groups of this Location'
 					: '')+
 				'</select>'+
 			'</div>'+
