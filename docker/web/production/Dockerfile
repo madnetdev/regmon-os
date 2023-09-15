@@ -1,0 +1,28 @@
+FROM php:8.2-apache
+
+RUN apt-get update \
+ && apt-get install -y git zlib1g-dev mariadb-client libzip-dev \
+ nodejs \
+ npm 
+
+RUN docker-php-ext-install zip mysqli pdo_mysql
+
+RUN a2enmod rewrite \
+ && sed -i 's!/var/www/html!/var/www/public!g' /etc/apache2/sites-available/000-default.conf \
+ && mv /var/www/html /var/www/public \
+ && echo 'ServerName localhost' >> /etc/apache2/apache2.conf 
+
+
+RUN curl -sS https://getcomposer.org/installer \
+  | php -- --install-dir=/usr/local/bin --filename=composer
+
+
+WORKDIR /var/www/public
+COPY . .
+
+RUN composer install --prefer-dist --no-scripts --no-dev --no-autoloader && rm -rf /root/.composer
+RUN composer dump-autoload --no-scripts --no-dev --optimize
+
+RUN npm install
+
+RUN rm .dockerignore
