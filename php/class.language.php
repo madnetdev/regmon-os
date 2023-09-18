@@ -47,7 +47,7 @@ class Language {
      */
     public function __construct(string $REGmon_Folder, string $Default_Language, bool $Use_Multi_Language_Selector) {
 
-		if (!$Use_Multi_Language_Selector) {
+        if (!$Use_Multi_Language_Selector) {
             $this->Default_Language = $Default_Language;
             $this->language = $Default_Language;
         }
@@ -57,29 +57,37 @@ class Language {
             }
         } 
 		elseif (isset($_COOKIE['LANG'])) {
-            $this->language = $_COOKIE['LANG'];
+            if (in_array($_COOKIE['LANG'], (array)$this->Languages)) {
+                $this->language = $_COOKIE['LANG'];
+            }
         }
+        //user Browser string //el,en-GB;q=0.9,en;q=0.8
 		elseif (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
 			//break up string into pieces (languages and q factors)
 			preg_match_all('/([a-z]{1,8}(-[a-z]{1,8})?)\s*(;\s*q\s*=\s*(1|0\.[0-9]+))?/i', $_SERVER['HTTP_ACCEPT_LANGUAGE'], $lang_parse);
 
 			$langs = array();
 			if (count($lang_parse[1])) {
-				$langs = array_combine($lang_parse[1], $lang_parse[4]); //create a list like "en" => 0.8
-				
-				foreach ($langs as $lang => $val) { //set default to 1 for any without q factor
-					if ($val === '') $langs[$lang] = 1;
+                //create a list like "en" => 0.8
+				$langs = array_combine($lang_parse[1], $lang_parse[4]);
+				foreach ($langs as $lang => $val) {
+                    //set default to 1 for any without q factor
+                    if ($val === '') {
+                        $langs[$lang] = 1;
+                    }
 				}				
-				arsort($langs, SORT_NUMERIC); //sort list based on value	
+                //sort list based on value	
+				arsort($langs, SORT_NUMERIC);
+                //print_r($langs); //Array ( [el] => 1 [en-GB] => 0.9 [en] => 0.8 )
 			}
 
 			//look through sorted list and use first one that matches our languages
 			foreach ($langs as $lang => $val) {
-				if (strpos($lang, 'en') === 0) { 
+				if (strpos($lang, 'en') === 0) { //if start with en
                     $this->language = 'en';
                     break; 
                 }
-				elseif (strpos($lang, 'de') === 0) { 
+				elseif (strpos($lang, 'de') === 0) { //if start with de
                     $this->language = 'de'; 
                     break; 
                 }
@@ -97,7 +105,7 @@ class Language {
         }
 
         $cookie_options = array(
-            'expires' => time() + (2 * 365 * 24 * 60 * 60),
+            'expires' => time() + (2 * 365 * 24 * 60 * 60), //2 years
             'path' => '/'.$REGmon_Folder,
             //'domain' => null,
             'secure' => false,
@@ -105,7 +113,7 @@ class Language {
             'samesite' => 'Lax' // None || Lax || Strict
         );
 
-        setcookie ('LANG', $this->language, $cookie_options); //2 years
+        setcookie ('LANG', $this->language, $cookie_options);
 
         $this->tags = include (__DIR__.'/lang_'.$this->language.'.php');
     }

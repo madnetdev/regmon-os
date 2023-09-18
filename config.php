@@ -39,6 +39,9 @@ if (isset($SEC_check_config)) {
 
 	//Load languages
 	require_once(__DIR__.'/php/class.language.php');
+	//we not have $CONFIG here so we use 'en' as standard
+	//else we need to provide the language selection button 
+	//and the language keys and translations in the lang_.php files 
 	$LANG = Language::getInstance($REGmon_Folder, 'en', false);
 
 
