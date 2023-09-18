@@ -150,13 +150,13 @@ if (count($POST_sport)) {
 //date from
 if ($POST_date_from != '') {
 	$date_from_sql = get_date_SQL($POST_date_from);
-	$where_Forms_Data__Dates .= " AND created >= '$date_from_sql 00:00:00'";
+	$where_Forms_Data__Dates .= " AND timestamp_start >= '$date_from_sql 00:00:00'";
 	$Date_From_selected = $POST_date_from;
 }
 //date to
 if ($POST_date_to != '') {
 	$date_to_sql = get_date_SQL($POST_date_to);
-	$where_Forms_Data__Dates .= " AND created <= '$date_to_sql 23:59:59'";
+	$where_Forms_Data__Dates .= " AND timestamp_start <= '$date_to_sql 23:59:59'";
 	$Date_To_selected = $POST_date_to;
 }
 
@@ -343,10 +343,10 @@ foreach ($Forms_Data_ordered_arr as $Forms_Data_row) {
 // get comments from calendar
 $where_Comments_Data = "WHERE 1 ". $where_Forms_Data__Groups . $where_Forms_Data__Dates . $where_Forms_Data__Users;
 $comments_data_rows = array();
-$comments_data = $db->fetch("SELECT user_id, group_id, name, isAllDay, created, created_end, modified 
+$comments_data = $db->fetch("SELECT user_id, group_id, `name`, isAllDay, timestamp_start, timestamp_end, modified 
 FROM comments 
 $where_Comments_Data AND showInGraph = 1 
-ORDER BY user_id, group_id, created", array());
+ORDER BY user_id, group_id, timestamp_start", array());
 if ($db->numberRows() > 0)  {
 	foreach ($comments_data as $comment) {
 		if ($TRAINER) {
@@ -358,18 +358,18 @@ if ($db->numberRows() > 0)  {
 		
 		//FIXES ########################################
 		//calendar want full day if allDay:true --if same date and diff times it will not shown in calendar
-		$start = get_date_time_SQL($comment['created']);
-		$end = get_date_time_SQL($comment['created_end']);
+		$start = get_date_time_SQL($comment['timestamp_start']);
+		$end = get_date_time_SQL($comment['timestamp_end']);
 		if ($comment['isAllDay']=='1') {
-			if ($comment['created_end'] == '') { //if we not have created_end --old comments
-				$start_tmp = explode(' ', $comment['created']??'');
-				$comment['created_end'] = $start_tmp[0].' 23:59:59';
+			if ($comment['timestamp_end'] == '') { //if we not have timestamp_end --old comments
+				$start_tmp = explode(' ', $comment['timestamp_start']??'');
+				$comment['timestamp_end'] = $start_tmp[0].' 23:59:59';
 			} 
-			$end = date("Y-m-d H:i:s", strtotime($comment['created_end']) + 1); //end + 1sec bcz is 23:59:59
+			$end = date("Y-m-d H:i:s", strtotime($comment['timestamp_end']) + 1); //end + 1sec bcz is 23:59:59
 		}
 		else {
-			if ($comment['created_end'] == '') { //if we not have created_end --old comments
-				$end = date("Y-m-d H:i:s", (strtotime($comment['created']) + (60*60))); //new +60mins
+			if ($comment['timestamp_end'] == '') { //if we not have timestamp_end --old comments
+				$end = date("Y-m-d H:i:s", (strtotime($comment['timestamp_start']) + (60*60))); //new +60mins
 			}
 		}
 		$diff = round((strtotime($end) - strtotime($start)) / 60);
@@ -383,7 +383,7 @@ if ($db->numberRows() > 0)  {
 			'category_id' => 'Note',
 			'group_id' => $comment['group_id'],
 			'res_json' => $res_json,
-			'created' => $comment['created'],
+			'timestamp_start' => $comment['timestamp_start'],
 			'modified' => $comment['modified']
 		);
 	}
@@ -394,7 +394,7 @@ if ($db->numberRows() > 0)  {
 $forms_data_rows = $db->fetch("SELECT * 
 FROM forms_data 
 $where_Forms_Data AND status = 1 AND form_id > 0 AND res_json != '[]' 
-ORDER BY user_id, group_id, created", array());
+ORDER BY user_id, group_id, timestamp_start", array());
 if ($db->numberRows() > 0)  {
 	$date_num = 0;
 	$date_last = 0;
@@ -404,11 +404,11 @@ if ($db->numberRows() > 0)  {
 	//$all_data_rows = $comments_data_rows + $forms_data_rows; //merge arrays -not work if not diff keys
 	$all_data_rows = array_merge($comments_data_rows, $forms_data_rows);; //merge arrays
 
-	//sort by user, group_id, created
+	//sort by user, group_id, timestamp_start
 	usort($all_data_rows, function($a, $b) {
 		if ($a['user_id'] == $b['user_id']){
 			if ($a['group_id'] == $b['group_id']){
-				return strtotime($a['created']) - strtotime($b['created']);     
+				return strtotime($a['timestamp_start']) - strtotime($b['timestamp_start']);     
 			} else {
 				return $a['group_id'] - $b['group_id'];
 			}
@@ -432,7 +432,7 @@ if ($db->numberRows() > 0)  {
 		}
 		
 		//date-time
-		$date_time = explode(' ', get_date_time($data_row['created'].''));
+		$date_time = explode(' ', get_date_time($data_row['timestamp_start'].''));
 		$date_time_2 = explode(' ', get_date_time($data_row['modified'].''));
 		if ($date_last != $date_time[0]) {
 			$date_num = 1;

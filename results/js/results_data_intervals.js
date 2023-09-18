@@ -1434,7 +1434,7 @@ function Formula__Interval__Update_N_Calculate(interval_id, field_num) {
 		}
 
 		if ($('#formula_individual_' + interval_id + '_' + field_num).length) {
-			this_FIELD.formula_intividual = Number($('#formula_individual_' + interval_id + '_' + field_num).val());
+			this_FIELD.formula_individual = Number($('#formula_individual_' + interval_id + '_' + field_num).val());
 		}
 
 
@@ -1465,7 +1465,7 @@ function Formula__Interval__Table__Cells__Update(interval_id, field_num) {
 
 	const save_form_id = this_FIELD.form_id;
 	const formula = this_FIELD.formula;
-	const is_individual = this_FIELD.formula_intividual;
+	const is_individual = this_FIELD.formula_individual;
 
 	const cell_ids = Formula__Cell_ids_from_Formula__Get(formula);
 	const cell_id = cell_ids[0];

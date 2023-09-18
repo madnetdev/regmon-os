@@ -67,8 +67,8 @@ CREATE TABLE `comments` (
   `name` varchar(64) DEFAULT NULL,
   `comments` text,
   `color` char(25) NOT NULL DEFAULT '',
-  `created` datetime DEFAULT NULL,
-  `created_end` datetime DEFAULT NULL,
+  `timestamp_start` datetime DEFAULT NULL,
+  `timestamp_end` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -250,8 +250,8 @@ CREATE TABLE `forms_data` (
   `group_id` int(11) NOT NULL DEFAULT '0',
   `res_json` text NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
-  `created` datetime DEFAULT NULL,
-  `created_end` datetime DEFAULT NULL,
+  `timestamp_start` datetime DEFAULT NULL,
+  `timestamp_end` datetime DEFAULT NULL,
   `created_by` varchar(50) DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   `modified_by` varchar(50) DEFAULT NULL

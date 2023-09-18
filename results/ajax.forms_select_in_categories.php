@@ -23,7 +23,7 @@ $Forms_with_Forms_Data_arr = array();
 $forms_data = $db->fetch("SELECT COUNT(*) AS count, form_id, category_id 
 FROM forms_data 
 WHERE CONCAT(group_id,'_',user_id) IN ($athletes_ids) AND form_id > 0 AND status = 1 
-AND created >= ? AND created <= ? 
+AND timestamp_start >= ? AND timestamp_start <= ? 
 GROUP BY form_id, category_id 
 ORDER BY category_id, form_id", array($date_from, $date_to));
 if ($db->numberRows() > 0)  {

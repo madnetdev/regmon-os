@@ -273,7 +273,7 @@ function DATA__Interval_Form__Get(interval_id) {
 			is_interval_form: 	$(data_is_interval_form[i]).val(),
 			interval_form: 		$(data_interval_form[i]).val(),
 			interval_form_name: $(data_interval_form[i]).find('option:selected').text(),
-			formula_intividual: $(data_formula_individual[i]).val(),
+			formula_individual: $(data_formula_individual[i]).val(),
 			formula_input: 		$(data_formula_input[i]).val(),
 			formula_sub_period: $(data_formula_sub_period[i]).val()
 		};

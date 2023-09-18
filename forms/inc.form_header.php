@@ -221,7 +221,7 @@ var V_ANSWERED = [];
 
 <?php if ($VIEW) { ?>
 	<div id="top-wizard" style="font-size:15px;">
-		<span style="white-space:nowrap;"><?=$LANG->RESULTS_CREATED;?>: <b><?=get_date_time($FORM_DATA['created'].'');?></b></span> &nbsp; - &nbsp; 
+		<span style="white-space:nowrap;"><?=$LANG->RESULTS_CREATED;?>: <b><?=get_date_time($FORM_DATA['timestamp_start'].'');?></b></span> &nbsp; - &nbsp; 
 		<span style="white-space:nowrap;"><?=$LANG->RESULTS_MODIFIED;?>: <b><?=get_date_time($FORM_DATA['modified'].'');?></b></span>
 		<div class="shadow"></div>
 	</div>
@@ -306,7 +306,7 @@ var V_ANSWERED = [];
 			<?php //####################################
 				//TODO: make a function
 				if ($CHANGE AND $FORM_DATA) {
-					$t_date_time = $FORM_DATA['created'];
+					$t_date_time = $FORM_DATA['timestamp_start'];
 				}
 				else {
 					if ($selected_date == '') {

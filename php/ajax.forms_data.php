@@ -84,12 +84,12 @@ switch ($action) {
 			$forms_names = $db->fetchAllwithKey("SELECT id, name FROM forms WHERE status = 1 ORDER BY id", array(), 'id'); 
 
 			
-			//$where = " WHERE user_id = '$ID' AND group_id = '$group_id' AND created BETWEEN '$start' AND '$end'";
+			//$where = " WHERE user_id = '$ID' AND group_id = '$group_id' AND timestamp_start BETWEEN '$start' AND '$end'";
 			//we need the selected Athlete and not the trainer or admin
-			$where = " WHERE user_id = '$athlete_id' AND group_id = '$group_id' AND form_id > 0 AND created BETWEEN '$start' AND '$end'";
+			$where = " WHERE user_id = '$athlete_id' AND group_id = '$group_id' AND form_id > 0 AND timestamp_start BETWEEN '$start' AND '$end'";
 
 			//forms_data
-			$rows = $db->fetch("SELECT * FROM forms_data $where $where_trainer AND status = 1 ORDER BY created", array()); 
+			$rows = $db->fetch("SELECT * FROM forms_data $where $where_trainer AND status = 1 ORDER BY timestamp_start", array()); 
 			$i=0;
 			if ($db->numberRows() > 0)  {
 				foreach ($rows as $row) {
@@ -98,15 +98,15 @@ switch ($action) {
 						$sec = '&sec='.MD5($CONFIG['SEC_Encrypt_Secret'] . $row['form_id'] . $athlete_id . $group_id . $UID);
 					}
 					//new +60mins
-					$date_time_end = date("Y-m-d H:i:s", (strtotime($row['created']) + (60*60)));
-					//if we have created_end
-					if ($row['created_end'] != '' AND $row['created'] != $row['created_end']) {
-						$date_time_end = $row['created_end'];
+					$date_time_end = date("Y-m-d H:i:s", (strtotime($row['timestamp_start']) + (60*60)));
+					//if we have timestamp_end
+					if ($row['timestamp_end'] != '' AND $row['timestamp_start'] != $row['timestamp_end']) {
+						$date_time_end = $row['timestamp_end'];
 					}
 					$response[$i] = $response[$i]['cell'] = array(
 						"id" => $row['id'],
 						"title" => $forms_names[$row['form_id']]['name'],
-						"start" => $row['created'],
+						"start" => $row['timestamp_start'],
 						"end" => $date_time_end,
 						"status" => $row['status'],
 						"color" => $categories_colors[$row['category_id']]['color'],
@@ -126,7 +126,7 @@ switch ($action) {
 							'<button id="Cal_Res_'.$row['id'].'" type="button" class="bttn fancybox fancybox.iframe" href="form.php?view=true&id='.$row['form_id'].'&cat_id='.$row['category_id'].'&from_data_id='.$row['id'].'&group_id='.$row['group_id'].'&athlete_id='.$athlete_id.'" style="margin-top:10px; padding:3px 10px; width:190px;">'.$LANG->INDEX_VIEW_RECORD.' &nbsp; &nbsp;<i class="fa fa-bar-chart fa-rotate-90" style="font-size:14px;"></i></button>'.
 							//view results
 							'<br>'.
-							'<button id="Cal_Res_Sub_'.$row['id'].'" type="button" class="bttn fancybox fancybox.iframe" href="forms_results.php?athlete_id='.$athlete_id.'&id='.$row['form_id'].'&cat_id='.$row['category_id'].'&timestamp='.(strtotime($row['created']) + 30*60).'&iframe'.$sec.'" style="margin-top:10px; padding:3px 10px; width:190px;">'.$LANG->INDEX_VIEW_RESULTS.' &nbsp; &nbsp;<i class="fa fa-bar-chart" style="font-size:16px;"></i></button>'.
+							'<button id="Cal_Res_Sub_'.$row['id'].'" type="button" class="bttn fancybox fancybox.iframe" href="forms_results.php?athlete_id='.$athlete_id.'&id='.$row['form_id'].'&cat_id='.$row['category_id'].'&timestamp='.(strtotime($row['timestamp_start']) + 30*60).'&iframe'.$sec.'" style="margin-top:10px; padding:3px 10px; width:190px;">'.$LANG->INDEX_VIEW_RESULTS.' &nbsp; &nbsp;<i class="fa fa-bar-chart" style="font-size:16px;"></i></button>'.
 							//delete form.save --if can
 							(($athlete_id == $UID OR ($trainer_view AND in_array($row['category_id'].'_'.$row['form_id'],$trainer_write_arr)))?
 								'<br>'.
@@ -134,7 +134,7 @@ switch ($action) {
 							:'').
 						'</div>'
 						//'<div style="text-align:center; margin-top:10px;">'.
-						// 	$LANG->CREATED.': <b>'.$row['created'].'</b><br>'.
+						// 	$LANG->CREATED.': <b>'.$row['timestamp_start'].'</b><br>'.
 						// 	$LANG->MODIFIED.': <b>'.$row['modified'].'</b>'.
 						//'</div>'
 					);
@@ -144,17 +144,17 @@ switch ($action) {
 
 			//comments in calendar
 			if ($athlete_id == $UID OR $ADMIN OR ($trainer_view AND (in_array('Note_n', $trainer_read_arr)))) {
-				$rows = $db->fetch("SELECT * FROM comments WHERE user_id = ? AND group_id = ? ORDER BY created", array($athlete_id, $group_id));
+				$rows = $db->fetch("SELECT * FROM comments WHERE user_id = ? AND group_id = ? ORDER BY timestamp_start", array($athlete_id, $group_id));
 				if ($db->numberRows() > 0)  {
 					foreach ($rows as $row) {
 						//FIXES //////////////////////////////////////////////////
-						$start = get_date_time_SQL($row['created']);
-						$end = get_date_time_SQL($row['created_end']);
+						$start = get_date_time_SQL($row['timestamp_start']);
+						$end = get_date_time_SQL($row['timestamp_end']);
 						if ($row['isAllDay']=='1') {
 							//calendar want a full day if allDay:true 
 							//if same date and different time calendar not show it
 							//end + 1sec bcz is 23:59:59
-							$end = date("Y-m-d H:i:s", strtotime($row['created_end']) + 1);
+							$end = date("Y-m-d H:i:s", strtotime($row['timestamp_end']) + 1);
 						}
 						//FIXES //////////////////////////////////////////////////
 						
@@ -194,9 +194,9 @@ switch ($action) {
 		else { //cal_count
 			$where = " WHERE user_id = '".((int)$athlete_id)."' AND group_id = '".((int)$group_id)."' AND form_id > 0";
 			//forms_data
-			$row_forms = $db->fetchRow("SELECT COUNT(*) AS data_num FROM forms_data $where $where_trainer AND status = 1 ORDER BY created", array()); 
+			$row_forms = $db->fetchRow("SELECT COUNT(*) AS data_num FROM forms_data $where $where_trainer AND status = 1 ORDER BY timestamp_start", array()); 
 			//comments in calendar
-			$row_comments = $db->fetchRow("SELECT COUNT(*) AS comments_num FROM comments WHERE user_id = ? AND group_id = ? ORDER BY created", array($athlete_id, $group_id));
+			$row_comments = $db->fetchRow("SELECT COUNT(*) AS comments_num FROM comments WHERE user_id = ? AND group_id = ? ORDER BY timestamp_start", array($athlete_id, $group_id));
 			echo ($row_forms['data_num'] + $row_comments['comments_num']);
 		}
 		
@@ -225,7 +225,7 @@ switch ($action) {
 					$row['type'],
 					$row['group_id'],
 					//$row['results_json'],
-					get_date_time_SQL($row['created'].''),
+					get_date_time_SQL($row['timestamp_start'].''),
 					get_date_time_SQL($row['modified'].''),
 					''
 				);

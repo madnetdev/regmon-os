@@ -52,9 +52,9 @@ $values['res_json'] = json_encode($_POST);
 $values['modified'] = get_date_time_SQL('now');
 $values['modified_by'] = $USERNAME;
 
-$values['created'] = $selected_date;
+$values['timestamp_start'] = $selected_date;
 if ($selected_date != $selected_date_end) {
-	$values['created_end'] = $selected_date_end;
+	$values['timestamp_end'] = $selected_date_end;
 }
 
 if ($CHANGE) {

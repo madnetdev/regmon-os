@@ -1119,7 +1119,7 @@ function DATA__Interval_Form_Fields__Values__Set(Saved_Data, interval_id) {
 				
 				//let calc_id = replaceAll(saved_sel_val, '|', '_');
 				let calc_id = interval_id + '_' + Field_Data.field_id;
-				if (Field_Data.is_interval_form == 'true' && Field_Data.formula_intividual == '1') {
+				if (Field_Data.is_interval_form == 'true' && Field_Data.formula_individual == '1') {
 					$(data_formula_individual[i]).prev().trigger("click");
 					//$('#formula_individual_ck_'+calc_id).prop('checked', true);
 					//$('#formula_individual_'+calc_id).val('1');

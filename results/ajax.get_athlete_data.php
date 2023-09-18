@@ -111,7 +111,7 @@ if (count($forms)) //if have forms
 	$form_id_2_name_arr = array();
 	
 	//comments from calendar
-	$comments = $db->fetch("SELECT * FROM comments WHERE showInGraph = 1 AND user_id=? AND group_id=? ORDER BY created", array($athlete_id, $group_id));
+	$comments = $db->fetch("SELECT * FROM comments WHERE showInGraph = 1 AND user_id=? AND group_id=? ORDER BY timestamp_start", array($athlete_id, $group_id));
 	if ($db->numberRows() > 0)  {
 		$form_id_2_name_arr['note'] = $LANG->NOTE;
 		
@@ -130,18 +130,18 @@ if (count($forms)) //if have forms
 		foreach ($comments as $comment) {
 			//FIXES ###########################################
 			//calendar want full day if allDay:true --if same date and diff times not show in calendar
-			$start = get_date_time_SQL($comment['created']);
-			$end = get_date_time_SQL($comment['created_end']);
+			$start = get_date_time_SQL($comment['timestamp_start']);
+			$end = get_date_time_SQL($comment['timestamp_end']);
 			if ($comment['isAllDay']=='1') {
-				if ($comment['created_end'] == '') { //if we not have created_end --old comments
-					$start_tmp = explode(' ', $comment['created']??'');
-					$comment['created_end'] = $start_tmp[0].' 23:59:59';
+				if ($comment['timestamp_end'] == '') { //if we not have timestamp_end --old comments
+					$start_tmp = explode(' ', $comment['timestamp_start']??'');
+					$comment['timestamp_end'] = $start_tmp[0].' 23:59:59';
 				} 
-				$end = date("Y-m-d H:i:s", strtotime($comment['created_end']) + 1); //end + 1sec bcz is 23:59:59
+				$end = date("Y-m-d H:i:s", strtotime($comment['timestamp_end']) + 1); //end + 1sec bcz is 23:59:59
 			}
 			else {
-				if ($comment['created_end'] == '') { //if we not have created_end --old comments
-					$end = date("Y-m-d H:i:s", (strtotime($comment['created']) + (60*60))); //new +60mins
+				if ($comment['timestamp_end'] == '') { //if we not have timestamp_end --old comments
+					$end = date("Y-m-d H:i:s", (strtotime($comment['timestamp_start']) + (60*60))); //new +60mins
 				}
 			}
 			$diff = round((strtotime($end) - strtotime($start)) / 60);
@@ -155,11 +155,11 @@ if (count($forms)) //if have forms
 
 
 	// get forms data to build data series
-	$forms_data = $db->fetch("SELECT fd.form_id, fd.res_json, fd.created 
+	$forms_data = $db->fetch("SELECT fd.form_id, fd.res_json, fd.timestamp_start 
 FROM forms_data fd 
 LEFT JOIN forms f ON f.id = fd.form_id 
 WHERE fd.user_id = ? AND fd.group_id = ? AND fd.status = 1 $where_form_cat
-ORDER BY f.name, fd.created", array($athlete_id, $group_id)); 
+ORDER BY f.name, fd.timestamp_start", array($athlete_id, $group_id)); 
 	//echo "<pre>";print_r($forms_data);
 	//echo "<pre>";print_r($forms);
 	if ($db->numberRows() > 0)  {
@@ -191,7 +191,7 @@ ORDER BY f.name, fd.created", array($athlete_id, $group_id));
 						$s_key = '_'.$key;
 						$data_name = $form_data_names[$key][0]; //series_name = data_name
 						$data_type = $form_data_names[$key][1];
-						$data_time = strtotime($form_data_columns['created']).'000'; //+date("Z")
+						$data_time = strtotime($form_data_columns['timestamp_start']).'000'; //+date("Z")
 						$data_input = $res;
 						
 						//EXTRA Fields ##########################################

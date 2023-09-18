@@ -29,7 +29,7 @@ if ($group_id AND $athlete_id)
 	//count num of comments in calendar in that day
 	if (!$ID) { //dont check if is update
 		$selected_date_start_day = get_date_SQL($t_date_start);
-		$row = $db->fetchRow("SELECT COUNT(*) AS count FROM comments WHERE user_id = ? AND group_id = ? AND created LIKE '$selected_date_start_day%'", array($athlete_id, $group_id));
+		$row = $db->fetchRow("SELECT COUNT(*) AS count FROM comments WHERE user_id = ? AND group_id = ? AND timestamp_start LIKE '$selected_date_start_day%'", array($athlete_id, $group_id));
 		if ($row['count'] >= 3) {
 			//not accept more than 3 comments a day
 			echo 'ERROR-MAX3';
@@ -46,8 +46,8 @@ if ($group_id AND $athlete_id)
 	$values['comments'] = $t_comment;
 	$values['color'] = $t_color;
 	$values['modified'] = get_date_time_SQL('now');
-	$values['created'] = $selected_date_start;
-	$values['created_end'] = $selected_date_end;
+	$values['timestamp_start'] = $selected_date_start;
+	$values['timestamp_end'] = $selected_date_end;
 	
 	if ($ID) {
 		$save = $db->update($values, "comments", "id=?", array($ID));

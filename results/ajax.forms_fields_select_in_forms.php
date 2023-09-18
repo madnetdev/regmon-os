@@ -41,7 +41,7 @@ $forms_data = $db->fetch("SELECT COUNT(*) AS count, form_id, category_id
 FROM forms_data 
 WHERE CONCAT(group_id,'_',user_id) IN ($selected_athletes_ids) 
 AND form_id > 0 AND status = 1 
-AND created >= '$date_from' AND created <= '$date_to' 
+AND timestamp_start >= '$date_from' AND timestamp_start <= '$date_to' 
 GROUP BY form_id, category_id 
 ORDER BY category_id, form_id", array());
 if ($db->numberRows() > 0)  {
@@ -147,8 +147,8 @@ if ($db->numberRows() > 0)  {
 	
 	//comments
 	$comments = $db->fetchRow("SELECT COUNT(*) AS count FROM comments 
-WHERE showInGraph = 1 AND CONCAT(group_id,'_',user_id) IN ($selected_athletes_ids) AND created >= '$date_from' AND created <= '$date_to' 
-ORDER BY created", array());
+WHERE showInGraph = 1 AND CONCAT(group_id,'_',user_id) IN ($selected_athletes_ids) AND timestamp_start >= '$date_from' AND timestamp_start <= '$date_to' 
+ORDER BY timestamp_start", array());
 	if ($db->numberRows() > 0)  {
 		if ($comments['count']) {
 			$forms_fields_option_comments .= '<optgroup label="'.$LANG->NOTE.' ('.$comments['count'].')">';

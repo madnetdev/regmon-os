@@ -57,7 +57,7 @@ $Forms_select_options = get_Available_Forms($UID);
 // get available Comments count
 $comments_count = 0;
 if ($ATHLETE) { //only for Athletes
-	$comments = $db->fetchRow("SELECT COUNT(*) AS count FROM comments WHERE showInGraph = 1 AND user_id=? ORDER BY created", array($UID));
+	$comments = $db->fetchRow("SELECT COUNT(*) AS count FROM comments WHERE showInGraph = 1 AND user_id=? ORDER BY timestamp_start", array($UID));
 	$comments_count = $comments['count'];
 }
 $Comments_select_option = '<option value="Note">'.$LANG->NOTE . ($ATHLETE?' ('.$comments_count.')':'').'</option>';
