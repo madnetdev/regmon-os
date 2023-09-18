@@ -144,6 +144,7 @@ if (isset($SEC_check_config)) {
 	
 			//conn to DB ok (Host, User, Pass) --> lets check if DB exist
 			if ($conn) {
+				mysqli_query($conn, "SET NAMES 'UTF8'");
 				$DB_Name = mysqli_real_escape_string($conn, $_POST['DB_Name']); 
 				$DB_exist_sql = mysqli_query($conn, "SHOW DATABASES LIKE '".$DB_Name."'");
 				$DB_exist = false;
@@ -190,6 +191,7 @@ if (isset($SEC_check_config)) {
 					//supposed we have a db connection
 					$conn = mysqli_connect($DB_CONFIG['DB_Host'], $DB_CONFIG['DB_User'], $DB_CONFIG['DB_Pass'], $DB_CONFIG['DB_Name']);
 					if ($conn) {
+						mysqli_query($conn, "SET NAMES 'UTF8'");
 						//execute multi query
 						mysqli_multi_query($conn, $DB_Migration_File_content);
 					}
@@ -298,6 +300,7 @@ if (isset($SEC_check_config)) {
 				try {
 					$conn = mysqli_connect($DB_CONFIG['DB_Host'], $DB_CONFIG['DB_User'], $DB_CONFIG['DB_Pass'], $DB_CONFIG['DB_Name']);
 					if ($conn) {
+						mysqli_query($conn, "SET NAMES 'UTF8'");
 						//execute multi query
 						mysqli_multi_query($conn, $Main_Data_sql);
 					}
