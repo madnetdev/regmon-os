@@ -18,7 +18,15 @@ Object.defineProperty(this, "Debug2", {get: function () {
 
 
 function get_Function_Name() {
-	return get_Function_Name.caller.name;
+	let Function_Name = get_Function_Name.caller;
+	if (Function_Name == null) {
+		Function_Name = arguments.callee.caller;
+		if (Function_Name == null) {
+			Function_Name = 'Unknown Function';
+		}
+	}
+	//we not want to pass null here --it break the promises if null
+	return Function_Name;
 }
 //##########################################
 
