@@ -25,6 +25,16 @@ if (!isset($SEC_check_config) OR $SEC_check_config != 'APP_Admin_User_Missing') 
 
 					<div style="text-align:left;">
 
+						<?=get_HTML_Input( //key, value, type, label, sub_label, placeholder, disabled
+							'Username', 
+							'admin', 
+							'text', 
+							'Admin Username', 
+							'', 
+							'',
+							true
+						);?>
+						
 						<?=get_HTML_Input( //key, value, type, label, sub_label, placeholder
 							'Admin_Password', 
 							'', 
