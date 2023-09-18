@@ -133,7 +133,7 @@ function get_dash_data(get_data) {
 	const id = $('#dash_id').val();
 	const name = $('#dash_name').val();
 	const type = $('#dash_type_select').val();
-	const options = $('.dash_option:visible').val();
+	let options = $('.dash_option:visible').val();
 	const sort = $('#dash_sort').val();
 	const color = $('#dash_color').val();
 	let extra_opt_empty = false;
