@@ -37,7 +37,7 @@ if ($db->numberRows() > 0)  {
 		$trainer_id = $row['id'];
 		$lastname = $row['lastname'];
 		$firstname = $row['firstname'];
-		$sport = str_replace(',', ', ', $row['sport']);
+		$sport = str_replace(',', ', ', $row['sport'].'');
 		$request_status = $row['request_status'];
 		$modified = get_date_time($row['modified'].'');
 		$created = get_date_time($row['created'].'');
@@ -106,7 +106,7 @@ if ($db->numberRows() > 0)  {
 			'<tr>'.
 				'<td>'.
 					'<a'.$link.'>'.
-						'<span class="' . ($answer ? 'answer' : ($status ? $status : '')) . '">';
+						'<span class="' . ($answer ? 'answer' : ($status ? $status : '')) . '">'.
 							$firstname.' '.$lastname . 
 							($request_status=='1'
 								? '<i class="fa fa-list-alt" style="float:right; margin-top:6px;" title="Trainerfreigaben"></i>'
