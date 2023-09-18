@@ -16,7 +16,7 @@ if (!$data_ids OR !$athletes_ids OR $athletes_ids == "''" OR !$date_from OR !$da
 	exit;
 }
 
-/** @var object $FORMS_DO */
+/** @var mixed $FORMS_DO */
 $FORMS_DO = array();
 
 $data_ids_arr = explode(',', $data_ids);
