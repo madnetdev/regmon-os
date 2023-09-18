@@ -24,7 +24,7 @@ jQuery(function()
 
 	if ($.cookie('DASH_ON_LOGIN') == '1') {
 		openDashboard();
-		$.removeCookie('DASH_ON_LOGIN', { path: '/'+V_REGmon_Folder });
+		$.removeCookie('DASH_ON_LOGIN', { path: '/'+V_REGmon_Folder, SameSite:'Lax' });
 	}
 	else if ($.cookie('DASHBOARD') == '1') {
 		openDashboard();
@@ -33,7 +33,7 @@ jQuery(function()
 
 
 function openDashboard() {
-	$.cookie('DASHBOARD', '1', { path: '/' + V_REGmon_Folder });
+	$.cookie('DASHBOARD', '1', { path: '/' + V_REGmon_Folder, SameSite:'Lax' });
 	
 	stickyNavBar.remove();
 
@@ -48,7 +48,7 @@ function openDashboard() {
 }
 
 function closeDashboard() {
-	$.cookie('DASHBOARD', '0', { path: '/' + V_REGmon_Folder });
+	$.cookie('DASHBOARD', '0', { path: '/' + V_REGmon_Folder, SameSite:'Lax' });
 	
 	$("#dashboard").css('width', $(window).width());
 	$('body').css('overflow', '');
@@ -560,7 +560,7 @@ function initDashboard() {
 
 			V_SELECTED_DATE = moment().format("YYYY-MM-DD HH:mm:ss");
 
-			$.cookie('SELECTED_DATE', V_SELECTED_DATE, { path: '/' + V_REGmon_Folder });
+			$.cookie('SELECTED_DATE', V_SELECTED_DATE, { path: '/' + V_REGmon_Folder, SameSite:'Lax' });
 			
 			if (dd[0] == 'Note') {
 				$.fancybox($("#create_comment"), $.extend({},fancyBoxDefaults,{minWidth: 300}));

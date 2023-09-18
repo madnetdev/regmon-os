@@ -3,6 +3,10 @@
 declare(strict_types=1);
 require_once('_settings.regmon.php');
 
+ini_set('session.cookie_samesite', 'Lax');
+ini_set('session.cookie_secure', 'Off');
+ini_set('session.cookie_httponly', 'Off');
+
 // Initialize Session
 session_cache_limiter();
 session_start();

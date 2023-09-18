@@ -13,6 +13,10 @@ $login = $PATH_2_ROOT.'login.php'; //login page
 $success = $PATH_2_ROOT; //index page
 
 
+ini_set('session.cookie_samesite', 'Lax');
+ini_set('session.cookie_secure', 'Off');
+ini_set('session.cookie_httponly', 'Off');
+
 // Initialize Session
 session_cache_limiter();
 session_start();
@@ -108,20 +112,28 @@ if ($Captcha AND !$Blocked_IP) {
 				$HASH = hash_Secret($CONFIG['SEC_Hash_Secret'] . $USERNAME . ($CONFIG['SEC_Hash_IP'] ? $UIP : '') . $USER['passwd'], $CONFIG['SEC_Hash_Secret']);
 				
 				unset($USER['passwd']);
-								
+				
+				$cookie_options = array(
+					'expires' => 0,
+					'path' => '/'.$CONFIG['REGmon_Folder'],
+					//'domain' => null,
+					'secure' => false,
+					'httponly' => false,
+					'samesite' => 'Lax' // None || Lax || Strict
+				);
 
-				setcookie ("UID", $UID, 0, '/'.$CONFIG['REGmon_Folder']);
-				setcookie ("ACCOUNT", $ACCOUNT, 0, '/'.$CONFIG['REGmon_Folder']);
-				setcookie ("USERNAME", $USERNAME, 0, '/'.$CONFIG['REGmon_Folder']);
-				setcookie ("HASH", $HASH, 0, '/'.$CONFIG['REGmon_Folder']);
+				setcookie ("UID", $UID, $cookie_options);
+				setcookie ("ACCOUNT", $ACCOUNT, $cookie_options);
+				setcookie ("USERNAME", $USERNAME, $cookie_options);
+				setcookie ("HASH", $HASH, $cookie_options);
 
 
 				//Dashboard
 				if ($USER["dashboard"] == '1') {
-					setcookie ("DASHBOARD", '1', 0, '/'.$CONFIG['REGmon_Folder']);
-					setcookie ("DASH_ON_LOGIN", '1', 0, '/'.$CONFIG['REGmon_Folder']);
+					setcookie ("DASHBOARD", '1', $cookie_options);
+					setcookie ("DASH_ON_LOGIN", '1', $cookie_options);
 				} else {
-					setcookie ("DASHBOARD", '0', 0, '/'.$CONFIG['REGmon_Folder']);
+					setcookie ("DASHBOARD", '0', $cookie_options);
 				}
 
 				//level - user type

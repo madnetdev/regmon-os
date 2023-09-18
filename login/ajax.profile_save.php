@@ -44,7 +44,7 @@ if (trim($_POST['passwd']) != '') {
 	}
 
 	//check password strength
-	if (!(preg_match("#[0-9]+#", $_POST['passwd']) AND //one nubmer
+	if (!(preg_match("#[0-9]+#", $_POST['passwd']) AND //one number
 		  preg_match("#[a-z]+#", $_POST['passwd']) AND //one a-z
 		  preg_match("#[A-Z]+#", $_POST['passwd']))) //one A-Z
 	{

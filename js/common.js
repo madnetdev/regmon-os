@@ -195,12 +195,12 @@ jQuery(function ()
 	//Languages
 	$("#lang_de").off('click').on('click', function () {
 		if ($.cookie('LANG') == 'de') return false;
-		$.cookie('LANG', 'de', { expires: 365, path: '/' + V_REGmon_Folder });
+		$.cookie('LANG', 'de', { expires: 365, path: '/' + V_REGmon_Folder, SameSite:'Lax' });
 		window.location.reload();
 	});
 	$("#lang_en").off('click').on('click', function () {
 		if ($.cookie('LANG') == 'en') return false;
-		$.cookie('LANG', 'en', { expires: 365, path: '/' + V_REGmon_Folder });
+		$.cookie('LANG', 'en', { expires: 365, path: '/' + V_REGmon_Folder, SameSite:'Lax' });
 		window.location.reload();
 	});
 

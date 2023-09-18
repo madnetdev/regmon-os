@@ -2,12 +2,26 @@
 $PATH_2_ROOT = '../';
 require_once($PATH_2_ROOT.'_settings.regmon.php');
 
-setcookie ("USERNAME", '', time()-3600, '/'.$CONFIG['REGmon_Folder']);
-//setcookie ("LANG", '', time()-3600, '/'.$CONFIG['REGmon_Folder']); // we keep the LANG
-setcookie ("HASH", '', time()-3600, '/'.$CONFIG['REGmon_Folder']);
-setcookie ("ATHLETE", '', time()-3600, '/'.$CONFIG['REGmon_Folder']);
-setcookie ("UID", '', time()-3600, '/'.$CONFIG['REGmon_Folder']);
-setcookie ("ACCOUNT", '', time()-3600, '/'.$CONFIG['REGmon_Folder']);
+$cookie_options = array(
+    'expires' => time()-3600,
+    'path' => '/'.$CONFIG['REGmon_Folder'],
+    //'domain' => null,
+    'secure' => false,
+    'httponly' => false,
+    'samesite' => 'Lax' // None || Lax || Strict
+);
+
+setcookie ("USERNAME", '', $cookie_options);
+setcookie ("HASH", '', $cookie_options);
+setcookie ("ATHLETE", '', $cookie_options);
+setcookie ("UID", '', $cookie_options);
+setcookie ("ACCOUNT", '', $cookie_options);
+//setcookie ("LANG", '', $cookie_options); // we keep the LANG
+//setcookie ("DASHBOARD", '', $cookie_options);
+
+ini_set('session.cookie_samesite', 'Lax');
+ini_set('session.cookie_secure', 'Off');
+ini_set('session.cookie_httponly', 'Off');
 
 session_start();
 session_unset();

@@ -96,7 +96,16 @@ class Language {
 			$this->language = $this->Default_Language;
         }
 
-		setcookie ('LANG', $this->language, time() + (2 * 365 * 24 * 60 * 60), '/'.$REGmon_Folder); //2 years
+        $cookie_options = array(
+            'expires' => time() + (2 * 365 * 24 * 60 * 60),
+            'path' => '/'.$REGmon_Folder,
+            //'domain' => null,
+            'secure' => false,
+            'httponly' => false,
+            'samesite' => 'Lax' // None || Lax || Strict
+        );
+
+        setcookie ('LANG', $this->language, $cookie_options); //2 years
 
         $this->tags = include (__DIR__.'/lang_'.$this->language.'.php');
     }

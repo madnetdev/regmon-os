@@ -152,7 +152,7 @@ jQuery(function()
 		else {
 			V_GROUP = $(this).val();
 
-			$.cookie('ATHLETE', V_UID, { path: '/'+V_REGmon_Folder });
+			$.cookie('ATHLETE', V_UID, { path: '/'+V_REGmon_Folder, SameSite:'Lax' });
 			
 			const post_data = {
 				group_id: V_GROUP,
@@ -218,7 +218,7 @@ jQuery(function()
 
 				V_GRID_SAVE = true; //for continue loading
 
-				$.cookie('ATHLETE', V_UID, { path: '/' + V_REGmon_Folder });
+				$.cookie('ATHLETE', V_UID, { path: '/' + V_REGmon_Folder, SameSite:'Lax' });
 				
 				window.location.reload();
 			});
@@ -410,7 +410,7 @@ jQuery(function()
 		dayClick: function(date, jsEvent, view) {
 			V_SELECTED_DATE = date.format();
 			//console.log(V_SELECTED_DATE, jsEvent, jsEvent.target, $(jsEvent.target).hasClass('fc-day'), view.name);
-			$.cookie('SELECTED_DATE', V_SELECTED_DATE, { path: '/' + V_REGmon_Folder });
+			$.cookie('SELECTED_DATE', V_SELECTED_DATE, { path: '/' + V_REGmon_Folder, SameSite:'Lax' });
 			
 			if (hasWriteAccess()) {
 				if (jsEvent.target.tagName == "TD") { //bcz it opens with a click to popover
@@ -616,7 +616,7 @@ function Select__Athletes__Init() {
 		//$('#calendar').fullCalendar('removeEventSource', getCalendarUrl());
 
 		V_ATHLETE = $(this).val();
-		$.cookie('ATHLETE', V_ATHLETE, { path: '/' + V_REGmon_Folder });
+		$.cookie('ATHLETE', V_ATHLETE, { path: '/' + V_REGmon_Folder, SameSite:'Lax' });
 		
 		//we not want anymore to change the options based on the selected user
 		//options is always from the current logged in user - version > 1.911
