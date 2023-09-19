@@ -220,6 +220,7 @@ array(
 	'EMPTY_GROUP_NAME' 		=> 'Warning! Empty Group Name',
 	'WARN_GROUP_EXIST' 		=> 'Warning! This Group already exists. <br> Please use a different name.',
 	'WARN_PRIVATE_KEY_EXIST'=> 'Warning! This (Private Key) already exists. <br> Please use another (Private Key).',
+	'WARN_PRIVATE_KEY_CHARS'=> 'Warning! The (Private Key) must be at least 8 characters long',
 	//ajax.categories
 	'EMPTY_CATEGORY_NAME' 	=> 'Warning! Empty Name',
 	//ajax.forms2categories

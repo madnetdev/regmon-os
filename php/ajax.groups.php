@@ -72,11 +72,20 @@ switch ($action) {
 			exit;
 		}
 		if ($values['private_key'] != '') {
+			//check pass < 8 chars
+			if (strlen($values['private_key']) < 8) {
+				echo $LANG->WARN_PRIVATE_KEY_CHARS;
+				exit;
+			}
 			$row = $db->fetchRow("SELECT * FROM `groups` WHERE private_key=? $where_id", array($values['private_key']));
 			if ($db->numberRows() > 0)  {
 				echo $LANG->WARN_PRIVATE_KEY_EXIST;
 				exit;
 			}
+		}
+		if ($values['status'] == '3' AND $values['private_key'] == '') { //private group empty key
+			echo $LANG->WARN_PRIVATE_KEY_CHARS;
+			exit;
 		}
 		
 		$admin_rows = $db->fetch("SELECT id FROM users WHERE level='99'", array());
