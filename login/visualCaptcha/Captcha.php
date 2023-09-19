@@ -162,14 +162,14 @@ class Captcha {
     // Stream image file given an index in the session visualCaptcha images array
     // @param headers object. used to store http headers for streaming
     // @param index of the image in the session images array to send
-    // @paran isRetina boolean. Defaults to false
+    // @param isRetina boolean. Defaults to false
     public function streamImage( &$headers, $index, $isRetina ) {
         $imageOption = $this->getImageOptionAtIndex( $index );
         $imageFileName = $imageOption ? $imageOption[ 'path' ] : ''; // If there's no imageOption, we set the file name as empty
         $imageFilePath = $this->assetsPath . '/images/' . $imageFileName;
 
         // Force boolean for isRetina
-        $isRetina = intval( $isRetina ) >= 1;
+        //$isRetina = intval( $isRetina ) >= 1; //we give true/false
 
         // If retina is requested, change the file name
         if ( $isRetina ) {

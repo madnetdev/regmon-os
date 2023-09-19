@@ -37,7 +37,8 @@ if (substr_count($request_page, 'start')) {
 elseif (substr_count($request_page, 'image')) {
     $captcha = new \visualCaptcha\Captcha( $visualCaptcha_session, $assetsPath, $defaultImages);
 	$index = explode('image/', $request_page)[1];
-    $retina = '';
+	$index = explode('?', $index)[0];
+    $retina = substr_count($request_page, 'retina=1') ? true : false;
     $headers = array();
     /**
      * Problem with setting headers on the fly
