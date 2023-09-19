@@ -334,7 +334,7 @@ switch ($action) {
 					$row['lastname'],
 					get_date_SQL($row['birth_date'].''),
 					$row['sport'],
-					$row['sex'],
+					$row['sex'].'',
 					$row['body_height'],
 					$row['email'],
 					$row['telephone'],

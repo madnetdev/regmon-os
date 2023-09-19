@@ -79,8 +79,8 @@ var stopDateTemplate = {
 
 var sexTemplate = {
 	formatter: "select", edittype: "select", align: "center",
-	editoptions: { value: "0:" + LANG.USERS.SEX_MALE + ";1:" + LANG.USERS.SEX_FEMALE + ";2:" + LANG.USERS.SEX_OTHER, defaultValue: LANG.USERS.SEX_MALE, size: 1 },
-	stype: 'select', searchoptions: { sopt: ['eq', 'ne'], value: ":;0:" + LANG.USERS.SEX_MALE + ";1:" + LANG.USERS.SEX_FEMALE + ";2:" + LANG.USERS.SEX_OTHER }
+	editoptions: { value: ": ;0:" + LANG.USERS.SEX_MALE + ";1:" + LANG.USERS.SEX_FEMALE + ";2:" + LANG.USERS.SEX_OTHER, defaultValue: LANG.USERS.SEX_MALE, size: 1 },
+	stype: 'select', searchoptions: { sopt: ['eq', 'ne'], value: ": ;0:" + LANG.USERS.SEX_MALE + ";1:" + LANG.USERS.SEX_FEMALE + ";2:" + LANG.USERS.SEX_OTHER }
 };
 
 var hiddenReadonlyTemplate = { hidden:true, editrules:{edithidden:true}, editoptions:{readonly:'readonly'}};

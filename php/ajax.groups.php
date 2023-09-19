@@ -161,7 +161,7 @@ switch ($action) {
 			}
 		}
 
-		$row = $db->fetchRow("SELECT * FROM `groups` WHERE id=?", array($id));
+		//$row = $db->fetchRow("SELECT * FROM `groups` WHERE id=?", array($id));
 		
 		$result = $db->delete("`groups`", "id=?", array($id));
 			
