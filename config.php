@@ -33,6 +33,8 @@ if (isset($SEC_check_config)) {
 	//secure ajax sub pages from direct call
 	$SEC_check = $SEC_check_config;
 	
+	require_once('login/inc.login_functions.php');
+
 	require('config/inc.config.functions.php');
 
 	$REGmon_Folder = get_CONFIG__REGmon_Folder();
@@ -217,8 +219,6 @@ if (isset($SEC_check_config)) {
 				$_POST['Admin_Password'] = $_POST['Admin_Password_Confirm'] AND 
 				$_POST['Admin_Email'] != '') 
 			{
-				require('login/inc.login_functions.php');
-
 				$password = $_POST['Admin_Password'];
 				$email = $_POST['Admin_Email'];
 				$Extra_Location_Groups_Users = (int)$_POST['Extra_Location_Groups_Users'];

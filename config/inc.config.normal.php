@@ -43,7 +43,7 @@ if ((!isset($SEC_check_config)) AND $SEC_check != $CONFIG['SEC_Page_Secret']) ex
 
 						<?=get_HTML_Radio_Check_Buttons__On_Off( //key, value, option_on, option_off, label, sub_label
 							'Production_Mode', 
-							$CONFIG['Production_Mode'], 
+							($CONFIG['Production_Mode'] ? '1' : '0'), 
 							'ON', 
 							'OFF', 
 							'Production Mode', 

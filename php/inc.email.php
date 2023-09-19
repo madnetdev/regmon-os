@@ -44,14 +44,14 @@ function SendEmail(string $EmailTo, string $Subject, string $Message):string {
 	}
 	$mail->Port       = $CE['Port']; 	 // set the SMTP port for the server (25, 465 or 587)
 	$mail->Username   = $CE['Username']; // SMTP account username
-	$mail->Password   = $CE['Password']; // SMTP account password
+	$mail->Password   = Decrypt_String($CE['Password']); // SMTP account password
 	$mail->CharSet 	  = 'utf-8';
 	$mail->SetFrom($CE['From_Email'], $CE['From_Name']);
 	if ($CE['Reply_Email'] != '') {
 		$mail->AddReplyTo($CE['Reply_Email'], $CE['Reply_Name']);
 	}
 
-	//$EmailTo can be an array comma seperated
+	//$EmailTo can be an array comma separated
 	//$mail->AddAddress($EmailTo);
 	array_map(array($mail, 'AddAddress'), explode(',', $EmailTo));
 

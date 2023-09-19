@@ -60,4 +60,12 @@ function verify_Secret(string $secret_hashed, string $secret, string $pepper) {
 	return false;
 }
 
+//Encrypt/Decrypt ###########################
+function Encrypt_String(string $string):mixed {
+	return openssl_encrypt($string, "AES-128-ECB", "REGmon");
+}
+function Decrypt_String(string $encrypted_string):mixed {
+	return openssl_decrypt($encrypted_string, "AES-128-ECB", "REGmon");
+}
+
 ?>

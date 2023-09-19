@@ -1,13 +1,5 @@
 <?php // Config functions
 
-//Encrypt/Decrypt ###########################
-function Encrypt_String(string $string):mixed {
-	return openssl_encrypt($string, "AES-128-ECB", "REGmon");
-}
-function Decrypt_String(string $encrypted_string):mixed {
-	return openssl_decrypt($encrypted_string, "AES-128-ECB", "REGmon");
-}
-
 function Generate_Secret_Key(int $length = 64, bool $special_chars = true, bool $extra_special_chars = false):string {
 	$chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 	if ($special_chars) {
