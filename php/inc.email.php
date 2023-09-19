@@ -44,7 +44,7 @@ function SendEmail(string $EmailTo, string $Subject, string $Message):string {
 	}
 	$mail->Port       = $CE['Port']; 	 // set the SMTP port for the server (25, 465 or 587)
 	$mail->Username   = $CE['Username']; // SMTP account username
-	$mail->Password   = Decrypt_String($CE['Password']); // SMTP account password
+	$mail->Password   = Decrypt_String($CE['Password']).''; // SMTP account password
 	$mail->CharSet 	  = 'utf-8';
 	$mail->SetFrom($CE['From_Email'], $CE['From_Name']);
 	if ($CE['Reply_Email'] != '') {
