@@ -73,7 +73,7 @@ switch ($action) {
 		}
 		if ($values['private_key'] != '') {
 			//check pass < 8 chars
-			if (strlen($values['private_key']) < 8) {
+			if (strlen($values['private_key'].'') < 8) {
 				echo $LANG->WARN_PRIVATE_KEY_CHARS;
 				exit;
 			}

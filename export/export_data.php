@@ -340,7 +340,7 @@ foreach ($Forms_Data_ordered_arr as $Forms_Data_row) {
 
 
 
-// get comments from calendar
+// get comments
 $where_Comments_Data = "WHERE 1 ". $where_Forms_Data__Groups . $where_Forms_Data__Dates . $where_Forms_Data__Users;
 $comments_data_rows = array();
 $comments_data = $db->fetch("SELECT user_id, group_id, `name`, isAllDay, timestamp_start, timestamp_end, modified 
