@@ -18,7 +18,7 @@ switch ($action) {
 			'Host' => $_POST['Host'] ?? '',
 			'Port' => $_POST['Port'] ?? '',
 			'Username' => $_POST['Username'] ?? '',
-			'Password' => $_POST['Password'] ?? '',
+			'Password' => Encrypt_String($_POST['Password'] ?? ''),
 			'From_Name' => $_POST['From_Name'] ?? '',
 			'From_Email' => $_POST['From_Email'] ?? '',
 			'Reply_Name' => $_POST['Reply_Name'] ?? '',

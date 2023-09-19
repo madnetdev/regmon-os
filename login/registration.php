@@ -106,7 +106,10 @@ WHERE gr.status = 3 AND gr.private_key = ?", array($_POST['private_key']));
 	$values['last_ip'] = '';
 	$values['modified'] = get_date_time_SQL('now');
 	$values['created'] = get_date_time_SQL('now');
-	$activate_code = MD5($values['account'].$values['uname'].$values['passwd']);
+
+	//$activate_code = MD5($values['account'].$values['uname'].$values['passwd']);
+	$activate_code = hash_Secret($CONFIG['SEC_Encrypt_Secret'] . $values['account'] . $values['uname'] . $values['passwd'], $CONFIG['SEC_Encrypt_Secret']);
+
 	
 	//check if we have a new sport to activate
 	$values['sport'] = '';

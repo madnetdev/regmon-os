@@ -17,8 +17,11 @@ if ($db->numberRows() > 0)  {
 		$message = $LANG->REGISTER_ACTIVATE_READY;
 	}
 	else {
-		$activate_code = MD5($user['account'].$user['uname'].$user['passwd']);
-		if ($activate_code == $code) {
+		//$activate_code = MD5($user['account'].$user['uname'].$user['passwd']);
+		$activate_code = $CONFIG['SEC_Encrypt_Secret'] . $user['account'] . $user['uname'] . $user['passwd'];
+
+		//if ($activate_code == $code) {
+		if (verify_Secret($code, $activate_code, $CONFIG['SEC_Encrypt_Secret'])) {
 			$message = $LANG->REGISTER_ACTIVATE_OK; 
 			$values = array();
 			$values['status'] = '1';
@@ -77,7 +80,7 @@ require($PATH_2_ROOT.'php/inc.html_head.php');
 <div class="container">
 	<div class="row">
         <div class="col-md-12" style="text-align:center; padding-top:80px;">
-         	<h1 style="color:#333"><?=$LANG->REGISTER;?>!</h1>
+			<h1 style="color:#333"><?=$LANG->REGISTER;?>!</h1>
 			<h3 style="color: #6C3"><?=$message;?></h3>
         </div>
 	</div>
