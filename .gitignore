@@ -69,6 +69,7 @@ Thumbs.db
 
 # track these files, if they exist
 !.gitignore
+!.dockerignore
 !.stylelintrc.json
 !.browserslistrc
 !.eslintrc.js
