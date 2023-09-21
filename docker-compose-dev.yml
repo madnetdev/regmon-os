@@ -20,8 +20,8 @@ services:
       - internal
     volumes:
       - .:/var/www/public
-      - lib_data:/var/www/public/vendor/
-      - lib_data:/var/www/public/node_modules/
+      - lib_vendor_data:/var/www/public/vendor/
+      - lib_node_data:/var/www/public/node_modules/
 
   db:
     image: mysql:5.7
@@ -53,7 +53,9 @@ services:
 volumes:
   mysql_data:
     driver: local
-  lib_data:
+  lib_vendor_data:
+    driver: local
+  lib_node_data:
     driver: local
 
 networks:
