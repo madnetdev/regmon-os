@@ -163,10 +163,10 @@ if ($POST_date_to != '') {
 
 //Forms
 if (count($POST_forms)) {
-	$has_comments = false;
-	if (in_array($LANG->NOTE, $POST_forms)) {
+	$has_Notes = false;
+	if (in_array('Note', $POST_forms)) {
 		unset($POST_forms[0]);
-		$has_comments = true;
+		$has_Notes = true;
 	}
 
 	$Forms_available_ids = '';
@@ -196,7 +196,7 @@ if (count($POST_forms)) {
 		}
 		$Forms_selected .= "'".$forms_arr[$form_id]."'";
 	}
-	if ($has_comments) {
+	if ($has_Notes) {
 		$Forms_selected = "'".$LANG->NOTE."'" . ($Forms_selected != '' ? ', ' : '') . $Forms_selected;
 	}
 }
@@ -239,14 +239,17 @@ if ($users_ids != '') //##################################################
 // Categories ###################################
 // make the view order
 $category_forms_ordered = array();
+$Forms_Data_ordered_arr = array();
 //$category_forms_ordered[$row['form_id']] = array($row['form_id'], $row['name'], $row['data_names'], $order); //informatics
 $order = 0;
 
 
 //comments
-$category_forms_ordered['0'] = array('0', $LANG->NOTE, '{"1":["'.$LANG->NOTE.'","_Text"],"2":["'.$LANG->NOTE_PERIOD.'","_Number"]}', $order);
-$Forms_Data_ordered_arr = array(array(0,$LANG->NOTE,'{"1":["'.$LANG->NOTE.'","_Text"],"2":["'.$LANG->NOTE_PERIOD.'","_Number"]}','{"1":"'.$LANG->NOTE.'","2":"'.$LANG->NOTE_PERIOD.'"}'));
-$order++;
+if ($has_Notes) {
+	$category_forms_ordered['0'] = array('0', $LANG->NOTE, '{"1":["'.$LANG->NOTE.'","_Text"],"2":["'.$LANG->NOTE_PERIOD.'","_Number"]}', $order);
+	$Forms_Data_ordered_arr = array(array(0,$LANG->NOTE,'{"1":["'.$LANG->NOTE.'","_Text"],"2":["'.$LANG->NOTE_PERIOD.'","_Number"]}','{"1":"'.$LANG->NOTE.'","2":"'.$LANG->NOTE_PERIOD.'"}'));
+	$order++;
+}
 
 
 //build Forms Categories #################################
@@ -395,14 +398,22 @@ $forms_data_rows = $db->fetch("SELECT *
 FROM forms_data 
 $where_Forms_Data AND status = 1 AND form_id > 0 AND res_json != '[]' 
 ORDER BY user_id, group_id, timestamp_start", array());
-if ($db->numberRows() > 0)  {
+if ($db->numberRows() > 0 OR $has_Notes)  {
 	$date_num = 0;
 	$date_last = 0;
 	$uid_last = 0;
 	$gid_last = 0;
 
-	//$all_data_rows = $comments_data_rows + $forms_data_rows; //merge arrays -not work if not diff keys
-	$all_data_rows = array_merge($comments_data_rows, $forms_data_rows);; //merge arrays
+	if (count($forms_data_rows) AND $has_Notes) {
+		//merge arrays
+		$all_data_rows = array_merge($comments_data_rows, $forms_data_rows);
+	}
+	elseif ($has_Notes) {
+		$all_data_rows = $comments_data_rows;
+	}
+	else {
+		$all_data_rows = $forms_data_rows;
+	}
 
 	//sort by user, group_id, timestamp_start
 	usort($all_data_rows, function($a, $b) {
@@ -576,7 +587,6 @@ else {
 	$no_data = true;
 }
 //######################################################################
-
 if ($no_data) {
 	$Data_Table_HTML = '
 	<div class="container">
