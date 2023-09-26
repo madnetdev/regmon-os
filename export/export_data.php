@@ -162,24 +162,31 @@ if ($POST_date_to != '') {
 
 
 //Forms
+$has_Notes = false;
 if (count($POST_forms)) {
-	$has_Notes = false;
 	if (in_array('Note', $POST_forms)) {
 		unset($POST_forms[0]);
 		$has_Notes = true;
 	}
 
 	$Forms_available_ids = '';
-	foreach($POST_forms as $form_id) {
-		if ($Forms_available_ids != '') {
-			$Forms_available_ids .= ', ';
+	if (count($POST_forms)) {
+		foreach($POST_forms as $form_id) {
+			if ($Forms_available_ids != '') {
+				$Forms_available_ids .= ', ';
+			}
+			$Forms_available_ids .= (int)$form_id;
 		}
-		$Forms_available_ids .= (int)$form_id;
 	}
+
+	if ($Forms_available_ids == '') {
+		$Forms_available_ids = '0'; //we give 0 so it finds nothing
+	}
+
 	$where_Forms_Data__Forms = " AND form_id IN (".$Forms_available_ids.")";
+	$where_forms = " AND id IN (".$Forms_available_ids.")";
 
 	$forms_arr = array();
-	$where_forms = " AND id IN (".$Forms_available_ids.")";
 
 	//TODO: maybe we need all forms for export even disabled if they have data
 	$forms_rows = $db->fetch("SELECT id, name FROM forms WHERE status = 1 $where_forms", array());
@@ -190,11 +197,13 @@ if (count($POST_forms)) {
 	}
 	//get selected forms text
 	$Forms_selected = '';
-	foreach ($POST_forms as $form_id) {
-		if ($Forms_selected != '') {
-			$Forms_selected .= ', ';
+	if (count($POST_forms)) {
+		foreach ($POST_forms as $form_id) {
+			if ($Forms_selected != '') {
+				$Forms_selected .= ', ';
+			}
+			$Forms_selected .= "'".($forms_arr[$form_id] ?? '')."'";
 		}
-		$Forms_selected .= "'".$forms_arr[$form_id]."'";
 	}
 	if ($has_Notes) {
 		$Forms_selected = "'".$LANG->NOTE."'" . ($Forms_selected != '' ? ', ' : '') . $Forms_selected;
@@ -300,6 +309,7 @@ ksort($Forms_Data_ordered_arr);
 $data_header_form = '';
 $data_header = '';
 $data_rows = '';
+$forms_data_empty = array();
 
 // get header data -field names
 foreach ($Forms_Data_ordered_arr as $Forms_Data_row) {
@@ -493,7 +503,7 @@ if ($db->numberRows() > 0 OR $has_Notes)  {
 				}
 			}
 			else {
-				$form_data_columns .= $forms_data_empty[$form_id];
+				$form_data_columns .= $forms_data_empty[$form_id] ?? '';
 			}
 			//+1
 			$form_data_columns .= '<td class="forms_separator"></td>';
