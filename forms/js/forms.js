@@ -227,6 +227,8 @@ $('form#wrapped').on('submit', function(e){
 		post_data += '&category_id=' + $('#category_id').val();
 		post_data += '&group_id=' + $('#group_id').val();
 		post_data += '&athlete_id=' + $('#athlete_id').val();
+		post_data += '&change=' + $('#change').val();
+		post_data += '&change_id=' + $('#change_id').val();
 		
 		$.post('forms/ajax.form_data_save.php', post_data, function (data, result) {
 			

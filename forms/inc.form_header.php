@@ -169,8 +169,8 @@ var V_ANSWERED = [];
 		<input name="form_json_names" type="hidden" value="">
 	<?php } ?>
 	<?php if ($CHANGE AND $FORM_DATA) { ?>
-		<input name="change" type="hidden" value="true">
-		<input name="change_id" type="hidden" value="<?=$FORM_DATA['id'].'';?>">
+		<input name="change" id="change"type="hidden" value="true">
+		<input name="change_id" id="change_id"type="hidden" value="<?=$FORM_DATA['id'].'';?>">
 	<?php } ?>
 	</form>
 
