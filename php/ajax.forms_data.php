@@ -103,6 +103,14 @@ switch ($action) {
 					if ($row['timestamp_end'] != '' AND $row['timestamp_start'] != $row['timestamp_end']) {
 						$date_time_end = $row['timestamp_end'];
 					}
+
+					$has_write_permissions = false;
+					if ($athlete_id == $UID OR 
+						($trainer_view AND in_array($row['category_id'].'_'.$row['form_id'], $trainer_write_arr))) 
+					{
+						$has_write_permissions = true;
+					}
+
 					$response[$i] = $response[$i]['cell'] = array(
 						"id" => $row['id'],
 						"title" => $forms_names[$row['form_id']]['name'],
@@ -112,23 +120,24 @@ switch ($action) {
 						"color" => $categories_colors[$row['category_id']]['color'],
 						"msg" => ''.
 						'<div style="text-align:center; font-size:0.9em; margin:0 5px;">'.
-							//deactivate form_data entry
-							'<button id="forms_data_deactivate_'.$row['id'].'" type="button" class="bttn" style="padding:3px 10px; width:190px;">'.$LANG->INDEX_DEACTIVATE_RECORD.' &nbsp; <i class="fa fa-eye-slash" style="font-size:16px;"></i></button>'.
-							//activate form_data entry
-							'<button id="forms_data_activate_'.$row['id'].'" type="button" class="bttn" style="padding:3px 10px; width:190px;">'.$LANG->INDEX_ACTIVATE_RECORD.' &nbsp; <i class="fa fa-eye" style="font-size:16px;"></i></button>'.
-							//edit form --if can
-							(($athlete_id == $UID OR ($trainer_view AND in_array($row['category_id'].'_'.$row['form_id'],$trainer_write_arr)))?
+							//edit form + deactivate/activate form_data entry --if can
+							($has_write_permissions?
+								//deactivate form_data entry
+								'<button id="forms_data_deactivate_'.$row['id'].'" type="button" class="bttn" style="padding:3px 10px; width:190px;">'.$LANG->INDEX_DEACTIVATE_RECORD.' &nbsp; <i class="fa fa-eye-slash" style="font-size:16px;"></i></button>'.
+								//activate form_data entry
+								'<button id="forms_data_activate_'.$row['id'].'" type="button" class="bttn" style="padding:3px 10px; width:190px;">'.$LANG->INDEX_ACTIVATE_RECORD.' &nbsp; <i class="fa fa-eye" style="font-size:16px;"></i></button>'.
+								//edit form 
 								'<br>'.
-								'<button id="Cal_Edit_'.$row['id'].'" type="button" class="bttn fancybox fancybox.iframe" href="form.php?change=true&id='.$row['form_id'].'&cat_id='.$row['category_id'].'&from_data_id='.$row['id'].'&group_id='.$row['group_id'].'&athlete_id='.$athlete_id.'" style="margin-top:10px; padding:3px 10px; width:190px;">'.$LANG->INDEX_EDIT_RECORD.'&nbsp; &nbsp;<i class="fa fa-edit" style="font-size:16px;"></i></button>'
+								'<button id="Cal_Edit_'.$row['id'].'" type="button" class="bttn fancybox fancybox.iframe" href="form.php?change=true&id='.$row['form_id'].'&cat_id='.$row['category_id'].'&from_data_id='.$row['id'].'&group_id='.$row['group_id'].'&athlete_id='.$athlete_id.'" style="margin-top:10px; padding:3px 10px; width:190px;">'.$LANG->INDEX_EDIT_RECORD.'&nbsp; &nbsp;<i class="fa fa-edit" style="font-size:16px;"></i></button>'.
+								'<br>'
 							:'').
 							//view form
-							'<br>'.
 							'<button id="Cal_Res_'.$row['id'].'" type="button" class="bttn fancybox fancybox.iframe" href="form.php?view=true&id='.$row['form_id'].'&cat_id='.$row['category_id'].'&from_data_id='.$row['id'].'&group_id='.$row['group_id'].'&athlete_id='.$athlete_id.'" style="margin-top:10px; padding:3px 10px; width:190px;">'.$LANG->INDEX_VIEW_RECORD.' &nbsp; &nbsp;<i class="fa fa-bar-chart fa-rotate-90" style="font-size:14px;"></i></button>'.
 							//view results
 							'<br>'.
 							'<button id="Cal_Res_Sub_'.$row['id'].'" type="button" class="bttn fancybox fancybox.iframe" href="forms_results.php?athlete_id='.$athlete_id.'&id='.$row['form_id'].'&cat_id='.$row['category_id'].'&timestamp='.(strtotime($row['timestamp_start']) + 30*60).'&iframe'.$sec.'" style="margin-top:10px; padding:3px 10px; width:190px;">'.$LANG->INDEX_VIEW_RESULTS.' &nbsp; &nbsp;<i class="fa fa-bar-chart" style="font-size:16px;"></i></button>'.
 							//delete form.save --if can
-							(($athlete_id == $UID OR ($trainer_view AND in_array($row['category_id'].'_'.$row['form_id'],$trainer_write_arr)))?
+							($has_write_permissions?
 								'<br>'.
 								'<button id="Cal_Res_Del_'.$row['id'].'" type="button" class="bttnR" style="margin-top:10px; padding:3px 10px; width:190px;">'.$LANG->INDEX_DELETE_RECORD.' &nbsp; <i class="fa fa-trash-o" style="font-size:16px;"></i></button>'
 							:'').
