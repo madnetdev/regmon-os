@@ -11,8 +11,8 @@ if (isset($_POST['group_id']) AND isset($_POST['forms_select']))
 	//we get only the "on" = selected items 
 
 	//new format = category_form
-	//sel_g_1_c_1_4=on&sel_g_1_c_2_5=on  //select
-	//std_g_1_c_1_4=on&std_g_1_c_2_5=on  //standard
+	//sel_g_1_c_1_4=on&sel_g_1_c_2_5=on  //select   - read
+	//std_g_1_c_1_4=on&std_g_1_c_2_5=on  //standard - write
 	
 	//we replace default strings so it will remain only the "category_form" ex. 1_4,2_5
 	/** @var string $forms_select */

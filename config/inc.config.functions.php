@@ -409,10 +409,10 @@ function get_Extra_Users2Trainers_Init_SQL(string $datetime):string {
 	return "".
 		// users2trainers
 		"INSERT INTO users2trainers (id, user_id, group_id, trainer_id, forms_select_read, forms_select_write, status, created, created_by, modified, modified_by) VALUES ".
-		"(1, 6, 1, 5, '3_4,Note_n', '3_5', 1, '".$datetime."', 'Auto_Init', '".$datetime."', 'Auto_Init'),".
+		"(1, 6, 1, 5, 'Note_n,3_4,3_5', '3_5', 1, '".$datetime."', 'Auto_Init', '".$datetime."', 'Auto_Init'),".
 		"(2, 6, 2, 5, '3_4', NULL, 1, '".$datetime."', 'Auto_Init', '".$datetime."', 'Auto_Init'),".
 		"(3, 7, 1, 5, '3_4,3_5', NULL, 1, '".$datetime."', 'Auto_Init', '".$datetime."', 'Auto_Init'),".
-		"(4, 7, 2, 5, NULL, '3_4,3_5', 1, '".$datetime."', 'Auto_Init', '".$datetime."', 'Auto_Init');";
+		"(4, 7, 2, 5, '3_4,3_5', '3_4,3_5', 1, '".$datetime."', 'Auto_Init', '".$datetime."', 'Auto_Init');";
 }
 
 function get_Extra_DropdownsSample_Init_SQL(string $datetime):string {

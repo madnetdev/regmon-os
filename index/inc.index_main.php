@@ -249,12 +249,12 @@ $DIS2 = ' display:none;';
 								</div>
 							</div>
 		<?php  	} //end if ($ATHLETE) { //only Athletes 
-		  		if ($ADMIN OR $LOCATION_ADMIN OR $GROUP_ADMIN OR $GROUP_ADMIN_2) {
-				  	if (!$ADMIN AND !$THIS_LOCATION_ADMIN AND !$THIS_GROUP_ADMIN AND !$THIS_GROUP_ADMIN_2) {
+				if ($ADMIN OR $LOCATION_ADMIN OR $GROUP_ADMIN OR $GROUP_ADMIN_2) {
+					if (!$ADMIN AND !$THIS_LOCATION_ADMIN AND !$THIS_GROUP_ADMIN AND !$THIS_GROUP_ADMIN_2) {
 						$dis_panel = true;
 					} else $dis_panel = false;
 					//new only when 'this' admin can see that 
-				  	if ($ADMIN OR $THIS_LOCATION_ADMIN OR $THIS_GROUP_ADMIN OR $THIS_GROUP_ADMIN_2) {
+					if ($ADMIN OR $THIS_LOCATION_ADMIN OR $THIS_GROUP_ADMIN OR $THIS_GROUP_ADMIN_2) {
 		?>
 							<?php /*######## Group_Forms_Select ###################################*/?>
 							<div class="panel panel-default" style="margin-top:-1px;<?=($dis_panel?$DIS2:'');?>">
@@ -314,7 +314,7 @@ $DIS2 = ' display:none;';
 							</div>
 		<?php  		} //end if $ADMIN OR $THIS_LOCATION_ADMIN OR $THIS_GROUP_ADMIN OR $THIS_GROUP_ADMIN_2
 		  		} //end if ($ADMIN OR $LOCATION_ADMIN OR $GROUP_ADMIN OR $GROUP_ADMIN_2)
-		  		if ($ADMIN OR $LOCATION_ADMIN OR $GROUP_ADMIN OR $GROUP_ADMIN_2) {
+				if ($ADMIN OR $LOCATION_ADMIN OR $GROUP_ADMIN OR $GROUP_ADMIN_2) {
 		?>
 							<?php /*Location Groups*/?>
 							<div class="panel panel-default">
