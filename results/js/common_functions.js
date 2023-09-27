@@ -1227,10 +1227,14 @@ function USED_DATA__Athlete_Form_Field__Add(ath_id, form_id, form_field_name, fo
 
 function Formula__Get_Max_Number(form_group_id) {
 	Debug2('      4.Calc.Num.', '-', get_Function_Name(), '-', [...arguments]);
-	
+
 	let max = null;
 	$('#div-ATHLETE-FORM_' + form_group_id + ' .calc').each(function () {
-		const calc_id = parseInt($(this).attr('id').split('_')[5]);
+		//fs-ATHLETE-FORM-FIELD_calc_6_6_1 or fs-ATHLETE-FORM-FIELD_calc_6_6_S1_1 for template
+		//we need to get the last element in array
+		const element_array = $(this).attr('id').split('_');
+		const last_element_index = element_array.length - 1;
+		const calc_id = parseInt(element_array[last_element_index]);
 		max = (calc_id > max) ? calc_id : max;
 	});
 	return max;
