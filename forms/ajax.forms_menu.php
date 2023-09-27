@@ -319,12 +319,12 @@ if ($db->numberRows() > 0)  {
 }
 
 
-//add Comment button
+//add Note button
 if ($box AND !$trainer_view) {
-	echo '<button type="button" id="addComment_Menu" class="bttn" style="padding:5px 10px; width:100%; border:1px #ccc solid;">'.$LANG->FORM_MENU_COMMENT_ADD.' &nbsp; &nbsp;<i class="fa fa-commenting" style="font-size:17px; vertical-align:bottom;"></i></button>';
+	echo '<button type="button" id="addNote_Menu" class="bttn" style="padding:5px 10px; width:100%; border:1px #ccc solid;">'.$LANG->FORM_MENU_NOTE_ADD.' &nbsp; &nbsp;<i class="fa fa-commenting" style="font-size:17px; vertical-align:bottom;"></i></button>';
 }
 
-//Trainers see/change Comments 
+//Trainers see/change Notes 
 //echo 'trainer:'.$trainer.'view:'.$trainer_view;
 if ($trainer OR $trainer_view) {
 	$t_html = '';
@@ -344,8 +344,8 @@ if ($trainer OR $trainer_view) {
 				'<div style="padding:0 5px 10px;">'.
 					'<table style="width:100%;"><tbody><tr>'.
 						'<td>'.
-							'<a href="javascript:void(0)"'.(($trainer_view && $box)?' id="addComment_Trainer"':'').'>'.
-								'<span class="form_name">'.$LANG->FORM_MENU_COMMENT.'</span>'.
+							'<a href="javascript:void(0)"'.(($trainer_view && $box)?' id="addNote_Trainer"':'').'>'.
+								'<span class="form_name">'.$LANG->FORM_MENU_NOTE.'</span>'.
 							'</a>'.
 						'</td>'.
 						'<td style="width:70px; padding-left:2px;">'.
@@ -437,16 +437,16 @@ V_TRAINER_W_PERMS = ['All'];
 <?php if (!$select AND !$trainer AND !$edit) { 
 //TODO: check - this changes in every Athlete change, but it only has to do with main user 
 ?>
-V_CATEGORIES_FORMS_OPTIONS = '<option value="Note_n" style="background:#aaaaaa;"><?=$LANG->FORM_MENU_COMMENT;?></option><?=buildCategory_Html(0, $collapse_id_prefix, 1, true);?>';
+V_CATEGORIES_FORMS_OPTIONS = '<option value="Note_n" style="background:#aaaaaa;"><?=$LANG->FORM_MENU_NOTE;?></option><?=buildCategory_Html(0, $collapse_id_prefix, 1, true);?>';
 <?php } ?>
 
 jQuery(function() {
 	if (typeof fancyBoxDefaults_iframe !== "undefined") {
 		$("a.calendar_menu_box").fancybox(fancyBoxDefaults_iframe);
-		$('#addComment_Menu, #addComment_Trainer').on('click',function() {
+		$('#addNote_Menu, #addNote_Trainer').on('click',function() {
 			if (V_TRAINER_W_PERMS.indexOf('All') != -1 || V_TRAINER_W_PERMS.indexOf('Note_n') != -1) {
-				$.fancybox($("#create_comment"), $.extend({},fancyBoxDefaults,{minWidth: 300}));
-				init_Comments_Create('Menu_Button');
+				$.fancybox($("#create_Note"), $.extend({},fancyBoxDefaults,{minWidth: 300}));
+				init_Notes_Create('Menu_Button');
 			}
 		});
 	<?php if ($box AND $athlete_id == $UID) { ?>

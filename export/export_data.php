@@ -253,7 +253,7 @@ $Forms_Data_ordered_arr = array();
 $order = 0;
 
 
-//comments
+//notes
 if ($has_Notes) {
 	$category_forms_ordered['0'] = array('0', $LANG->NOTE, '{"1":["'.$LANG->NOTE.'","_Text"],"2":["'.$LANG->NOTE_PERIOD.'","_Number"]}', $order);
 	$Forms_Data_ordered_arr = array(array(0,$LANG->NOTE,'{"1":["'.$LANG->NOTE.'","_Text"],"2":["'.$LANG->NOTE_PERIOD.'","_Number"]}','{"1":"'.$LANG->NOTE.'","2":"'.$LANG->NOTE_PERIOD.'"}'));
@@ -353,17 +353,17 @@ foreach ($Forms_Data_ordered_arr as $Forms_Data_row) {
 
 
 
-// get comments
-$where_Comments_Data = "WHERE 1 ". $where_Forms_Data__Groups . $where_Forms_Data__Dates . $where_Forms_Data__Users;
-$comments_data_rows = array();
-$comments_data = $db->fetch("SELECT user_id, group_id, `name`, isAllDay, timestamp_start, timestamp_end, modified 
-FROM comments 
-$where_Comments_Data AND showInGraph = 1 
+// get notes
+$where_Notes_Data = "WHERE 1 ". $where_Forms_Data__Groups . $where_Forms_Data__Dates . $where_Forms_Data__Users;
+$Notes_data_rows = array();
+$Notes_data = $db->fetch("SELECT user_id, group_id, `name`, isAllDay, timestamp_start, timestamp_end, modified 
+FROM notes 
+$where_Notes_Data AND showInGraph = 1 
 ORDER BY user_id, group_id, timestamp_start", array());
 if ($db->numberRows() > 0)  {
-	foreach ($comments_data as $comment) {
+	foreach ($Notes_data as $Note) {
 		if ($TRAINER) {
-			if (!in_array('Note_n', (array)$Trainer_Forms_Read_Permissions_arr[$comment['user_id']])) {
+			if (!in_array('Note_n', (array)$Trainer_Forms_Read_Permissions_arr[$Note['user_id']])) {
 				//if trainer not have read form permissions
 				continue;
 			}
@@ -371,33 +371,33 @@ if ($db->numberRows() > 0)  {
 		
 		//FIXES ########################################
 		//calendar want full day if allDay:true --if same date and diff times it will not shown in calendar
-		$start = get_date_time_SQL($comment['timestamp_start']);
-		$end = get_date_time_SQL($comment['timestamp_end']);
-		if ($comment['isAllDay']=='1') {
-			if ($comment['timestamp_end'] == '') { //if we not have timestamp_end --old comments
-				$start_tmp = explode(' ', $comment['timestamp_start']??'');
-				$comment['timestamp_end'] = $start_tmp[0].' 23:59:59';
+		$start = get_date_time_SQL($Note['timestamp_start']);
+		$end = get_date_time_SQL($Note['timestamp_end']);
+		if ($Note['isAllDay']=='1') {
+			if ($Note['timestamp_end'] == '') { //if we not have timestamp_end --old notes
+				$start_tmp = explode(' ', $Note['timestamp_start']??'');
+				$Note['timestamp_end'] = $start_tmp[0].' 23:59:59';
 			} 
-			$end = date("Y-m-d H:i:s", strtotime($comment['timestamp_end']) + 1); //end + 1sec bcz is 23:59:59
+			$end = date("Y-m-d H:i:s", strtotime($Note['timestamp_end']) + 1); //end + 1sec bcz is 23:59:59
 		}
 		else {
-			if ($comment['timestamp_end'] == '') { //if we not have timestamp_end --old comments
-				$end = date("Y-m-d H:i:s", (strtotime($comment['timestamp_start']) + (60*60))); //new +60mins
+			if ($Note['timestamp_end'] == '') { //if we not have timestamp_end --old notes
+				$end = date("Y-m-d H:i:s", (strtotime($Note['timestamp_start']) + (60*60))); //new +60mins
 			}
 		}
 		$diff = round((strtotime($end) - strtotime($start)) / 60);
 		//FIXES ########################################
 		
-		$res_json = '{"1":"'.$comment['name'].'","2":"'.$diff.'"}';
+		$res_json = '{"1":"'.$Note['name'].'","2":"'.$diff.'"}';
 		
-		$comments_data_rows[] = array(
-			'user_id' => $comment['user_id'],
+		$Notes_data_rows[] = array(
+			'user_id' => $Note['user_id'],
 			'form_id' => 'n',
 			'category_id' => 'Note',
-			'group_id' => $comment['group_id'],
+			'group_id' => $Note['group_id'],
 			'res_json' => $res_json,
-			'timestamp_start' => $comment['timestamp_start'],
-			'modified' => $comment['modified']
+			'timestamp_start' => $Note['timestamp_start'],
+			'modified' => $Note['modified']
 		);
 	}
 }
@@ -416,10 +416,10 @@ if ($db->numberRows() > 0 OR $has_Notes)  {
 
 	if (count($forms_data_rows) AND $has_Notes) {
 		//merge arrays
-		$all_data_rows = array_merge($comments_data_rows, $forms_data_rows);
+		$all_data_rows = array_merge($Notes_data_rows, $forms_data_rows);
 	}
 	elseif ($has_Notes) {
-		$all_data_rows = $comments_data_rows;
+		$all_data_rows = $Notes_data_rows;
 	}
 	else {
 		$all_data_rows = $forms_data_rows;
@@ -438,7 +438,7 @@ if ($db->numberRows() > 0 OR $has_Notes)  {
 		}
 	});
 	//echo "<pre>";print_r($forms_data_rows);echo "</pre>";
-	//echo "<pre>";print_r($comments_data_rows);echo "</pre>";
+	//echo "<pre>";print_r($Notes_data_rows);echo "</pre>";
 	//echo "<pre>";print_r($all_data_rows);echo "</pre>";
 
 	foreach ($all_data_rows as $data_row) {

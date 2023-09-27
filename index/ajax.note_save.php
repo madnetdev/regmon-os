@@ -1,4 +1,4 @@
-<?php // ajax Comment Save
+<?php // ajax Note Save
 $PATH_2_ROOT = '../';
 require_once($PATH_2_ROOT.'_settings.regmon.php');
 require($PATH_2_ROOT.'login/validate.php');
@@ -12,7 +12,7 @@ $t_date_end 	= $_POST['t_date_end'] ?? get_date_SQL('now');
 $t_time_start	= $_POST['t_time_start'] ?? date("H:i");
 $t_time_end 	= $_POST['t_time_end'] ?? date("H:i");
 $t_title 		= $_POST['t_title'] ?? '';
-$t_comment 		= $_POST['t_comment'] ?? '';
+$t_note 		= $_POST['t_note'] ?? '';
 $t_showInGraph 	= isset($_POST['t_showInGraph']) ? $_POST['t_showInGraph'] : 'false';
 $t_color 		= $_POST['t_color'] ?? '#aaaaaa';
 
@@ -26,12 +26,12 @@ if ($t_isAllDay == 'true') {
 
 if ($group_id AND $athlete_id)
 {
-	//count num of comments in calendar in that day
+	//count num of notes in calendar in that day
 	if (!$ID) { //dont check if is update
 		$selected_date_start_day = get_date_SQL($t_date_start);
-		$row = $db->fetchRow("SELECT COUNT(*) AS count FROM comments WHERE user_id = ? AND group_id = ? AND timestamp_start LIKE '$selected_date_start_day%'", array($athlete_id, $group_id));
+		$row = $db->fetchRow("SELECT COUNT(*) AS count FROM notes WHERE user_id = ? AND group_id = ? AND timestamp_start LIKE '$selected_date_start_day%'", array($athlete_id, $group_id));
 		if ($row['count'] >= 3) {
-			//not accept more than 3 comments a day
+			//not accept more than 3 notes a day
 			echo 'ERROR-MAX3';
 			exit;
 		}
@@ -43,17 +43,17 @@ if ($group_id AND $athlete_id)
 	$values['isAllDay'] = ($t_isAllDay=='true' ? 1 : 0);
 	$values['showInGraph'] = ($t_showInGraph=='true' ? 1 : 0);
 	$values['name'] = $t_title;
-	$values['comments'] = $t_comment;
+	$values['notes'] = $t_note;
 	$values['color'] = $t_color;
 	$values['modified'] = get_date_time_SQL('now');
 	$values['timestamp_start'] = $selected_date_start;
 	$values['timestamp_end'] = $selected_date_end;
 	
 	if ($ID) {
-		$save = $db->update($values, "comments", "id=?", array($ID));
+		$save = $db->update($values, "notes", "id=?", array($ID));
 	}
 	else {
-		$save = $db->insert($values, "comments");
+		$save = $db->insert($values, "notes");
 	}
 	
 	if ($save) {

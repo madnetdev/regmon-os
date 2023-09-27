@@ -386,25 +386,25 @@ jQuery(function()
 				}
 			});
 
-			//comments
-			$("button#comment_delete").on('click',function() {
+			//notes
+			$("button#note_delete").on('click',function() {
 				const post_data = {
 					group_id: V_GROUP,
 					athlete_id: V_ATHLETE,
 					ID: event.id
 				};
-				$.post('index/ajax.comment_delete.php', post_data, function(data, result){
+				$.post('index/ajax.note_delete.php', post_data, function(data, result){
 					$('.popover').popover('hide'); //hide all popovers
 					$('#calendar').fullCalendar( 'refetchEvents' );
 				});
 			});
 
-			$("button#comment_edit").on('click', function () {
+			$("button#note_edit").on('click', function () {
 				$('.popover').popover('hide'); //hide all popovers
-				$.fancybox($("#create_comment"), $.extend({}, fancyBoxDefaults, { minWidth: 300 }));
+				$.fancybox($("#create_Note"), $.extend({}, fancyBoxDefaults, { minWidth: 300 }));
 				//console.log(event);
 
-				init_Comments_Edit(event.id, event.allDay, event.showInGraph, event.start._i, event.end._i, event.title, event.text, event.color2);
+				init_Notes_Edit(event.id, event.allDay, event.showInGraph, event.start._i, event.end._i, event.title, event.text, event.color2);
 			});
 		},
 		dayClick: function(date, jsEvent, view) {
@@ -414,13 +414,13 @@ jQuery(function()
 			
 			if (hasWriteAccess()) {
 				if (jsEvent.target.tagName == "TD") { //bcz it opens with a click to popover
-					if (view.name != 'month' && V_SELECTED_DATE.indexOf('T') == -1) { //all-day comment
+					if (view.name != 'month' && V_SELECTED_DATE.indexOf('T') == -1) { //all-day Note
 						if (V_TRAINER_W_PERMS.indexOf('All') != -1 ||
 							V_TRAINER_W_PERMS.indexOf('Note_n') != -1)
 						{
-							$.fancybox($("#create_comment"), $.extend({}, fancyBoxDefaults, { minWidth: 300 }));
+							$.fancybox($("#create_Note"), $.extend({}, fancyBoxDefaults, { minWidth: 300 }));
 							
-							init_Comments_Create('Cal_' + view.name);
+							init_Notes_Create('Cal_' + view.name);
 						}
 						else {
 							$.fancybox('<div class="empty_message">' + LANG.NOT_HAVE_ACCESS_RIGHTS + '</div>', $.extend({}, fancyBoxDefaults, { minWidth: 300, minHeight: 60 }));
@@ -468,7 +468,7 @@ jQuery(function()
 	});	
 	
 
-	//add Comment Button
+	//add Note Button
 	//on mozila have float:left from .fc .fc-toolbar > * > *
 	$("#calendar .fc-toolbar .fc-center h2").after(
 		'<br style="float:none;">' +
@@ -478,22 +478,22 @@ jQuery(function()
 			'<button id="go_to_date" type="button" title="'+LANG.BUTTON_DATUM_TOOLTIP+'" data-toggle="tooltip" data-placement="top" data-container="body" class="input-group-addon fc-button fc-state-default fc-corner-left fc-corner-right" style="height:25px; width:auto; padding:0 5px; border-left:1px solid rgba(0, 0, 0, 0.1);"><i class="fa fa-calendar"></i> '+LANG.BUTTON_DATUM+'</button>'+
 		'</div>' +
 		//border-left: 1px solid rgba(0, 0, 0, 0.1); bcz the .input-group-addon which needed it, zero it
-		//addComment button
-		'<button id="addComment" type="button" title="'+LANG.BUTTON_COMMENT_TOOLTIP+'" data-toggle="tooltip" data-placement="top" data-container="body" class="fc-button fc-state-default fc-corner-left fc-corner-right" style="float:right; height:25px; padding:0 5px;"><i class="fa fa-commenting"></i> '+LANG.BUTTON_COMMENT+'</button>'
+		//addNote button
+		'<button id="addNote" type="button" title="'+LANG.BUTTON_NOTE_TOOLTIP+'" data-toggle="tooltip" data-placement="top" data-container="body" class="fc-button fc-state-default fc-corner-left fc-corner-right" style="float:right; height:25px; padding:0 5px;"><i class="fa fa-commenting"></i> '+LANG.BUTTON_NOTE+'</button>'
 	);
 
-	$('#addComment').hover(function() {
+	$('#addNote').hover(function() {
 		$(this).addClass('fc-state-hover');
 	}, function() {
 		$(this).removeClass('fc-state-hover');
 	});
 
-	$('#addComment').on('click',function() {
+	$('#addNote').on('click',function() {
 		if (V_TRAINER_W_PERMS.indexOf('All') != -1 ||
 			V_TRAINER_W_PERMS.indexOf('Note_n') != -1)
 		{
-			$.fancybox($("#create_comment"), $.extend({},fancyBoxDefaults,{minWidth: 300}));
-			init_Comments_Create('Cal_Button');
+			$.fancybox($("#create_Note"), $.extend({},fancyBoxDefaults,{minWidth: 300}));
+			init_Notes_Create('Cal_Button');
 		}
 		else {
 			$.fancybox(

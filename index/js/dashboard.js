@@ -563,8 +563,8 @@ function initDashboard() {
 			$.cookie('SELECTED_DATE', V_SELECTED_DATE, { path: '/' + V_REGmon_Folder, SameSite:'Lax' });
 			
 			if (dd[0] == 'Note') {
-				$.fancybox($("#create_comment"), $.extend({},fancyBoxDefaults,{minWidth: 300}));
-				init_Comments_Create('Dash_Button');
+				$.fancybox($("#create_Note"), $.extend({},fancyBoxDefaults,{minWidth: 300}));
+				init_Notes_Create('Dash_Button');
 				loading.hide();
 			}
 			else {

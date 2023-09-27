@@ -83,7 +83,7 @@ function get_Groups_select_options_n_ids(int $user_id):mixed {
 	$Groups_available_ids = '';
 	$where_location = '';
 	if (!$ADMIN) {
-		// if not admin get groups only from the current user location_id
+		//if not admin get groups only from the current user location_id
 		//I comment this so users can select groups they has access from any location //MAD
 		//$where_location = 'WHERE location_id = "'.$LOCATION.'"';
 	}

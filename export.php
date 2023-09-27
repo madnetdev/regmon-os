@@ -54,16 +54,16 @@ if ($db->numberRows() > 0)  {
 // get available Forms select options
 $Forms_select_options = get_Available_Forms($UID);
 
-// get available Comments count
-$comments_count = 0;
+// get available notes count
+$Notes_count = 0;
 if ($ATHLETE) { //only for Athletes
-	$comments = $db->fetchRow("SELECT COUNT(*) AS count FROM comments WHERE showInGraph = 1 AND user_id=? ORDER BY timestamp_start", array($UID));
-	$comments_count = $comments['count'];
+	$notes = $db->fetchRow("SELECT COUNT(*) AS count FROM notes WHERE showInGraph = 1 AND user_id=? ORDER BY timestamp_start", array($UID));
+	$Notes_count = $notes['count'];
 }
-$Comments_select_option = '<option value="Note">'.$LANG->NOTE . ($ATHLETE?' ('.$comments_count.')':'').'</option>';
+$Notes_select_option = '<option value="Note">'.$LANG->NOTE . ($ATHLETE?' ('.$Notes_count.')':'').'</option>';
 
-// put comments as first option
-$Forms_select_options = $Comments_select_option . $Forms_select_options;
+// put notes as first option
+$Forms_select_options = $Notes_select_option . $Forms_select_options;
 
 //#####################################################################################
 $title = $LANG->EXPORT_PAGE_TITLE;

@@ -442,7 +442,7 @@ function Select__Athlete_Data__Init(ath_id) { //#####  --only in FORMS_RESULTS
 
 	//make select data options 
 	let data_select = '';
-	let data_select_comments = '';
+	let data_select_Notes = '';
 
 	//loop forms
 	for (const form_id in V_FORMS_DATA[ath_id]) {
@@ -466,7 +466,7 @@ function Select__Athlete_Data__Init(ath_id) { //#####  --only in FORMS_RESULTS
 				}
 			}
 			if (form_id == 'note') {
-				data_select_comments += '<optgroup label="' + V_FORM_id_2_name[form_id] + ' (' + form_data_length + ')">' + data_select_options + '</optgroup>';
+				data_select_Notes += '<optgroup label="' + V_FORM_id_2_name[form_id] + ' (' + form_data_length + ')">' + data_select_options + '</optgroup>';
 			}
 			else {
 				data_select += '<optgroup label="' + V_FORM_id_2_name[form_id] + ' (' + form_data_length + ')">' + data_select_options + '</optgroup>';
@@ -496,7 +496,7 @@ function Select__Athlete_Data__Init(ath_id) { //#####  --only in FORMS_RESULTS
 
 
 	//data select init
-	$('#Select__Athlete_Data_' + ath_id).html(data_select_comments + data_select);
+	$('#Select__Athlete_Data_' + ath_id).html(data_select_Notes + data_select);
 	//http://davidstutz.github.io/bootstrap-multiselect/
 	$("#Select__Athlete_Data_" + ath_id).multiselect({
 		maxHeight: 300,

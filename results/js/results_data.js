@@ -469,7 +469,7 @@ function Fieldset__Athlete__Init(athlete_id, athlete_name) { //#####	 --RESULTS 
 
 	//####### key_form_id may be base_form_id or save_form_id
 	
-	//first the Note/Comments
+	//first the Notes
 	for (let key_form_id in V_FORMS_DATA[athlete_id]) { //forms
 		if (Object.prototype.hasOwnProperty.call(V_FORMS_DATA[athlete_id], key_form_id)) {
 

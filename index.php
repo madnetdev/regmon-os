@@ -193,7 +193,7 @@ var V_ONLINE = true;
 </script>
 <script type="text/javascript" src="forms/js/forms.menu.js<?=$G_VER;?>"></script>
 <script type="text/javascript" src="index/js/fancybox_defaults.js<?=$G_VER;?>"></script>
-<script type="text/javascript" src="index/js/comments.js<?=$G_VER;?>"></script>
+<script type="text/javascript" src="index/js/notes.js<?=$G_VER;?>"></script>
 <script type="text/javascript" src="index/js/options.js<?=$G_VER;?>"></script>
 <script type="text/javascript" src="index/js/index.js<?=$G_VER;?>"></script>
 <script type="text/javascript" src="index/js/sticky_navbar.js<?=$G_VER;?>"></script>
@@ -212,7 +212,7 @@ var V_ONLINE = true;
 
 	<?php require('index/inc.index_main.php');?>
 
-	<?php require('index/inc.comments.php');?>
+	<?php require('index/inc.notes.php');?>
 
 	<?php //require('php/inc.footer.php');?>
 

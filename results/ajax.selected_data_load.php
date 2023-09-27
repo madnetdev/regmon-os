@@ -35,7 +35,7 @@ foreach ($data_ids_arr as $form_field) {
 		$selected_SAVES_arr[] = $save_id;
 		$FORMS_DO['saves'][$base_form_id][] = $save_id;
 	}
-	elseif ($base_form_id == 'note') { //comments
+	elseif ($base_form_id == 'note') { //notes
 		$FORMS_DO[$base_form_id][] = $field_id;
 	}
 	else { //form field
@@ -117,10 +117,10 @@ $forms_n_fields = array();
 $series = array();
 
 
-//comments from calendar #################################################
+//notes from calendar #################################################
 if (isset($FORMS_DO['note'])) {
-	$comments = $db->fetch("SELECT * 
-FROM comments 
+	$notes = $db->fetch("SELECT * 
+FROM notes 
 WHERE showInGraph = 1 AND CONCAT(group_id,'_',user_id) IN ($athletes_ids) 
 AND timestamp_start >= '$date_from' AND timestamp_start <= '$date_to' 
 ORDER BY user_id, timestamp_start", array());
@@ -129,23 +129,23 @@ ORDER BY user_id, timestamp_start", array());
 		$form_id_2_name[$form_id] = $LANG->NOTE;
 		$forms_n_fields[$form_id] = array($LANG->NOTE, array(), array()); //add form and init arrays + form name
 		
-		foreach ($comments as $comment) {
-			$user_id = $comment['user_id'];
+		foreach ($notes as $note) {
+			$user_id = $note['user_id'];
 			
 			//FIXES ########################################
 			//calendar want full day if allDay:true --if same date and diff times not show in calendar
-			$start = get_date_time_SQL($comment['timestamp_start']);
-			$end = get_date_time_SQL($comment['timestamp_end']);
-			if ($comment['isAllDay']=='1') {
-				if ($comment['timestamp_end'] == '') { //if we not have timestamp_end --old comments
-					$start_tmp = explode(' ', $comment['timestamp_start']??'');
-					$comment['timestamp_end'] = $start_tmp[0].' 23:59:59';
+			$start = get_date_time_SQL($note['timestamp_start']);
+			$end = get_date_time_SQL($note['timestamp_end']);
+			if ($note['isAllDay']=='1') {
+				if ($note['timestamp_end'] == '') { //if we not have timestamp_end --old notes
+					$start_tmp = explode(' ', $note['timestamp_start']??'');
+					$note['timestamp_end'] = $start_tmp[0].' 23:59:59';
 				} 
-				$end = date("Y-m-d H:i:s", strtotime($comment['timestamp_end']) + 1); //end + 1sec bcz is 23:59:59
+				$end = date("Y-m-d H:i:s", strtotime($note['timestamp_end']) + 1); //end + 1sec bcz is 23:59:59
 			}
 			else {
-				if ($comment['timestamp_end'] == '') { //if we not have timestamp_end --old comments
-					$end = date("Y-m-d H:i:s", (strtotime($comment['timestamp_start']) + (60 * 60))); //new +60mins
+				if ($note['timestamp_end'] == '') { //if we not have timestamp_end --old notes
+					$end = date("Y-m-d H:i:s", (strtotime($note['timestamp_start']) + (60 * 60))); //new +60mins
 				}
 			}
 			$diff = round((strtotime($end) - strtotime($start)) / 60);
@@ -156,14 +156,14 @@ ORDER BY user_id, timestamp_start", array());
 			$series[$user_id][$form_id]['_1']['num'] = 0;
 			$series[$user_id][$form_id]['_1']['name'] = $LANG->NOTE;
 			$series[$user_id][$form_id]['_1']['type'] = '_Text';
-			$series[$user_id][$form_id]['_1']['data'][] = array(strtotime($start).'000', $comment['name'], strtotime($end).'000', $comment['color']);
+			$series[$user_id][$form_id]['_1']['data'][] = array(strtotime($start).'000', $note['name'], strtotime($end).'000', $note['color']);
 			
 			$cell_id = Formula__Get_ALPHA_id('data', 1, false);
 			$series[$user_id][$form_id]['_2']['cell_id'] = $cell_id;
 			$series[$user_id][$form_id]['_2']['num'] = 1;
 			$series[$user_id][$form_id]['_2']['name'] = $LANG->NOTE_PERIOD;
 			$series[$user_id][$form_id]['_2']['type'] = '_Number';
-			$series[$user_id][$form_id]['_2']['data'][] = array(strtotime($start).'000', $diff, strtotime($end).'000', $comment['color']);
+			$series[$user_id][$form_id]['_2']['data'][] = array(strtotime($start).'000', $diff, strtotime($end).'000', $note['color']);
 			
 			if (!in_array($user_id, $forms_n_fields[$form_id][2])) {
 				$forms_n_fields[$form_id][2][] = $user_id; //add user to this form users
@@ -181,7 +181,7 @@ ORDER BY user_id, timestamp_start", array());
 		}
 	}
 }
-//comments from calendar end #################################################
+//notes from calendar end #################################################
 
 
 

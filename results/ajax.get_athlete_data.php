@@ -110,8 +110,8 @@ if (count($forms)) //if have forms
 	$series = array();
 	$form_id_2_name_arr = array();
 	
-	//comments from calendar
-	$comments = $db->fetch("SELECT * FROM comments WHERE showInGraph = 1 AND user_id=? AND group_id=? ORDER BY timestamp_start", array($athlete_id, $group_id));
+	//notes from calendar
+	$notes = $db->fetch("SELECT * FROM notes WHERE showInGraph = 1 AND user_id=? AND group_id=? ORDER BY timestamp_start", array($athlete_id, $group_id));
 	if ($db->numberRows() > 0)  {
 		$form_id_2_name_arr['note'] = $LANG->NOTE;
 		
@@ -127,29 +127,29 @@ if (count($forms)) //if have forms
 		$series['note']['_2']['name'] = $LANG->NOTE_PERIOD;
 		$series['note']['_2']['type'] = '_Number';
 		
-		foreach ($comments as $comment) {
+		foreach ($notes as $note) {
 			//FIXES ###########################################
 			//calendar want full day if allDay:true --if same date and diff times not show in calendar
-			$start = get_date_time_SQL($comment['timestamp_start']);
-			$end = get_date_time_SQL($comment['timestamp_end']);
-			if ($comment['isAllDay']=='1') {
-				if ($comment['timestamp_end'] == '') { //if we not have timestamp_end --old comments
-					$start_tmp = explode(' ', $comment['timestamp_start']??'');
-					$comment['timestamp_end'] = $start_tmp[0].' 23:59:59';
+			$start = get_date_time_SQL($note['timestamp_start']);
+			$end = get_date_time_SQL($note['timestamp_end']);
+			if ($note['isAllDay']=='1') {
+				if ($note['timestamp_end'] == '') { //if we not have timestamp_end --old notes
+					$start_tmp = explode(' ', $note['timestamp_start']??'');
+					$note['timestamp_end'] = $start_tmp[0].' 23:59:59';
 				} 
-				$end = date("Y-m-d H:i:s", strtotime($comment['timestamp_end']) + 1); //end + 1sec bcz is 23:59:59
+				$end = date("Y-m-d H:i:s", strtotime($note['timestamp_end']) + 1); //end + 1sec bcz is 23:59:59
 			}
 			else {
-				if ($comment['timestamp_end'] == '') { //if we not have timestamp_end --old comments
-					$end = date("Y-m-d H:i:s", (strtotime($comment['timestamp_start']) + (60*60))); //new +60mins
+				if ($note['timestamp_end'] == '') { //if we not have timestamp_end --old notes
+					$end = date("Y-m-d H:i:s", (strtotime($note['timestamp_start']) + (60*60))); //new +60mins
 				}
 			}
 			$diff = round((strtotime($end) - strtotime($start)) / 60);
 			//FIXES ###########################################
 			
-			$series['note']['_1']['data'][] = array(strtotime($start).'000', $comment['name'], strtotime($end).'000', $comment['color']);
+			$series['note']['_1']['data'][] = array(strtotime($start).'000', $note['name'], strtotime($end).'000', $note['color']);
 			
-			$series['note']['_2']['data'][] = array(strtotime($start).'000', $diff, strtotime($end).'000', $comment['color']);
+			$series['note']['_2']['data'][] = array(strtotime($start).'000', $diff, strtotime($end).'000', $note['color']);
 		}
 	}
 

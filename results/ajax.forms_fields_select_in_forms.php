@@ -83,7 +83,7 @@ if ($db->numberRows() > 0) {
 
 
 $forms_fields_option = '';
-$forms_fields_option_comments = '';
+$forms_fields_option_Notes = '';
 
 // get available forms
 $forms = array();
@@ -145,16 +145,16 @@ if ($db->numberRows() > 0)  {
 		}
 	}
 	
-	//comments
-	$comments = $db->fetchRow("SELECT COUNT(*) AS count FROM comments 
+	//notes
+	$notes = $db->fetchRow("SELECT COUNT(*) AS count FROM notes 
 WHERE showInGraph = 1 AND CONCAT(group_id,'_',user_id) IN ($selected_athletes_ids) AND timestamp_start >= '$date_from' AND timestamp_start <= '$date_to' 
 ORDER BY timestamp_start", array());
 	if ($db->numberRows() > 0)  {
-		if ($comments['count']) {
-			$forms_fields_option_comments .= '<optgroup label="'.$LANG->NOTE.' ('.$comments['count'].')">';
-			$forms_fields_option_comments .= '<option value="note_1">'.$LANG->NOTE.'</option>';
-			$forms_fields_option_comments .= '<option value="note_2">'.$LANG->NOTE_PERIOD.'</option>';
-			$forms_fields_option_comments .= '</optgroup>';
+		if ($notes['count']) {
+			$forms_fields_option_Notes .= '<optgroup label="'.$LANG->NOTE.' ('.$notes['count'].')">';
+			$forms_fields_option_Notes .= '<option value="note_1">'.$LANG->NOTE.'</option>';
+			$forms_fields_option_Notes .= '<option value="note_2">'.$LANG->NOTE_PERIOD.'</option>';
+			$forms_fields_option_Notes .= '</optgroup>';
 		}
 	}
 }
@@ -165,13 +165,13 @@ ORDER BY timestamp_start", array());
 	<div id="Select__Forms_Fields__Row">
 		<span class="wiz-title"><?=$LANG->RESULTS_SELECT_FIELDS;?> : &nbsp; </span>
 		<select id="Select__Forms_Fields" name="Select__Forms_Fields" multiple="multiple" style="display:none;">
-			<?=$forms_fields_option_comments . $forms_fields_option;?>
+			<?=$forms_fields_option_Notes . $forms_fields_option;?>
 		</select> &nbsp; 
 <?php if ($forms_fields_option != '') { ?>
-	 	<button id="Button__Select__Forms_Fields__Submit" class="forward" title="<?= $LANG->RESULTS_BUTTON_APPLY_CHANGES;?>"></button>
+		<button id="Button__Select__Forms_Fields__Submit" class="forward" title="<?= $LANG->RESULTS_BUTTON_APPLY_CHANGES;?>"></button>
 <?php } else { //change Loading to NoData ?>
-	 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	 	<?=get_No_Data_Error();?>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<?=get_No_Data_Error();?>
 <?php } ?>
 	</div>
 </span>

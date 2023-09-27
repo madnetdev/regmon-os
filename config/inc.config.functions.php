@@ -515,11 +515,11 @@ function get_Extra_NotesSampleData_Init_SQL(string $datetime):string {
 
 	return "".
 		// sample notes data (for user-id 6 = "Athlete1") [german]
-		"INSERT INTO comments (id, user_id, group_id, isAllDay, showInGraph, `name`, comments, color, timestamp_start, timestamp_end, modified) VALUES ".
+		"INSERT INTO notes (id, user_id, group_id, isAllDay, showInGraph, `name`, notes, color, timestamp_start, timestamp_end, modified) VALUES ".
 		"(1, 6, 1, 1, 0, 'Urlaub', NULL, 'rgba(238,238,238,0.5)', '".$datetimeStart[0]."', '".$datetimeEnd[0]."', '".$datetime."'),".
 		"(2, 6, 1, 1, 0, 'Schulterprellung', NULL, 'rgba(23,144,190,1)', '".$datetimeStart[1]."', '".$datetimeEnd[1]."', '".$datetime."'),".
 		"(3, 6, 1, 1, 0, 'Urlaub am Bodensee', NULL, 'rgba(238,238,238,0.5)', '".$datetimeStart[2]."', '".$datetimeEnd[2]."', '".$datetime."'),".
-		"(4, 6, 1, 0, 1, 'Test_Note_Name', 'Test_comments', 'rgb(165,165,165)', '".$datetimeStart[3]."', '".$datetimeEnd[3]."', '".$datetime."');";		
+		"(4, 6, 1, 0, 1, 'Test_Note_Name', 'Test_notes', 'rgb(165,165,165)', '".$datetimeStart[3]."', '".$datetimeEnd[3]."', '".$datetime."');";		
 }
 
 function get_Extra_FormsSampleData_Init_SQL(string $datetime):string {

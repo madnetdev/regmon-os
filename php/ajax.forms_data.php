@@ -151,9 +151,9 @@ switch ($action) {
 				}
 			}
 
-			//comments in calendar
+			//notes in calendar
 			if ($athlete_id == $UID OR $ADMIN OR ($trainer_view AND (in_array('Note_n', $trainer_read_arr)))) {
-				$rows = $db->fetch("SELECT * FROM comments WHERE user_id = ? AND group_id = ? ORDER BY timestamp_start", array($athlete_id, $group_id));
+				$rows = $db->fetch("SELECT * FROM notes WHERE user_id = ? AND group_id = ? ORDER BY timestamp_start", array($athlete_id, $group_id));
 				if ($db->numberRows() > 0)  {
 					foreach ($rows as $row) {
 						//FIXES //////////////////////////////////////////////////
@@ -168,7 +168,7 @@ switch ($action) {
 						//FIXES //////////////////////////////////////////////////
 						
 						$response[$i] = $response[$i]['cell'] = array(
-							//comments need to have different id than normal events so no conflict
+							//notes need to have different id than normal events so no conflict
 							"id" => -$row['id'],
 							"title" => $row['name'],
 							"start" => $start,
@@ -177,13 +177,13 @@ switch ($action) {
 							"color2" => ($row['color']!=''?$row['color']:'#aaaaaa'),
 							"allDay"=> $row['isAllDay']=='1'?true:false,
 							"showInGraph"=> $row['showInGraph']=='1'?true:false,
-							"text" => $row['comments'],
-							"msg" => '<span>'.$row['comments'].'</span>'.
+							"text" => $row['notes'],
+							"msg" => '<span>'.$row['notes'].'</span>'.
 								(($athlete_id == $UID OR ($trainer_view AND in_array('Note_n', $trainer_write_arr)))?
 									'<div class="clearfix"></div>'.
 									'<div style="text-align:center; margin-top:10px;">'.
-										'<button type="button" id="comment_delete" class="delete" style="margin:5px; padding:5px 30px 5px 10px; font-size:12px;">'.$LANG->DELETE.'</button>'.
-										'<button type="button" id="comment_edit" class="edit" style="margin:5px; padding:5px 30px 5px 10px; font-size:12px;">'.$LANG->EDIT.'</button>'.
+										'<button type="button" id="note_delete" class="delete" style="margin:5px; padding:5px 30px 5px 10px; font-size:12px;">'.$LANG->DELETE.'</button>'.
+										'<button type="button" id="note_edit" class="edit" style="margin:5px; padding:5px 30px 5px 10px; font-size:12px;">'.$LANG->EDIT.'</button>'.
 									'</div>'
 								:'')
 						);
@@ -204,9 +204,9 @@ switch ($action) {
 			$where = " WHERE user_id = '".((int)$athlete_id)."' AND group_id = '".((int)$group_id)."' AND form_id > 0";
 			//forms_data
 			$row_forms = $db->fetchRow("SELECT COUNT(*) AS data_num FROM forms_data $where $where_trainer AND status = 1 ORDER BY timestamp_start", array()); 
-			//comments in calendar
-			$row_comments = $db->fetchRow("SELECT COUNT(*) AS comments_num FROM comments WHERE user_id = ? AND group_id = ? ORDER BY timestamp_start", array($athlete_id, $group_id));
-			echo ($row_forms['data_num'] + $row_comments['comments_num']);
+			//notes in calendar
+			$row_notes = $db->fetchRow("SELECT COUNT(*) AS notes_num FROM notes WHERE user_id = ? AND group_id = ? ORDER BY timestamp_start", array($athlete_id, $group_id));
+			echo ($row_forms['data_num'] + $row_notes['notes_num']);
 		}
 		
 	  break;

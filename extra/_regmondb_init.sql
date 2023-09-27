@@ -55,17 +55,17 @@ ALTER TABLE `categories`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comments`
+-- Table structure for table `notes`
 --
 
-CREATE TABLE `comments` (
+CREATE TABLE `notes` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `group_id` int(11) NOT NULL DEFAULT '0',
   `isAllDay` tinyint(1) NOT NULL DEFAULT '1',
   `showInGraph` tinyint(1) NOT NULL DEFAULT '0',
   `name` varchar(64) DEFAULT NULL,
-  `comments` text,
+  `notes` text,
   `color` char(25) NOT NULL DEFAULT '',
   `timestamp_start` datetime DEFAULT NULL,
   `timestamp_end` datetime DEFAULT NULL,
@@ -73,16 +73,16 @@ CREATE TABLE `comments` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Indexes for table `comments`
+-- Indexes for table `notes`
 --
-ALTER TABLE `comments`
+ALTER TABLE `notes`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`,`group_id`);
 
 --
--- AUTO_INCREMENT for table `comments`
+-- AUTO_INCREMENT for table `notes`
 --
-ALTER TABLE `comments`
+ALTER TABLE `notes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 -- --------------------------------------------------------

@@ -85,8 +85,8 @@ LANG = {
 	//index buttons
 	BUTTON_DATUM 			: 'Date',
 	BUTTON_DATUM_TOOLTIP 	: 'Go to Date',
-	BUTTON_COMMENT 			: 'Comment',
-	BUTTON_COMMENT_TOOLTIP 	: 'Add Comment',
+	BUTTON_NOTE 			: 'Note',
+	BUTTON_NOTE_TOOLTIP 	: 'Add Note',
 
 	//messages
 	UPDATE_OK	: 'Updated successfully!',

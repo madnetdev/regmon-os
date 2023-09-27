@@ -142,7 +142,7 @@ function HTML_Template__Fieldset__Athlete_Form(base_form_id, form_group_id, form
 					//here goes the form fields
 				'</div>'+
 				'<div>'+
-				//if not comments/note form
+				//if not notes form
 				(base_form_id == 'note' ? '' :
 					//Calculation Button and Template actions
 					Button_Calculation_Add +
@@ -288,10 +288,10 @@ function HTML_Template__Athlete_Form_Field__Diagram_Options(data_or_calc, ath_id
 			show_2_graph = false;
 		}
 		if (base_form_id == 'note' && form_field_num == '1') {
-			show_2_graph = true; //comment title
+			show_2_graph = true; //Note title
 		}
 		else if (base_form_id == 'note' && form_field_num == '2') {
-			show_2_graph = true; //comment period mins
+			show_2_graph = true; //Note period mins
 		}
 	}
 

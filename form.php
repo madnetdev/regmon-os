@@ -165,9 +165,6 @@ if ($timer AND $timer_time_min) {
 	$timer_time_step = 100 / $timer_time_sec;
 }
 
-//$standard_name = isset($form['std_name']) ? $form['std_name'] : true;
-//$standard_comment = isset($form['std_comment']) ? $form['std_comment'] : false;
-
 
 //HAVE_DATA + HAVE_DATA_NUM - if + the number of times this form has filled 
 $HAVE_DATA = false;

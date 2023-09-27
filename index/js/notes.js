@@ -1,35 +1,35 @@
 "use strict";
 
-// Comments functions
+// Notes functions
 
-//initialize Comments
-function init_Comments(id) {
+//initialize Notes
+function init_Notes(id) {
 
 	function on_isAllDay_check() {
 		if ($("#isAllDay").is(':checked')) {
-			$('#comment_date_end').prop('disabled','');
-			$('#comment_time_div').hide();
+			$('#note_date_end').prop('disabled','');
+			$('#note_time_div').hide();
 		}
 		else {
-			$('#comment_date_end').val( $('#comment_date_start').val() );
-			$('#comment_date_end').prop('disabled','disabled');
-			$('#comment_time_div').show();
+			$('#note_date_end').val( $('#note_date_start').val() );
+			$('#note_date_end').prop('disabled','disabled');
+			$('#note_time_div').show();
 		}
 	}
 
 	function on_showInGraph_check() {
 		if ($("#showInGraph").is(':checked')) {
-			$('#comment_color_div').show();
+			$('#note_color_div').show();
 		}
 		else {
-			$('#comment_color_div').hide();
+			$('#note_color_div').hide();
 		}
 	}
 
-	//console.log('init_Comments', id);
+	//console.log('init_Notes', id);
 	$('label.error:visible').remove();
 	
-	$('#comment_error').hide();
+	$('#note_error').hide();
 	
 	//checkbox isAllDay
 	$("#isAllDay").on('change', function() {
@@ -48,42 +48,42 @@ function init_Comments(id) {
 	
 
 	color_field_dash('.cpC');
-	$('#comment_color').trigger('change'); //to enable the background
+	$('#note_color').trigger('change'); //to enable the background
 
-	item_Comment_Date_init('#datetimepicker_comment_start', 'left');
-	item_Comment_Date_init('#datetimepicker_comment_end', 'right');
+	item_Note_Date_init('#datetimepicker_note_start', 'left');
+	item_Note_Date_init('#datetimepicker_note_end', 'right');
 
-	item_Comment_Date_From_To_Calc_init('#comment_date_start', '#comment_date_end');
+	item_Note_Date_From_To_Calc_init('#note_date_start', '#note_date_end');
 
-	item_Comment_Time_init('#clockpicker_comment_time_start');
-	item_Comment_Time_init('#clockpicker_comment_time_end');
+	item_Note_Time_init('#clockpicker_note_time_start');
+	item_Note_Time_init('#clockpicker_note_time_end');
 
-	item_Comment_Time_From_To_Calc_init('#comment_time_start', '#comment_time_end');
+	item_Note_Time_From_To_Calc_init('#note_time_start', '#note_time_end');
 
-	$("#comment_time_now").off('click').on('click',function() { //button Now
-		$('#comment_time_start').val( moment().format("HH:mm") ).trigger('change'); 
+	$("#note_time_now").off('click').on('click',function() { //button Now
+		$('#note_time_start').val( moment().format("HH:mm") ).trigger('change'); 
 	});
 
 
-	//button Save Comment
-	$("button#comment_save").off('click').on('click', function () {
+	//button Save Note
+	$("button#note_save").off('click').on('click', function () {
 		
-		$('form#create_comment').validate();
+		$('form#create_Note').validate();
 
-		const inputs = $('form#create_comment').find(':input');
+		const inputs = $('form#create_Note').find(':input');
 		if (!inputs.valid() && $('label.error:visible').length != 0) {
 			//console.log(inputs, inputs.valid(), $('label.error:visible').length);
 		}
 		else {
 			const t_isAllDay = $("#isAllDay").is(':checked');
-			const t_date_start = get_date_SQL($('#comment_date_start').val());
-			const t_date_end = get_date_SQL($('#comment_date_end').val());
-			const t_time_start = $('#comment_time_start').val();
-			const t_time_end = $('#comment_time_end').val();
-			const t_title = $('#comment_title').val();
-			const t_comment = $('#comment_text').val();
+			const t_date_start = get_date_SQL($('#note_date_start').val());
+			const t_date_end = get_date_SQL($('#note_date_end').val());
+			const t_time_start = $('#note_time_start').val();
+			const t_time_end = $('#note_time_end').val();
+			const t_title = $('#note_title').val();
+			const t_note = $('#note_text').val();
 			const t_showInGraph = $("#showInGraph").is(':checked');
-			const t_color = $('#comment_color').val();
+			const t_color = $('#note_color').val();
 
 			const data = {
 				group_id: V_GROUP,
@@ -94,7 +94,7 @@ function init_Comments(id) {
 				t_time_start: t_time_start,
 				t_time_end: t_time_end,
 				t_title: t_title,
-				t_comment: t_comment,
+				t_note: t_note,
 				t_showInGraph: t_showInGraph,
 				t_color: t_color
 			};
@@ -102,12 +102,12 @@ function init_Comments(id) {
 			if (id) {
 				data['ID'] = id;
 			}
-			$.post('index/ajax.comment_save.php', data, function(data, result){
+			$.post('index/ajax.note_save.php', data, function(data, result){
 				if (data == 'ERROR-MAX3') {
-					$('#comment_error').show();
+					$('#note_error').show();
 				} else {
 					//close and reload calendar
-					$('#comment_error').hide();
+					$('#note_error').hide();
 
 					$.fancybox.close();
 
@@ -118,11 +118,11 @@ function init_Comments(id) {
 			});
 		}
 	});
-} //init_Comments()
+} //init_Notes()
 
 
-//initialize Comments Create
-function init_Comments_Create(from) {
+//initialize Notes Create
+function init_Notes_Create(from) {
 	/*from (
 		Cal_Button false
 		Dash_Button false
@@ -130,7 +130,7 @@ function init_Comments_Create(from) {
 		Cal_agendaDay true
 		Cal_agendaWeek true
 	)*/
-	//console.log('init_Comments_Create', from);
+	//console.log('init_Notes_Create', from);
 
 	let date = $.cookie('SELECTED_DATE') || ''; //2019-10-02 or 2019-10-02T06%3A30%3A00
 	let tt1 = moment().format("HH:mm"); //now
@@ -185,23 +185,23 @@ function init_Comments_Create(from) {
 		}
 	}
 
-	//console.log('init_Comments_Create', from, $.cookie('SELECTED_DATE'), date, time_start, time_end);
-	$('#comment_date_start').val(get_date(date));
-	$('#comment_date_end').val(get_date(date));
-	$('#comment_time_start').val(time_start);
-	$('#comment_time_end').val(time_end);
-	$('#comment_title').val('');
-	$('#comment_text').val('');
-	$('#comment_color').val('rgba(238,238,238,0.5)');
+	//console.log('init_Notes_Create', from, $.cookie('SELECTED_DATE'), date, time_start, time_end);
+	$('#note_date_start').val(get_date(date));
+	$('#note_date_end').val(get_date(date));
+	$('#note_time_start').val(time_start);
+	$('#note_time_end').val(time_end);
+	$('#note_title').val('');
+	$('#note_text').val('');
+	$('#note_color').val('rgba(238,238,238,0.5)');
 	$("#showInGraph").prop('checked', '');
 
-	init_Comments(false);
-} //init_Comments_Create()
+	init_Notes(false);
+} //init_Notes_Create()
 
 
-//initialize Comments Edit
-function init_Comments_Edit(id, isAllDay, showInGraph, date_start, date_end, title, text, color) {
-	//console.log('init_Comments_Edit', id, isAllDay, showInGraph, date_start, date_end, title, text, color);
+//initialize Notes Edit
+function init_Notes_Edit(id, isAllDay, showInGraph, date_start, date_end, title, text, color) {
+	//console.log('init_Notes_Edit', id, isAllDay, showInGraph, date_start, date_end, title, text, color);
 	let dt1 = date_start.split(' ');
 	let dt2 = date_end.split(' ');
 	let date__start = dt1[0];
@@ -216,29 +216,29 @@ function init_Comments_Edit(id, isAllDay, showInGraph, date_start, date_end, tit
 	}
 	else $("#isAllDay").prop('checked', '').trigger('change');
 	
-	$('#comment_date_start').val(get_date(date__start));
-	$('#comment_date_end').val(get_date(date__end));
-	$('#comment_time_start').val(time__start);
-	$('#comment_time_end').val(time__end);
-	$('#comment_title').val(title);
-	$('#comment_text').val(text);
-	$('#comment_color').val(color);
+	$('#note_date_start').val(get_date(date__start));
+	$('#note_date_end').val(get_date(date__end));
+	$('#note_time_start').val(time__start);
+	$('#note_time_end').val(time__end);
+	$('#note_title').val(title);
+	$('#note_text').val(text);
+	$('#note_color').val(color);
 	
-	init_Comments(id);
+	init_Notes(id);
 	
-	//we need ot after init_Comments bcz there it reset the check
+	//we need ot after init_Notes bcz there it reset the check
 	if (showInGraph) {
 		$("#showInGraph").prop('checked', 'checked').trigger('change');
 	} else {
 		$("#showInGraph").prop('checked', '').trigger('change');
 	}
-} //init_Comments_Edit()
+} //init_Notes_Edit()
 
 
 //#####################################################
 
-//initialize Comment Date
-function item_Comment_Date_init(element, pos) {
+//initialize Note Date
+function item_Note_Date_init(element, pos) {
 	$(element).datetimepicker({ //'#datetimepicker'
 		locale: LANG.LANG_CURRENT,
 		format: LANG.MOMENT.DATE,
@@ -274,8 +274,8 @@ function item_Comment_Date_init(element, pos) {
 }
 
 
-//initialize Comment Time
-function item_Comment_Time_init(element) {
+//initialize Note Time
+function item_Note_Time_init(element) {
 	$(element).clockpicker({
 		donetext: LANG.OK
 	});
@@ -283,7 +283,7 @@ function item_Comment_Time_init(element) {
 
 
 //initialize Date From -> To = auto calculate
-function item_Comment_Date_From_To_Calc_init(el_From, el_To) {
+function item_Note_Date_From_To_Calc_init(el_From, el_To) {
 	//'#t_time_from'
 	$(el_From).off('change').on('change', function () {
 		const start = $(this).val();
@@ -308,7 +308,7 @@ function item_Comment_Date_From_To_Calc_init(el_From, el_To) {
 
 
 //initialize Time From -> To = auto calculate
-function item_Comment_Time_From_To_Calc_init(el_From, el_To) {
+function item_Note_Time_From_To_Calc_init(el_From, el_To) {
 	//'#t_time_from'
 	$(el_From).on('change', function () {
 		const start = $(this).val();
