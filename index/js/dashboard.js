@@ -295,7 +295,8 @@ function get_dash_content(dash) {
 					'<option value="link"'+(dash_type=='link'?' selected':'')+'>'+LANG.DASH.TYPE_OPTIONS+'</option>'+
 					'<option value="form"'+(dash_type=='form'?' selected':'')+'>'+LANG.DASH.TYPE_FORMS+'</option>'+
 					'<option value="forms_results"'+(dash_type=='forms_results'?' selected':'')+'>'+LANG.DASH.TYPE_RESULTS+'</option>'+
-					(!V_IS_ATHLETE ? '<option value="results"'+(dash_type=='results'?' selected':'')+'>'+LANG.DASH.TYPE_RESULTS_GRP+'</option>':'')+
+					'<option value="results"'+(dash_type=='results'?' selected':'')+'>'+LANG.DASH.TYPE_RESULTS_GRP+'</option>'+
+					// (!V_IS_ATHLETE ? '<option value="results"'+(dash_type=='results'?' selected':'')+'>'+LANG.DASH.TYPE_RESULTS_GRP+'</option>':'')+
 				'</select>'+
 			'</div>'+
 			
