@@ -6,6 +6,7 @@ __*
 # ignore log files
 *.log
 logs/
+extra/__docker_error.log
 
 # ignore dependency directories
 node_modules/

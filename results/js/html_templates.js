@@ -65,7 +65,9 @@ function HTML_Template__Fieldset__Athlete(athlete_id, athlete_name) {
 	
 	
 	if (V_RESULTS_PAGE == 'FORMS_RESULTS') {
-		Button__Fieldset_Athlete__Remove = '<span class="close_item Button__Fieldset_Athlete__Remove" data-val="' + athlete_id + '"></span>';
+		if (!V_ATHLETE) {
+			Button__Fieldset_Athlete__Remove = '<span class="close_item Button__Fieldset_Athlete__Remove" data-val="' + athlete_id + '"></span>';
+		}
 		if (V_ATHLETE || V_IS_IFRAME) {
 			Fieldset__Title = '';
 			Diagram__Athlete_Name__Show = '' +
