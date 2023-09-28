@@ -318,7 +318,8 @@ function HTML_Template__Athlete_Form_Field__Diagram_Options(data_or_calc, ath_id
 		'<div class="diagram_options"'+(!show_2_graph?' style="display:none;"':'')+'>'+
 			'<div class="form-group"'+((base_form_id=='note' && form_field_num=='1')?' style="display:none;"':'')+'>'+
 				'<label>Name</label>'+
-				'<input type="text" name="data_graph_name[]" value="'+lang_field_name+'" class="form-control" style="'+(V_ATHLETE_TRAINER?'width:250px;':'width:170px;')+'"/>'+
+				// '<input type="text" name="data_graph_name[]" value="'+lang_field_name+'" class="form-control" style="'+(V_ATHLETE_TRAINER?'width:250px;':'width:170px;')+'"/>'+
+				'<input type="text" name="data_graph_name[]" value="'+lang_field_name+'" class="form-control" style="width:170px;"/>'+
 				'<input type="hidden" name="data_select_val[]" value="'+select_val+'"/>'+
 				'<input type="hidden" name="data_athlete_id[]" value="'+ath_id+'"/>'+
 				'<input type="hidden" name="data_base_form_id[]" value="'+base_form_id+'"/>'+
@@ -332,7 +333,8 @@ function HTML_Template__Athlete_Form_Field__Diagram_Options(data_or_calc, ath_id
 			'</div> '+
 			'<div class="form-group"'+((base_form_id=='note' && form_field_num=='1')?' style="display:none;"':'')+'>'+
 				'<label>'+LANG.RESULTS.DIAGRAM_TYPE.LABEL+'</label>'+
-				'<select name="data_type_sel[]" class="form-control"'+(V_ATHLETE_TRAINER?'':' style="width:140px;"')+'>'+
+				// '<select name="data_type_sel[]" class="form-control"'+(V_ATHLETE_TRAINER?'':' style="width:140px;"')+'>'+
+				'<select name="data_type_sel[]" class="form-control" style="width:140px;">'+
 					'<option value="line">'+		LANG.RESULTS.DIAGRAM_TYPE.LINE+'</option>'+
 					'<option value="spline">'+		LANG.RESULTS.DIAGRAM_TYPE.SPLINE+'</option>'+
 					'<option value="area">'+		LANG.RESULTS.DIAGRAM_TYPE.AREA+'</option>'+
@@ -344,7 +346,8 @@ function HTML_Template__Athlete_Form_Field__Diagram_Options(data_or_calc, ath_id
 			'</div> '+
 			'<div class="form-group"'+((data_or_calc=='calc' || (base_form_id=='note' && form_field_num=='1'))?' style="display:none;"':'')+'>'+
 				'<label>'+LANG.RESULTS.LINE_TYPE.LABEL+'</label>'+
-				'<select name="data_line_sel[]" class="form-control"'+(V_ATHLETE_TRAINER?'':' style="width:120px;"')+'>'+
+				// '<select name="data_line_sel[]" class="form-control"'+(V_ATHLETE_TRAINER?'':' style="width:120px;"')+'>'+
+				'<select name="data_line_sel[]" class="form-control" style="width:120px;">'+
 					'<option value="Solid">'+			LANG.RESULTS.LINE_TYPE.SOLID+'</option>'+
 					'<option value="Dot">'+				LANG.RESULTS.LINE_TYPE.DOT+'</option>'+
 					'<option value="ShortDot">'+		LANG.RESULTS.LINE_TYPE.SHORT_DOT+'</option>'+
@@ -379,12 +382,14 @@ function HTML_Template__Athlete_Form_Field__Diagram_Options(data_or_calc, ath_id
 					'<option value="40320">4 '+LANG.RESULTS.COLUMN_WIDTH.WEEKS+'</option>'+
 				'</select>'+
 			'</div> '+
-			'<div class="form-group"'+(V_ATHLETE_TRAINER?' style="display:none;"':'')+'>'+
+			// '<div class="form-group"'+(V_ATHLETE_TRAINER?' style="display:none;"':'')+'>'+
+			'<div class="form-group">'+
 				'<label>'+LANG.RESULTS.DIAGRAM_COLOR+'</label>'+
 				'<span class="fa fa-close color_remove" style="cursor:pointer; position:relative; margin:29px 2px -24px 0; float:right; color:#ddd;"></span>'+
 				'<input type="text" name="data_color[]" value="" class="form-control cp" style="width:80px; color:white; text-shadow:black 1px 1px;" placeholder="'+LANG.RESULTS.AUTO+'" />'+
 			'</div> '+
-			'<div class="form-group"'+((V_ATHLETE_TRAINER||data_or_calc=='calc' || (base_form_id=='note' && form_field_num=='1'))?' style="display:none;"':'')+'>'+
+			// '<div class="form-group"'+((V_ATHLETE_TRAINER||data_or_calc=='calc' || (base_form_id=='note' && form_field_num=='1'))?' style="display:none;"':'')+'>'+
+			'<div class="form-group"'+((data_or_calc=='calc' || (base_form_id=='note' && form_field_num=='1'))?' style="display:none;"':'')+'>'+
 				'<label>'+LANG.RESULTS.POINT_MARKERS.LABEL+'</label>'+
 				'<select name="data_markers_sel[]" class="form-control" style="width:100px;">'+
 					'<option value="null">'+LANG.RESULTS.POINT_MARKERS.AUTO+'</option>'+ //on hover
@@ -392,14 +397,16 @@ function HTML_Template__Athlete_Form_Field__Diagram_Options(data_or_calc, ath_id
 					'<option value="false">'+LANG.RESULTS.POINT_MARKERS.NO+'</option>'+
 				'</select>'+
 			'</div> '+
-			'<div class="form-group"'+((V_ATHLETE_TRAINER || (base_form_id=='note' && form_field_num=='1'))?' style="display:none;"':'')+'>'+
+			// '<div class="form-group"'+((V_ATHLETE_TRAINER || (base_form_id=='note' && form_field_num=='1'))?' style="display:none;"':'')+'>'+
+			'<div class="form-group"'+((base_form_id=='note' && form_field_num=='1')?' style="display:none;"':'')+'>'+
 				'<label>'+LANG.RESULTS.DATA_LABELS.LABEL+'</label>'+
 				'<select name="data_labels_sel[]" class="form-control">'+
 					'<option value="false">'+LANG.RESULTS.DATA_LABELS.NO+'</option>'+
 					'<option value="true">'+LANG.RESULTS.DATA_LABELS.YES+'</option>'+
 				'</select>'+
 			'</div> '+
-			'<div class="form-group"'+((V_ATHLETE_TRAINER || (base_form_id=='note' && form_field_num=='1'))?' style="display:none;"':'')+'>'+
+			// '<div class="form-group"'+((V_ATHLETE_TRAINER || (base_form_id=='note' && form_field_num=='1'))?' style="display:none;"':'')+'>'+
+			'<div class="form-group"'+((base_form_id=='note' && form_field_num=='1')?' style="display:none;"':'')+'>'+
 				//'<label>Y-Achse</label>'+
 				//'<select name="data_axis_sel[]" class="form-control Select_Axis"><option value="0">Y-Achse 1</option></select>'+
 		
