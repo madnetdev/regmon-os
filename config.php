@@ -275,6 +275,10 @@ if (isset($SEC_check_config)) {
 					$Main_Data_sql .= get_Extra_Users2Trainers_Init_SQL($datetime);
 
 					$Main_Data_sql .= "\n";
+					// axis sample data
+					$Main_Data_sql .= get_Extra_AxisSample_Init_SQL($datetime);
+
+					$Main_Data_sql .= "\n";
 					// dashboard sample data
 					$Main_Data_sql .= get_Extra_DashboardSample_Init_SQL($datetime);
 

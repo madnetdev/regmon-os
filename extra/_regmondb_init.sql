@@ -444,8 +444,8 @@ ALTER TABLE `templates_axis`
 -- Dumping data for table `templates_axis`
 --
 
-INSERT INTO `templates_axis` (`id`, `user_id`, `location_id`, `group_id`, `name`, `data_json`, `created`, `created_by`, `modified`, `modified_by`) VALUES
-(1, 1, 1, 1, ' Auto Y-Axis', '{\"axis\":{\"id\":\"axis_\",\"name\":\"\",\"color\":\"\",\"min\":\"\",\"max\":\"\",\"pos\":\"false\",\"grid\":\"0\"}}', '2023-02-25 00:00:00', 'admin', '2023-02-25 00:00:00', 'admin');
+-- INSERT INTO `templates_axis` (`id`, `user_id`, `location_id`, `group_id`, `name`, `data_json`, `created`, `created_by`, `modified`, `modified_by`) VALUES
+-- (1, 1, 1, 1, ' Auto Y-Axis', '{\"axis\":{\"id\":\"axis_\",\"name\":\"\",\"color\":\"\",\"min\":\"\",\"max\":\"\",\"pos\":\"false\",\"grid\":\"0\"}}', '2023-02-25 00:00:00', 'admin', '2023-02-25 00:00:00', 'admin');
 
 -- --------------------------------------------------------
 
