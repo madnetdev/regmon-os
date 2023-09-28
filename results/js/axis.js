@@ -140,7 +140,7 @@ $('#save_selected').on('click', function()
 		
 	jQuery.validator.addMethod("noName", function(value, element, param) {
 		return this.optional(element) || ($('#axis_name').val != '');
-	}, LANG.RESULTS.NO_AXIS_NAME); //No Axis Name
+	}, LANG.RESULTS.NO_AXIS_LABEL); //No Axis Label
 
 
 	//validate

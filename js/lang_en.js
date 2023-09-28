@@ -345,7 +345,7 @@ LANG = {
 		TEMPLATE_CONFIRM_DELETE	: 'Template: {TEMPLATE_NAME} confirm delete?',
 		TEMPLATE_DELETE_SUCCESS	: 'Template: {TEMPLATE_NAME} deleted successfully.',
 		TEMPLATE_SAVE_SUCCESS	: 'Template: {TEMPLATE_NAME} saved successfully.',
-		NO_AXIS_NAME			: 'No Axis Name',
+		NO_AXIS_LABEL			: 'No Axis Label',
 		COLLAPSE_EXPAND_ALL 	: 'Collapse All / Expand All',
 		SHOW_ATHLETE_NAME 		: 'Show Athlete name',
 		SHOW_FORM_NAME 			: 'Show Form name',
@@ -412,7 +412,7 @@ LANG = {
 		Y_AXIS: {
 			LABEL 			: 'Y-Axis',
 			GROUP_LABEL		: 'Y-AXIS',
-			NAME			: 'Name',
+			LABEL			: 'Label',
 			POSITION		: 'Position',
 			POSITION_LEFT	: 'Left',
 			POSITION_RIGHT	: 'Right',

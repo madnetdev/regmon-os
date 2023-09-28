@@ -345,7 +345,7 @@ LANG = {
 		TEMPLATE_CONFIRM_DELETE	: 'Vorlage: {TEMPLATE_NAME} wirklich löschen?',
 		TEMPLATE_DELETE_SUCCESS	: 'Vorlage: {TEMPLATE_NAME} gelöscht.',
 		TEMPLATE_SAVE_SUCCESS	: 'Vorlage: {TEMPLATE_NAME} gespeichert.',
-		NO_AXIS_NAME			: 'Kein Achsenname',
+		NO_AXIS_LABEL			: 'Keine Achsenbeschriftung',
 		COLLAPSE_EXPAND_ALL 	: 'Alles schließen / Alles erweitern',
 		SHOW_ATHLETE_NAME 		: 'Sportlernamen anzeigen',
 		SHOW_FORM_NAME 			: 'Formularnamen anzeigen',
@@ -412,11 +412,11 @@ LANG = {
 		Y_AXIS: {
 			LABEL 			: 'Y-Achse',
 			GROUP_LABEL		: 'Y-ACHSE',
-			NAME			: 'Axis Name',
+			LABEL			: 'Achsenbeschriftung',
 			POSITION		: 'Position',
 			POSITION_LEFT	: 'Links',
 			POSITION_RIGHT	: 'Rechts',
-			GRID_WIDTH 		: 'Raster weite',
+			GRID_WIDTH 		: 'Rasterweite',
 			MIN 			: 'Min',
 			MAX 			: 'Max',
 		},
@@ -594,5 +594,5 @@ LANG = {
 	},
 
 	
-	END : 'End'
+	END : 'Ende'
 };

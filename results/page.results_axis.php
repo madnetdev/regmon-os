@@ -175,7 +175,7 @@ var V_DEBUG = <?=$DEBUG;?>;
 						<legend><?=$LANG->RESULTS_Y_AXIS;?>&nbsp;</legend>
 						<div>
 							<div class="form-group">
-								<label><?=$LANG->RESULTS_Y_AXIS_NAME;?></label>
+								<label><?=$LANG->RESULTS_Y_AXIS_LABEL;?></label>
 								<input type="text" id="axis_name" value="" class="form-control" style="width:170px;" required />
 								<input type="hidden" id="axis_id" value=""/>
 							</div> 
@@ -220,7 +220,7 @@ var V_DEBUG = <?=$DEBUG;?>;
 				<div>
 					<?php /* SAVE */?>
 					<div class="form-group" style="width:100%; position:relative;">
-						<label><?=$LANG->RESULTS_Y_AXIS_NAME;?></label><br>
+						<label><?=$LANG->RESULTS_Y_AXIS_SAVE_NAME;?></label><br>
 						<input type="text" id="save_name" name="save_name" value="" class="form-control" style="width:100%; max-width:318px; margin-bottom:5px; display:inline-block;" required />
 						<button id="save_selected" type="button" class="btn btn-success btn-sm" style="display:inline-block; margin-top:-3px;"><i style="font-size:17px; vertical-align:middle;" class="fa fa-floppy-o"></i>&nbsp;&nbsp;<b><?=$LANG->SAVE;?></b></button>
 					</div>

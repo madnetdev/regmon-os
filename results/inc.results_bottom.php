@@ -123,13 +123,13 @@ $axis_data .= '}';
 			</div>
 			
 			<fieldset class="coolfieldset collapsed">
-				<legend style="text-align:center;"><?=$LANG->RESULTS_Y_AXIS_SHOW_ALL;?>&nbsp;</legend>
+				<legend style="text-align:left;"><?=$LANG->RESULTS_Y_AXIS_SHOW_ALL;?>&nbsp;</legend>
 				<div style="display:none;">
 					<table id="axis_table" class="data_table" style="background:white; width:100%">
 						<tr><th colspan="7"><?=$LANG->RESULTS_Y_AXIS;?></th></tr>
 						<tr>
 							<th><?=$LANG->RESULTS_Y_AXIS_SAVE_NAME;?></th>
-							<th><?=$LANG->RESULTS_Y_AXIS_NAME;?></th>
+							<th><?=$LANG->RESULTS_Y_AXIS_LABEL;?></th>
 							<th><?=$LANG->RESULTS_Y_AXIS_POSITION;?></th>
 							<th><?=$LANG->RESULTS_COLOR;?></th>
 							<th><?=$LANG->RESULTS_Y_AXIS_GRID_WIDTH;?></th>

@@ -9,7 +9,7 @@ function Html_Template__Fieldset_Axis(axis_id, axis_name) {
 		'<legend>'+ axis_name +'</legend>'+
 		'<div>'+
 			'<div class="form-group">'+
-				'<label>'+LANG.RESULTS.Y_AXIS.NAME+'</label>'+
+				'<label>'+LANG.RESULTS.Y_AXIS.LABEL+'</label>'+
 				'<input type="text" name="axis_name[]" value="" class="form-control" style="width:170px;"/>'+
 				'<input type="hidden" name="axis_id[]" value="'+ axis_id +'"/>'+
 			'</div> '+
