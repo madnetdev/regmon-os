@@ -248,7 +248,7 @@ const V_Athlete_Name = '<?=$u_vorname.' '.$u_name;?>';
 const V_Category_id = '<?=$cat_id;?>';
 const V_Form_id = '<?=$form_id;?>';
 var V_Template_id = '<?=$template_id;?>';
-var V_Auto_Init = <?=(($is_iframe)?'true':'false');?>;
+var V_Auto_Init = <?=($is_iframe?'true':'false');?>;
 <?php } else { //RESULTS ?>
 const V_Group_id = '<?=$group_id;?>';
 const V_Athlete_id = '<?=$athlete_id;?>';

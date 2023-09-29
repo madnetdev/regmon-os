@@ -235,6 +235,7 @@ function Fieldset__Athlete__Init(athlete_id, athlete_name) { //#####	 --FORMS_RE
 
 			//Auto Init - from dashboard and calendar
 			if (V_Auto_Init || V_OPEN_TEMPLATE != '0') {
+				V_AUTO_UPDATE_CHART = true;
 				setTimeout(function(){
 					V_Auto_Init = false;
 					if (V_OPEN_TEMPLATE != '0') {

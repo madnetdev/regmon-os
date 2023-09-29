@@ -135,7 +135,7 @@ switch ($action) {
 							'<button id="Cal_Res_'.$row['id'].'" type="button" class="bttn fancybox fancybox.iframe" href="form.php?view=true&id='.$row['form_id'].'&cat_id='.$row['category_id'].'&from_data_id='.$row['id'].'&group_id='.$row['group_id'].'&athlete_id='.$athlete_id.'" style="margin-top:10px; padding:3px 10px; width:190px;">'.$LANG->INDEX_VIEW_RECORD.' &nbsp; &nbsp;<i class="fa fa-bar-chart fa-rotate-90" style="font-size:14px;"></i></button>'.
 							//view results
 							'<br>'.
-							'<button id="Cal_Res_Sub_'.$row['id'].'" type="button" class="bttn fancybox fancybox.iframe" href="forms_results.php?athlete_id='.$athlete_id.'&id='.$row['form_id'].'&cat_id='.$row['category_id'].'&timestamp='.(strtotime($row['timestamp_start']) + 30*60).'&iframe'.$sec.'" style="margin-top:10px; padding:3px 10px; width:190px;">'.$LANG->INDEX_VIEW_RESULTS.' &nbsp; &nbsp;<i class="fa fa-bar-chart" style="font-size:16px;"></i></button>'.
+							'<button id="Cal_Res_Sub_'.$row['id'].'" type="button" class="bttn fancybox fancybox.iframe" href="forms_results.php?athlete_id='.$athlete_id.'&id='.$row['form_id'].'&cat_id='.$row['category_id'].'&timestamp='.(strtotime($row['timestamp_start']) + 30*60).'&is_iframe'.$sec.'" style="margin-top:10px; padding:3px 10px; width:190px;">'.$LANG->INDEX_VIEW_RESULTS.' &nbsp; &nbsp;<i class="fa fa-bar-chart" style="font-size:16px;"></i></button>'.
 							//delete form.save --if can
 							($has_write_permissions?
 								'<br>'.
