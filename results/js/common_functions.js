@@ -1765,7 +1765,8 @@ function USED_DATA__Formula__Update_After_Calculate(calx, ath_id, save_form_id) 
 					}
 					else {
 						//if not find it with the first pass then it is later, not need to continue, go to the next each
-						return;
+						//not return --it may have a lot of disabled cells at start
+						//return;
 					}
 				};
 			});
