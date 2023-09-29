@@ -354,6 +354,20 @@ function Save_Configuration(mixed $config_arr, bool $init = false):string {
 }
 
 
+function addTime(int $Seconds2Add, string $DateTime):string {
+	$timestamp_new = strtotime($DateTime) + $Seconds2Add;
+	if (strlen($DateTime) == 10) { //'Y-m-d'
+		return date('Y-m-d', $timestamp_new);
+	}
+	elseif (strlen($DateTime) == 16) { //'Y-m-d H:i'
+		return date('Y-m-d H:i', $timestamp_new);
+	}
+	else { //'Y-m-d H:i:s'
+		return date('Y-m-d H:i:s', $timestamp_new);
+	}
+}
+
+
 function get_Admin_User_Init_SQL(string $password, string $email, string $datetime):string {
 	return "".
 		// add admin user
@@ -488,6 +502,20 @@ function get_Extra_FormsTagsSample_Init_SQL(string $datetime):string {
 		"(11, 'Training Load', 1, '".$datetime."', 'Auto_Init', '".$datetime."', 'Auto_Init'),".
 		"(12, 'Trainingload', 1, '".$datetime."', 'Auto_Init', '".$datetime."', 'Auto_Init');";
 }
+
+/*function get_Extra_NotesSampleData_Init_SQL__NEW_way(string $datetime):string {
+	$max_Date = strtotime('2023-09-29'); //the latest date in the data we want to install
+	$current_Date = strtotime(date('Y-m-d', strtotime($datetime))); //get only the date
+	$addTime = $current_Date - $max_Date; //the difference in seconds between current_Date and max_Date
+
+	return "".
+		"INSERT INTO notes (id, user_id, group_id, isAllDay, showInGraph, `name`, notes, color, timestamp_start, timestamp_end, modified) VALUES ".
+		"(1, 6, 1, 1, 0, 'Urlaub', NULL, 'rgba(238,238,238,0.5)', '".addTime($addTime, '2023-06-05 00:00')."', '".addTime($addTime, '2023-06-05 23:59')."', '".addTime($addTime, '2023-09-29 17:32:30')."'),".
+		"(2, 6, 1, 1, 0, 'Schulterprellung', NULL, 'rgba(23,144,190,1)', '".addTime($addTime, '2023-07-12 00:00')."', '".addTime($addTime, '2023-07-12 23:59')."', '".addTime($addTime, '2023-09-29 17:32:30')."'),".
+		"(3, 6, 1, 1, 0, 'Urlaub am Bodensee', NULL, 'rgba(238,238,238,0.5)', '".addTime($addTime, '2023-09-09 00:00')."', '".addTime($addTime, '2023-09-09 23:59')."', '".addTime($addTime, '2023-09-29 17:32:30')."'),".
+		"(4, 6, 1, 0, 1, 'Test_Note_Name', 'Test_notes', 'rgb(165,165,165)', '".addTime($addTime, '2023-09-29 07:45')."', '".addTime($addTime, '2023-09-29 08:15')."', '".addTime($addTime, '2023-09-29 17:32:30')."');";
+}
+*/
 
 function get_Extra_NotesSampleData_Init_SQL(string $datetime):string {
 
