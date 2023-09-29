@@ -192,6 +192,7 @@ if ($CHANGE OR $VIEW) {
 		$FORM_DATA = json_decode($forms_data_row['res_json'], true);
 		$FORM_DATA['id'] = $forms_data_row['id'];
 		$FORM_DATA['timestamp_start'] = $forms_data_row['timestamp_start'];
+		$FORM_DATA['timestamp_end'] = $forms_data_row['timestamp_end'];
 		$FORM_DATA['modified'] = $forms_data_row['modified'];
 
 		//if ($debug) { echo "<br><br><pre>"; print_r($FORM_DATA);echo "</pre>"; }

@@ -307,6 +307,7 @@ var V_ANSWERED = [];
 				//TODO: make a function
 				if ($CHANGE AND $FORM_DATA) {
 					$t_date_time = $FORM_DATA['timestamp_start'];
+					$t_date_time_end = $FORM_DATA['timestamp_end'].'';
 				}
 				else {
 					if ($selected_date == '') {
@@ -323,8 +324,12 @@ var V_ANSWERED = [];
 					}
 				}
 				$t_date_time = get_date_time_noSecs($t_date_time.'');
-				$t_date_time_add_2_hours = date("Y-m-d H:i:s", strtotime($t_date_time)+(60*60));
-				$t_date_time_end = get_date_time_noSecs($t_date_time_add_2_hours);
+				if ($t_date_time_end != '') {
+					$t_date_time_end = get_date_time_noSecs($t_date_time_end.'');
+				} else {
+					$t_date_time_add_1_hour = date("Y-m-d H:i:s", strtotime($t_date_time)+(60*60));
+					$t_date_time_end = get_date_time_noSecs($t_date_time_add_1_hour);
+				}
 				$date_time = explode(' ', $t_date_time);
 				$date_time_end = explode(' ', $t_date_time_end);
 				//####################################
