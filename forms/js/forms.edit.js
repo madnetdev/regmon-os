@@ -554,7 +554,6 @@ button_Copy_Row_Click = function (element) {
 		$('#Row_'+new_row_num+' .row_div > table > tbody > tr > td > div.rowItem_div > div.trumbowyg-box textarea').each(function(){
 			const new_name = this.name;
 			const old_name = new_name.replace(new_row_num, old_row_num);
-			//TODO: check $(this).val() inside after()
 			//$(this).parent().after( $(this).val( $('textarea[name='+old_name+']').val() ) ).remove();
 			$(this).parent().after(
 				$(this).val(

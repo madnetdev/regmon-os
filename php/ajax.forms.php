@@ -98,7 +98,7 @@ switch ($action) {
 			$result = $db->delete("forms", "id=?", array($id));
 			echo check_delete_result($result);
 			
-			//TODO: give a warning and a button to confirm deletion of forms2categories
+			//TODO: maybe we need to give a warning and a button to confirm deletion of forms2categories
 			//delete from forms2categories too
 			$result = $db->delete("forms2categories", "form_id=?", array($id));
 		}		

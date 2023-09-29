@@ -1173,7 +1173,7 @@ function convertHSL(int $h, int $s, int $l, bool $toHex=true):string {
                 $b = $m;
               break;
             case 2:
-            	$r = $m;
+				$r = $m;
                 $g = $v;
                 $b = $mid1;
               break;
@@ -1207,6 +1207,49 @@ function convertHSL(int $h, int $s, int $l, bool $toHex=true):string {
 	else {
         return "rgb($r, $g, $b)";    
     }
+}
+
+
+/**
+ * Summary of get_ddd
+ * @param mixed $CHANGE
+ * @param mixed $FORM_DATA
+ * @param mixed $selected_date
+ * @return mixed
+ */
+function get_timestamp_start_end_array($CHANGE, $FORM_DATA, $selected_date) {
+	$t_date_time = '';
+	$t_date_time_end = '';
+	
+	if ($CHANGE AND $FORM_DATA) {
+		$t_date_time = $FORM_DATA['timestamp_start'];
+		$t_date_time_end = $FORM_DATA['timestamp_end'].'';
+	}
+	else { //init
+		if ($selected_date == '') {
+			$selected_date = get_date_time_SQL('now');
+		}
+		if (strlen($selected_date) > 10) {
+			$t_date_time = get_date_time_SQL($selected_date);
+		}
+		else { //rest only date
+			$t_minutes = date("i"); //minutes
+			if ($t_minutes > 30) $t_minutes = '30';
+			else $t_minutes = '00';
+			$t_date_time = get_date_SQL($selected_date) . date(" H:").$t_minutes; //.':00';
+		}
+	}
+	$t_date_time = get_date_time_noSecs($t_date_time.'');
+	if ($t_date_time_end != '') {
+		$t_date_time_end = get_date_time_noSecs($t_date_time_end.'');
+	} else {
+		$t_date_time_add_1_hour = date("Y-m-d H:i:s", strtotime($t_date_time)+(60*60));
+		$t_date_time_end = get_date_time_noSecs($t_date_time_add_1_hour);
+	}
+	$date_time = explode(' ', $t_date_time);
+	$date_time_end = explode(' ', $t_date_time_end);
+
+	return array($date_time[0], $date_time[1], $date_time_end[0], $date_time_end[1]);
 }
 
 ?>

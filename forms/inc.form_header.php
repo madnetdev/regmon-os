@@ -303,43 +303,19 @@ var V_ANSWERED = [];
 
 	<div id="top-wizard">
 		<div class="row">
-			<?php //####################################
-				//TODO: make a function
-				if ($CHANGE AND $FORM_DATA) {
-					$t_date_time = $FORM_DATA['timestamp_start'];
-					$t_date_time_end = $FORM_DATA['timestamp_end'].'';
-				}
-				else {
-					if ($selected_date == '') {
-						$selected_date = get_date_time_SQL('now');
-					}
-					if (strlen($selected_date) > 10) {
-						$t_date_time = get_date_time_SQL($selected_date);
-					}
-					else { //rest only date
-						$t_minutes = date("i"); //minutes
-						if ($t_minutes > 30) $t_minutes = '30';
-						else $t_minutes = '00';
-						$t_date_time = get_date_SQL($selected_date) . date(" H:").$t_minutes; //.':00';
-					}
-				}
-				$t_date_time = get_date_time_noSecs($t_date_time.'');
-				if ($t_date_time_end != '') {
-					$t_date_time_end = get_date_time_noSecs($t_date_time_end.'');
-				} else {
-					$t_date_time_add_1_hour = date("Y-m-d H:i:s", strtotime($t_date_time)+(60*60));
-					$t_date_time_end = get_date_time_noSecs($t_date_time_add_1_hour);
-				}
-				$date_time = explode(' ', $t_date_time);
-				$date_time_end = explode(' ', $t_date_time_end);
-				//####################################
+			<?php
+			$timestamp_start_end_array = get_timestamp_start_end_array($CHANGE, $FORM_DATA, $selected_date);
+			$form_date_start = $timestamp_start_end_array[0];
+			$form_time_start = $timestamp_start_end_array[1];
+			//$form_date_end = $timestamp_start_end_array[2];
+			$form_time_end = $timestamp_start_end_array[3];
 			?>
 			<div class="col-sm-6 grouping" style="text-align:right;">
 				<div class="date-group" style="white-space:nowrap; margin:1px; height:35px;">
 					<div id="form_date_title" class="input-group" style="display:inline-table; top:-8px; font-size:14px;"><b><?=$LANG->FORM_DATE;?> : </b></div>
 					<div class="input-group date" style="display:inline-table; width:260px;">
 						<span class="input-group-addon" style="width:25px; height:28px; padding:5px;"><span class="fa fa-calendar"></span></span>
-						<input name="form_date" type="text" class="form-control textfield required" value="<?=$date_time[0];?>" style="height:28px; padding:4px 17px 4px 12px; text-align:center;">
+						<input name="form_date" type="text" class="form-control textfield required" value="<?=$form_date_start;?>" style="height:28px; padding:4px 17px 4px 12px; text-align:center;">
 						<span class="input-group-addon" style="width:25px; height:28px; padding:5px;"><span class="fa fa-calendar"></span></span>
 					</div>
 				</div>
@@ -348,19 +324,18 @@ var V_ANSWERED = [];
 					<div id="form_time_div" style="display:inline-block; position:relative;">
 						<div class="input-group clockpicker time" style="display:inline-table;" data-placement="bottom" data-align="left" data-default="now">
 							<span id="form_time_now" class="btn btn-default btn-sm input-group-addon" style="width:43px; padding:5px; font-size:13px; height:28px; margin-left:2px; margin-right:-4px;">&nbsp;<?=$LANG->FORM_TIME_NOW;?></span>
-							<input id="form_time" name="form_time" type="text" class="form-control textfield time required" style="width:72px; height:28px; padding:4px 12px;" value="<?=$date_time[1];?>" title="Start">
+							<input id="form_time" name="form_time" type="text" class="form-control textfield time required" style="width:72px; height:28px; padding:4px 12px;" value="<?=$form_time_start;?>" title="Start">
 							<span class="input-group-addon" style="width:25px; height:28px; padding:3px 4px;"><span class="fa fa-clock-o" style="font-size:17px;"></span></span>
 							<span class="input-group-addon" style="width:22px; height:28px; padding:5px 0; border-top-right-radius:0; border-bottom-right-radius:0;"><span class="fa fa-long-arrow-right"></span></span>
 						</div>
 						<div class="input-group clockpicker time" style="display:inline-table;" data-placement="bottom" data-align="right" data-default="now">
-							<input id="form_time_end" name="form_time_end" type="text" class="form-control textfield time required" style="width:72px; height:28px; padding:4px 12px; margin-left:-4px;" value="<?=$date_time_end[1];?>" title="Ende">
+							<input id="form_time_end" name="form_time_end" type="text" class="form-control textfield time required" style="width:72px; height:28px; padding:4px 12px; margin-left:-4px;" value="<?=$form_time_end;?>" title="Ende">
 							<span class="input-group-addon" style="width:22px; height:28px; padding:3px 4px;"><span class="fa fa-clock-o fa-flip-horizontal" style="font-size:17px;"></span></span>
 						</div>
 					</div>	
 				</div>
 			</div>
 <?php //####################################
-//TODO: make a function
 $Athletes_2_Group = array();
 $GroupsNames = array();
 $Trainer_Group_in = '';
@@ -379,7 +354,9 @@ if ($db->numberRows() > 0)  {
 			$Groups_select_options .= '<option value="'.$row['group_id'].'"'.$t_selected/*.$t_disabled*/.'>'.$row['name'].'</option>';
 			$GroupsNames[$row['group_id']] = $row['name'];
 			$Athletes_2_Group[$UID][] = $row['group_id'];
-			if ($Trainer_Group_in != '') $Trainer_Group_in .= ',';
+			if ($Trainer_Group_in != '') {
+				$Trainer_Group_in .= ',';
+			}
 			$Trainer_Group_in .= "'".$row['group_id']."'";
 		}
 	}

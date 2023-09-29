@@ -260,7 +260,6 @@ function HTML_Template__Athlete_Form_Field__Diagram_Options(data_or_calc, ath_id
 		save_form_id = base_form_id + '_S' + save_id;
 	}
 
-	//TODO: check
 	if (V_RESULTS_PAGE == 'FORMS_RESULTS') {
 		form_name = V_FORM_id_2_name[base_form_id];
 	}
