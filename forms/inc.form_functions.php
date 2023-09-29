@@ -1214,7 +1214,7 @@ function convertHSL(int $h, int $s, int $l, bool $toHex=true):string {
  * Summary of get_ddd
  * @param mixed $CHANGE
  * @param mixed $FORM_DATA
- * @param mixed $selected_date
+ * @param string $selected_date
  * @return mixed
  */
 function get_timestamp_start_end_array($CHANGE, $FORM_DATA, $selected_date) {

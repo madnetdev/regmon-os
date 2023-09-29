@@ -305,10 +305,10 @@ var V_ANSWERED = [];
 		<div class="row">
 			<?php
 			$timestamp_start_end_array = get_timestamp_start_end_array($CHANGE, $FORM_DATA, $selected_date);
-			$form_date_start = $timestamp_start_end_array[0];
-			$form_time_start = $timestamp_start_end_array[1];
-			//$form_date_end = $timestamp_start_end_array[2];
-			$form_time_end = $timestamp_start_end_array[3];
+			$form_date_start = $timestamp_start_end_array[0].'';
+			$form_time_start = $timestamp_start_end_array[1].'';
+			//$form_date_end = $timestamp_start_end_array[2].'';
+			$form_time_end = $timestamp_start_end_array[3].'';
 			?>
 			<div class="col-sm-6 grouping" style="text-align:right;">
 				<div class="date-group" style="white-space:nowrap; margin:1px; height:35px;">
