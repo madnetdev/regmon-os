@@ -78,7 +78,7 @@ require('index/inc.groups_athletes_select.php');
 
 <script type="text/javascript" src="js/modernizr.custom.js"></script><?php /*<!-- HTML5 and CSS3-in older browsers-->*/?>
 
-<script type="text/javascript" src="node_modules/jquery.cookie/jquery.cookie.js"></script>
+<script type="text/javascript" src="js/plugins/jquery.cookie.js"></script>
 
 <link rel="stylesheet" type="text/css" href="css/overrides/icheck/skins/polaris2/polaris2.css">
 <link rel="stylesheet" type="text/css" href="css/overrides/icheck/skins/flat/yellow2s.css">

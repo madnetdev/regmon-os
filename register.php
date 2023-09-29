@@ -97,7 +97,7 @@ require('php/inc.html_head.php');
 //#####################################################################################
 ?>
 <link rel="stylesheet" type="text/css" href="index/css/sticky_navbar.css<?=$G_VER;?>" />
-<script type="text/javascript" src="node_modules/jquery.cookie/jquery.cookie.js"></script>
+<script type="text/javascript" src="js/plugins/jquery.cookie.js"></script>
 
 <script type="text/javascript" src="node_modules/@kflorence/jquery-wizard/src/jquery.wizard.js"></script>
 

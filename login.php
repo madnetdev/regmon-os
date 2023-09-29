@@ -43,7 +43,7 @@ $LANG = Language::getInstance($CONFIG['REGmon_Folder']??'', $CONFIG['Default_Lan
 
 <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" src="node_modules/jquery-ui/dist/jquery-ui.min.js"></script>
-<script type="text/javascript" src="node_modules/jquery.cookie/jquery.cookie.js"></script>
+<script type="text/javascript" src="js/plugins/jquery.cookie.js"></script>
 <script type="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/lang_<?=$LANG->LANG_CURRENT;?>.js<?=$G_VER;?>"></script>
 

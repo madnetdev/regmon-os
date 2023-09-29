@@ -46,7 +46,7 @@ $body_height_options_grid = get_Body_Height_Options('', true);
 <script type="text/javascript" src="js/modernizr.custom.js"></script><?php /*<!-- HTML5 and CSS3-in older browsers-->*/?>
 
 <script type="text/javascript" src="node_modules/moment/min/moment.min.js"></script>
-<script type="text/javascript" src="node_modules/jquery.cookie/jquery.cookie.js"></script>
+<script type="text/javascript" src="js/plugins/jquery.cookie.js"></script>
 <script type="text/javascript" src="js/plugins/jquery.blockUI.js"></script>
 
 <link rel="stylesheet" type="text/css" href="js/plugins/colorPicker/jquery.colorPicker.css" />
